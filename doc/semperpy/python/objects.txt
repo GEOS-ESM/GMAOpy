@@ -1,0 +1,396 @@
+Object Orientation
+******************
+
+    Python is an object-oriented language, this means that it supports **object-oriented
+    programming**. C and Fortran 90 are not object-oriented, there is not explicit support
+    for objet orientation, but it is still possible to use object-oriented techniques.
+
+    A language supports object-orientation when it provides those three mechanisms:
+
+        - encapsulation
+        - inheritance (see also delegation)
+        - polymorphism (see also duck typing)
+
+Encapsulation and related topics
+--------------------------------
+
+    Encapsulation is the capability to group variables and functions together in a
+    variable. The modele to create such a variable is called a **class**, the
+    variable derived from the class is called an **object** or a **class instance**. 
+    To create a variable from a class is called to **instanciate an object**. 
+    The functions defined in a class are called **methods** and the variables 
+    are called **members**, but in Python it seems that the word **attribute** is used::
+
+        a = 12 
+        # instanciates an object from the type.IntType class
+        # the object a encapsulates attributes (value 12) and methods
+        # for example it has a method for addition which is called
+        # when we do:
+        print a + 2
+        --> 14
+
+    How to define a class::
+
+        class Polite(object): # new style class post Python 2.2, necessary
+
+            def greetings(self):  # self is the object which was instanciated
+                print "hello"
+
+        # instaciating
+        a = Polite()
+        a.greetings()
+
+    :note: When calling the **greetings** method we don't pass any arguments. The **self** argument is passed automatically by Python. In the **greetings** method, **self** is the same variable as **a** in the main program.
+
+    Python defines a special method called a **constructor** which is called when the
+    object is instanciated. This enables the developper to initialize the object
+    and optionally receive initialization arguments. This method is called **__init__**.
+
+    :note: in Python, all special method names start and finish with a double underscore.
+
+    Let's define an object we will call Turtle, as a tribute to the good old
+    `logo language <http://en.wikipedia.org/wiki/Logo_(programming_language)>`_ 
+    which handled a *graphical turtle* on the screen. The user gave the turtle orders
+    such as "forward N"  or "left 90", "penup", "pendown" etc...::
+
+        import math
+
+        class Turtle(object):
+
+            def __init__(self,x,y):
+                self.x = x
+                self.y = y
+                self.angle = 0
+
+            def forward(self,distance):
+                self.x += distance * math.cos(self.angle)
+                self.y += distance * math.sin(self.angle)
+
+            def left(self,angle):
+                self.angle += angle / 180.0 * math.pi
+
+            def right(self,angle):
+                self.angle -= angle / 180.0 * math.pi
+
+        t = Turtle(0,0)
+        t.forward(10)
+        print 'x =',t.x,'y =',t.y
+        t.left(45)
+        t.forward(10)
+        t.right(45)
+        print t
+        t.forward(-12)
+        print t
+
+    The output shows::
+
+        x = 10.0 y = 0.0
+        x = 17.0710678119 y = 7.07106781187
+        x = 5.07106781187 y = 7.07106781187
+
+    Let's improve this class using Python's features: 
+        - the **__str__** method is another of Python's special methods which is called when the object is printed.  This facilitates the proper formatting of objects.
+        - arguments to functions and methods can be given default values. We can assume that our turtle will start often in (0,0).
+        - operators can be redefined in Python. You can define your own numerical and logical functions for your objects. In Python the construct operator= is widely used (e.g. a += 1), meaning that the result is stored in the variable itself. We could decide to implement += (method __iadd__) for the method **forward**, *= (method __imul__) for the method **left** and /= (method __idiv__) for the **right** method. This may not be a great improvement, but it serves the purpose of this tutorial.
+
+    The code becomes :download:`download<turtle.py>`:
+
+    .. literalinclude:: turtle.py
+        :language: python
+
+    The output still shows::
+
+        x = 10.000000 y = 0.000000
+        x = 17.071068 y = 7.071068
+        x = 5.071068 y = 7.071068
+
+    We just saw how Python supports encapsulation by grouping attributes (x,y,angle) and
+    methods (forward, left etc...) under one single variable which is our object instance.
+    We also visited two of Python's special methods (__init__ and __str__). __str__ enabled
+    us to let our object print itself out. In the first version of our Turtle class we did
+    something which is not recommended on the line::
+        
+        print 'x =',t.x,'y =',t.y
+
+    A rule of object-orientated programming is that you should **never** access the attributes
+    of an object from the outside. If the author of this class decided to change the names
+    of the attributes or change the way the internals of the object are handled, your program
+    would stop working. Some languages like C++ and Java let you define whether attributes
+    can be accessed from the outside or not. Class authors are also supposed to 
+    provide **accessors** so users don't need to access attributes::
+
+        def x(self):
+            return self.x
+
+        def y(self):
+            return self.y
+
+        def angle(self):
+            return self.angle
+
+    Some can argue that there is an overhead calling a method instead of accessing
+    an attribute, scrictly they would be right, but this overhead is very small and
+    the reduction of cost maintenance is significant.
+
+    Encapsulation makes **data hiding** possible, so that the user just needs to know
+    how to use an object and not how it is implemented.
+
+Inheritance and related topics
+------------------------------
+
+    Classes can be defined as **subclasses** of other classes::
+
+        class Tortoise(Turtle):
+            pass
+
+    The class **Tortoise** inherits all the characteristics of class **Turtle**, an instance
+    of **Tortoise** would behave exactly the same way as its **ancestor** 
+    (**parent**, **superclass**), **Turtle**. A subclass
+    can augment the behaviour of its ancestor by adding new methods and new possibilities and/or
+    **alter** the behaviour of its ancestor by **overriding** or **specializing**
+    its methods.
+
+    The mechanisms supported by Python are:
+    
+        - the **overriding** of ancestor's methods
+        - the calling of the overriden ancestor's methods
+
+    Here is an example::
+
+        class Hare(Tortoise):  # totally mixing references and metaphors!!!
+
+            def forward(self,howmuch): # see, we can change the name of the argument
+                howmuch *= 15.0
+                super(Hare,self).forward(howmuch)
+
+        h = Hare()
+        h.forward(10)
+        print h
+
+    The output shows::
+
+        x = 150.000000 y = 0.000000
+
+    The **Hare** class overrides its ancestor's method to change its behaviour and calls
+    eventually the original method: the ancestor's implementation.
+
+    A subclass is "like" its ancestor, this is called a **is a** relationship. Although
+    we agree that a hare is not a turtle, for Python, a Hare instance is just like a
+    Turltle or a Tortoise instance. Python has a built in function called **isinstance** 
+    which would return True if called with a Hare or a Tortoise instance: 
+    isinstance(h,Turtle). This is one of the realities of object-programming, 
+    you are dealing with classes which do not always represent real-life objects. 
+    When you look for material on Internet on object-orientation, you find many examples 
+    mapping real-life objects to language objects. This is often a beginnner's mistake.
+
+    There has been a lot written about inheritance versus delegation for a long time. 
+    Delegation is obtained when an object's methods call another object which is an 
+    attribute of the host object. Delegation is known as a **has a** relationship. If you
+    think of classes representing shapes which are drawn graphically. A typical example of
+    delegation would be to associate an output object to our shape objects, some delegators
+    would draw on a screen, other would print on printers etc... The same object could be
+    rendered on many different media and delegation makes sense in that case, if a **Circle**
+    class inherited from a **Printer** class, it could only be redered on a printer. Another
+    clear difference between inheritance and delegation is that inheritance is determined
+    at coding time (although in Python you could have dynamic inheritance) while delegation
+    is determined at runtime. Whatever has been written about the subject, none of the two is
+    better than the other one and I could add that depending on the language used this could
+    change.
+
+    In Python you can delegate operations automatically with very little effort thanks to
+    the special method **__getattr__**::
+
+        import numpy
+
+        class MyOwnArray(object):
+
+            def __init__(self,array):
+                self.array = array
+
+            def __getattr__(self,attribute):
+                return getattr(self.array,attribute)
+
+        array = numpy.arange(12)
+        print array
+        a = MyOwnArray(array)
+        print a.shape
+        print a.mean()
+
+    The output shows::
+
+        [ 0  1  2  3  4  5  6  7  8  9 10 11]
+        (12,)
+        5.5
+
+    As you can see the attribute **shape** and the method **mean** which belong to
+    a numpy array were called automatically. This is priceless because you can
+    interface other objects classes without having to implement and maintain all
+    their methods. The method __getattr__ is called when an attribute is not
+    found in the object only. However, what happens here::
+
+        print a
+        print a + 12
+
+    The output shows::
+
+        <__main__.MyOwnArray object at 0x1057b6fd0>
+        Traceback (most recent call last):
+          File "a.py", line 17, in <module>
+              print a + 12
+          TypeError: unsupported operand type(s) for +: 'MyOwnArray' and 'int'
+
+    The function __getattr__ is not called for special methods, this means that if you 
+    are aiming for total delegation, you would have to implement all the special methods.
+    The advantage is that we know beforehand what these are.
+
+    :info: There is another special method called __getattribute__ which is called systematically even if an attribute exists in an object. It is however still not called for special methods.
+
+    So just to complete this example::
+
+        def __str__(self):
+            return self.array.__str__()
+
+        def __add__(self,value):
+            return self.array.__add__(value)
+
+    The output now shows::
+
+        [ 0  1  2  3  4  5  6  7  8  9 10 11]
+        [12 13 14 15 16 17 18 19 20 21 22 23]
+
+    We just saw that a class can inherit all characteristics from another class and augment
+    its capabilities or modify them. Delegation is a process in which a class passes "command"
+    (e.g. method calls) to another object. Inheritance and delegation are both very useful. 
+    We also visited more special Python's methods.
+
+Polymorhpism and related topics
+-------------------------------
+
+    Polymorphism comes from the ancient Greek poly (many) morph (form). Objects can show many
+    forms when they all inherit from a same class and therefore all have the same methods,
+    but they behave differently. This basically means that the fact that a program uses a 
+    **Hare** or a **Turtle**, doesn't matter to the program, the results will just be different.
+    If at some point we define a **Tortoise** class which inherits from **Turtle** but 
+    exhibits a different behaviour, this program will be able to work with an instance of this
+    new class without needing any change at all.  Polymorhism means technically that 
+    if a class overrides one of its ancestor's methods, when an instance of that
+    subclass is used, the method called by the ancestor is the subclass' method.
+
+    Polymorphism enables you to write a program once for all and to write new classes
+    and have their instances manipulated by this program. When you use a compiled language,
+    Polymorphism means that a compiled library **can manipulate class instances you just 
+    wrote** without knowing about them and you can do that 
+    **without having the source code of that library**! This is probably less impressive 
+    with interpreted languages like Python.
+
+    So if you think of one of these vectorized drawing programs, you could consider 
+    having a program handling objects which can be created, drawn, colored etc... For different
+    shapes (rectangle, oval, polygon, text etc...) you can create classes wich inherit
+    from a **base class**: Shape, and behave as expected by the main program. Base classes
+    are meant to be the root of an inheritance hierarchy, they define the behaviour to be
+    expected from their subclasses. Often, **base classes** are **abstract**, they don't 
+    actually do anything, they just define a set of methods. This is normally true in 
+    compiled languages which support the concept of abstract methods (C++) or interfaces (Java)
+    and fail in the compilation if an abstract method is not overriden by a subclass. In Python
+    there no support for abstract classes and methods. I will have to digress from this to make
+    the point.
+
+Class attributes and class methods
+==================================
+
+    We saw how to define a class and how it receives the parameter **self** as the object
+    instance to be dealt with. This mean obviously that you cannot call a method until
+    you have instanciated an object. You can define attributes and class methods which
+    are valid for a class and not for a class instance. Let's start with an example of an
+    http browser which caches already visited pages, because getting a page and rendering
+    it is a costly process::
+
+        class HttpBrowser(object):
+
+            cache = {}
+
+            @classmethod
+            def resetCache(self):
+                cache = {}
+
+            def browse(self,url):
+                if url in HttpBrowser.cache:
+                    return self.cache[url]
+                page = self.get_and_render_url(url) # a costly method
+
+    The attribute **cache** is defined at class level, this means that all instances
+    of **HttpBrowser** will share the same variable, this means that if one instance of
+    **HttpBrowser** modifies the cache, all other instances will see the change. This
+    is what a class variable is defined for and it can be useful. Please notice the method
+    **resetCache** which has **@classmethod** defined on the line before. This is called a
+    **decorator** which states that the following method does not require an class instance,
+    it can be called directly::
+
+        HttpBrowser.resetCache()
+
+    This method can be a class method because it deals with class variables only. So if this
+    method is called, the class-wide variable **cache** is reset and all class instances can
+    see this change.
+    
+Abstract methods
+================
+    
+    Decorator are special object which have an impact on the method following their
+    definition. SemperPy defines in semperpy.core.decorators the decorator abstractMethod.
+    If you define::
+
+        from semperpy.core.decorators import abstractMethod
+
+        class MyAbstractClass(object):
+
+            @abstractMethod
+            def doTheWork(self):
+                pass
+                
+        d = MyAbstractClass()
+        d.doTheWork()
+
+    The output shows::
+
+        semperpy.core.exceptions.AbstractMethod: Method <function doTheWork at 0x10060ecf8> is abstract, the subclass should implement it
+
+    This enables you to define abstract methods and if these are not overriden, you will
+    find out about it quite quickly. Please use it and if when using SemperPy you see 
+    this message, you will understand what is going on.
+
+Duck Typing
+===========
+
+    I came across this name recently although I have been doing this for years without
+    knowing whether it had a name or not. When using compiled languages, you have to
+    define abstract classes to be able to use polymorphism. When you use interpreted 
+    languages which find out about the objects they manipulate at runtime, whether
+    an object is an instance of class which inherits from another one or not does not
+    make any difference, provided its class defines all methods which are expected with
+    their expected signature (arguments). This is called duck typing because
+    **If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.**
+    
+    This means basically that if an object shows the same behaviour as others (same set of
+    methods with compatible signatures) then this object is seen to have the same form (morph)
+    as the others even if it doesn't inherit from a common ancestor. This polymorphism can
+    be achieved in Python without much effort and this is really great for delegation.
+
+Design patterns
+===============
+
+    While in the chapter of polymorphism, I thought it could be interesting to mention 
+    `design patterns <http://en.wikipedia.org/wiki/Design_pattern_(computer_science)>`_.
+    `Object oriented design patterns <http://www.oodesign.com/>`_ are methods for solving common problems independently of the language. The most important one for using SemperPy
+    is the **factory**. The precedent paragraphs show that in object-oriented design,
+    you can implement a program without knowing about the actual objects it is going to
+    manipulate. There is a saying amongst object-oriented programmers: "don't use
+    if's". This means that your code shouldn't have if's to test for special cases
+    during its run. However, you need to figure out what classes to instanciate 
+    depending on the conditions. This means that you need to choose which objects are
+    created depending on circumstances and it would be unvaluable if you could that
+    in a configuration file. Factories are objects which can instanciate class
+    instances based on arbitrary criteria (more usually a name).
+
+    SemperPy implements a Factory :class:`core.factory.Factory` which enables you
+    to register classes under an name (string). The factory can then create instances
+    using a string. This is used widely in SemperPy and GMAOPy.

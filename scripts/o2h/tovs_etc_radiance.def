@@ -1,0 +1,247 @@
+[hirs3_n16]
+kx = 16
+kt = 40
+rank = 020
+
+[hirs3_n17]
+kx = 17
+kt = 40
+rank = 020
+
+[hirs4_n18]
+kx = 18
+kt = 40
+rank = 020
+
+[hirs4_n19]
+kx = 19
+kt = 40
+rank = 020
+
+[hirs4_metop-a]
+kx = 25
+kt = 40
+rank = 020
+
+[hirs4_metop-b]
+kx = 26
+kt = 40
+rank = 020
+
+[amsua_n15]
+kx = 315
+kt = 40
+rank = 010
+
+[amsua_n18]
+kx = 318
+kt = 40
+rank = 020
+
+[amsua_n19]
+kx = 319
+kt = 40
+rank = 010
+
+[amsua_aqua]
+kx = 349
+kt = 40
+rank = 020
+
+[amsua_metop-a]
+kx = 325
+kt = 40
+rank = 020
+
+[amsua_metop-b]
+kx = 326
+kt = 40
+rank = 020
+
+[amsub_n15]
+kx = 415
+kt = 40
+rank = 020
+
+[amsub_n16]
+kx = 416
+kt = 40
+rank = 020
+
+[amsub_n17]
+kx = 417
+kt = 40
+rank = 020
+
+[mhs_n18]
+kx = 818
+kt = 40
+rank = 010
+
+[mhs_n19]
+kx = 819
+kt = 40
+rank = 020
+
+[mhs_metop-a]
+kx = 825
+kt = 40
+rank = 020
+
+[mhs_metop-b]
+kx = 826
+kt = 40
+rank = 020
+
+
+#[sndrd1_g11]
+#kx = 61
+#kt = 40
+#rank = 000
+
+#[sndrd1_g12]
+#kx = 62
+#kt = 40
+#rank = 000
+
+[sndrd1_g13]
+kx = 63
+kt = 40
+rank = 000
+
+[sndrd1_g15]
+kx = 65
+kt = 40
+rank = 000
+
+#[sndrd2_g11]
+#kx = 71
+#kt = 40
+#rank = 000
+
+#[sndrd2_g12]
+#kx = 72
+#kt = 40
+#rank = 000
+
+[sndrd2_g13]
+kx = 73
+kt = 40
+rank = 000
+
+[sndrd2_g15]
+kx = 75
+kt = 40
+rank = 000
+
+#[sndrd3_g11]
+#kx = 81
+#kt = 40
+#rank = 000
+
+#[sndrd3_g12]
+#kx = 82
+#kt = 40
+#rank = 000
+
+[sndrd3_g13]
+kx = 83
+kt = 40
+rank = 000
+
+[sndrd3_g15]
+kx = 85
+kt = 40
+rank = 000
+
+#[sndrd4_g11]
+#kx = 91
+#kt = 40
+#rank = 000
+
+#[sndrd4_g12]
+#kx = 92
+#kt = 40
+#rank = 000
+
+[sndrd4_g13]
+kx = 93
+kt = 40
+rank = 000
+
+[sndrd4_g15]
+kx = 95
+kt = 40
+rank = 000
+
+[atms_npp]
+kx = 900
+kt=40
+rank = 000
+
+[atms_n20]
+kx = 920
+kt=40
+rank = 000
+
+[atms_n21]
+kx = 921
+kt=40
+rank = 000
+
+[avhrr_n18]
+kx = 618
+kt = 40
+rank = 020
+
+[avhrr_n19]
+kx = 619
+kt = 40
+rank = 020
+
+[avhrr_metop-a]
+kx = 625
+kt = 40
+rank = 020
+
+[avhrr_metop-b]
+kx = 626
+kt = 40
+rank = 020
+
+[gmi_gpm]
+kx = 706
+kt = 40
+
+[seviri_m08]
+kx = 988
+kt=40
+rank = 000
+
+[seviri_m09]
+kx = 989
+kt=40
+rank = 000
+
+[seviri_m10]
+kx = 990
+kt=40
+rank = 000
+
+[ssmis_f16]
+kx = 716
+kt=40
+rank = 000
+
+[ssmis_f17]
+kx = 717
+kt=40
+rank = 000
+
+[ssmis_f18]
+kx = 718
+kt=40
+rank = 000
+
+
+

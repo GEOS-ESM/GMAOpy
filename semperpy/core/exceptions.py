@@ -1,0 +1,3 @@
+
+class AbstractMethod(NotImplementedError):
+    pass

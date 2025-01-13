@@ -1,0 +1,194 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>json — Conversion to and from json &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="core — Core classes" href="coremodule.html" />
+    <link rel="next" title="texttemplate — Handling text templates to generate titles" href="texttemplate.html" />
+    <link rel="prev" title="innerpython — Python internals" href="innerpython.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="texttemplate.html" title="texttemplate — Handling text templates to generate titles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="innerpython.html" title="innerpython — Python internals"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-core.json">
+<span id="json-conversion-to-and-from-json"></span><h1><a class="reference external" href="http://docs.python.org/library/json.html#json" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">json</span></tt></a> &#8212; Conversion to and from json<a class="headerlink" href="#module-core.json" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="the-json-class">
+<h2>The Json class<a class="headerlink" href="#the-json-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="core.json.JSon">
+<em class="property">class </em><tt class="descclassname">core.json.</tt><tt class="descname">JSon</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#core.json.JSon" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>JSon</strong> class only wraps the json (or simplejson) module&#8217;s dump, dumps,
+load and loads functions. It ensures that:</p>
+<ul class="simple">
+<li>floats are represented properly and there is no accuracy problem
+(see for example <a class="reference external" href="http://tinyurl.com/ykhqrre">http://tinyurl.com/ykhqrre</a>)</li>
+<li>when decoding a json string, the standard module creates unicode
+strings. These cannot be used for the name of variables before
+python 3.0, so at the moment, JSon convert all unicodes strings
+to python strs.</li>
+</ul>
+<dl class="classmethod">
+<dt id="core.json.JSon.encode">
+<em class="property">classmethod </em><tt class="descname">encode</tt><big>(</big><em>destination = None</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#core.json.JSon.encode" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>destination</strong> (<em>stream</em>) &#8211; optional, if specified, a stream to encode into, if not, encoding is made in a string which is returned.</li>
+<li><strong>kargs</strong> (<em>names parameters</em>) &#8211; parameters to encode into json (encoded as a dictionary)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="core.json.JSon.decode">
+<em class="property">classmethod </em><tt class="descname">decode</tt><big>(</big><em>source</em><big>)</big><a class="headerlink" href="#core.json.JSon.decode" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>source</strong> (<em>either a stream (e.g. file) or a string</em>) &#8211; source to decode from</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.json</span> <span class="kn">import</span> <span class="n">JSon</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">JSon</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;hello&#39;</span><span class="p">:</span><span class="s">&#39;world&#39;</span><span class="p">},</span><span class="n">hello</span><span class="o">=</span><span class="s">&quot;world&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">s</span>
+<span class="p">{</span><span class="s">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;hello&quot;</span><span class="p">:</span> <span class="s">&quot;world&quot;</span><span class="p">},</span> <span class="s">&quot;hello&quot;</span><span class="p">:</span> <span class="s">&quot;world&quot;</span><span class="p">}</span>
+<span class="k">print</span> <span class="n">JSon</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="p">{</span><span class="s">&#39;data&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;hello&#39;</span><span class="p">:</span> <span class="s">&#39;world&#39;</span><span class="p">},</span> <span class="s">&#39;hello&#39;</span><span class="p">:</span> <span class="s">&#39;world&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">json</span></tt> &#8212; Conversion to and from json</a><ul>
+<li><a class="reference internal" href="#the-json-class">The Json class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="innerpython.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">innerpython</span></tt> &#8212; Python internals</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="texttemplate.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">texttemplate</span></tt> &#8212; Handling text templates to generate titles</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/core/json.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="texttemplate.html" title="texttemplate — Handling text templates to generate titles"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="innerpython.html" title="innerpython — Python internals"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

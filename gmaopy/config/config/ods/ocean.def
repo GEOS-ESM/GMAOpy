@@ -1,0 +1,59 @@
+[tao]
+kx = 501
+kt = 101
+
+[pir]
+kx = 502
+kt = 101
+
+[xbt]
+kx = 503
+kt = 101
+
+[rama]
+kx = 504
+kt = 101, 102
+
+[argo]
+kx = 508
+kt = 101, 102
+
+[levitus]
+kx = 509
+kt = 101,102
+
+[levitus_sss]
+kx = 521
+kt = 102
+
+[ctd]
+kx = 513
+kt = 101,102
+
+[reyn_sst]
+kx = 516
+kt = 101
+
+[cmip_sst]
+kx = 520
+kt = 101
+
+[nsidc_ice]
+kx = 518
+kt = 106
+
+[cmip5_ice]
+kx = 519
+kt = 106
+
+[topex]
+kx = 514
+kt = 105
+
+[jason-1]
+kx = 515
+kt = 105
+
+[jason-2]
+kx = 517
+kt = 105

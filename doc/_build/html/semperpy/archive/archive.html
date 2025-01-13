@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Archive base class — Mass storage specific &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="archive — Dealing with mass storage systems" href="archivemodule.html" />
+    <link rel="next" title="DMF implementation of Archive" href="dmf/dmf.html" />
+    <link rel="prev" title="archive — Dealing with mass storage systems" href="archivemodule.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dmf/dmf.html" title="DMF implementation of Archive"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="archivemodule.html" title="archive — Dealing with mass storage systems"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="archivemodule.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">archive</span></tt> &#8212; Dealing with mass storage systems</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-archive">
+<span id="the-archive-base-class-mass-storage-specific"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">Archive</span> <span class="pre">base</span> <span class="pre">class</span></tt> &#8212; Mass storage specific<a class="headerlink" href="#module-archive" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="archive.Archive">
+<em class="property">class </em><tt class="descclassname">archive.</tt><tt class="descname">Archive</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#archive.Archive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The <strong>Archive</strong> file is the base class for handling files which are held in a mass
+storage system. It defines behaviour for finding wich files are offline and calculate
+their size, stage them and extract them.</p>
+<div class="section" id="public-methods">
+<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">Archive(filelist):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filelist</strong> (<em>sequence</em>) &#8211; a list of full paths to files to be accessed</td>
+</tr>
+</tbody>
+</table>
+<p>Calls the <strong>offline</strong> method to hold the list of files to stage. The list of files
+could be the result of a call to glob.glob:</p>
+<div class="highlight-python"><pre>import glob
+import re
+
+print glob.glob('/usr/local/lib/*z*.a')
+  --&gt; ['/usr/local/lib/libboost_serialization.a', '/usr/local/lib/libboost_wserialization.a', '/usr/local/lib/libsz.a', '/usr/local/lib/libz.a']
+
+print [x for x in glob.glob('/usr/local/lib/*z*.a') if not re.search('boost',x) ]
+  --&gt; ['/usr/local/lib/libsz.a', '/usr/local/lib/libz.a']</pre>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">stage():</tt></dt>
+<dd><p>Initiates a stage, the migration of files which are on tape onto a filesystem
+designed to hold online files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">copy(destination):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>destination</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; full path to a directory in a file system where all the files should be copied to</td>
+</tr>
+</tbody>
+</table>
+<p>If required, copies files which were just put online using <strong>stage</strong> to
+a specified location.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">stageCount():</tt></dt>
+<dd><p>Returns the number of files to stage.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">stageSize():</tt></dt>
+<dd><p>Returns the size of data to be read from tape in megabytes (MB).</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="abstract-methods">
+<h2>Abstract methods<a class="headerlink" href="#abstract-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">do_stage(filelist):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filelist</strong> (<em>sequence</em>) &#8211; list of files to stage</td>
+</tr>
+</tbody>
+</table>
+<p>Should implement the staging of a list of files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">offline(filelist):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filelist</strong> (<em>sequence</em>) &#8211; a list of files in the archive</td>
+</tr>
+</tbody>
+</table>
+<p>Should return the list of files take out of filelist which are offline.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">filesize(filelist):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filelist</strong> (<em>sequence</em>) &#8211; a list of files in the archive</td>
+</tr>
+</tbody>
+</table>
+<p>Should return a list of sizes for each file in bytes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">do_copy(filelist,destination):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filelist</strong> (<em>sequence</em>) &#8211; a list of files in the archive</li>
+<li><strong>destination</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; path to the destination directory</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Should move, link or copy files to the destination given. This is often an optional step.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Archive</span> <span class="pre">base</span> <span class="pre">class</span></tt> &#8212; Mass storage specific</a><ul>
+<li><a class="reference internal" href="#public-methods">Public methods</a></li>
+<li><a class="reference internal" href="#abstract-methods">Abstract methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="archivemodule.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">archive</span></tt> &#8212; Dealing with mass storage systems</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dmf/dmf.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">DMF</span> <span class="pre">implementation</span> <span class="pre">of</span> <span class="pre">Archive</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/archive/archive.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dmf/dmf.html" title="DMF implementation of Archive"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="archivemodule.html" title="archive — Dealing with mass storage systems"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="archivemodule.html" ><tt class="docutils literal docutils literal"><span class="pre">archive</span></tt> &#8212; Dealing with mass storage systems</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

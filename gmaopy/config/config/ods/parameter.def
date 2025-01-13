@@ -1,0 +1,439 @@
+[1]
+title = Surface (10m) zonal wind
+unit = m/sec
+shortname = u10
+
+[2]
+title = Surface (10m) meridional wind
+unit = m/sec
+shortname = v10
+
+[3]
+title = Sea level pressure
+unit = hPa
+shortname = slp
+
+[4]
+title = Upper-air zonal wind
+unit = m/sec
+shortname = u
+
+[5]
+title = Upper-air meridional wind
+unit = m/sec
+shortname = v
+
+[6]
+title = Upper-air geopotential height
+unit = m
+shortname = h
+
+[7]
+title = Upper-air water vapor mixing ratio
+unit = g/kg
+shortname = WatVapMixr
+
+[8]
+title = Upper-air temperature
+unit = Kelvin
+shortname = T
+
+[9]
+title = Upper-air dew-point temperature
+unit = Kelvin
+shortname = Td
+
+[10]
+title = Upper-air relative humidity
+unit = %%
+shortname = r
+
+[11]
+title = Upper-air specific humidity
+unit = g/kg
+shortname = q
+
+[12]
+title = Surface (10m) wind speed
+unit = m/sec
+shortname = ff10
+
+[13]
+title = Surface (10m) temperature
+unit = Kelvin
+shortname = T10
+
+[14]
+title = Surface (10m) dew-point temperature
+unit = Kelvin
+shortname = Td10
+
+[15]
+title = Surface (10m) relative humidity
+unit = %%
+shortname = r10
+
+[16]
+title = Surface (10m) specific humidity
+unit = g/kg
+shortname = q10
+
+[17]
+title = Precipitation rate
+unit = mm/day
+shortname = PcpnRate
+
+[18]
+title = Total precipitable water
+unit = mm
+shortname = TPW
+
+[19]
+title = Total cloud liquid water
+unit = mm
+shortname = CldTPW
+
+[20]
+title = Fractional cloud cover
+unit = %%
+shortname = FracCldCov
+
+[21]
+title = Column ozone
+unit = Dobson
+shortname = O3Column
+
+[22]
+title = Ozone layer
+unit = Dobson
+shortname = O3Layer
+
+[23]
+title = Upper-air thickness
+unit = m
+shortname = Thickness
+
+[24]
+title = Surface (2m) wind speed
+unit = m/sec
+shortname = ff2
+
+[25]
+title = Surface (2m) maximum wind speed
+unit = m/sec
+shortname = ffmax2
+
+[26]
+title = Surface (2m) maximum wind gust
+unit = m/sec
+shortname = ffgust2
+
+[27]
+title = Surface (2m) temperature
+unit = Kelvin
+shortname = T2
+
+[28]
+title = Surface (2m) maximum temperature
+unit = Kelvin
+shortname = Tmax2
+
+[29]
+title = Surface (2m) minimum temperature
+unit = Kelvin
+shortname = Tmin2
+
+[30]
+title = Surface (2m) dew-point temperature
+unit = Kelvin
+shortname = Td2
+
+[31]
+title = Surface (2m) relative humidity
+unit = %%
+shortname = r2
+
+[32]
+title = Surface (2m) specific humidity
+unit = g/kg
+shortname = q2
+
+[33]
+title = Surface (2m) pressure
+unit = hPa
+shortname = sp
+
+[34]
+title = Visibility
+unit = km
+shortname = Vsby
+
+[35]
+title = Snow depth
+unit = mm
+shortname = SnowDepth
+
+[36]
+title = Weather condition
+unit = 
+shortname = WxCon
+
+[37]
+title = Upper-air potential temperature (ps=1000hPa)
+unit = Kelvin
+shortname = Theta
+
+[38]
+title = Surface skin temperature
+unit = Kelvin
+shortname = Tskin
+
+[39]
+title = Sea Surface temperature
+unit = Kelvin
+shortname = SST
+
+[40]
+title = Brightness temperature
+unit = Kelvin
+shortname = TBright
+
+[41]
+title = Layer-mean virtual temperature
+unit = Kelvin
+shortname = MeanTv
+
+[42]
+title = Line-of-Sight Wind (LOS)
+unit = m/sec
+shortname = LoSWind
+
+[43]
+title = Log(eps+AOD)
+unit = 
+shortname = LogEPSAOD
+
+[44]
+title = Upper-air virtual temperature
+unit = Kelvin
+shortname = Tv
+
+[45]
+title = Aerosol Optical Depth
+unit = 
+shortname = AOD
+
+[46]
+title = Angstrom Exponent
+unit = 
+shortname = AngExp
+
+[47]
+title = Surface Albedo
+unit = %%
+shortname = SfcAlbedo
+
+[48]
+title = Reflectance
+unit = %%
+shortname = Reflect
+
+[49]
+title = Aerosol Absorption Optical Depth
+unit = 
+shortname = AerAOD
+
+[50]
+title = Single Scattering Albedo
+unit = %%
+shortname = SScatAlbedo
+
+[51]
+title = CO mixing ratio
+unit = ppmv
+shortname = COMixr
+
+[52]
+title = NO2 mixing ratio
+unit = ppmv
+shortname = NO2Mixr
+
+[54]
+title = Solar Zenith Angle
+unit = Degrees
+shortname = SolZenAngle
+
+[55]
+title = Solar Azimuth Angle
+unit = Degrees
+shortname = SolAziAngle
+
+[56]
+title = Sensor Zenith Angle
+unit = Degrees
+shortname = SenZenAngle
+
+[57]
+title = Sensor Azimuth Angle
+unit = Degrees
+shortname = SenAziAngle
+
+[58]
+title = Aerosol Scattering Angle
+unit = Degress
+shortname = AerScatAngle
+
+[59]
+title = Aerosol Glittering angle
+unit = Degrees
+shortname = AerGlitAngle
+
+[60]
+title = Aerosol Type
+unit = 
+shortname = AerType
+
+[61]
+title = Fine model Optical thickness
+unit = nm
+shortname = FineModOptThk
+
+[62]
+title = Fine model Angstrom exponent
+unit = 
+shortname = FineModAngExp
+
+[63]
+title = Cloud Pressure
+unit = hPa
+shortname = CldPress
+
+[64]
+title = ColumnAmountO3
+unit = DU
+shortname = O3ColAmt
+
+[65]
+title = ColumnAmountSO2_PBL
+unit = DU
+shortname = SO2_PBLColAmt
+
+[66]
+title = ColumnAmountSO2_TRL
+unit = DU
+shortname = SO2_TRLColAmt
+
+[70]
+title = Aerosol Optical Depth Ratio (Small/Total)
+unit = 
+shortname = AODRationSmTot
+
+[71]
+title = Terrain Height
+unit = m
+shortname = TerrHgt
+
+[74]
+title = Quality Assurance Flag
+unit = 
+shortname = QAFlag
+
+[75]
+title = Confidence Flag (Deep Blue Aerosol)
+unit = 
+shortname = AerDpBluConFlag
+
+[76]
+title = Aerosol Refractive index (Real)
+unit = 
+shortname = AerRefracReal
+
+[77]
+title = Aerosol Refractive index (Imaginary)
+unit = 
+shortname = AerRefracImag
+
+[78]
+title = Reflectivity
+unit = 
+shortname = Reflect
+
+[79]
+title = Height of aerosol layer
+unit = meter
+shortname = AerLyrHgt
+
+[80]
+title = Radiance
+unit = 
+shortname = Radiance
+
+[81]
+title = Aerosol Index
+unit = 
+shortname = AerIndex
+
+[82]
+title = Fire Radiative Power
+unit = Megawatts
+shortname = FireRadPwr
+
+[83]
+title = Aerosol Asymmetry Factor
+unit = 
+shortname = AerAsymFactor
+
+[84]
+title = Aerosol Mass Concentration
+unit = kg/meter2
+shortname = AerMassConc
+
+[85]
+title = Aerosol Effective Radius
+unit = micron
+shortname = AerEffRadius
+
+[86]
+title = GSI precip rate ln(1+rain_rate)
+unit = ln(mm/hr)
+shortname = ln1+pcprate
+
+[87]
+title = Ozone mixing ratio
+unit = ppmv
+shortname = O3Mixr
+
+[88]
+title = Refractivity
+unit = N-units
+shortname = Refract
+
+[89]
+title = Bending Angle
+unit = 
+shortname = BendAngle
+
+[90]
+title = Cloud Fraction
+unit = 
+shortname = CldFrac
+
+[92]
+title = position-type obs: latitude
+unit = degrees
+shortname = obsposlat
+
+[93]
+title = position-type obs: longitude
+unit = degrees
+shortname = obsposlon
+
+[101]
+title = temperature
+unit = degrees
+shortname = T
+
+[102]
+title = salinity
+unit = %%
+shortname = Sal

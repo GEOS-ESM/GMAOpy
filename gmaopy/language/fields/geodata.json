@@ -1,0 +1,64 @@
+{
+	"directive": "geodata",
+    "inherit_from": "plot",
+    "doc": true,
+	"keywords" : {
+        "ignore_missing_files": {
+            "alias": "ignore_missing",
+            "default_value": false,
+            "unique": true,
+            "help": ["When accessing files, if a file is missing, the application","can either fail and report the error, or ignore","the problem and carry on"]
+        },
+        "staging_rate": {
+            "unique": true,
+            "default_value": "hourly",
+            "lowercase": false
+        },
+        "root_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "tree_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "file_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "archive_type": {
+            "optional": true,
+            "unique": true
+        },
+		"fields": {
+            "alias": "field"
+		},
+        "slices": {
+            "alias": "slice"
+        },
+		"contour": {
+            "optional": true
+		},
+        "geography": {
+            "unique": true,
+            "optional": true
+        },
+        "layout": {
+            "default_value": [1,1],
+            "optional": true
+        },
+        "interactive": {
+            "unique": true,
+            "optional": true,
+            "default_value": true
+        },
+        "output_file": {
+            "optional": true,
+            "default_value": "<parameter>_<date>_<step>_<level>.png",
+            "unique": true
+        }
+	}
+}

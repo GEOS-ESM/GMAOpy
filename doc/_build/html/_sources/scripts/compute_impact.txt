@@ -1,0 +1,13 @@
+compute_impact.ksh
+===================
+
+**compute_impact.ksh** is a sweeper which detects when new days are available online to be processed and compute statistics according to the description make in the file compute.py. Its usage is::
+
+    ./compute_impact.ksh /path/to/directory/where/things/happen (the same as for stage_impact)
+
+This script takes care of the following things:
+
+    * whenever a day is available (directory date.expver.ready), it locks it by renaming it date.expver.run and invokes compute.py to calculate statistics and store them in a database.
+    * when the calculation is completed, the directory is renamed to date.expver.done
+
+:note: many instances of this script can be started. The more instances the higher the constant *max_ready* in stage.py should be.

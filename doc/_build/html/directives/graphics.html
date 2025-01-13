@@ -1,0 +1,1086 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>graphics &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="directives — Application directives" href="directives.html" />
+    <link rel="next" title="levelplot" href="levelplot.html" />
+    <link rel="prev" title="geography" href="geography.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="levelplot.html" title="levelplot"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="geography.html" title="geography"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="directives.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">directives</span></tt> &#8212; Application directives</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="graphics">
+<span id="id1"></span><h1>graphics<a class="headerlink" href="#graphics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">keyword</th>
+<th class="head">default</th>
+<th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>alpha</strong></td>
+<td>0.9</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>alias</em></td>
+<td>alpha_channel</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>float</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>automatic_edge</strong></td>
+<td>True</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>bar_color</strong></td>
+<td>[&#8216;wheat&#8217;, &#8216;olive&#8217;, &#8216;yellow&#8217;, &#8216;darkmagenta&#8217;, &#8216;tan&#8217;, &#8216;orange&#8217;, &#8216;salmon&#8217;, &#8216;rosybrown&#8217;, &#8216;palevioletred&#8217;, &#8216;cadetblue&#8217;, &#8216;seagreen&#8217;, &#8216;darkgoldenrod&#8217;, &#8216;brown&#8217;, &#8216;darkkhaki&#8217;, &#8216;lightslategrey&#8217;, &#8216;darkslateblue&#8217;, &#8216;navy&#8217;, &#8216;maroon&#8217;, &#8216;dodgerblue&#8217;, &#8216;firebrick&#8217;, &#8216;floralwhite&#8217;, &#8216;lemonchiffon&#8217;, &#8216;lightseagreen&#8217;]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>bar_width_factor</strong></td>
+<td>0.85</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>float</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>boxedline_color</strong></td>
+<td>line_color</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>color</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>custom_bar_width</strong></td>
+<td>0.4</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>custom_bar_width_limit</strong></td>
+<td>0</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>dot_color</strong></td>
+<td>[&#8216;wheat&#8217;, &#8216;olive&#8217;, &#8216;yellow&#8217;, &#8216;darkmagenta&#8217;, &#8216;tan&#8217;, &#8216;orange&#8217;, &#8216;salmon&#8217;, &#8216;rosybrown&#8217;, &#8216;palevioletred&#8217;, &#8216;cadetblue&#8217;, &#8216;seagreen&#8217;, &#8216;darkgoldenrod&#8217;, &#8216;brown&#8217;, &#8216;darkkhaki&#8217;, &#8216;lightslategrey&#8217;, &#8216;darkslateblue&#8217;, &#8216;navy&#8217;, &#8216;maroon&#8217;]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>edge_limit</strong></td>
+<td>120</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>edgecolor</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>edgewidth</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>grid</strong></td>
+<td>True</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>bool</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>horizontal</strong></td>
+<td>True</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>bool</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>line_color</strong></td>
+<td>[&#8216;blue&#8217;, &#8216;crimson&#8217;, &#8216;darkgreen&#8217;, &#8216;olive&#8217;, &#8216;mediumvioletred&#8217;, &#8216;blueviolet&#8217;, &#8216;mediumseagreen&#8217;, &#8216;darkgoldenrod&#8217;, &#8216;maroon&#8217;, &#8216;dimgrey&#8217;]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>linewidth</strong></td>
+<td>1.8</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>float</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>marker</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>markeredgecolor</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>markerfacecolor</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>markersize</strong></td>
+<td>5.0</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>float</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>shiftedbar_color</strong></td>
+<td>bar_color</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>splitbar_color</strong></td>
+<td>bar_color</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>stackedbar_color</strong></td>
+<td>bar_color</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>style</strong></td>
+<td>[&#8216;solid&#8217;]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>alias</em></td>
+<td>styles</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>sym_color</strong></td>
+<td>[&#8216;purple&#8217;, &#8216;darkgreen&#8217;, &#8216;red&#8217;, &#8216;olive&#8217;, &#8216;mediumvioletred&#8217;, &#8216;blueviolet&#8217;, &#8216;mediumseagreen&#8217;, &#8216;darkgoldenrod&#8217;, &#8216;maroon&#8217;, &#8216;dimgrey&#8217;]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="keywords">
+<h2>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="alpha">
+<h3>alpha<a class="headerlink" href="#alpha" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>0.9</strong></p>
+<p>this is a percentage of opacity for the alpha channel, 0 is transparent, 1 is full color</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>alias</td>
+<td>alpha_channel</td>
+</tr>
+<tr class="row-odd"><td>type</td>
+<td>float</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="automatic-edge">
+<h3>automatic_edge<a class="headerlink" href="#automatic-edge" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>True</strong></p>
+<p>when drawing bars, the edges of the bars are drawn in black by default. When the number of bars increases, the black of the edge may hide the actual bar color. In automatic edge mode, the black edge is removed, or changed to the value of edgewidth if it is defined when the number of bars exceeds the attribute edge_limit. If set to False, the edge is always drawn.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="bar-color">
+<h3>bar_color<a class="headerlink" href="#bar-color" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>wheat, olive, yellow, darkmagenta, tan, orange, salmon, rosybrown, palevioletred, cadetblue, seagreen, darkgoldenrod, brown, darkkhaki, lightslategrey, darkslateblue, navy, maroon, dodgerblue, firebrick, floralwhite, lemonchiffon, lightseagreen</strong></p>
+<p>a list of colors which are affected in turn and in a cyclic way to each bar (part of a curve) in a single plot.</p>
+</div>
+<div class="section" id="bar-width-factor">
+<h3>bar_width_factor<a class="headerlink" href="#bar-width-factor" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>0.85</strong></p>
+<p>when plotting bars, each bar is allocated a space (the length of its axis divided by the number of bars) to be plotted. This value is the percentage of that space. A value of 1 means that all bars will touch each others, less than 1 introduces gaps between them.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>float</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="boxedline-color">
+<h3>boxedline_color<a class="headerlink" href="#boxedline-color" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>line_color</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="color">
+<h3>color<a class="headerlink" href="#color" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="custom-bar-width">
+<h3>custom_bar_width<a class="headerlink" href="#custom-bar-width" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>0.4</strong></p>
+<p>sets the value to use for the width of the bar (a percentage 0 to 1 of the width between two consecutive ticks)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="custom-bar-width-limit">
+<h3>custom_bar_width_limit<a class="headerlink" href="#custom-bar-width-limit" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>0</strong></p>
+<p>when drawing few bars, they sometimes look too bulky, this keyword set the limit under which a custom width for the bar should be used, see &#8216;custom_bar_width&#8217;</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dot-color">
+<h3>dot_color<a class="headerlink" href="#dot-color" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>wheat, olive, yellow, darkmagenta, tan, orange, salmon, rosybrown, palevioletred, cadetblue, seagreen, darkgoldenrod, brown, darkkhaki, lightslategrey, darkslateblue, navy, maroon</strong></p>
+<p>a list of colors which are affected in turn and in a cyclic way to each dot (part of a curve) in a single plot.</p>
+</div>
+<div class="section" id="edge-limit">
+<h3>edge_limit<a class="headerlink" href="#edge-limit" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>120</strong></p>
+<p>when drawing bars, the edges of the bars are drawn in black by default. When the number of bars increases, the black of the edge may hide the actual bar color. In automatic edge mode, the black edge is removed when the number of bars exceeds the attribute edge_limit. If set to False, the edge is always drawn.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="edgecolor">
+<h3>edgecolor<a class="headerlink" href="#edgecolor" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="edgewidth">
+<h3>edgewidth<a class="headerlink" href="#edgewidth" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="grid">
+<h3>grid<a class="headerlink" href="#grid" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>True</strong></p>
+<p>draws a grid on the background of the plot</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>bool</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="horizontal">
+<h3>horizontal<a class="headerlink" href="#horizontal" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>True</strong></p>
+<p>this attribute determines the orientation of the plot, for example in a time series, by default the dates are on the x-axis and the data values on the y-axis. If this parameter is set to True, the dates are on the y-axis and the data values on the x-axis.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>bool</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="line-color">
+<h3>line_color<a class="headerlink" href="#line-color" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>blue, crimson, darkgreen, olive, mediumvioletred, blueviolet, mediumseagreen, darkgoldenrod, maroon, dimgrey</strong></p>
+<p>a list of colors which are affected in turn and in a cyclic way to each line (curve) in a single plot.</p>
+</div>
+<div class="section" id="linewidth">
+<h3>linewidth<a class="headerlink" href="#linewidth" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>1.8</strong></p>
+<p>when drawing line, determines the thickness of the line</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>float</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="marker">
+<h3>marker<a class="headerlink" href="#marker" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<p>defines the marker to plot</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="markeredgecolor">
+<h3>markeredgecolor<a class="headerlink" href="#markeredgecolor" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="markerfacecolor">
+<h3>markerfacecolor<a class="headerlink" href="#markerfacecolor" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="markersize">
+<h3>markersize<a class="headerlink" href="#markersize" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>5.0</strong></p>
+<p>when drawing markers, determines the size of the markers.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>float</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="shiftedbar-color">
+<h3>shiftedbar_color<a class="headerlink" href="#shiftedbar-color" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>bar_color</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="splitbar-color">
+<h3>splitbar_color<a class="headerlink" href="#splitbar-color" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>bar_color</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="stackedbar-color">
+<h3>stackedbar_color<a class="headerlink" href="#stackedbar-color" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>bar_color</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="style">
+<h3>style<a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>solid</strong></p>
+<p>when drawing lines, determines the style of the line (e.g. solid, dash etc...).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>alias</td>
+<td>styles</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sym-color">
+<h3>sym_color<a class="headerlink" href="#sym-color" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>purple, darkgreen, red, olive, mediumvioletred, blueviolet, mediumseagreen, darkgoldenrod, maroon, dimgrey</strong></p>
+<p>a list of colors which are affected in turn and in a cyclic way to each group of symbols in a single plot.</p>
+<p>generated on 2012-11-04 20:07:45</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">graphics</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#keywords">Keywords</a><ul>
+<li><a class="reference internal" href="#alpha">alpha</a></li>
+<li><a class="reference internal" href="#automatic-edge">automatic_edge</a></li>
+<li><a class="reference internal" href="#bar-color">bar_color</a></li>
+<li><a class="reference internal" href="#bar-width-factor">bar_width_factor</a></li>
+<li><a class="reference internal" href="#boxedline-color">boxedline_color</a></li>
+<li><a class="reference internal" href="#color">color</a></li>
+<li><a class="reference internal" href="#custom-bar-width">custom_bar_width</a></li>
+<li><a class="reference internal" href="#custom-bar-width-limit">custom_bar_width_limit</a></li>
+<li><a class="reference internal" href="#dot-color">dot_color</a></li>
+<li><a class="reference internal" href="#edge-limit">edge_limit</a></li>
+<li><a class="reference internal" href="#edgecolor">edgecolor</a></li>
+<li><a class="reference internal" href="#edgewidth">edgewidth</a></li>
+<li><a class="reference internal" href="#grid">grid</a></li>
+<li><a class="reference internal" href="#horizontal">horizontal</a></li>
+<li><a class="reference internal" href="#line-color">line_color</a></li>
+<li><a class="reference internal" href="#linewidth">linewidth</a></li>
+<li><a class="reference internal" href="#marker">marker</a></li>
+<li><a class="reference internal" href="#markeredgecolor">markeredgecolor</a></li>
+<li><a class="reference internal" href="#markerfacecolor">markerfacecolor</a></li>
+<li><a class="reference internal" href="#markersize">markersize</a></li>
+<li><a class="reference internal" href="#shiftedbar-color">shiftedbar_color</a></li>
+<li><a class="reference internal" href="#splitbar-color">splitbar_color</a></li>
+<li><a class="reference internal" href="#stackedbar-color">stackedbar_color</a></li>
+<li><a class="reference internal" href="#style">style</a></li>
+<li><a class="reference internal" href="#sym-color">sym_color</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="geography.html"
+                        title="previous chapter">geography</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="levelplot.html"
+                        title="next chapter">levelplot</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/directives/graphics.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="levelplot.html" title="levelplot"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="geography.html" title="geography"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="directives.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">directives</span></tt> &#8212; Application directives</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

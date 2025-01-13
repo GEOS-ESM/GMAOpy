@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The HTML class &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="The Services module — Client-Server tools" href="services.html" />
+    <link rel="next" title="The Service class" href="service.html" />
+    <link rel="prev" title="Some Response implementations" href="responses.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="service.html" title="The Service class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="responses.html" title="Some Response implementations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="servicesmodule.html" ><tt class="docutils literal docutils literal"><span class="pre">services</span></tt> &#8212; Client-Server utilities</a> &raquo;</li>
+          <li><a href="services.html" accesskey="U"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Services</span> <span class="pre">module</span></tt> &#8212; Client-Server tools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-services.html">
+<span id="the-html-class"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">HTML</span> <span class="pre">class</span></tt><a class="headerlink" href="#module-services.html" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="services.html.HTML">
+<em class="property">class </em><tt class="descclassname">services.html.</tt><tt class="descname">HTML</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#services.html.HTML" title="Permalink to this definition">¶</a></dt>
+<dd><p>A very lightweight class to help with HTML page rendering. It relies on an environment
+variable called <strong>SEMPERPY_WEB</strong> which is expected to have two subdirectories:</p>
+<blockquote>
+<div><ul class="simple">
+<li>css containing cascading style sheet files (css)</li>
+<li>templates containing .tmpl files as described further</li>
+</ul>
+</div></blockquote>
+<p>Some sample files are part of the distribution in the <em>web</em> directory.</p>
+</dd></dl>
+
+<div class="section" id="public-methods">
+<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="staticmethod">
+<dt>
+<tt class="descname">list(items):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> &#8211; list of elements to render in an HTML list</td>
+</tr>
+</tbody>
+</table>
+<p>Returns an HMTL string using &lt;ul&gt; and &lt;li&gt; tags. List elements are the elements
+of the list <em>items</em>. The elements are expected to be strings or lists, if these
+are lists, this method works recursively.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="services.html.webPath">
+<em class="property">classmethod </em><tt class="descclassname">services.html.</tt><tt class="descname">webPath</tt><big>(</big><big>)</big><a class="headerlink" href="#services.html.webPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the contents of the <strong>SEMPERPY_WEB</strong> environmement variable always
+ending with &#8216;/&#8217;. The server install a static page handler in that location, so
+any file (script, css, html etc...) will be served from there.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="services.html.substituteVariables">
+<em class="property">classmethod </em><tt class="descclassname">services.html.</tt><tt class="descname">substituteVariables</tt><big>(</big><em>template_name</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#services.html.substituteVariables" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template_name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the template to be used (<strong>SEMPERPY_WEB</strong>/templates/name.tmpl)</td>
+</tr>
+</tbody>
+</table>
+<p>Substitutes keywords in the template files which are part of **kargs and part of the
+contents of the templare with their value, if <em>templates/body.tmpl</em> contains:</p>
+<div class="highlight-python"><pre>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;__title__&lt;/title&gt;
+&lt;link rel="StyleSheet" href="css/style.css" type="text/css" /&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h1&gt;__welcome__&lt;/h1&gt;
+__content__
+&lt;/body&gt;</pre>
+</div>
+<p>The code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.services.hmtl</span> <span class="kn">import</span> <span class="n">HMTL</span>
+
+<span class="k">print</span> <span class="n">HTML</span><span class="o">.</span><span class="n">substituteVariables</span><span class="p">(</span><span class="s">&#39;body&#39;</span><span class="p">,</span><span class="n">welcome</span><span class="o">=</span><span class="s">&quot;Welcome to HTML&quot;</span><span class="p">,</span><span class="n">content</span><span class="o">=</span><span class="s">&quot;This is an example&quot;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;example&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>produces:</p>
+<blockquote>
+<div><img alt="../../_images/template.tiff" src="../../_images/template.tiff" />
+</div></blockquote>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="services.html.keywords">
+<em class="property">classmethod </em><tt class="descclassname">services.html.</tt><tt class="descname">keywords</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#services.html.keywords" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; any text, more likeky the contents of a template file.</td>
+</tr>
+</tbody>
+</table>
+<p>returns the list of keywords used in the strings (keywords are prefixed and suffixed with &#8216;__&#8217;):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.services.html</span> <span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="k">print</span> <span class="n">HTML</span><span class="o">.</span><span class="n">keywords</span><span class="p">(</span><span class="s">&quot;The __weather__ is nice __today__&quot;</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;weather&#39;</span><span class="p">,</span><span class="s">&#39;nice&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="private-methods">
+<h2>Private methods<a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="classmethod">
+<dt id="services.html.template">
+<em class="property">classmethod </em><tt class="descclassname">services.html.</tt><tt class="descname">template</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#services.html.template" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the name of the template file (without .tmpl)</td>
+</tr>
+</tbody>
+</table>
+<p>Reads and returns the contents of a template file.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">HTML</span> <span class="pre">class</span></tt></a><ul>
+<li><a class="reference internal" href="#public-methods">Public methods</a></li>
+<li><a class="reference internal" href="#private-methods">Private methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="responses.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">Some</span> <span class="pre">Response</span> <span class="pre">implementations</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="service.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Service</span> <span class="pre">class</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/services/html.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="service.html" title="The Service class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="responses.html" title="Some Response implementations"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="servicesmodule.html" ><tt class="docutils literal docutils literal"><span class="pre">services</span></tt> &#8212; Client-Server utilities</a> &raquo;</li>
+          <li><a href="services.html" ><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Services</span> <span class="pre">module</span></tt> &#8212; Client-Server tools</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

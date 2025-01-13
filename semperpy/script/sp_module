@@ -1,0 +1,7 @@
+root=/Users/claudegibert/unix/p4
+export PYTHONPATH=$root:$PYTHONPATH
+export LD_LIBRARY_PATH=${LOCAL_LIBS}/netcdf4/lib:${LOCAL_LIBS}/hdf5/lib:$LD_LIBRARY_PATH
+
+export GMAOPY_LANGUAGE=$root/gmaopy/language:$root/gmaopy/config/db/schema:$root/semperpy/plot/matplotlib/language
+export SEMPERPY_LANGUAGE=$GMAOPY_LANGUAGE
+GMAOPY_CONFIG=$root/gmaopy/config

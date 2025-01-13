@@ -1,0 +1,33 @@
+Tutorials for the end user
+==========================
+
+.. toctree::
+    :maxdepth: 2
+
+    ods/tutorial
+    plotting/plotting
+    obs/stattutorial
+    plotting/tutorial
+    stats/yourown
+
+Tutorials and scripts for research experiments
+==============================================
+
+.. toctree::
+    :maxdepth: 2
+
+    exp/notes
+    exp/observations
+    exp/impact
+    exp/scores
+
+Tutorials for the developer
+===========================
+
+.. toctree::
+    :maxdepth: 2
+
+    semperpy/python/python
+    semperpy/language/tutorial
+    semperpy/services/tutorial
+    semperpy/netcdf/tutorial

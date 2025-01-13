@@ -1,0 +1,201 @@
+[title]
+
+# domains
+n.hem=Northern Hemisphere
+s.hem=Southern Hemisphere
+global=Global Domain
+tropics=Tropics
+
+# statistics
+perob=Per Observation
+impact_per_ob=Impact per Observation
+perob=Impact per Observation
+rms=Root Mean Square Error
+beneficial=Fraction of Beneficial Obs
+impact_per_anl=Total Impact
+fractional_impact=Fractional Impact
+peranl=Impact per Analysis
+normcost=Normalized Cost
+esigo=Estimated sigo
+esigb=Estimated sigb
+count = Observation count
+count_per_anl = Observation Count Per Analysis
+cor=Anomaly Correlation
+mean=Mean
+
+# groups
+amsua=AMSUA
+amsub=AMSUB
+airs=AIRS
+aircraft=Aircraft
+radiosondes=Radiosonde
+ssu=SSU
+msu=MSU
+goes=GOES
+satellite_wind=Satellite Wind
+hirs=HIRS
+mhs=MHS
+sbuv_ozone=SBUV
+ssmi_rad=SSMI Radiance
+ascat_wind=ASCAT Wind
+dropsondes=Dropsonde
+gpsro=GPSRO
+iasi=IASI
+land_sfc=Land-Surface
+marine_sfc=Marine-Surface
+modis_wind=MODIS Wind
+nexrad_wind=NEXRAD Wind
+pibal=PIBAL
+profiler_wind=Profiler Wind
+raob=RAOB
+satwind_wind=SATWIND Wind
+tmi_rain_rate=TMI Rain Rate
+windsat_wind=WINDSAT Wind
+hirs=HIRS
+amsua=AMSUA
+metopa_iasi=IASI
+aqua_airs=AIRS
+
+# observation monitoring
+alldata=All data
+alltemp=All temperature data
+rstemp=Radiosonde Temperatures
+airtemp_md=Aircraft temperatures (MDCARS)
+airtemp_as=Aircraft temperatures (ASDAR)
+airtemp_rep=Aircraft temperatures (AIREP, PIREP)
+droptemp=Dropsonde temperatures
+surfmartemp=Surface marine temperatures
+spllevtemp=Splash level temperatures
+seasurftemp=Sea-surface temperature data
+allsurfpress=All surface pressure data
+metsurfpress=Metar surface pressures
+landsurfpress=Land station surface pressures
+surfmarpress=Surface marine pressures
+rssurfpress=Radiosonde station surface pressures
+spllevsurfpress=Splash level surface pressures
+austmsl=AUSTRALIAN PAOB MEAN SEA-LEVEL PRESSURE BOGUS
+allwind=All wind data
+irclouddrift=IR cloud drift U,V (NASA/MODIS POES Aqua/Terra)
+watervapour=Water vapor cloud top U,V (NASA/MODIS POES Aqua/Terra)
+rswind=Radiosonde wind vectors
+pibalwind=Pibal wind vectors
+profwind=Wind profiler wind vectors
+japprofwind=Japanese profiler wind vectors
+nexradwind=NEXRAD wind vectors
+airwind_md=Aircraft wind vectors (MDCARS)
+airwind_as=Aircraft wind vectors (ASDARS)
+airwind_tam=Aircraft wind vectors (TAMDAR)
+airwind_amd=Aircraft wind vectors (Canadian AMDAR)
+airwind_rep=Aircraft wind vectors (AIREP, PIREP)
+dropwind=Dropsonde wind vectors
+clouddrift_met=Cloud drift wind vectors (METEOSAT)
+clouddrift_gms=Cloud drift wind vectors (GMS)
+clouddrift_goesir=Cloud drift wind vectors (GOES-EAST IR, GOES-WEST IR)
+clouddrift_goeswv=Cloud drift wind vectors (GOES-EAST WV, GOES-WEST WV)
+pilotwind=PILOT wind vectors
+surfmarwind=Surface marine wind vectors
+buoywind_atlas=ATLAS buoy wind vectors
+ssmiwind=SSMI/I wind speed
+windsatwind=WINDSAT wind vectors
+scattwind_ers=ERS Scatterometer wind vectors
+scattwind_ascat=ASCAT Scatterometer wind vectors
+allmoist=All moisture data
+rsspecihum=Radiosonde specific humidities
+surfmarspecihum=Surface marine specific humidities
+spllevspecihum=Splash level specific humidities
+ssmitotpreciwat=SSM/I Total Precipitable Water Retrievals
+rainrate_tmi=TMI Rain Rate
+rainrate_ssmi=SSM/I Rain Rate [log(1+rain rate)]
+allgpsro=All GPS RO data
+gpsro_sac=SAC-C GPS RO
+gpsro_gracea=GRACE-A GPS RO
+gpsro_graceb=GRACE-B GPS RO
+gpsro_champ=CHAMP GPS RO
+gpsro_cosmic1=COSMIC-1 GPS RO
+gpsro_cosmic2=COSMIC-2 GPS RO
+gpsro_cosmic3=COSMIC-3 GPS RO
+gpsro_cosmic4=COSMIC-4 GPS RO
+gpsro_cosmic5=COSMIC-5 GPS RO
+gpsro_cosmic6=COSMIC-6 GPS RO
+allozone=All ozone data
+noaa14_ozone_lay=NOAA-14 SBUV/2 ozone layers
+noaa14_ozone_total=NOAA-14 SBUV/2 total column ozone
+noaa16_ozone_lay=NOAA-16 SBUV/2 ozone layers
+noaa16_ozone_total=NOAA-16 SBUV/2 total column ozone
+noaa17_ozone_lay=NOAA-17 SBUV/2 ozone layers
+noaa17_ozone_total=NOAA-17 SBUV/2 total column ozone
+noaa18_ozone_lay=NOAA-18 SBUV/2 ozone layers
+noaa18_ozone_total=NOAA-18 SBUV/2 total column ozone
+allrad=All radiance data
+allsynth=All synthetic data
+noaa15_hirs2=NOAA-15 HIRS/2 
+noaa17_hirs3=NOAA-17 HIRS/3 
+noaa18_hirs4=NOAA-18 HIRS/4 
+noaa19_hirs4=NOAA-19 HIRS/4 
+metopa_hirs4=METOP-A HIRS/4 
+noaa17_hirs=NOAA-17 HIRS/3 
+noaa19_hirs=NOAA-19 HIRS/4 
+metopa_hirs=METOP-A HIRS/4 
+noaa15_amsua=NOAA-15 AMSUA 
+noaa16_amsua=NOAA-16 AMSUA 
+noaa17_amsua=NOAA-17 AMSUA 
+noaa18_amsua=NOAA-18 AMSUA 
+noaa19_amsua=NOAA-19 AMSUA 
+metopa_amsua=METOP-A AMSUA 
+aqua_amsua=Aqua AMSUA 
+noaa15_amsub=NOAA-15 AMSUB 
+noaa16_amsub=NOAA-16 AMSUB 
+noaa17_amsub=NOAA-17 AMSUB 
+aqua_airs=Aqua AIRS 
+goes10_btemp=GOES-10  
+goes11_btemp=GOES-11  
+goes13_btemp=GOES-13 
+dsmpf11_ssmi=DMSP F-11 SSM/I 
+dsmpf13_ssmi=DMSP F-13 SSM/I 
+dsmpf14_ssmi=DMSP F-14 SSM/I 
+dsmpf15_ssmi=DMSP F-15 SSM/I 
+noaa18_mhs=NOAA-18 MHS
+noaa19_mhs=NOAA-19 MHS
+metopa_mhs=METOP-A MHS
+metopa_iasi=METOP-A IASI 
+aqua_high_amsre=AQUA AMSRE HIGH 
+aqua_mid_amsre=AQUA AMSRE MID 
+aqua_low_amsre=AQUA AMSRE LOW 
+# aerosols
+aer_terra_modis_ocean=TERRA MODIS Aerosol (Ocean Algorithm)
+aer_terra_modis_land=TERRA MODIS Aerosol (Land Algorithm)
+aer_aqua_modis_ocean=AQUA MODIS Aerosol (Ocean Algorithm)
+aer_aqua_modis_land=AQUA MODIS Aerosol (Land Algorithm)
+aer_misr=MISR (Multi-angle Imaging SpectroRadiometer)
+aer_omi=OMI (Ozone Monitoring Instrument)
+aer_aeronet=AERONET
+
+
+
+# types
+im=Observation Impact
+ob=Observation
+
+# levels
+pl=Pressure levels (hPa)
+ch=Channel number
+none=Surface
+
+# variables
+omf = (O-B)
+oma = (O-A)
+
+# parameters
+h=Height
+t=Temperature
+u=U-Wind
+v=V-Wind
+
+[abbreviated]
+n.hem = N.Hem
+s.hem = S.Hem
+global = Global Domain
+
+[legend]
+omf = (O-B)
+oma = (O-A)

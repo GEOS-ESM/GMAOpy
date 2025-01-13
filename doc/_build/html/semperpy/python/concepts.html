@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Hints and tips &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="About Python" href="python.html" />
+    <link rel="next" title="Object Orientation" href="objects.html" />
+    <link rel="prev" title="About Python" href="python.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="objects.html" title="Object Orientation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="python.html" title="About Python"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" >Tutorials for the end user</a> &raquo;</li>
+          <li><a href="python.html" accesskey="U">About Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="hints-and-tips">
+<h1>Hints and tips<a class="headerlink" href="#hints-and-tips" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>Learning Python, just as well as learning Perl or Ruby does not only consist
+in learning a new syntax, if your background is in C or Fortran programming.
+The data types you manipulate and the programming technique can be somewhat
+different.</div></blockquote>
+<div class="section" id="data-types">
+<h2>Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Since version 2.2, everything in Python is an object, even modules,
+functions, numbers. New types have been introduced in the Python language
+over the years, you can also define your own types.</div></blockquote>
+<div class="section" id="basic-types">
+<h3>Basic types<a class="headerlink" href="#basic-types" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>booleans: True and False</li>
+<li>numeric: int, long, float, complex</li>
+<li>alphanumerical: string</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="structured-types">
+<h3>Structured types<a class="headerlink" href="#structured-types" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>sequences: list, tuple, string, buffer, collections etc...</li>
+<li>mapping: dictionaries</li>
+<li>sets: set, frozenset</li>
+<li>ios: file</li>
+<li>array</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="annoying-features">
+<h2>Annoying features<a class="headerlink" href="#annoying-features" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="indentation">
+<h3>Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>A block in Python (group of instructions which are part of a
+loop or a alternative) is identified by indentation. Most people find it annoying
+at the beginning, we end up getting used to it. A typical bug:</p>
+<div class="highlight-python"><pre>a = [[1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15]]
+result = []
+for sublist in a:
+    keep = []
+    for v in sublist:
+        if v &gt; 4 and v &lt; 12:
+            keep.append(v)
+        result.append(keep)
+print result
+--&gt; [[], [], [], [5, 6], [5, 6], [5, 6], [7, 8, 9], [7, 8, 9], [7, 8, 9], [10, 11], [10, 11], [10, 11], [], [], []]</pre>
+</div>
+<p>This is not what we expect to obtain, because the statement <em>result.append(keep)</em>
+in indented one level too far, it is part of the inner loop, which we need it
+to only be part of the outer loop. So watch your indentations, those mistakes tend
+to happen when you ident or unindent blocks of code because of changes in your program.</p>
+</div></blockquote>
+</div>
+<div class="section" id="tuples">
+<h3>Tuples<a class="headerlink" href="#tuples" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Many people seem to be confused with tuples and it is understandable. Tuples are
+non-mutable lists (they just cannot be changed), that is all. Tuples have a great
+advantage over lists, because they are non-mutable, they can be used as keys for
+dictionaries. Using Python and other people&#8217;s modules you will probably manipulate
+tuples, without knowing it.</p>
+<p>Here is an error prone Python syntax related to tuples:</p>
+<div class="highlight-python"><pre>a = 12,
+print a
+--&gt; (12,)</pre>
+</div>
+<p>Because there is a coma at the end of the line, <strong>a</strong> is interpreted as being
+a tuple. This happens when you change code where a dictionary or a list was used
+and all members are coma separated.</p>
+</div></blockquote>
+</div>
+<div class="section" id="range">
+<h3>Range<a class="headerlink" href="#range" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>In Python, just like in C and C++, but unlike Fortran, arrays and sequence are
+indexed from 0 and not 1. You can access a list with 2 elements:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The range function was developped with this in mind and although it is very
+understandable, it can also be confusing:</p>
+<blockquote>
+<div>print range(5)
+&#8211;&gt; [0, 1, 2, 3, 4]</div></blockquote>
+<p>When used in a loop it makes sense, but what do you think of:</p>
+<div class="highlight-python"><pre># iterating over the daily runs
+for i in range(0,18,6):  # 00 to 18 by 6h
+    print i
+--&gt; 0
+    6
+    12</pre>
+</div>
+<p>This means that to have your four runs you would need to write:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">runs</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is ridiculous. SemperPy implements some functions for dates, steps etc...
+to make this look better.</p>
+<p>The range function returns a list of integers, the creation of the list can use
+both time and memory if the upper limit of range is a big number. In that case you
+can use the function <strong>xrange</strong> which returns an object of class xrange which behaves
+like a sequence without storing all the values (like an iterator).</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>For the exception of basic types, arguments to functions are passed by reference,
+this means that a pointer to the data is passed to the function and if you make
+changes to the data, the original data is changed:</p>
+<div class="highlight-python"><pre>def function(a,b,c):
+    a = 12
+    b.append(12)
+    del(c['b'])
+
+v1 = 10
+v2 = [1,2,3]
+v3 = {
+    'a':1,
+    'b':2,
+}
+function(v1,v2,v3)
+print v1,v2,v3
+--&gt; 10 [1, 2, 3, 12] {'a': 1}</pre>
+</div>
+<p>If you want to preserve the contents of the variables:</p>
+<div class="highlight-python"><pre>def function(a,b,c):
+    a = 12
+    b = list(b)
+    b.append(12)
+    c = dict(c)
+    del(c['b'])
+
+v1 = 10
+v2 = [1,2,3]
+v3 = {
+    'a':1,
+    'b':2,
+}
+function(v1,v2,v3)
+print v1,v2,v3
+--&gt; 10 [1, 2, 3] {'a': 1, 'b': 2}</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="testing-none">
+<h2>Testing None<a class="headerlink" href="#testing-none" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Quite often, you define a method or a function with a parameter which is <strong>None</strong>
+by default. You then need to test if that argument is <strong>None</strong> in the body of the function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">myFunc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="c"># This is how it should be done</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>This is stated in PEP-8 (<a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">http://www.python.org/dev/peps/pep-0008/</a>).</p>
+</div></blockquote>
+</div>
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Error handling in programs is often difficult to achieve and makes programs
+difficult to read. Exceptions consitute a mechanism to interrupt the program
+flow and control what is happening. Python defines the <strong>Exception</strong> class
+together with classes dedicated to different problems:</p>
+<div class="highlight-python"><pre>a = [1,2]
+print a[3]
+print "end"
+-&gt; IndexError: list index out of range</pre>
+</div>
+<p>This is an exception of class IndexError which was raised by Python and it
+interrupted and terminated the program (<strong>end</strong> was not printed).
+What we can do:</p>
+<div class="highlight-python"><pre>a = [1,2]
+try:
+    print a[3]
+except:
+    pass
+print "end"
+--&gt; end</pre>
+</div>
+<p>This means that we try an action (everything in the <strong>try</strong> block) and if an
+exception is <strong>raised</strong> we <strong>catch</strong> it. This is a very good way to handle
+errors because even if the error should be fatal to the program, the except
+block gives you the opportunity to close open files, or finish processes or
+signal a server that you are dying. This example is a little crude though,
+what if:</p>
+<div class="highlight-python"><pre>a = [1,2]
+try:
+    print b[3]
+except:
+    pass
+print "end"
+--&gt; end</pre>
+</div>
+<p>We are printing <strong>b</strong> which is not defined, it is correct to just ignore the
+error? We made a type and won&#8217;t know about it straight away. This is why the class
+used for an exception matters:</p>
+<div class="highlight-python"><pre>a = [1,2]
+try:
+    print b[3]
+except IndexError,e:
+    pass
+print "end"
+--&gt; NameError: name 'b' is not defined</pre>
+</div>
+<p>We only ignore IndexError exceptions, all the other exeptions will terminate the
+program. You can create your own classes of exceptions and by carefully choosing
+which classes are caught in different places of your code, you can write robust code.
+You can raise exceptions anywhere:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="n">a_list</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Cannot sort an empty list&#39;</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>You can also use the <strong>raise</strong> statement within an <strong>except</strong> block.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Hints and tips</a><ul>
+<li><a class="reference internal" href="#data-types">Data types</a><ul>
+<li><a class="reference internal" href="#basic-types">Basic types</a></li>
+<li><a class="reference internal" href="#structured-types">Structured types</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#annoying-features">Annoying features</a><ul>
+<li><a class="reference internal" href="#indentation">Indentation</a></li>
+<li><a class="reference internal" href="#tuples">Tuples</a></li>
+<li><a class="reference internal" href="#range">Range</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#testing-none">Testing None</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="python.html"
+                        title="previous chapter">About Python</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="objects.html"
+                        title="next chapter">Object Orientation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/python/concepts.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="objects.html" title="Object Orientation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="python.html" title="About Python"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" >Tutorials for the end user</a> &raquo;</li>
+          <li><a href="python.html" >About Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

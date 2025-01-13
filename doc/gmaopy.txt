@@ -1,0 +1,24 @@
+SemperPy - documentation
+========================
+
+.. toctree::
+    :maxdepth: 2
+
+    introduction
+    using/using
+    config/configure
+    databases/databases
+    tutorials
+    semperpy
+    reference
+    dev
+    scripts
+
+
+SemperPy - indices and tables
+=============================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

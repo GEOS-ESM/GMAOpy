@@ -1,0 +1,12 @@
+:mod:`netcdf` --- Registering specific dimension classes
+========================================================
+
+.. module:: netcdf
+   :synopsis: Registering CF 1.0 dimensions
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+This module currently only implements the resgistration of Dimension-derived classes for the handling of different flavours of field files at GMAO:
+
+    .. literalinclude:: __init__.py
+        :language: python

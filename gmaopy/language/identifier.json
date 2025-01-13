@@ -1,0 +1,34 @@
+{
+	"directive": "identifier",
+	"keywords" : {
+        "source": {
+			"unique": true,
+            "optional": true
+        },
+        "location": {
+            "unique": true,
+            "optional": true
+        },
+		"expver": {
+			"alias": ["experiment_id","expid"],
+			"unique": true,
+            "optional": true,
+            "lowercase": false
+		},
+        "collection": {
+            "alias":"dataset",
+            "unique": true,
+            "optional": true,
+            "lowercase": false
+        },
+		"type": {
+			"validate": ["ValidateChoice","fc","an","cl","ob","im"],
+			"unique": true,
+            "default_value": "an"
+		},
+        "observer": {
+            "alias": "observers",
+            "optional": true
+        }
+	}
+}

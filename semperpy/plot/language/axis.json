@@ -1,0 +1,83 @@
+{
+    "directive": "axis",
+    "doc": true,
+    "help": ["<axis> is a structure containing attributes for the axes of a plot."],
+    "keywords": {
+        "min": {
+            "alias": ["minimum"],
+            "unique": true,
+            "optional": true,
+            "type": "float",
+            "help": "minimum value for that axis in user coordinates. It is calculated."
+        },
+        "max": {
+            "alias": ["maximum"],
+            "unique": true,
+            "optional": true,
+            "type": "float",
+            "help": "maximum value for that axis in user coordinates. It is calculated."
+        },
+        "step": {
+            "unique": true,
+            "optional": true,
+            "type": "float",
+            "help": "the step to use between min and max for that axis. By default, it is calculated to set a tick for each value in the dataset"
+        },
+        "auto_scale": {
+            "alias": ["auto"],
+            "default_value": true,
+            "type": "bool",
+            "unique": true,
+            "help": "if set to False, both the attributes min and max need to be specified. The user does not normally need to set that attribute"
+        },
+        "scale": {
+            "default_value": "linear",
+            "unique": true,
+            "validate": ["ValidateChoice","linear","log","symlog"],
+            "help": "type of scale to be used along that axis: linear, logarithmic or symlog, please refer to matplotlib"
+        },
+        "horizontal": {
+            "unique": true,
+            "default_value": false,
+            "type": "bool",
+            "help": "this is used internally to know if the axis is the xaxis or the yaxis"
+        },
+        "min_bound_padding": {
+            "unique": true,
+            "default_value": 0.10,
+            "type": "float",
+            "help": "this determines the padding to add below the min value of the axis, it is a percentage of max-min. If min = 0 and max = 10, the actual min will be -1, set it to 0 to get the axis to start at 0"
+        },
+        "max_bound_padding": {
+            "unique": true,
+            "default_value": 0.10,
+            "type": "float",
+            "help": "this determines the padding to add over the max value of the axis, it is a percentage of max-min. If min = 0 and max = 10, the actual max will be 11."
+        },
+        "absolute_max": {
+            "unique": true,
+            "optional": true,
+            "help": "this ensures that the maximum value of the axis will be at least that value"
+        },
+        "tick_label_size": {
+            "unique": true,
+            "optional": true
+        },
+        "title_size": {
+            "unique": true,
+            "default_value": null
+        },
+        "rotation": {
+            "unique": true,
+            "optional": true
+        },
+        "other_side": {
+            "unique": true,
+            "default_value": false
+        },
+        "zoom": {
+            "unique": true,
+            "default_value": 1.0
+        }
+    }
+}

@@ -1,0 +1,151 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>stage_impact.ksh &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="observation impact timeseries — Computing observation impact timeseries from the archive" href="timeseries.html" />
+    <link rel="next" title="compute_impact.ksh" href="compute_impact.html" />
+    <link rel="prev" title="observation impact timeseries — Computing observation impact timeseries from the archive" href="timeseries.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="compute_impact.html" title="compute_impact.ksh"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="timeseries.html" title="observation impact timeseries — Computing observation impact timeseries from the archive"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../scripts.html" >Scripts</a> &raquo;</li>
+          <li><a href="timeseries.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">observation</span> <span class="pre">impact</span> <span class="pre">timeseries</span></tt> &#8212; Computing observation impact timeseries from the archive</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="stage-impact-ksh">
+<h1>stage_impact.ksh<a class="headerlink" href="#stage-impact-ksh" title="Permalink to this headline">¶</a></h1>
+<p><strong>stage_impact.ksh</strong> stages files from the archive and copies them into a specified directory by date. It also deletes directories with ODS files which have been processed. The script is invoked as follows:</p>
+<div class="highlight-python"><pre>./stage_impact.ksh /path/to/directory/where/things/happen streams.def</pre>
+</div>
+<p>This script takes care of the following things:</p>
+<blockquote>
+<div><ul class="simple">
+<li>reads the configuration file (streams.def) to determine which experiment versions and which dates should be retrieved.</li>
+<li>stages the files in the DMF if necessary</li>
+<li>copies the files into /path/to/directory/where/things/happen (date.expver.ready)</li>
+<li>when directories are processed and renamed to date.expver.done by the computing tasks, deletes the old directories.</li>
+</ul>
+</div></blockquote>
+<p>stage_impact has two important main constants which determines its behaviour and might need fine tuning (in stage.py):</p>
+<blockquote>
+<div><ul class="simple">
+<li>max_ready: the maximum number of days to stage and copy. The bigger the better, but watch the disk space</li>
+<li>max_done: when files are processed, the .done directories should be deleted. This constant determines how many days should be kept on disk in case there would be a need to go back in time.</li>
+</ul>
+</div></blockquote>
+<p><strong>stage_impact.ksh</strong> writes a file called <em>progress.def</em> which keeps track of the last day / expver copied online. If it fails or is killed, it can recover that file and start again where the work was left. If you need to restart from scratch, delete all <em>.ready</em> directories and delete the file <em>progress.def</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">Only one instance of this script should be started within one directory.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="timeseries.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">observation</span> <span class="pre">impact</span> <span class="pre">timeseries</span></tt> &#8212; Computing observation impact timeseries from the archive</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="compute_impact.html"
+                        title="next chapter">compute_impact.ksh</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/scripts/stage_impact.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="compute_impact.html" title="compute_impact.ksh"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="timeseries.html" title="observation impact timeseries — Computing observation impact timeseries from the archive"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../scripts.html" >Scripts</a> &raquo;</li>
+          <li><a href="timeseries.html" ><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">observation</span> <span class="pre">impact</span> <span class="pre">timeseries</span></tt> &#8212; Computing observation impact timeseries from the archive</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

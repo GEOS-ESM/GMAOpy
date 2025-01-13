@@ -1,0 +1,90 @@
+:mod:`The Archive base class` --- Mass storage specific
+=======================================================
+
+.. module:: archive
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: Archive(object)
+
+The **Archive** file is the base class for handling files which are held in a mass
+storage system. It defines behaviour for finding wich files are offline and calculate
+their size, stage them and extract them.
+
+Public methods
+--------------
+
+    .. method:: Archive(filelist):
+
+    	:param filelist: a list of full paths to files to be accessed
+    	:type filelist: sequence
+
+        Calls the **offline** method to hold the list of files to stage. The list of files
+        could be the result of a call to glob.glob::
+
+            import glob
+            import re
+
+            print glob.glob('/usr/local/lib/*z*.a')
+              --> ['/usr/local/lib/libboost_serialization.a', '/usr/local/lib/libboost_wserialization.a', '/usr/local/lib/libsz.a', '/usr/local/lib/libz.a']
+
+            print [x for x in glob.glob('/usr/local/lib/*z*.a') if not re.search('boost',x) ]
+              --> ['/usr/local/lib/libsz.a', '/usr/local/lib/libz.a']
+
+
+    .. method:: stage():
+
+        Initiates a stage, the migration of files which are on tape onto a filesystem
+        designed to hold online files.
+
+    .. method:: copy(destination):
+
+        :param destination: full path to a directory in a file system where all the files should be copied to
+        :type destination: string
+
+        If required, copies files which were just put online using **stage** to
+        a specified location.
+
+    .. method:: stageCount():
+
+        Returns the number of files to stage.
+
+    .. method:: stageSize():
+        
+        Returns the size of data to be read from tape in megabytes (MB).
+
+Abstract methods
+----------------
+
+    .. method:: do_stage(filelist):
+
+        :param filelist: list of files to stage
+        :type filelist: sequence
+
+        Should implement the staging of a list of files.
+
+    .. method:: offline(filelist):
+
+        :param filelist: a list of files in the archive
+        :type filelist: sequence
+
+        Should return the list of files take out of filelist which are offline.
+
+    .. method:: filesize(filelist):
+
+        :param filelist: a list of files in the archive
+        :type filelist: sequence
+
+        Should return a list of sizes for each file in bytes.
+
+    .. method:: do_copy(filelist,destination):
+
+        :param filelist: a list of files in the archive
+        :type filelist: sequence
+        :param destination: path to the destination directory
+        :type destination: string
+
+        Should move, link or copy files to the destination given. This is often an optional step.
+
+

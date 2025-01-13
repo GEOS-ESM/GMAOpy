@@ -1,0 +1,53 @@
+:mod:`innerpython` --- Python internals
+=======================================
+
+.. module:: core.innerpython
+   :synopsis: InnerPython to handle Python introspection and internals
+              to try and keep clean.
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The InnerPython class
+---------------------
+
+.. class:: InnerPython(object)
+
+    The **InnerPython** class encapsulates Python introspection mechanisms
+    and internal functions. That way it is easier to adapt to language
+    changes.
+
+    .. classmethod:: get_class(name)
+
+    	:param name: the name of a type or a class
+    	:type name: string
+
+    	the get_class method attempts to find the class object for the
+    	specified class named *name*. The name can be specified fully, e.g. 
+    	Core.Date. get_class will attempt to load the module if it was not
+    	imported. It also searched the builtin types.
+
+    .. classmethod:: in_globals(name)
+
+    	:param name: name of the variable
+    	:type name: string
+
+    	searches the global variable called name and return its values if found
+    	or None otherwise.
+
+    .. classmethod:: load_module(name)
+
+    	:param name: name of a module, can be fully specified (e.g. mod1.mod2.mod)
+    	:type name: string
+
+    	attempts to load the module describes in name. The module can be fully 
+    	specified::
+
+    		from semperpy.core.innerpython import InnerPython as internal
+
+    		date = internal.load_module('Core.Date')
+    		d = date.Date(20090101)
+    		print d
+    		2009-01-01
+
+

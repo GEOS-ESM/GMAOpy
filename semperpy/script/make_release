@@ -1,0 +1,30 @@
+#!/bin/ksh
+
+set -eaux
+
+umask 2
+
+if [[ $# -lt 1 || $1 = none ]]; then
+	echo .
+	echo "make_release version"
+	exit 1
+fi
+
+version=$1
+
+p4 change -o | sed "s/<enter description here>/at release $version/g" | p4 submit -i || true
+p4 branch -o $version | grep -v 'depot\/\.\.\.' | grep -v "depot\/.*$version" > temp
+for dir in semperpy gmaopy; do
+    echo " //depot/${dir}/main/... //depot/${dir}/$version/..." >> temp
+done
+cat temp | p4 branch -i
+p4 client -o | grep -v $version > temp
+for dir in semperpy gmaopy; do
+    echo " //depot/${dir}/$version/... //claude/${dir}_${version}/..." >> temp
+done
+cat temp | p4 client -i
+rm -f temp
+p4 integrate -b $version
+p4 change -o | sed "s/<enter description here>/release $version/g" | p4 submit -i || true
+p4 branch -d $version
+rm -f temp

@@ -1,0 +1,13 @@
+{
+	"directive": "boxedline",
+    "inherit_from": "line",
+    "doc": true,
+	"keywords" : {
+        "rectangle": {
+            "unique": true,
+            "alias": ["rect"],
+            "default_value": "",
+            "type": "rectangle"
+        }
+	}
+}

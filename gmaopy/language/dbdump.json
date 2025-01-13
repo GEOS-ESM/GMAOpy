@@ -1,0 +1,62 @@
+{
+	"directive": "dbdump",
+	"inherit_from": "obrecord",
+    "doc": true,
+	"keywords" : {
+		"database": {
+			"alias": ["db","db_name","dbname"],
+            "unique" : true
+		},
+        "filename": {
+            "unique": true
+        },
+        "date": {
+            "unique": false,
+            "type": "int"
+        },
+        "kx": {
+            "unique": false
+        },
+        "kt": {
+            "unique": false
+        },
+        "level": {
+            "unique": false
+        },
+        "domain_name": {
+            "unique": false
+        },
+        "expver": {
+            "unique": false
+        },
+        "variable": {
+            "unique": false
+        },
+        "statistic": {
+            "unique": false
+        },
+        "type": {
+            "unique": false
+        },
+        "usage": {
+            "unique": false
+        },
+        "order": {
+            "default_value": []
+        },
+        "begindate": {
+            "unique": true,
+            "type": "int",
+            "optional": true
+        },
+        "enddate": {
+            "unique": true,
+            "type": "int",
+            "optional": true
+        },
+        "append": {
+            "unique": true,
+            "default_value": false
+        }
+	}	
+}

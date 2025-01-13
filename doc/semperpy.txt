@@ -1,0 +1,11 @@
+SemperPy - Core libraries
+=========================
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   semperpy/introduction
+   semperpy/download
+   semperpy/reference

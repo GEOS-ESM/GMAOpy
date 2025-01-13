@@ -1,0 +1,30 @@
+:mod:`Some Response implementations`
+====================================
+
+.. module:: services.responses
+
+Immediate and blocking
+----------------------
+
+.. class:: ImmediateAndBlocking(Response)
+
+	Implements an immediate call to the service handler, the handler is executed in the
+	main thread of the program. This is blocking in the sense that while the service is
+	executing, the server cannot accept requests. This can be used when service handlers
+	carry out some very simple and quick tasks.
+
+Immediate and non blocking
+--------------------------
+
+.. class:: ImmediateAndNonBlocking(Response)
+
+	This is the default mode used by the :class:`Services.Server.Server`.
+
+	Implements an immediate call to the service handler, however the handler is executed 
+	in a different thread of the program. This is not blocking, because the server can
+	accept new requests in the main thread of the program while the service handler executes
+	in a different one. This can be used to optimise server availability and when service
+	handlers do not take too long. While the service handler is running, the client is
+	blocked with an open connection, awaiting a response.
+
+More will need to be implemented, e.g. Queued and non blocking and queued and call back.

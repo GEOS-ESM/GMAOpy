@@ -1,0 +1,784 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Language - validating data &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../../tutorials.html" />
+    <link rel="next" title="Services - client-server communication" href="../services/tutorial.html" />
+    <link rel="prev" title="Programming techniques" href="../python/techniques.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../services/tutorial.html" title="Services - client-server communication"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../python/techniques.html" title="Programming techniques"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="language-validating-data">
+<span id="languagegtutorial"></span><h1>Language - validating data<a class="headerlink" href="#language-validating-data" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>It is difficult to find useful examples of a language while keeping them simple. For a full
+reference for the language please see <a class="reference internal" href="definitions.html#language-definitions"><em>Language definition</em></a>.
+Lets try to define the language we gave as an example in the <a class="reference internal" href="introduction.html#language-introduction"><em>Introduction</em></a> of the <tt class="xref py py-mod docutils literal"><span class="pre">Language</span></tt> module.</div></blockquote>
+<div class="section" id="simple-example">
+<h2>Simple example<a class="headerlink" href="#simple-example" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>We can start with a very simple definition of the keywords (<a class="reference download internal" href="../../_downloads/langdef1.py"><tt class="xref download docutils literal"><span class="pre">Example</span> <span class="pre">1</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.language.language</span> <span class="kn">import</span> <span class="n">Language</span>
+
+<span class="c">#-----------------------------------------------------------</span>
+<span class="c"># The language</span>
+<span class="c">#-----------------------------------------------------------</span>
+<span class="n">retrieve</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">directive</span> <span class="o">=</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">),</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">),</span>
+        <span class="n">parameter</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">),</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">),</span>
+        <span class="n">experiment_version</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">reader</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">retrieve</span>
+
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2020101012</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;24&#39;</span><span class="p">,</span><span class="s">&#39;49&#39;</span><span class="p">],</span>
+    <span class="n">parameter</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">],</span>
+    <span class="n">experiment_version</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;0012&quot;</span><span class="p">,</span><span class="s">&quot;0013&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="k">print</span> <span class="n">Language</span><span class="o">.</span><span class="n">resolveDirective</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When we run the program we get:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2020101012</span><span class="p">],</span> <span class="s">&#39;experiment_version&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;0012&#39;</span><span class="p">],</span> <span class="s">&#39;parameter&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;geopotential&#39;</span><span class="p">],</span> <span class="s">&#39;step&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">48</span><span class="p">],</span> <span class="s">&#39;level&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]}</span>
+</pre></div>
+</div>
+<p>So so far we have a tool which returns the dictionary we submit to it, it&#8217;s a start. However,
+if we run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2020101012</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span><span class="mi">48</span><span class="p">],</span>
+    <span class="n">parameter</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">],</span>
+    <span class="n">experiment_version</span> <span class="o">=</span> <span class="s">&quot;0012&quot;</span><span class="p">,</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">&quot;forecast&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>we get:</p>
+<div class="highlight-python"><pre>Traceback (most recent call last):
+  File "langdef1.py", line 33, in &lt;module&gt;
+    print Language.resolveDirective(directive, "retrieve", reader)
+  File "Language/Language.py", line 135, in resolveDirective
+    error.check()
+  File "Core/tools.py", line 161, in check
+    raise self.exception('\n' + '\n'.join(self.msg))
+Language.Language.LanguageError:
+Unknow keyword 'type'</pre>
+</div>
+<p>At least there is already some control on the validity of dictionary we submit to be
+checked against the language. If we run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2020101012</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;24&#39;</span><span class="p">,</span><span class="s">&#39;49&#39;</span><span class="p">],</span>
+    <span class="n">parameter</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">],</span>
+    <span class="n">experiment_version</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;0012&quot;</span><span class="p">,</span><span class="s">&quot;0013&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="p">{</span><span class="s">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2020101012</span><span class="p">],</span> <span class="s">&#39;experiment_version&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;0012&#39;</span><span class="p">,</span> <span class="s">&#39;0013&#39;</span><span class="p">],</span> <span class="s">&#39;parameter&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;geopotential&#39;</span><span class="p">],</span> <span class="s">&#39;step&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;24&#39;</span><span class="p">,</span> <span class="s">&#39;49&#39;</span><span class="p">],</span> <span class="s">&#39;level&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="specifying-more">
+<h2>Specifying more<a class="headerlink" href="#specifying-more" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>There are four problems in <em>Example 1</em>.</p>
+<ul class="simple">
+<li>we would like the steps to be integers and not strings and we don&#8217;t want to depend on the way
+these are input by the user</li>
+<li>we know that we will not find step 49 in the archive, we might as well try to get
+rid of wrong requests before starting to read / retrieve data.</li>
+<li>we would like to limit a request to one single experiment version in order to
+limit the size of the data which is returned.</li>
+<li><em>experiment_version</em> is a long name, it could be useful to use something like:
+<em>ev</em> or <em>expver</em>.</li>
+</ul>
+<p>We can cater for these as in <a class="reference download internal" href="../../_downloads/langdef2.py"><tt class="xref download docutils literal"><span class="pre">Example</span> <span class="pre">2</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.language.language</span> <span class="kn">import</span> <span class="n">Language</span>
+
+<span class="n">retrieve</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">directive</span> <span class="o">=</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="c"># dates will be converted to integer</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="c"># steps will be converted to integer</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">parameter</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">),</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">),</span>
+        <span class="n">experiment_version</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="c"># you can now use ev or expver as well as experiment_version</span>
+            <span class="c"># but you can only specify one of these</span>
+            <span class="n">unique</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;ev&quot;</span><span class="p">,</span><span class="s">&quot;expver&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">reader</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">retrieve</span>
+
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2020101012</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;24&#39;</span><span class="p">,</span><span class="s">&#39;49&#39;</span><span class="p">],</span>
+    <span class="n">parameter</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">],</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&quot;0012&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">print</span> <span class="n">Language</span><span class="o">.</span><span class="n">resolveDirective</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When we run the program we now get:</p>
+<div class="highlight-python"><pre>Traceback (most recent call last):
+  File "langdef2.py", line 37, in &lt;module&gt;
+    print Language.resolveDirective(directive, "retrieve", reader)
+  File "Language/Language.py", line 135, in resolveDirective
+    error.check()
+  File "Core/tools.py", line 161, in check
+    raise self.exception('\n' + '\n'.join(self.msg))
+Language.Language.LanguageError:
+The keyword 'experiment_version' only takes one value</pre>
+</div>
+<p>So we are now protected against the input of too many values. Please note that the
+message displays <em>experiment_version</em> and not <em>exvper</em> which was input. This is
+because the alias was replaced with the real name of the keyword.</p>
+<p>If we now run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2020101012</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;24&#39;</span><span class="p">,</span><span class="s">&#39;49&#39;</span><span class="p">],</span>
+    <span class="n">parameter</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">],</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&quot;0012&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="p">{</span><span class="s">&#39;level&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="s">&#39;experiment_version&#39;</span><span class="p">:</span> <span class="s">&#39;0012&#39;</span><span class="p">,</span> <span class="s">&#39;step&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">49</span><span class="p">],</span> <span class="s">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2020101012</span><span class="p">],</span> <span class="s">&#39;parameter&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;geopotential&#39;</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="validators">
+<h2>Validators<a class="headerlink" href="#validators" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The steps are now integers and <em>expver</em> is converted to <em>experiment_version</em>. We still need to cater for step 49, <a class="reference download internal" href="../../_downloads/langdef3.py"><tt class="xref download docutils literal"><span class="pre">Example</span> <span class="pre">3</span></tt></a>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">We specified here <em>type int</em>, but any existing Python class would work as well.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.language.language</span> <span class="kn">import</span> <span class="n">Language</span>
+
+<span class="c">#----------------------------------------------------</span>
+<span class="c"># This is how we validate the values of steps, see</span>
+<span class="c"># how it is parameterised in the language definition</span>
+<span class="c"># values is always passed as a list</span>
+<span class="c">#----------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">ValidateChoice</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span><span class="n">keyword</span><span class="p">,</span><span class="n">values</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;for keyword </span><span class="si">%s</span><span class="s">. The value: &#39;</span><span class="si">%s</span><span class="s">&#39; is not in the set: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">keyword</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span><span class="p">])))</span>
+    <span class="k">return</span> <span class="n">values</span>
+
+<span class="n">retrieve</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">directive</span> <span class="o">=</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="c"># dates will be converted to integer</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="c"># steps will be converted to integer</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">validate</span> <span class="o">=</span> <span class="p">[</span><span class="n">ValidateChoice</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">72</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">144</span><span class="p">,</span><span class="mi">168</span><span class="p">]</span>
+        <span class="p">),</span>
+        <span class="n">parameter</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">),</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">),</span>
+        <span class="n">experiment_version</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="c"># you can now use ev or expver as well as experiment_version</span>
+            <span class="c"># but you can only specify one of these</span>
+            <span class="n">unique</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;ev&quot;</span><span class="p">,</span><span class="s">&quot;expver&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">reader</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">retrieve</span>
+
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2020101012</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;24&#39;</span><span class="p">,</span><span class="s">&#39;49&#39;</span><span class="p">],</span>
+    <span class="n">parameter</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">],</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&quot;0012&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">print</span> <span class="n">Language</span><span class="o">.</span><span class="n">resolveDirective</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When we run this:</p>
+<div class="highlight-python"><pre>Traceback (most recent call last):
+  File "langdef3.py", line 49, in &lt;module&gt;
+    print Language.resolveDirective(directive, "retrieve", reader)
+  File "Language/Language.py", line 157, in resolveDirective
+    error.check()
+  File "Core/tools.py", line 161, in check
+    raise self.exception('\n' + '\n'.join(self.msg))
+Language.Language.LanguageError:
+Validation error for keyword step. The value: '49' is not in the set: 24, 48, 72, 96, 120, 144, 168</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="inheritance">
+<h2>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>It is sometimes useful to define a language in different chunks which can be reused
+by different languages, this is basically called modularity. Please see the following
+example, although it is not extremely useful, it shows how to use inheritance (<a class="reference download internal" href="../../_downloads/langdef4.py"><tt class="xref download docutils literal"><span class="pre">Example</span> <span class="pre">4</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.language.language</span> <span class="kn">import</span> <span class="n">Language</span>
+
+<span class="n">parameter</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">directive</span> <span class="o">=</span> <span class="s">&quot;parameter&quot;</span><span class="p">,</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">parameter</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">),</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+            <span class="n">optional</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">date</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">directive</span> <span class="o">=</span> <span class="s">&quot;date&quot;</span><span class="p">,</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">retrieve</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">directive</span> <span class="o">=</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span>
+    <span class="n">inherit_from</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;parameter&quot;</span><span class="p">,</span><span class="s">&quot;date&quot;</span><span class="p">],</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">experiment_version</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">unique</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="s">&quot;expver&quot;</span>
+        <span class="p">),</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">reader</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">dirs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">parameter</span> <span class="o">=</span> <span class="n">parameter</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="p">,</span>
+        <span class="n">retrieve</span> <span class="o">=</span> <span class="n">retrieve</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">dirs</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2020101012</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span><span class="mi">48</span><span class="p">],</span>
+    <span class="n">parameter</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">],</span>
+    <span class="n">experiment_version</span> <span class="o">=</span> <span class="s">&quot;0012&quot;</span><span class="p">,</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="s">&quot;myFile&quot;</span>
+<span class="p">)</span>
+<span class="k">print</span> <span class="n">Language</span><span class="o">.</span><span class="n">resolveDirective</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">Inheritance is a very useful tool, a language can inherit the definition of multiple languages. The inheritance is carried out from left to right with precedence to the left: in <strong>date</strong>, the definition of the keyword <strong>level</strong> has no effect, because the definition of <strong>level</strong> in <strong>parameter</strong> has precedence.</td>
+</tr>
+</tbody>
+</table>
+<p>It may happen that you want to inherit from a language definition, but do not want to inherit
+all keywords. You can get rid of the unwanted keywords as follows:</p>
+<div class="highlight-python"><pre>from semperpy.language.language import Language
+
+a = dict(
+    directive = "a",
+    keywords = dict(
+        hello = dict(
+        ),
+        world = dict(
+        )
+    )
+)
+
+b = dict(
+    directive = "b",
+    inherit_from = "a",
+    keywords = dict(
+        world = dict(
+        remove = True
+        )
+    )
+)
+
+def reader(s):
+    if s == "a":
+        return a
+    else:
+        return b
+
+directive = dict(
+    hello = 1,
+    world = 2
+)
+
+print Language.resolveDirective(directive, "a", reader)
+print Language.resolveDirective(directive, "b", reader)
+
+{'world': [2], 'hello': [1]}
+
+Traceback (most recent call last):
+  File "t.py", line 35, in &lt;module&gt;
+    print Language.resolveDirective(directive, "b", reader)
+  File "Language/Language.py", line 142, in resolveDirective
+    error.check()
+  File "Core/tools.py", line 161, in check
+    raise self.exception('\n' + '\n'.join(self.msg))
+Language.Language.LanguageError:
+Unknown keyword 'world'</pre>
+</div>
+<p>The first call succeeds while the second one fails, because the keyword <strong>world</strong> is
+undefined in the <strong>b</strong> language.</p>
+</div></blockquote>
+</div>
+<div class="section" id="specialization">
+<h2>Specialization<a class="headerlink" href="#specialization" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>It is also useful to be able to specify different definitions of the language
+depending on some of the values supplied by the user. Depending on the value
+of one of the entries in the directive, we may want to change some definitions,
+change default values or add or remove keywords. This is analoguous to dynamic
+inheritance in object-oriented programming. This is defined using the keyword
+<strong>specialize_from</strong> (<a class="reference download internal" href="../../_downloads/langdef5.py"><tt class="xref download docutils literal"><span class="pre">Example</span> <span class="pre">5</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.tools</span> <span class="kn">import</span> <span class="n">dictionary</span>
+<span class="kn">from</span> <span class="nn">semperpy.language.language</span> <span class="kn">import</span> <span class="n">Language</span>
+
+<span class="n">field_directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">directive</span> <span class="o">=</span> <span class="s">&quot;field&quot;</span><span class="p">,</span>
+    <span class="n">specialize_from</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&quot;source == &#39;merra&#39;&quot;</span><span class="p">:</span> <span class="s">&quot;merra&quot;</span><span class="p">,</span>
+        <span class="s">&quot;parameter == &#39;mslp&#39; or parameter == &#39;t2m&#39;&quot;</span> <span class="p">:</span> <span class="s">&quot;surface&quot;</span>
+    <span class="p">},</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">optional</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="s">&quot;fc&quot;</span> <span class="c"># forecast</span>
+        <span class="p">),</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">optional</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="c"># 500 hPa</span>
+        <span class="p">),</span>
+        <span class="n">leveltype</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">optional</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="s">&quot;pl&quot;</span> <span class="c"># pressure level</span>
+        <span class="p">),</span>
+        <span class="n">parameter</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">surface_directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">directive</span> <span class="o">=</span> <span class="s">&quot;surface&quot;</span><span class="p">,</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">remove</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="p">),</span>
+        <span class="n">leveltype</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">optional</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="s">&quot;sfc&quot;</span> <span class="c"># surface level</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">merra_directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">directive</span> <span class="o">=</span> <span class="s">&quot;merra&quot;</span><span class="p">,</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">optional</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">default_value</span> <span class="o">=</span> <span class="s">&quot;an&quot;</span> <span class="c"># analysis</span>
+        <span class="p">),</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="nb">str</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">reader</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">dirs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">field</span>   <span class="o">=</span> <span class="n">field_directive</span><span class="p">,</span>
+        <span class="n">surface</span> <span class="o">=</span> <span class="n">surface_directive</span><span class="p">,</span>
+        <span class="n">merra</span>   <span class="o">=</span> <span class="n">merra_directive</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">dirs</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span><span class="p">,</span>
+    <span class="n">parameter</span> <span class="o">=</span> <span class="s">&#39;t2m&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">print</span> <span class="n">dictionary</span><span class="p">(</span><span class="n">Language</span><span class="o">.</span><span class="n">resolveDirective</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span> <span class="s">&quot;field&quot;</span><span class="p">,</span> <span class="n">reader</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>What we are doing here is to define a default language for a directive comprising:</p>
+<blockquote>
+<div><ul class="simple">
+<li>source</li>
+<li>type</li>
+<li>level</li>
+<li>leveltype</li>
+<li>parameter</li>
+</ul>
+</div></blockquote>
+<p>There are default values for some of the keywords. We decide to automatically
+accommodate some special cases. When the source is <strong>merra</strong> we want to force
+the type to &#8220;an&#8221; (analysis) and we add a new keyword <strong>dataset</strong>. Whenever the
+parameter is a surface parameter we want to force the level type to <strong>surface</strong>
+and remove the keyword <strong>level</strong>.</p>
+<p>If we try this language definition:</p>
+<div class="highlight-python"><pre>directive = dict(
+    source = 'oper',
+    level = 500,
+    parameter = 'gh',
+)
+print Language.resolveDirective(directive, "field", reader)
+--&gt;
+    source:
+            oper
+    parameter:
+            gh
+    leveltype:
+            pl
+    type:
+            fc
+    level:
+            500</pre>
+</div>
+<p>Now we change the source and walk though different errors:</p>
+<div class="highlight-python"><pre>directive = dict(
+    source = 'merra',
+    level = 500,
+    parameter = 'gh',
+)
+print dictionary(Language.resolveDirective(directive, "field", reader))
+--&gt; Keyword dataset is missing and is required</pre>
+</div>
+<p>The fact that we introduced the source as being <strong>merra</strong>, we inserted a new
+required keyword <strong>dataset</strong> so the system rightfully complains. If we correct
+that:</p>
+<div class="highlight-python"><pre>directive = dict(
+    source = 'merra',
+    level = 500,
+    parameter = 'gh',
+    dataset = 'MAI3CPASM'
+)
+print dictionary(Language.resolveDirective(directive, "field", reader))
+--&gt;
+    source:
+            merra
+    level:
+            500
+    type:
+            an
+    leveltype:
+            pl
+    parameter:
+            gh
+    dataset:
+            mai3cpasm</pre>
+</div>
+<p>We now change the parameter to <strong>t2m</strong> (two meter temperature):</p>
+<div class="highlight-python"><pre>directive = dict(
+    source = 'merra',
+    level = 500,
+    parameter = 't2m',
+    dataset = 'MAI3CPASM'
+)
+print dictionary(Language.resolveDirective(directive, "field", reader))
+--&gt; Unknown keyword 'level'</pre>
+</div>
+<p>The fact that we introduce a surface parameter removes the keyword <strong>level</strong>, so
+the system, once again, rightfully complains. When we fix it:</p>
+<div class="highlight-python"><pre>directive = dict(
+     source = 'merra',
+     parameter = 't2m',
+     dataset = 'MAI3CPASM'
+ )
+ print dictionary(Language.resolveDirective(directive, "field", reader))
+ --&gt;
+     source:
+             merra
+     parameter:
+             t2m
+     leveltype:
+             sfc
+     type:
+             an
+     dataset:
+             mai3cpasm</pre>
+</div>
+<p>If we change the source back to <strong>oper</strong>:</p>
+<div class="highlight-python"><pre>directive = dict(
+    source = 'oper',
+    parameter = 't2m',
+    dataset = 'MAI3CPASM'
+)
+print dictionary(Language.resolveDirective(directive, "field", reader))
+--&gt; Unknown keyword 'dataset'</pre>
+</div>
+<p>The <strong>dataset</strong> keyword is not valid anymore. Let&#8217;s remove it:</p>
+<div class="highlight-python"><pre>directive = dict(
+    source = 'oper',
+    parameter = 't2m',
+)
+print dictionary(Language.resolveDirective(directive, "field", reader))
+--&gt;
+    source:
+            oper
+    leveltype:
+            sfc
+    parameter:
+            t2m
+    type:
+            fc</pre>
+</div>
+<p>And we are back to a valid directive.</p>
+</div></blockquote>
+</div>
+<div class="section" id="language-format">
+<h2>Language format<a class="headerlink" href="#language-format" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>So far we have shown examples using Python dictionaries to define languages. This is the
+format which is expected eventually by the <tt class="xref py py-mod docutils literal"><span class="pre">Language</span></tt> module, but defining languages
+in the actual Python language may not be the best way of doing it. If for some reason a
+language definition needed to be shared with another language this wouldn&#8217;t be very practical.
+Pretty much any file format can be used to store language definition information provided that
+the reader converts the file to the expected dictionary.</p>
+<p>At this stage it seems like a good idea to use <strong>json</strong> which is used heavily in web technologies
+to store the language definitions. It has some advantages:
+* it looks very much like Python,
+* decoding it is fast and straightforward,
+* decoders are available for many languages.
+XML could also be used.</p>
+<p>Here is an example of how a language can be written in json (<a class="reference download internal" href="../../_downloads/retrieve.json"><tt class="xref download docutils literal"><span class="pre">Example</span> <span class="pre">6</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;directive&quot;</span> <span class="p">:</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span>
+    <span class="s">&quot;keywords&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;date&quot;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="s">&quot;step&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;int&quot;</span><span class="p">,</span>
+            <span class="s">&quot;validate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;ValidateChoice&quot;</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">72</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">144</span><span class="p">,</span><span class="mi">168</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s">&quot;parameter&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;alias&quot;</span> <span class="p">:</span> <span class="s">&quot;param&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;level&quot;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="s">&quot;experiment_version&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;unique&quot;</span><span class="p">:</span> <span class="n">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The Python program then becomes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.language.language</span> <span class="kn">import</span> <span class="n">Language</span>
+<span class="kn">from</span> <span class="nn">semperpy.core.json</span> <span class="kn">import</span> <span class="n">JSon</span>
+
+<span class="k">def</span> <span class="nf">ValidateChoice</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span><span class="n">keyword</span><span class="p">,</span><span class="n">values</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;for keyword </span><span class="si">%s</span><span class="s">. The value: &#39;</span><span class="si">%s</span><span class="s">&#39; is not in the set: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">keyword</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span><span class="p">])))</span>
+    <span class="k">return</span> <span class="n">values</span>
+
+<span class="k">def</span> <span class="nf">reader</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;.json&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="c"># a configuration path could be used</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">JSon</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2020101012</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span><span class="mi">48</span><span class="p">],</span>
+    <span class="n">param</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">1000</span><span class="p">],</span>
+    <span class="n">experiment_version</span> <span class="o">=</span> <span class="s">&quot;0012&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">print</span> <span class="n">Language</span><span class="o">.</span><span class="n">resolveDirective</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span> <span class="s">&quot;retrieve&quot;</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The syntax in json is a little more cumbersome than in Python, but having configuration
+files which are not in the language used is a good thing. Please note that both the type
+<em>int</em> and the function <em>ValidateChoice</em> are written as strings. The Language finds
+them at run time (if they are defined).</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Language - validating data</a><ul>
+<li><a class="reference internal" href="#simple-example">Simple example</a></li>
+<li><a class="reference internal" href="#specifying-more">Specifying more</a></li>
+<li><a class="reference internal" href="#validators">Validators</a></li>
+<li><a class="reference internal" href="#inheritance">Inheritance</a></li>
+<li><a class="reference internal" href="#specialization">Specialization</a></li>
+<li><a class="reference internal" href="#language-format">Language format</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../python/techniques.html"
+                        title="previous chapter">Programming techniques</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../services/tutorial.html"
+                        title="next chapter">Services - client-server communication</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/language/tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../services/tutorial.html" title="Services - client-server communication"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../python/techniques.html" title="Programming techniques"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

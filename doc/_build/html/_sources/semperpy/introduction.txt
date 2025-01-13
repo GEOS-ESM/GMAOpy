@@ -1,0 +1,33 @@
+Design decisions
+================
+
+    A few design decisions have been made in the development of the framework to try and achieve the following:
+
+    * modules are as little coupled as possible, ideally they are not coupled at all. The idea is to develop sub-components which are independent to reduce maintenance and offer the user a programming framework which only requires to know what is needed. 
+    * object orientation should be used. Object delegation is preferred to class inheritance as this enables low coupling.
+    * classes and modules should be fully documented as soon as they are tested and validated. Tutorials should be provided whenever it helps the user to quickly learn how to use a module or a collection of modules together.
+
+
+Programming convention
+======================
+
+    A few programming conventions have been applied when developing the **SemperPy** library.
+    Although conventions are important in a project intended to be used and shared between
+    a number of users, some exceptions can sometimes be acceptable. Here are the conventions
+    and some of the exceptions:
+
+    	1. Class names start with an uppercase and use mixed-case: *ThisClass*.
+    	2. A class definition is stored in a file with the class name classnamelowercase.py. As far as possible only one class is defined in one file. However, classes used privately in that module can be defined there as well (class name starting with underscore).
+    	3. Public methods and function names start with a lowercase and then use mixed case: *openFile()*. Public means that these were intended to be used by the users of the library. *An exception to this rule is for example the Core.tools module which exports low level functions (e.g. *is_list*). Using mixed case for those functions does not feel right, it gives them too much emphasis in the code while they should be seen as *part of the language*. *Whenever this applies, it is acceptable to use rule 4*.
+    	4. Private functions and methods used within one module or within one hierarchy of classes start with a lowercase and then use lowercase and underscore: *close_all_open_files()*.
+    	5. Don't be lazy, please use long names for variables, classes and methods, as this saves comments and explanations.
+    	6. No rules are imposed on the naming of object or class members, these are normally easily recognized (self.member). 
+    	7. Attention to spelling is expected. American spelling is preferred, but for method names, it can be useful to define British and American spelling when they differ, for example Core.tools.specialize is also defined as Core.tools.specialise. Anyway, I know I tend to use British spelling and vocabulary, I will try to do my best.
+
+.. sectionauthor:: Claude Gibert 2010-2011-2012
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+

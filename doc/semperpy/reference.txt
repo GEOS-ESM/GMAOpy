@@ -1,0 +1,21 @@
+Reference
+=========
+
+Contents:
+
+.. toctree::
+   :maxdepth: 3
+
+   archive/archivemodule
+   core/coremodule
+   directive/directivemodule
+   language/languagemodule
+   netcdf/netcdfmodule
+   observations/observationsmodule
+   services/servicesmodule
+   slicing/slicingmodule
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

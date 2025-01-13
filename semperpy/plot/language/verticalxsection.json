@@ -1,0 +1,34 @@
+{
+	"directive": "verticalxsection",
+    "doc": true,
+    "inherit_from": "plot",
+	"keywords" : {
+        "_combinable": {
+            "default_value": ["domain_name","statistic","variable","usage"]
+        },
+        "_index_columns": {
+            "default_value": ["level"]
+        },
+        "_curve_preference": {
+            "default_value": "line"
+        },
+        "_title_template": {
+            "default_value": ["GEOS-5 Vertical XSection <parameter>","<date_interval>","<expver> <domain_name>","<statistic>"]
+        },
+        "legend_template": {
+            "default_value": "<expver> <parameter> <domain_name> <variable> <statistic>"
+        },
+        "has_xtitle": {
+            "default_value": true
+        },
+        "_xtitle_template": {
+            "default_value": "<type> <parameter> <unit>"
+        },
+        "has_ytitle": {
+            "default_value": true
+        },
+        "_ytitle_template": {
+            "default_value": "<levtype>"
+        }
+	}
+}

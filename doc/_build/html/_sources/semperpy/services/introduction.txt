@@ -1,0 +1,42 @@
+.. _services_introduction:
+
+Introduction
+************
+
+    Exchanging data between different computers or even different sites is never
+    something which is done easily. Often, all applications run on the same host
+    just because it is easier to share data that way.
+
+    Client-Server applications exhibit many advantages:
+
+    * they facilitate the distribution of application around different computer facilites
+    * they allow to hide the data organisation layer by providing services which can be queried through high-level requests
+    * they work transparently either in a distributed system or on the same mainframe
+    
+    They also show a few disadvantages:
+
+    * they increase the network usage
+    * if the network is not very fast, communication between processes can be a bottleneck
+
+    The tools implemented in the **Service** module attempt to offer an easy way of implementing client-server communication: 
+    
+    * they use the python library *twisted matrix* which is heavily used even in industry and has proven to be very efficient
+    * they use the http protocol (web) to communicate as it is supported everywhere and is normally enabled as it does not represent a security threat
+    * they handle requests using the json language encoding. This allows the encoding of arbitray Python structure in an easy way and is supported by different programming language, hence enabling the communication of processes written in different languages
+    * Pure binary data is exchanged following the standard http exchange: application/octet-stream
+
+    The :mod:`Language` module can be used to create requests which can then be sent to a server in order to request a service.
+
+Server side
+-----------
+
+    Depending on the service offered, different behaviours can be expected from the server:
+
+    * for extremely quick actions, an immediate response is expected possibly in the main thread of the server
+    * for reasonably quick actions, but the response can take some processing and IOs, the response should run in a different thread or a different process and the server does not block. The client waits with an open connection until the end of the service
+    * for slow actions, typically hours, for example an access to an archive. The response should run in a different thread or a different process and the server does not block. A queuing system is also to be considered. The client does not wait with an opened connection, it then acts as a server and waits to be called back with the result.
+
+Client side
+-----------
+
+    The client is implemented using standard Python tools (urllib2), if the client behaves like a server, it uses the library BaseHTTPServer. This way the client can run on most architectures where a recent enough version of python is installed without the need for *twisted*.

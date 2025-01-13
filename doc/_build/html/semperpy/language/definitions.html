@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Language definition &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="language — Language definition and analysis utilities" href="languagemodule.html" />
+    <link rel="next" title="The Language class — Language validation" href="language.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="language.html" title="The Language class — Language validation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="languagemodule.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">language</span></tt> &#8212; Language definition and analysis utilities</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="language-definition">
+<span id="language-definitions"></span><h1>Language definition<a class="headerlink" href="#language-definition" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>Defining a language consists in defining rules about how to validate and interpret
+what the user submits to a program in the form of a dictionary. The rules apply to
+two different levels:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the directive itself, its name and characteristics</li>
+<li>the keywords defining the directive</li>
+</ul>
+</div></blockquote>
+<p>The top dictionary defines the characteristics of the directive as a whole,
+while the special entry &#8216;keywords&#8217; describe the keywords allowed in the
+directive</p>
+</div></blockquote>
+<div class="section" id="directive">
+<h2>Directive<a class="headerlink" href="#directive" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The keywords allowed in the directive are:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><strong>directive</strong> (<em>string</em>) - specifies the name of the directive</p>
+</li>
+<li><p class="first"><strong>inherit_from</strong> (<em>string or list of strings</em>) - names the directives this directive inherits the language definition from. The directive inherits from all the definitions given in the list from left to right. Language definitions on the left have precedence over definitions on the right if they share common definitions.</p>
+</li>
+<li><p class="first"><strong>specialize_from</strong> (name of a directive). The keyword is an expression to be evaluated, the value if the name of a directive to specialize from. Specialization occurs if the expression evaluates to True.</p>
+</li>
+<li><p class="first"><strong>keywords</strong> (<em>dictionary</em>) - the keywords, please see the next section.</p>
+</li>
+<li><p class="first"><strong>post_validate</strong> (<em>list</em>, default: <em>no default</em>) - The list is as follows: [<em>function, arg1, arg2, ..., argN</em>]. This defines a function or method to be called after the validation of the directive succeeded. This can be useful to copy or derive keywords or to check the validity of a collection of keywords. The function is called as follows:</p>
+<blockquote>
+<div><dl class="function">
+<dt>
+<tt class="descname">post_validate(directive,*args):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directive</strong> (<em>dict or derived</em>) &#8211; the directive which was just validated</li>
+<li><strong>args</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; the arguments as defined by the user (arg1,...,argN)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Should return the directive.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="keywords">
+<h2>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The <strong>keyword</strong> entry in the top level dictionary is a dictionary, each key defines
+the name of a keyword. For each key, the following properties are processed:</p>
+<ul>
+<li><p class="first"><strong>optional</strong> (<em>bool</em>, default: <em>False</em>) - do not fail if this keyword is missing. Optional keywords often haven an associated <strong>default_value</strong></p>
+</li>
+<li><p class="first"><strong>default_value</strong> (<em>any type</em>: default: <em>no default</em>) - if this keyword is not defined, assign this default value. If a keyword has a default value, it is automatically set to be optional.</p>
+</li>
+<li><p class="first"><strong>unique</strong> (<em>bool</em>, default: <em>False</em>) - if the keyword is unique, it can only take one values, otherwise it is a list of values</p>
+</li>
+<li><p class="first"><strong>lowercase</strong> (<em>bool</em>, default: <em>True</em>) - by default keyword values provided in a directive by the user are converted to lower case (even if they are part of a list or a dictionary). Set this to False if you want the strings to be untouched</p>
+</li>
+<li><p class="first"><strong>remove</strong> (<em>bool</em>, default: <em>False</em>) - this basically means that this keyword is not defined. This is useful when inheriting other language definitions and removing some of the keywords</p>
+</li>
+<li><p class="first"><strong>discretional</strong> (<em>bool</em>, default: <em>False</em>) - a keyword is discretional when it is optional, but should be removed if it has its default value. This is useful for programs testing the absence of keywords which are defined optional.</p>
+</li>
+<li><p class="first"><strong>alias</strong> (<em>string or list of strings</em>: default: <em>no default</em>) - define other names for that keywords. If an alias is used in a directive, it is renamed to the original keyword name (the dictionary key here).</p>
+</li>
+<li><p class="first"><strong>type</strong> (<em>string or type-class</em>, default: <em>no default</em>) - specify a type of a string to be constructed. That class or type is initialised with the keyword value provided by the user. If the type is specified with a string, the type of class (it can also be a callable object) is retrieved at runtime using Python&#8217;s self inspection.</p>
+</li>
+<li><p class="first"><strong>ignore_type_errors</strong> (<em>bool</em>, default <em>False</em>) - when a type is specified and a parameter with the wrong type is entered, a TypeError exception is sent. It can be useful sometime to ignore those errors, for example if the type speficied is <em>float</em>, but we need to the user use <em>None</em> as well, we do not want the error to stop the program.</p>
+</li>
+<li><p class="first"><strong>distribute_type</strong> (<em>bool</em>, default: <em>True</em>) - when a type is specified and the value is a complex type (e.g. a list), there are two possibilities, either the type if for each element of the list (list of int) and each element is converted to that type, or the specified type should be initialised with the whole keyword value (when <strong>distribute_type</strong> is False)</p>
+</li>
+<li><p class="first"><strong>validate</strong> (<em>list</em>, default: <em>no default</em>) - provide mechanisms for validating a value or a list of values. The list is as follows: [<em>validator, arg1, arg2, ..., argN</em>]. The validator can be a string naming a function or any callable object or the callable object itself. The callable object is called to validate the values as follows:</p>
+<blockquote>
+<div><dl class="function">
+<dt id="validator">
+<tt class="descname">validator</tt><big>(</big><em>directive</em>, <em>keyword</em>, <em>values</em>, <em>*args</em><big>)</big><a class="headerlink" href="#validator" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directive</strong> (<em>dictionary or someting behaving like one</em>) &#8211; the whole directive already cleanup up, but being validated. It is provided to enable validation using other keyword values in the directive</li>
+<li><strong>keyword</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the name of the keyword being validated</li>
+<li><strong>values</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; the value(s) supplied for this keyword by the user, this is what needs validating. It is always a list, if the keywork only has one value, it is a list of one element.</li>
+<li><strong>args</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; the list of values define in the language (arg1, arg2, ..., argN)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The callable should either raise an exception if there is a validation problem or return a list of values either identical or modified.</p>
+</dd></dl>
+
+<p>A validator can be used to check that a value is in a numerical range, but also to calculate someone&#8217;s age from the birthday.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Language definition</a><ul>
+<li><a class="reference internal" href="#directive">Directive</a></li>
+<li><a class="reference internal" href="#keywords">Keywords</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="language.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Language</span> <span class="pre">class</span></tt> &#8212; Language validation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/language/definitions.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="language.html" title="The Language class — Language validation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="languagemodule.html" ><tt class="docutils literal docutils literal"><span class="pre">language</span></tt> &#8212; Language definition and analysis utilities</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

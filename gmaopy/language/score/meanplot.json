@@ -1,0 +1,21 @@
+{
+	"directive": "meanplot",
+    "inherit_from": "plot",
+    "doc": true,
+	"keywords" : {
+        "graphics": {
+            "type": "vertgraphics"
+        },
+        "has_ytitle": {
+            "default_value": true
+        },
+        "display_last_curve_value": {
+            "unique": true,
+            "default_value": false,
+            "help": "if set to True, the floating point value of the last point of the curve is displayed on the right hand side of the plot"
+        },
+        "_curve_preference": {
+            "default_value": "line"
+        }
+	}
+}

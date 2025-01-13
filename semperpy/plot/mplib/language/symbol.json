@@ -1,0 +1,29 @@
+{
+	"directive": "symbol",
+    "doc": true,
+	"keywords" : {
+        "marker": {
+            "unique": true,
+            "optional": true
+        },
+        "alpha": {
+            "unique": true,
+            "type": "float",
+            "default_value": 1.0
+        },
+        "faceted": {
+            "unique": true,
+            "default_value": false,
+            "type": "bool"
+        },
+        "edgecolor": {
+            "unique": true,
+            "default_value": "none"
+        },
+        "s": {
+            "unique": true,
+            "alias": "size",
+            "default_value": 18
+        }
+	}
+}

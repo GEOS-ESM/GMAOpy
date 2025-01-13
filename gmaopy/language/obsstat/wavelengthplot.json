@@ -1,0 +1,6 @@
+{
+	"directive": "wavelengthplot",
+    "inherit_from": "channelplot",
+	"keywords" : {
+	}
+}

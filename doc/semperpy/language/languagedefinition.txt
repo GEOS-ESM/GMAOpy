@@ -1,0 +1,23 @@
+:mod:`The LanguageDefinition class` --- Validating the language definition
+==========================================================================
+
+.. module:: language.languagedefinition
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: LanguageDefinition(object)
+
+Private definition
+------------------
+
+    The :class:`Language.LanguageDefinition.LanguageDefinition` defines the keywords to be used when defining a 
+    language, which keyword are expected to be defined, default values for non-supplied
+    keywords in the language definition and types of the keywords.
+
+    .. literalinclude:: languagedefinition.py
+        :language: python
+
+    Modifying either the :meth:`directive` or the :meth:`keywords` methods would imply adding
+    new features to the language definition capabilities and would therefore require the 
+    modification of the :class:`language.language.Language` class.

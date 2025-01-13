@@ -1,0 +1,609 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using SemperPy &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="next" title="Configuring SemperPy" href="../config/configure.html" />
+    <link rel="prev" title="Introduction" href="../introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../config/configure.html" title="Configuring SemperPy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="using-semperpy">
+<h1>Using SemperPy<a class="headerlink" href="#using-semperpy" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>In order to be concise, <strong>SemperPy</strong> is shortened to <strong>spy</strong> in shell commands. Calling <strong>spy</strong> is equivalent to
+calling <strong>python</strong>. SemperPy specific commands are prefixed with <strong>spy</strong>.</div></blockquote>
+<div class="section" id="loading-semperpy">
+<h2>Loading SemperPy<a class="headerlink" href="#loading-semperpy" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The cleanest and easiest way to configure your environment to use SemperPy is to add into your shell starter script (whichever shell you use, you might need to modify .kshrc or .bashrc or cshrc etc..., the syntax changes with the shell used):</p>
+<div class="highlight-python"><pre>setenv MODULEPATH /discover/nobackup/projects/gmao/share/dasilva/lib/python/gmaopy/modules:$MODULEPATH
+or
+MODULEPATH= /discover/nobackup/projects/gmao/share/dasilva/lib/python/gmaopy/modules:$MODULEPATH</pre>
+</div>
+<p>Please note that this step might become unecessary if SemperPy can be installed with system modules.
+You can then load the SemperPy module by typing:</p>
+<div class="highlight-python"><pre>module load semperpy/current</pre>
+</div>
+<p>This sets environment variables to the current user version of SemperPy. From that stage, invoking the command
+<strong>python</strong> will load the version of the Python used by the current version of SemperPy and all the python modules
+being part of SemperPy are in the PYTHONPATH and can be used directly.</p>
+<p>This will load the current user version of SemperPy, valid options are:</p>
+<div class="highlight-python"><pre>module load semperpy/old       # point to the previous user version
+module load semperpy/new       # point to the newest user version
+module load semperpy/ops       # point to the operational version of SemperPy
+module load semperpy/ops_old   # point to the previous operational version of SemperPy</pre>
+</div>
+<p>The versions a standard user would normally use are <strong>current</strong>, <strong>new</strong> and occasionally <strong>old</strong>.</p>
+</div></blockquote>
+</div>
+<div class="section" id="version-strategy">
+<h2>Version Strategy<a class="headerlink" href="#version-strategy" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>There are always at least three versions of SemperPy installed simultaneously, current, new and old. The versions are as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>current is the official version of SemperPy to use. It has been tested and has been probably been current for some time.</li>
+<li>new is the next version of SemperPy which may have new features and bug fixes, it is not completely tested yet and it keeps being updated with new features and bug fixes as needs and problems are known. When validated, this version becomes the current version.</li>
+<li>old used to be the official current version before the new version was made current. This old version is kept in case something goes wrong with the latest current version and users can point to <strong>old</strong> to be able to carry on working until issues are sorted.</li>
+</ul>
+</div></blockquote>
+<p>So when an update of SemperPy occurs, the following happens:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>old</strong> is thrown away</li>
+<li><strong>current</strong> becomes old</li>
+<li><strong>new</strong> becomes current</li>
+</ul>
+</div></blockquote>
+<p>At that stage, <strong>current</strong> and <strong>new</strong> are normally identical. Some more versions might be kept online for specific
+needs, those can be loaded with the actual version of SemperPy which needs to be known by the user:</p>
+<div class="highlight-python"><pre>module load semperpy/1.6.4</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="getting-help">
+<h2>Getting help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The biggest resource for help on SemperPy is this html documentation. However, some dynamic help can be obtained
+interactively from the shell command line (included in your PATH by the semperpy module):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">spy_doc</span>
+</pre></div>
+</div>
+<p>Invoking spy_doc gives you information about what help to ask about (e.g. databases, directives, domains, datahook), you can then
+specify which command you are interested in:</p>
+<div class="highlight-python"><pre>spy_doc databases</pre>
+</div>
+<p>Produces the list of <strong>logical databases</strong> defined together with relevant information. This is dynamic, if new
+databases are defined, they appear in the help automatically:</p>
+<div class="highlight-python"><pre>spy_doc databases
+
+List of available databases:
+
+fc_exp  : type = obsstat  writer = gmao_rd  experiment database for forecast scores
+fc_ops  : type = obsstat  writer = gmao_ops operational database for forecast scores
+im_exp  : type = obsstat  writer = gmao_rd  experiment database for observation impact statistics
+im_ops  : type = obsstat  writer = gmao_ops operational database for observation impact statistics
+ob_exp  : type = obsstat  writer = gmao_rd  experiment database for observation statistics
+ob_ops  : type = obsstat  writer = gmao_ops operational database for observation statistics
+ocean   : type = obsstat  writer = gmao_rd  database for observation statistics for the ocean
+product : type = product  writer = gmao_ops test database for statistics on field products
+test_exp: type = obsstat  writer = gmao_rd  test database for experiments, can be deleted at anytime
+test_ops: type = obsstat  writer = gmao_ops test database for operations, can be deleted at anytime
+
+
+generated on 2012-04-29 21:02:57</pre>
+</div>
+<p>Please see <a class="reference internal" href="../databases/databases.html#databasedefinition"><em>Database definition</em></a> for more information. You can also request information for one particular database:</p>
+<div class="highlight-python"><pre>spy_doc databases im_ops</pre>
+</div>
+<p>To obtain information about geographical domains (south, west, north, west):</p>
+<div class="highlight-python"><pre>Available domains (South, West, North, East):
+
+     arabia           :  12.5,   25.0,   35.0,   57.5
+     asia             :  25.0,   45.0,   80.0, -170.0
+     atlantic         : -15.0,  -60.0,   15.0,   10.0
+     austnz           : -45.0,  120.0,  -12.5,  175.0
+     australia        : -44.5,  112.0,  -10.0, 156.25
+     austtrop         : -15.0,  115.0,   -2.0,  150.0
+     baltic           :  53.0,   10.0,   66.0,   31.0
+     c.afr            : -12.5,    5.0,   12.5,   42.5
+     e.asia           :  25.0,  102.5,   60.0,  150.0
+     e.trop.pac       : -20.0, -140.0,   10.0,  -90.0
+     europe           :  35.0,  -12.5,   75.0,   42.5
+     global           : -90.0, -180.0,   90.0,  180.0
+     ind.oc           : -10.0,   50.0,   30.0,  100.0
+     india            :   5.0,   75.0,   32.5,  102.5
+     indian           : -15.0,   30.0,   15.0,  110.0
+     indonesia        : -12.5,  102.5,   17.5,  132.5
+     med              :  30.0,   -6.0,   46.0,   36.0
+     n.amer           :  20.0, -140.0,   60.0,  -60.0
+     n.atl            :  25.0,  -70.0,   65.0,  -10.0
+     n.europe         :  55.0,    5.0,   75.0,   35.0
+     n.hem            :  20.0, -180.0,   90.0,  180.0
+     n.hem.full       :   0.0, -180.0,   90.0,  180.0
+     n.hem.mid        :  35.0, -180.0,   65.0,  180.0
+     n.pac            :  25.0,  145.0,   60.0, -130.0
+     n.pole           :  65.0, -180.0,   90.0,  180.0
+     n.subtropics     :  20.0, -180.0,   35.0,  180.0
+     nw.afr           :  12.5,  -22.5,   35.0,   12.5
+     pacific          : -15.0,  -90.0,   15.0,  120.0
+     s.afr            : -47.5,   10.0,  -12.5,   52.5
+     s.amer.n         : -12.5,  -85.0,   17.5,  -55.0
+     s.amer.s         : -57.5,  -80.0,  -12.5,  -42.5
+     s.hem            : -90.0, -180.0,  -20.0,  180.0
+     s.hem.full       : -90.0, -180.0,    0.0,  180.0
+     s.hem.mid        : -65.0, -180.0,  -35.0,  180.0
+     s.pole           : -90.0, -180.0,  -65.0,  180.0
+     s.subtropics     : -35.0, -180.0,  -20.0,  180.0
+     se.europe        :  32.5,   10.0,   45.0,   32.5
+     sw.europe        :  32.5,  -15.0,   45.0,   10.0
+     trop.atl         : -45.0,  -60.0,   45.0,   10.0
+     trop.ind         : -45.0,   30.0,   45.0,  119.0
+     trop.pac         : -45.0,  -90.0,   45.0,  120.0
+     tropics          : -20.0, -180.0,   20.0,  180.0
+
+generated on 2012-05-18 14:53:47</pre>
+</div>
+<p>Lists the geographical domains defined in the system, this is also a dynamic function reflecting the current definition. High
+level directives syntax can be explored with the same command:</p>
+<div class="highlight-python"><pre>spy_doc directives
+
+axis
+bar
+channelplot
+commentline
+commenttext
+coverageplot
+dbdump
+document
+graphics
+levelplot
+meanplot
+obsdata
+observation
+obsstat
+odsdata
+scatterplot
+scoredata
+summaryplot
+textloader
+timeseriesplot
+verticalxsection
+
+generated on 2012-03-06 20:37:34</pre>
+</div>
+<p>The list of available directive is displayed, to look at one particular directive, just specify its name:</p>
+<div class="highlight-python"><pre>spy_doc directives timeseriesplot
+
+directive: obsstat
+   'obbstat' is a directive used to initiate the computation of statistics
+   from the original ODS files
+
+   keyword: archive_type   default: None
+      optional = True
+      unique = True
+
+   keyword: database   default: test_obs
+   this is the name of the database to store the data into. This is not an arbitrary
+   name, it should be given to you by the administrator of gmaopy who will
+   have setup that database and given you the necessary credentials
+      alias = output_file
+      unique = True
+
+   keyword: date   default: None
+   A list of dates. The convenience function in &lt;semperpy.core.date.Dates&gt; can
+   generate lists of dates from an interval and an increment
+      type = int
+
+   keyword: domain_name   default: None
+   Pre-defined geographical areas or domains: n.europe, sw.europe, n.amer, tropics, global, india, pacific, s.hem, e.trop.pac, n.hem.full, arabia, n.subtropics, austnz, asia, indian, n.pole, s.hem.full, s.subtropics, nw.afr, europe, med, australia, s.hem.mid, s.afr, s.amer.n, n.atl, s.amer.s, n.hem, atlantic, n.pac, c.afr, n.hem.mid, e.asia, trop.pac, indonesia, austtrop, trop.atl, se.europe, trop.ind, ind.oc, s.pole, baltic
+      alias = domain
+      optional = True
+      validate = ValidateDomains,semperpy
+
+   keyword: expver   default: None
+      alias = experiment_id,expid
+      lowercase = False
+      optional = True
+      unique = True
+
+   keyword: file_tmpl   default: None
+      lowercase = False
+      optional = True
+      unique = True
+
+   keyword: ignore_missing_files   default: False
+   When accessing ODS files, if a file is missing, the application
+   can either fail and report the error, or ignore
+   the problem and carry on
+      alias = ignore_missing
+      unique = True
+
+   keyword: level   default: None
+   The pressure level for upper air observations, 0 for surface,
+   or the channel number for satellite data, hence the alias 'channel'. If 'all' is specified, the official list of pressure levels or channels for the kx-kt observations being processed are used.
+      alias = channel
+      ignore_type_errors = True
+      optional = True
+      type = float
+
+   keyword: location   default: None
+      optional = True
+      unique = True
+
+   keyword: observation   default: None
+   one or more 'observation' directives, these are used to specify
+   which observations should be used for computing statistics
+      alias = observations,obs
+      optional = True
+
+   keyword: output_expver   default: None
+      alias = output_experiment_id,output_expid
+      lowercase = False
+      optional = True
+      unique = True
+
+   keyword: overwrite   default: False
+   if the statistics being computed are already present in the database,
+   when setting this keyword to False, the application will fail and preserve
+   what is in the database. When True, any data already present
+   will be overwritten. Be careful when using that option.
+      unique = True
+
+   keyword: root_tmpl   default: None
+      lowercase = False
+      optional = True
+      unique = True
+
+   keyword: source   default: None
+      optional = False
+      unique = True
+
+   keyword: staging_rate   default: hourly
+      lowercase = False
+      unique = True
+
+   keyword: statistic   default: None
+   the list of statistics to compute for the specified set of observations
+   current statistics: product: sum, product: mean, score: rms, score: cor, obsstat: count, obsstat: rms, obsstat: beneficial, obsstat: sum, obsstat: impact_per_anl, obsstat: count_per_anl, obsstat: rate, obsstat: impact_per_ob, obsstat: sumsquare, obsstat: esigb, obsstat: esigo, obsstat: fractional_impact, obsstat: normcost, obsstat: concat, obsstat: mean
+      alias = stat,stats,statistics
+      optional = True
+
+   keyword: storage   default: dbstorer
+   the name of a storage class to store the statistics, by default the
+   statistics are saved in an SQL database, to store the statistics
+   in a file, specify: storage = 'filestorer' with output_file = 'filename'
+      alias = store
+
+   keyword: tree_tmpl   default: None
+      lowercase = False
+      optional = True
+      unique = True
+
+   keyword: type   default: ob
+      unique = True
+      validate = ValidateChoice,ob,im
+
+   keyword: usage   default: used
+      validate = ValidateChoice,used,all,passive,unused
+
+generated on 2012-05-18 15:30:56</pre>
+</div>
+</div></blockquote>
+<blockquote id="beautifydoc">
+<div><p>A <strong>Beautifier</strong> is used in SemperPy to help produce titles, legends and generally texts which look
+good. The <strong>Beautifier</strong> is basically a table, you can see what is defined in that table by issuing
+the command <strong>spy_doc beauty</strong>:</p>
+<div class="highlight-python"><pre>Beautifier:
+
+section: abbreviated:
+    global              : Global Domain
+    n.hem               : N.Hem
+    s.hem               : S.Hem
+
+section: legend:
+    oma                 : (O-A)
+    omf                 : (O-B)
+
+section: title:
+    aer_aeronet         : AERONET
+    aer_aqua_modis_land : AQUA MODIS Aerosol (Land Algorithm)
+    aer_aqua_modis_ocean: AQUA MODIS Aerosol (Ocean Algorithm)
+    aer_misr            : MISR (Multi-angle Imaging SpectroRadiometer)
+    aer_omi             : OMI (Ozone Monitoring Instrument)
+    aer_terra_modis_land: TERRA MODIS Aerosol (Land Algorithm)
+    aer_terra_modis_ocean: TERRA MODIS Aerosol (Ocean Algorithm)
+    aircraft            : Aircraft
+    airs                : AIRS
+    airtemp_as          : Aircraft temperatures (ASDAR)
+    airtemp_md          : Aircraft temperatures (MDCARS)
+    airtemp_rep         : Aircraft temperatures (AIREP, PIREP)
+    airwind_amd         : Aircraft wind vectors (Canadian AMDAR)
+    airwind_as          : Aircraft wind vectors (ASDARS)
+    airwind_md          : Aircraft wind vectors (MDCARS)
+    airwind_rep         : Aircraft wind vectors (AIREP, PIREP)
+    airwind_tam         : Aircraft wind vectors (TAMDAR)
+    alldata             : All data
+    allgpsro            : All GPS RO data
+    allmoist            : All moisture data
+    allozone            : All ozone data
+    allrad              : All radiance data
+    allsurfpress        : All surface pressure data
+    allsynth            : All synthetic data
+    alltemp             : All temperature data
+    allwind             : All wind data
+    amsua               : AMSUA
+    amsub               : AMSUB
+    aqua_airs           : Aqua AIRS
+    aqua_amsua          : Aqua AMSUA
+    aqua_high_amsre     : AQUA AMSRE HIGH
+    aqua_low_amsre      : AQUA AMSRE LOW
+    aqua_mid_amsre      : AQUA AMSRE MID
+    ascat_wind          : ASCAT Wind
+    austmsl             : AUSTRALIAN PAOB MEAN SEA-LEVEL PRESSURE BOGUS
+    beneficial          : Fraction of Beneficial Obs
+    buoywind_atlas      : ATLAS buoy wind vectors
+    ch                  : Channel number
+    clouddrift_gms      : Cloud drift wind vectors (GMS)
+    clouddrift_goesir   : Cloud drift wind vectors (GOES-EAST IR, GOES-WEST IR)
+    clouddrift_goeswv   : Cloud drift wind vectors (GOES-EAST WV, GOES-WEST WV)
+    clouddrift_met      : Cloud drift wind vectors (METEOSAT)
+    cor                 : Anomaly Correlation
+    count               : Observation count
+    count_per_anl       : Observation Count Per Analysis
+    dropsondes          : Dropsonde
+    droptemp            : Dropsonde temperatures
+    dropwind            : Dropsonde wind vectors
+    dsmpf11_ssmi        : DMSP F-11 SSM/I
+    dsmpf13_ssmi        : DMSP F-13 SSM/I
+    dsmpf14_ssmi        : DMSP F-14 SSM/I
+    dsmpf15_ssmi        : DMSP F-15 SSM/I
+    esigb               : Estimated sigb
+    esigo               : Estimated sigo
+    fractional_impact   : Fractional Impact
+    global              : Global Domain
+    goes                : GOES
+    goes10_btemp        : GOES-10
+    goes11_btemp        : GOES-11
+    goes13_btemp        : GOES-13
+    gpsro               : GPSRO
+    gpsro_champ         : CHAMP GPS RO
+    gpsro_cosmic1       : COSMIC-1 GPS RO
+    gpsro_cosmic2       : COSMIC-2 GPS RO
+    gpsro_cosmic3       : COSMIC-3 GPS RO
+    gpsro_cosmic4       : COSMIC-4 GPS RO
+    gpsro_cosmic5       : COSMIC-5 GPS RO
+    gpsro_cosmic6       : COSMIC-6 GPS RO
+    gpsro_gracea        : GRACE-A GPS RO
+    gpsro_graceb        : GRACE-B GPS RO
+    gpsro_sac           : SAC-C GPS RO
+    h                   : Height
+    hirs                : HIRS
+    iasi                : IASI
+    im                  : Observation Impact
+    impact_per_anl      : Total Impact
+    impact_per_ob       : Impact per Observation
+    irclouddrift        : IR cloud drift U,V (NASA/MODIS POES Aqua/Terra)
+    japprofwind         : Japanese profiler wind vectors
+    land_sfc            : Land-Surface
+    landsurfpress       : Land station surface pressures
+    marine_sfc          : Marine-Surface
+    mean                : Mean
+    metopa_amsua        : METOP-A AMSUA
+    metopa_hirs         : METOP-A HIRS/4
+    metopa_hirs4        : METOP-A HIRS/4
+    metopa_iasi         : METOP-A IASI
+    metopa_mhs          : METOP-A MHS
+    metsurfpress        : Metar surface pressures
+    mhs                 : MHS
+    modis_wind          : MODIS Wind
+    msu                 : MSU
+    n.hem               : Northern Hemisphere
+    nexrad_wind         : NEXRAD Wind
+    nexradwind          : NEXRAD wind vectors
+    noaa14_ozone_lay    : NOAA-14 SBUV/2 ozone layers
+    noaa14_ozone_total  : NOAA-14 SBUV/2 total column ozone
+    noaa15_amsua        : NOAA-15 AMSUA
+    noaa15_amsub        : NOAA-15 AMSUB
+    noaa15_hirs2        : NOAA-15 HIRS/2
+    noaa16_amsua        : NOAA-16 AMSUA
+    noaa16_amsub        : NOAA-16 AMSUB
+    noaa16_ozone_lay    : NOAA-16 SBUV/2 ozone layers
+    noaa16_ozone_total  : NOAA-16 SBUV/2 total column ozone
+    noaa17_amsua        : NOAA-17 AMSUA
+    noaa17_amsub        : NOAA-17 AMSUB
+    noaa17_hirs         : NOAA-17 HIRS/3
+    noaa17_hirs3        : NOAA-17 HIRS/3
+    noaa17_ozone_lay    : NOAA-17 SBUV/2 ozone layers
+    noaa17_ozone_total  : NOAA-17 SBUV/2 total column ozone
+    noaa18_amsua        : NOAA-18 AMSUA
+    noaa18_hirs4        : NOAA-18 HIRS/4
+    noaa18_mhs          : NOAA-18 MHS
+    noaa18_ozone_lay    : NOAA-18 SBUV/2 ozone layers
+    noaa18_ozone_total  : NOAA-18 SBUV/2 total column ozone
+    noaa19_amsua        : NOAA-19 AMSUA
+    noaa19_hirs         : NOAA-19 HIRS/4
+    noaa19_hirs4        : NOAA-19 HIRS/4
+    noaa19_mhs          : NOAA-19 MHS
+    none                : Surface
+    normcost            : Normalized Cost
+    ob                  : Observation
+    oma                 : (O-A)
+    omf                 : (O-B)
+    peranl              : Impact per Analysis
+    perob               : Impact per Observation
+    pibal               : PIBAL
+    pibalwind           : Pibal wind vectors
+    pilotwind           : PILOT wind vectors
+    pl                  : Pressure levels (hPa)
+    profiler_wind       : Profiler Wind
+    profwind            : Wind profiler wind vectors
+    radiosondes         : Radiosonde
+    rainrate_ssmi       : SSM/I Rain Rate [log(1+rain rate)]
+    rainrate_tmi        : TMI Rain Rate
+    raob                : RAOB
+    rms                 : Root Mean Square Error
+    rsspecihum          : Radiosonde specific humidities
+    rssurfpress         : Radiosonde station surface pressures
+    rstemp              : Radiosonde Temperatures
+    rswind              : Radiosonde wind vectors
+    s.hem               : Southern Hemisphere
+    satellite_wind      : Satellite Wind
+    satwind_wind        : SATWIND Wind
+    sbuv_ozone          : SBUV
+    scattwind_ascat     : ASCAT Scatterometer wind vectors
+    scattwind_ers       : ERS Scatterometer wind vectors
+    seasurftemp         : Sea-surface temperature data
+    spllevspecihum      : Splash level specific humidities
+    spllevsurfpress     : Splash level surface pressures
+    spllevtemp          : Splash level temperatures
+    ssmi_rad            : SSMI Radiance
+    ssmitotpreciwat     : SSM/I Total Precipitable Water Retrievals
+    ssmiwind            : SSMI/I wind speed
+    ssu                 : SSU
+    surfmarpress        : Surface marine pressures
+    surfmarspecihum     : Surface marine specific humidities
+    surfmartemp         : Surface marine temperatures
+    surfmarwind         : Surface marine wind vectors
+    t                   : Temperature
+    tmi_rain_rate       : TMI Rain Rate
+    tropics             : Tropics
+    u                   : U-Wind
+    v                   : V-Wind
+    watervapour         : Water vapor cloud top U,V (NASA/MODIS POES Aqua/Terra)
+    windsat_wind        : WINDSAT Wind
+    windsatwind         : WINDSAT wind vectors
+
+
+generated on 2012-05-18 15:13:57</pre>
+</div>
+<p>There are currently three sections in the beautifier:</p>
+<blockquote>
+<div><ul class="simple">
+<li>abbreviated for shorter text equivalent</li>
+<li>legend for texts in legends which normally need to be even shorter</li>
+<li>title for long explanatory texts</li>
+</ul>
+</div></blockquote>
+<p>Please see the section <a class="reference internal" href="../config/configure.html#beautifyconfig"><em>Text substitution (beautify)</em></a> for more information about how to customize the
+beautifer. Please note that <strong>spy_doc</strong> help is generated dynamically, if you add your own entries
+in the beautifier, they will be shown in the help.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using SemperPy</a><ul>
+<li><a class="reference internal" href="#loading-semperpy">Loading SemperPy</a></li>
+<li><a class="reference internal" href="#version-strategy">Version Strategy</a></li>
+<li><a class="reference internal" href="#getting-help">Getting help</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../config/configure.html"
+                        title="next chapter">Configuring SemperPy</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/using/using.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../config/configure.html" title="Configuring SemperPy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

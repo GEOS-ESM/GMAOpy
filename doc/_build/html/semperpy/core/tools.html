@@ -1,0 +1,701 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tools — Micellaneous language tools &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="core — Core classes" href="coremodule.html" />
+    <link rel="next" title="directive — A class enhancing python dictionaries" href="../directive/directivemodule.html" />
+    <link rel="prev" title="truthparser — Parsing Boolean expressions" href="truthparser.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../directive/directivemodule.html" title="directive — A class enhancing python dictionaries"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="truthparser.html" title="truthparser — Parsing Boolean expressions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-core.tools">
+<span id="tools-micellaneous-language-tools"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">tools</span></tt> &#8212; Micellaneous language tools<a class="headerlink" href="#module-core.tools" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="miscellaneous-classes-and-functions">
+<h2>Miscellaneous classes and functions<a class="headerlink" href="#miscellaneous-classes-and-functions" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The <strong>tools</strong> module offers different convenience classes and functions. It is probably
+quicker to look at the source file to find out what things do.</p>
+<dl class="function">
+<dt id="core.tools.specialise">
+<tt class="descclassname">core.tools.</tt><tt class="descname">specialise</tt><big>(</big><em>newclass</em><big>)</big><a class="headerlink" href="#core.tools.specialise" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>newclass</strong> (<em>any class</em>) &#8211; The class to change to</td>
+</tr>
+</tbody>
+</table>
+<p>Dynamically changes the current class of the object to newclass.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.classname">
+<tt class="descclassname">core.tools.</tt><tt class="descname">classname</tt><big>(</big><big>)</big><a class="headerlink" href="#core.tools.classname" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the class name of the current object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.classof">
+<tt class="descclassname">core.tools.</tt><tt class="descname">classof</tt><big>(</big><big>)</big><a class="headerlink" href="#core.tools.classof" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the class object of the current object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.is_string">
+<tt class="descclassname">core.tools.</tt><tt class="descname">is_string</tt><big>(</big><em>what</em><big>)</big><a class="headerlink" href="#core.tools.is_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns True or False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.to_list">
+<tt class="descclassname">core.tools.</tt><tt class="descname">to_list</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#core.tools.to_list" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>any type</em>) &#8211; any variable</td>
+</tr>
+</tbody>
+</table>
+<p>create a list out of a single element or returns it untouched if it is
+already a list ot a tuple.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.no_list">
+<tt class="descclassname">core.tools.</tt><tt class="descname">no_list</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#core.tools.no_list" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>any type</em>) &#8211; any variable</td>
+</tr>
+</tbody>
+</table>
+<p>returns the first element if it is a one element list or tuple. Raises ValueError if the list has more than one element.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.is_list">
+<tt class="descclassname">core.tools.</tt><tt class="descname">is_list</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#core.tools.is_list" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>any type</em>) &#8211; any variable</td>
+</tr>
+</tbody>
+</table>
+<p>returns True or False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.is_tuple">
+<tt class="descclassname">core.tools.</tt><tt class="descname">is_tuple</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#core.tools.is_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>any type</em>) &#8211; any variable</td>
+</tr>
+</tbody>
+</table>
+<p>returns True or False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.is_tuple_or_list">
+<tt class="descclassname">core.tools.</tt><tt class="descname">is_tuple_or_list</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#core.tools.is_tuple_or_list" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>any type</em>) &#8211; any variable</td>
+</tr>
+</tbody>
+</table>
+<p>returns True or False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.is_dict">
+<tt class="descclassname">core.tools.</tt><tt class="descname">is_dict</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#core.tools.is_dict" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>any type</em>) &#8211; any variable</td>
+</tr>
+</tbody>
+</table>
+<p>returns True or False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.to_lower">
+<tt class="descclassname">core.tools.</tt><tt class="descname">to_lower</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#core.tools.to_lower" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>any type</em>) &#8211; any variable</td>
+</tr>
+</tbody>
+</table>
+<p>recursively converts any arbitrary stucture to lower case.
+It is aware of strings tuples, lists and dictionary and converts
+any string contained to lower case. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;Hello&#39;</span><span class="p">,</span><span class="s">&#39;World&#39;</span><span class="p">],{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;HELLO&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">:</span><span class="s">&#39;world&#39;</span><span class="p">},</span><span class="s">&#39;SHOUT&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">to_lower</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="p">[[</span><span class="s">&#39;hello&#39;</span><span class="p">,</span> <span class="s">&#39;world&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="s">&#39;hello&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="s">&#39;world&#39;</span><span class="p">},</span> <span class="s">&#39;shout&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.float10Power">
+<tt class="descclassname">core.tools.</tt><tt class="descname">float10Power</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#core.tools.float10Power" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the power of 10 of a float, postive or negative value</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.floatFormat">
+<tt class="descclassname">core.tools.</tt><tt class="descname">floatFormat</tt><big>(</big><em>power</em><big>)</big><a class="headerlink" href="#core.tools.floatFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a Python type format using the power of 10 given as a parameter. Numbers
+less than 10^-2 or more than 10^+2 are formatted using the exponant notation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.apply_type">
+<tt class="descclassname">core.tools.</tt><tt class="descname">apply_type</tt><big>(</big><em>thisType</em>, <em>item</em><big>)</big><a class="headerlink" href="#core.tools.apply_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>thisType</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#any" title="(in Python v2.7)"><em>any</em></a>) &#8211; a valid python class</li>
+<li><strong>item</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#any" title="(in Python v2.7)"><em>any</em></a>) &#8211; any variable</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>builds an instance of &#8216;thisType&#8217; initialised with item, or if item is
+a list, builds a list of instances of &#8216;thisType&#8217;, for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;12&#39;</span><span class="p">,</span><span class="s">&#39;24&#39;</span><span class="p">,</span><span class="s">&#39;45&#39;</span><span class="p">,</span><span class="s">&#39;50&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">apply_type</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.apply_type_deep">
+<tt class="descclassname">core.tools.</tt><tt class="descname">apply_type_deep</tt><big>(</big><em>thisType</em>, <em>item</em><big>)</big><a class="headerlink" href="#core.tools.apply_type_deep" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>thisType</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#any" title="(in Python v2.7)"><em>any</em></a>) &#8211; a valid python class</li>
+<li><strong>item</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#any" title="(in Python v2.7)"><em>any</em></a>) &#8211; any variable</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>recursively builds instances of &#8216;thisType&#8217; in arbitrary stucture
+with item going through lists and dictionaries (hence <em>deep</em>), for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;12&#39;</span><span class="p">,</span><span class="s">&#39;24&#39;</span><span class="p">,</span><span class="s">&#39;45&#39;</span><span class="p">,{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;12&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">13</span><span class="p">},</span><span class="s">&#39;50&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">apply_type_deep</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">},</span> <span class="mi">50</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.resolve_environment_variables">
+<tt class="descclassname">core.tools.</tt><tt class="descname">resolve_environment_variables</tt><big>(</big><em>what</em><big>)</big><a class="headerlink" href="#core.tools.resolve_environment_variables" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>what</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; contains text and possibly environment variable name in the form: ${VARIABLE}</td>
+</tr>
+</tbody>
+</table>
+<p>This function looks in the shell environment and substitutes each variable name with its value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;Map over ${DOMAIN}&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.substitute_variables">
+<tt class="descclassname">core.tools.</tt><tt class="descname">substitute_variables</tt><big>(</big><em>template</em>, <em>what</em><big>)</big><a class="headerlink" href="#core.tools.substitute_variables" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>template</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; containing the templated text</li>
+<li><strong>what</strong> (<em>dictionary</em>) &#8211; containing entries with the same name as the variables</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>template is a string containing variable following the format:
+&#8220;&lt;var1&gt; &lt;var2&gt; etc...&#8221;.</p>
+<div class="highlight-python"><pre>template = "&lt;type&gt; for &lt;valid&gt;, parameter &lt;parameter&gt;, level &lt;level&gt;"
+what = dict(
+    type = 'forecast',
+    valid = 2010121500,
+    parameter = 't',
+    level = 500
+)
+print substitute_variables(template,what)
+forecast for 2010121500, parameter t, level 500</pre>
+</div>
+<p>This is a convenience function, it first calls the function find_variables
+and then the function substitute_variable_list.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.find_variables">
+<tt class="descclassname">core.tools.</tt><tt class="descname">find_variables</tt><big>(</big><em>template</em><big>)</big><a class="headerlink" href="#core.tools.find_variables" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; containing the templated text</td>
+</tr>
+</tbody>
+</table>
+<p>Returns the list of variable names contained in the string template please see
+<a class="reference internal" href="#core.tools.substitute_variables" title="core.tools.substitute_variables"><tt class="xref py py-func docutils literal"><span class="pre">substitute_variables()</span></tt></a> above.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.substitute_variable_list">
+<tt class="descclassname">core.tools.</tt><tt class="descname">substitute_variable_list</tt><big>(</big><em>variables</em>, <em>template</em>, <em>what</em><big>)</big><a class="headerlink" href="#core.tools.substitute_variable_list" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variables</strong> (<em>list of strings</em>) &#8211; the list of variables to be substituted in the template, typically returned by the function find_variables</li>
+<li><strong>template</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; containing the templated text</li>
+<li><strong>what</strong> (<em>dictionary</em>) &#8211; containing entries with the same name as the variables</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Please see <a class="reference internal" href="#core.tools.substitute_variables" title="core.tools.substitute_variables"><tt class="xref py py-func docutils literal"><span class="pre">substitute_variables()</span></tt></a> above.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.substitute_unix_dates">
+<tt class="descclassname">core.tools.</tt><tt class="descname">substitute_unix_dates</tt><big>(</big><em>template</em>, <em>name1</em>, <em>thedate1</em>, <em>...</em>, <em>nameN</em>, <em>thedateN</em><big>)</big><a class="headerlink" href="#core.tools.substitute_unix_dates" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>template</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; containing the templated text</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; used in the template for the date following, these work in pairs</li>
+<li><strong>thedate</strong> (<tt class="xref py py-class docutils literal"><span class="pre">core.date.Date</span></tt>) &#8211; to be formatatted and use for the substitution</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>template is a string containing dates expressed as: name(strftime-format)
+where: name is here the string preceding the (format), e.g. date(%d).
+The format complies with the Unix format for the function strftime:</p>
+<div class="highlight-python"><pre>template = "forecast/Ydate(%Y)/Mdate(%m)/Ddate(%d)/Hdate(%H)/date(%Y%m%d_%Hz)+valid(%Y%m%d_%H%Mz).hdf
+a = substitute_unix_dates(template,'date',Date(2010010100))
+print substitute_unix_dates(template,'valid',Date(2010010212))
+forecast/Y2010/M10/D01/H00/20100101_00z+20100102_1200z</pre>
+</div>
+<p>Please note that for convenience in configuration files (see <a class="reference internal" href="configfile.html#core.configfile.ConfigFile" title="core.configfile.ConfigFile"><tt class="xref py py-class docutils literal"><span class="pre">core.configfile.ConfigFile</span></tt></a>),
+the format can also be expressed using the character &#8216;&#64;&#8217; instead of &#8216;%&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.substitute_unix_calculated_dates">
+<tt class="descclassname">core.tools.</tt><tt class="descname">substitute_unix_calculated_dates</tt><big>(</big><em>template</em>, <em>date</em>, <em>keyword = 'date'</em><big>)</big><a class="headerlink" href="#core.tools.substitute_unix_calculated_dates" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>template</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; containing the templated text</li>
+<li><strong>date</strong> (<tt class="xref py py-class docutils literal"><span class="pre">core.date.Date</span></tt>) &#8211; a date</li>
+<li><strong>keyword</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the name of the variable in the template, see below</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This function is similar to <a class="reference internal" href="#core.tools.substitute_unix_dates" title="core.tools.substitute_unix_dates"><tt class="xref py py-func docutils literal"><span class="pre">substitute_unix_dates()</span></tt></a>, it substitutes dates
+formatted as strftime-format, but dates can include simple calculations:</p>
+<div class="highlight-python"><pre>s = 'date(@Y@m@d_@H@Mz)-date+12(@Y@m@d_@H@Mz)-date-12(@Y@m@d_@H@Mz)'
+date = Date(2011020100)
+print substitute_unix_calculated_dates(s,date)
+  -&gt; 20110201_0000z-20110201_1200z-20110131_1200z</pre>
+</div>
+<p>The calculations depend on the unit of the date:</p>
+<div class="highlight-python"><pre>s = 'date(@Y@m@d_@H@Mz)-date+12(@Y@m@d_@H@Mz)-date-12(@Y@m@d_@H@Mz)'
+date = Date(20110201)
+print substitute_unix_calculated_dates(s,date)
+  -&gt; 20110201_0000z-20110213_0000z-20110120_0000z</pre>
+</div>
+<p>Finally, you can combine the use of this function with <tt class="xref py py-func docutils literal"><span class="pre">subtitute_variables()</span></tt>
+to express the calculation in terms of variables part of a dictionary (please also
+note the use of the <strong>keyword</strong> parameter):</p>
+<div class="highlight-python"><pre>d = dict(step=12)
+s = 'time(@Y@m@d_@H@Mz)-time+&lt;step&gt;(@Y@m@d_@H@Mz)-time-&lt;step&gt;(@Y@m@d_@H@Mz)'
+s = substitute_variables(s,d)
+date = Date(2011020100)
+print substitute_unix_calculated_dates(s,date,keyword='time')
+  -&gt; 20110201_0000z-20110213_0000z-20110120_0000z</pre>
+</div>
+<p>Please note that for convenience in configuration files (see <a class="reference internal" href="configfile.html#core.configfile.ConfigFile" title="core.configfile.ConfigFile"><tt class="xref py py-class docutils literal"><span class="pre">core.configfile.ConfigFile</span></tt></a>),
+the format can also be expressed using the character &#8216;&#64;&#8217; instead of &#8216;%&#8217;.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="core.tools.dictionary">
+<em class="property">class </em><tt class="descclassname">core.tools.</tt><tt class="descname">dictionary</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#core.tools.dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>inherits from the built-in dict and redefines the __str__ method to improve
+the display of the dictionary, particularly with nested dictionaries.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="core.tools.nocasedict">
+<em class="property">class </em><tt class="descclassname">core.tools.</tt><tt class="descname">nocasedict</tt><big>(</big><em>dictionary</em><big>)</big><a class="headerlink" href="#core.tools.nocasedict" title="Permalink to this definition">¶</a></dt>
+<dd><p>inherits from dictionary but also convert the dictionary keys to lower case
+when reading and writing.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.mergedicts_overwrite">
+<tt class="descclassname">core.tools.</tt><tt class="descname">mergedicts_overwrite</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="headerlink" href="#core.tools.mergedicts_overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a new dictionary after merging dictionaries a and b. If a and b have some common
+keys, b&#8217;s values are kept.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.mergedicts_keep">
+<tt class="descclassname">core.tools.</tt><tt class="descname">mergedicts_keep</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="headerlink" href="#core.tools.mergedicts_keep" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a new dictionary after merging dictionaries a and b. If a and b have some common
+keys, a&#8217;s values are kept.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="core.tools.ErrorCreator">
+<em class="property">class </em><tt class="descclassname">core.tools.</tt><tt class="descname">ErrorCreator</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#core.tools.ErrorCreator" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a small utility to help keep code readable when dealing with errors. Sometimes,
+when we detect an error, we want to continue and report the error later or report
+a list of errors instead just one, which saves time when debugging. This is what this
+class does.</p>
+<dl class="method">
+<dt>
+<tt class="descname">__init__(exception,title = ''):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>exception</strong> &#8211; the class of the exception to raise</li>
+<li><strong>title</strong> &#8211; a general title to be displayed is the exception is raised</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.tools.ErrorCreator.__call__">
+<tt class="descname">__call__</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#core.tools.ErrorCreator.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends the message to the list of messages to display.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.tools.ErrorCreator.check">
+<tt class="descname">check</tt><big>(</big><big>)</big><a class="headerlink" href="#core.tools.ErrorCreator.check" title="Permalink to this definition">¶</a></dt>
+<dd><p>If no messages have been added through the __call__ method, nothing happens,
+otherwise, an exception of the class given in the constructor is raised, initialised
+with all messages added through the __call__  method separated by a new line.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.distribute">
+<tt class="descclassname">core.tools.</tt><tt class="descname">distribute</tt><big>(</big><em>values</em><big>)</big><a class="headerlink" href="#core.tools.distribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>recursively distributes all values contained in values, in other terms, generates all the possible combinations.
+The parameter values is expected to be a list of any type of element, combinations will be generated if some of these
+elements are lists:</p>
+<div class="highlight-python"><pre>a = [1,2,3,4]
+print distribute(a)
+ [[1, 2, 3, 4]]
+a = [1,2,3,[4,5]]
+print distribute(a)
+ [[1, 2, 3, 4], [1, 2, 3, 5]]
+a = [1,[2,3],[4,5],[6,7]]
+print distribute(a)
+ [[1, 2, 4, 6], [1, 2, 4, 7], [1, 2, 5, 6], [1, 2, 5, 7], [1, 3, 4, 6], [1, 3, 4, 7], [1, 3, 5, 6], [1, 3, 5, 7]]
+[[1, 2, 3, 4], [1, 2, 3, 5]]</pre>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.nestedLoops">
+<tt class="descclassname">core.tools.</tt><tt class="descname">nestedLoops</tt><big>(</big><em>directive</em>, <em>keywords</em>, <em>action = None</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#core.tools.nestedLoops" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directive</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; A dictionary containing keywords. Some keywords are lists, this function executes nested loops given by the keyword <strong>keywords</strong> and generates as many dictionaries as combinations</li>
+<li><strong>keywords</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of keywords, the number of items in the list determines the number of nested loops</li>
+<li><strong>action</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#callable" title="(in Python v2.7)"><em>callable</em></a>) &#8211; a function to be called for each dictionary generated.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This function executes nested loops given by the keyword <strong>keywords</strong> and generates as many dictionaries as combinations. If an action is passed, it is called for each combination. The function also returns the list all of combinations. Extra parameters can be passed to the action through **kargs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d</span> <span class="o">=</span> <span class="n">dictionary</span><span class="p">(</span>
+    <span class="n">direction</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;north&#39;</span><span class="p">,</span><span class="s">&#39;south&#39;</span><span class="p">,</span><span class="s">&#39;west&#39;</span><span class="p">,</span><span class="s">&#39;east&#39;</span><span class="p">],</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">150</span><span class="p">],</span>
+    <span class="n">vehicule</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span><span class="s">&#39;car&#39;</span><span class="p">],</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="mo">0001</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">print</span> <span class="n">nestedLoops</span><span class="p">(</span><span class="n">d</span><span class="p">,[</span><span class="s">&#39;direction&#39;</span><span class="p">,</span><span class="s">&#39;speed&#39;</span><span class="p">,</span><span class="s">&#39;vehicule&#39;</span><span class="p">])</span>
+
+<span class="p">[{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}]</span>
+
+<span class="k">def</span> <span class="nf">visitor</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span><span class="n">current</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">current</span>
+<span class="k">print</span> <span class="n">nestedLoops</span><span class="p">(</span><span class="n">d</span><span class="p">,[</span><span class="s">&#39;direction&#39;</span><span class="p">,</span><span class="s">&#39;speed&#39;</span><span class="p">,</span><span class="s">&#39;vehicule&#39;</span><span class="p">],</span><span class="n">visitor</span><span class="p">)</span>
+
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;north&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;north&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;north&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;north&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;north&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;north&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;south&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;south&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;south&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;south&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;south&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;south&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;west&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;west&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;west&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;west&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;west&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;west&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;boat&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="s">&#39;car&#39;</span><span class="p">}</span>
+
+<span class="n">nestedLoops</span><span class="p">(</span><span class="n">d</span><span class="p">,[</span><span class="s">&#39;direction&#39;</span><span class="p">,</span><span class="s">&#39;speed&#39;</span><span class="p">],</span><span class="n">visitor</span><span class="p">)</span>
+
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;north&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;north&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;north&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;south&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;south&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;south&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;west&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;west&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;west&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+<span class="p">{</span><span class="s">&#39;direction&#39;</span><span class="p">:</span> <span class="s">&#39;east&#39;</span><span class="p">,</span> <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="s">&#39;expver&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;vehicule&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;boat&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">]}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">The list returned by the function is reversed (recursive processing), you can reverse it again if necessary: mylist.reverse()</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.dirlist">
+<tt class="descclassname">core.tools.</tt><tt class="descname">dirlist</tt><big>(</big><em>dir</em>, <em>follow_symlinks = True</em><big>)</big><a class="headerlink" href="#core.tools.dirlist" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dir</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; A valid os path</li>
+<li><strong>follow_symlinks</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; follow symbolic links</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Walks a directory tree and returns a list of the full path to the directories found under dir + dir itself. If required
+it follows symbolic links.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.tools.dirwalk">
+<tt class="descclassname">core.tools.</tt><tt class="descname">dirwalk</tt><big>(</big><em>dir</em>, <em>follow_symlinks = True</em><big>)</big><a class="headerlink" href="#core.tools.dirwalk" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dir</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; A valid os path</li>
+<li><strong>follow_symlinks</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; follow symbolic links</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Walks a directory tree and returns a full path to each of the directories including dir itself. It is implemented as a generator.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">tools</span></tt> &#8212; Micellaneous language tools</a><ul>
+<li><a class="reference internal" href="#miscellaneous-classes-and-functions">Miscellaneous classes and functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="truthparser.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">truthparser</span></tt> &#8212; Parsing Boolean expressions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../directive/directivemodule.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">directive</span></tt> &#8212; A class enhancing python dictionaries</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/core/tools.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../directive/directivemodule.html" title="directive — A class enhancing python dictionaries"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="truthparser.html" title="truthparser — Parsing Boolean expressions"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

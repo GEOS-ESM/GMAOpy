@@ -1,0 +1,200 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Slice to List Visitor — Slicing into a collection of multi-dimensional arrays &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="slicing — Slicing multi-dimensional arrays" href="slicingmodule.html" />
+    <link rel="next" title="Dimensions — Different classes to handle different kinds of dimensions" href="dimensions/dimensionmodule.html" />
+    <link rel="prev" title="The Slice to Array Visitor — Slicing into a multi-dimensional array" href="slice2array.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dimensions/dimensionmodule.html" title="Dimensions — Different classes to handle different kinds of dimensions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="slice2array.html" title="The Slice to Array Visitor — Slicing into a multi-dimensional array"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="slicingmodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-slicer.slice2list">
+<span id="the-slice-to-list-visitor-slicing-into-a-collection-of-multi-dimensional-arrays"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">Slice</span> <span class="pre">to</span> <span class="pre">List</span> <span class="pre">Visitor</span></tt> &#8212; Slicing into a collection of multi-dimensional arrays<a class="headerlink" href="#module-slicer.slice2list" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="slicer.slice2list.Slice2List">
+<em class="property">class </em><tt class="descclassname">slicer.slice2list.</tt><tt class="descname">Slice2List</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#slicer.slice2list.Slice2List" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">Slice2List(visitor):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>visitor</strong> &#8211; a visitor to handle the creation of arrays.</td>
+</tr>
+</tbody>
+</table>
+<p>Slice2List create a discrete list of n dimensional arrays (e.g. a list of vertical slices or a list of horizontal fields) with their associated metadata. The visitor should provided
+the following interface:</p>
+<div class="highlight-python"><pre>def __call__(self,slices,metadata,**kargs):
+    # slices: a list of one slice (exceptionally 2) to extract from the source array
+    # metadata: metadata regarding the dimensions of the array
+    # kargs: metadata extracted from the original directive passed to the slicer
+
+def preProcess(self,dimensions,source,shape,slices,metadata):
+    # see :class:`slicer.slicer.Slicer`
+
+def postProcess(self,dimensions,source,shape,slices,metadata):
+    # see :class:`slicer.slicer.Slicer`
+
+def fieldSet(self,new = None):
+    # should return a collection of created fields / arrays.</pre>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__call__(dimensions,variable,src,dst,meta,is_interval,**kargs):</tt></dt>
+<dd><p>The parameters are described in <a class="reference internal" href="slicer.html#slicer.slicer.Slicer" title="slicer.slicer.Slicer"><tt class="xref py py-class docutils literal"><span class="pre">slicer.slicer.Slicer</span></tt></a>. Copies slices of
+<em>variable</em> into a newly create array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">preProcess(dimensions,variable,shape,slices,metadata):</tt></dt>
+<dd><p>calls the visitor&#8217;s preProcess method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">postProcess(dimensions,variable,shape,slices,metadata):</tt></dt>
+<dd><p>calls the visitor&#8217;s postProcess method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">fieldset():</tt></dt>
+<dd><p>returns the generated <tt class="xref py py-class docutils literal"><span class="pre">fields.fieldset.FieldSet</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Slice</span> <span class="pre">to</span> <span class="pre">List</span> <span class="pre">Visitor</span></tt> &#8212; Slicing into a collection of multi-dimensional arrays</a><ul>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="slice2array.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Slice</span> <span class="pre">to</span> <span class="pre">Array</span> <span class="pre">Visitor</span></tt> &#8212; Slicing into a multi-dimensional array</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dimensions/dimensionmodule.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">Dimensions</span></tt> &#8212; Different classes to handle different kinds of dimensions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/slicing/slice2list.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dimensions/dimensionmodule.html" title="Dimensions — Different classes to handle different kinds of dimensions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="slice2array.html" title="The Slice to Array Visitor — Slicing into a multi-dimensional array"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

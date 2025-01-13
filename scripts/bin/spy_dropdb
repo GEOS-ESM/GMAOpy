@@ -1,0 +1,4 @@
+#!/bin/bash
+
+where=$(dirname $0)
+python $where/createdb.py --drop_only $@

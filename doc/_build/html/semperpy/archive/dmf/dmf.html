@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DMF implementation of Archive &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="archive — Dealing with mass storage systems" href="../archivemodule.html" />
+    <link rel="next" title="core — Core classes" href="../../core/coremodule.html" />
+    <link rel="prev" title="The Archive base class — Mass storage specific" href="../archive.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../core/coremodule.html" title="core — Core classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../archive.html" title="The Archive base class — Mass storage specific"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../archivemodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">archive</span></tt> &#8212; Dealing with mass storage systems</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-archive.dmf">
+<span id="dmf-implementation-of-archive"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">DMF</span> <span class="pre">implementation</span> <span class="pre">of</span> <span class="pre">Archive</span></tt><a class="headerlink" href="#module-archive.dmf" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="archive.dmf.DMF">
+<em class="property">class </em><tt class="descclassname">archive.dmf.</tt><tt class="descname">DMF</tt><big>(</big><em>Archive</em><big>)</big><a class="headerlink" href="#archive.dmf.DMF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The <strong>DMF</strong> implement the abstract methods of the class <tt class="xref py py-class docutils literal"><span class="pre">archive.archive.Archive</span></tt>
+to handle a DMF file system. Whenever <strong>dm...</strong> commands are called for multiple files,
+a pipe is open between the current process and the dmget command to pass the list of
+files. This is more efficient. It is much safer not to pass any files which are not handled
+by DMF as some invalid results can sometimes be encountered (e.g. NASA).</p>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">do_stage(filelist):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filelist</strong> (<em>sequence</em>) &#8211; list of files to stage</td>
+</tr>
+</tbody>
+</table>
+<p>Calls the command <strong>dmget</strong> for each of the file specified.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">offline(filelist):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filelist</strong> (<em>sequence</em>) &#8211; a list of files in the archive</td>
+</tr>
+</tbody>
+</table>
+<p>Calls the command <strong>dmattr -a state</strong> for each of the files and if the
+result is OFL, the file is kept in the list of files to stage. Returns
+the list of files found offline.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">filesize(filelist):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filelist</strong> (<em>sequence</em>) &#8211; a list of files in the archive</td>
+</tr>
+</tbody>
+</table>
+<p>Calls the command <strong>dmattr -a size</strong> for each of the files and returns a list
+of sizes in bytes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">do_copy(filelist,destination):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filelist</strong> (<em>sequence</em>) &#8211; a list of files in the archive</li>
+<li><strong>destination</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; path to the destination directory</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Does nothing, files once put online are accessible from the DMF virtual file system.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../archive.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Archive</span> <span class="pre">base</span> <span class="pre">class</span></tt> &#8212; Mass storage specific</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../core/coremodule.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/semperpy/archive/dmf/dmf.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../core/coremodule.html" title="core — Core classes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../archive.html" title="The Archive base class — Mass storage specific"
+             >previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../archivemodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">archive</span></tt> &#8212; Dealing with mass storage systems</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

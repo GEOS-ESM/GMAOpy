@@ -1,0 +1,53 @@
+Introduction
+============
+
+    **SemperPy** is a **Python** programming framework designed to offer tools for writing applications specialised in the decoding and processing of meteorological, climatological and environmental data. The first objective is to develop diagnostic, verification and plotting tools.
+    
+    Why naming a programming framework? Mostly because it then becomes easier to talk about it and reference it. Running out of available and meaningful names, I settled for **SemperPy** which has a double meaning. In Latin *Semper* means *always* or *forever* and *Py* stands for *Python*. **Always Python** states my enthusiasm for this language for writing programming frameworks with sugared syntax. **Semper fidelious** is a Latin construction meaning **always faithful**, **semper fi** for short. It has been the motto of the U.S. Marine Corps and other military corps. **SemperPy** also stands for *always faithful*, it will hopefully not fail you.
+
+    **SemperPy** was designed with two main crucial goals in mind:
+
+    * implement robust code which facilitates the development of reliable operational or semi-operational software. The library offers strong mechanisms to detect errors through assertion programming and exception handling. 
+    * offer scientists tools hiding most technical details to help them focus on their project at hand and not waste time on solving low level problems over and over.
+
+    The tools offered to the scientists are identical to the tools used to develop applications and operational software. In other words, the *building blocks* available to the users of the framework are the very building blocks used to develop operational software. This means that any user can specialise existing applications and that developments made using the framework are strong candidates for operational use.
+
+    **SemperPy** is also a great candidate to develop interactive tools for the researcher with a graphic user interface, ideally in a web environment with huge amounts of space for customization.
+
+Design concepts
+---------------
+
+    The design of **SemperPy** was made following the following concepts:
+
+    * python is an easy-to-learn language, it is fast and reliable, an enormous amount of third-party modules are available to deal with everything and the kitchen sink.
+    * python is easily interfaced with different languages such as C, C++ and Fortran. It plays the role of a glue between different libraries and environments.
+    * object orientation facilitates modular and extendable software, it is strongly supported by Python, and highly recommended for the design of software.
+    * the main idea of using Python as a glue is to read different types of data from different formats and media and put all this data in a central place in a Python program to be processed (the *numpy* array).
+    * the fields of meteorology, climatology and environment involve dealing with a big amount of data. Capturing the identification, the location and the nature of the data into a programming framework, transfers people's expertise into an easy-to-use library available to all.
+    * providing a programming framework to researchers instead of a rigid interactive application, acknowledges their need and capability to innovate and to take full ownership of their research. However, highly customisable interactive tools could solve as much as 70 to 80% of the needs.
+
+Features
+--------
+
+    **SemperPy** is in constant development and its list of features is only limited to its users' imagination, the current features are:
+
+    * reading gridded fields into a generic Field object. The first formats to be supported are *netCDF* with the *CF 1.0* convention as used at GMAO and *GRIB* edition 1 and 2 to handle fields from NCEP, ECMWF and others.
+    * easy and standardized access to field data (e.g. parameter, field type, level, step etc...)
+    * capability to index, sort, plot, derive fields
+    * field slicing in index and physical spaces
+    * compute forecast skill scores.
+    * provide support for client-server communication management through http using *Twisted Matrix*.
+    * provide tools to offer users of the framework an easy way to parameterize programs through configuration files and a user-oriented language.
+    * reading observations and observation impacts from ODS files.
+    * filtering of observations.
+    * computing statistics.
+    * plot graphs using statistics and skill scores.
+    * plot data from ODS files.
+
+.. sectionauthor:: Claude Gibert 2010-2011-2012
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+

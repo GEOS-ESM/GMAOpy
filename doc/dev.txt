@@ -1,0 +1,9 @@
+Developer's guide
+=================
+
+Contents:
+
+.. toctree::
+   :maxdepth: 3
+
+   dev/plotting/plottingmodule

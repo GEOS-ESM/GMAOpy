@@ -1,0 +1,41 @@
+{
+    "directive": "plotfont",
+    "doc": true,
+    "help": ["These attributes are native attributes from matplotlib,","\n\nplease see http://matplotlib.sourceforge.net/api/font_manager_api.html#matplotlib.font_manager.FontProperties"],
+    "keywords": {
+        "family": {
+            "unique": true,
+            "default_value": "sans-serif",
+            "validate": ["ValidateChoice","serif","sans-serif","cursive","fantasy","monospace"]
+        },
+        "style": {
+            "unique": true,
+            "default_value": ["normal"],
+            "validate": ["ValidateChoice","normal","italic","oblique"]
+        },
+        "variant": {
+            "unique": true,
+            "default_value": ["normal"],
+            "validate": ["ValidateChoice","normal","small-caps"]
+        },
+        "stretch": {
+            "unique": true,
+            "default_value": ["normal"],
+            "validate": ["ValidateChoice","float","ultra-condensed","extra-condensed","condensed","semi-condensed","normal","semi-expanded","expanded","extra-expanded","ultra-expanded"]
+        },
+        "weight": {
+            "unique": true,
+            "default_value": ["normal"],
+            "validate": ["ValidateChoice","float","ultralight","light","normal","regular","book","medium","roman","semibold","demibold","demi","bold","heavy","extra bold","black"]
+        },
+        "size": {
+            "unique": true,
+            "default_value": ["medium"],
+            "validate": ["ValidateChoice","xx-small","x-small","small","medium","large","x-large","xx-large"]
+        },
+        "fname": {
+            "unique": true,
+            "default_value": null
+        }
+    }
+}

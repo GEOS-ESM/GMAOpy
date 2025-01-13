@@ -1,0 +1,25 @@
+The ODSGroup class
+------------------
+
+.. class:: ODSGroup(object)
+
+    The **ODSGroup** is a wrapper around the **ODS** class, enabling to read from multiple ODS files at
+    a time by calling ODS methods and concatenating filters and variables which are returned.
+
+    .. method:: ODSGroup(files):
+
+        :param files: list of ods files to read
+        :type files: list
+
+        Opens the specified files.
+
+    .. method:: compile(expression, used_observations = True):
+
+        Same as ODS.compile but compiles the expression over all the open files.
+
+    .. method:: extract(name,filter = None):
+
+        Same as ODS.extract but extracts the variable over all the open files. If filter is provided,
+        it is applied to the concatenated variable.
+
+        :synonym: read

@@ -1,0 +1,15 @@
+:mod:`The LatDimension class`
+=============================
+
+.. module:: slicer.cf10
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: LatDimension(IndexedDimension)
+
+Summary
+-------
+
+    The LatDimension class inherits fully from IndexedDimension without any specialization.
+    It was created for clarity only.

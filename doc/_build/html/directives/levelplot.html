@@ -1,0 +1,1017 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>levelplot &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="directives — Application directives" href="directives.html" />
+    <link rel="next" title="meanplot" href="meanplot.html" />
+    <link rel="prev" title="graphics" href="graphics.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="meanplot.html" title="meanplot"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="graphics.html" title="graphics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="directives.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">directives</span></tt> &#8212; Application directives</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="levelplot">
+<span id="id1"></span><h1>levelplot<a class="headerlink" href="#levelplot" title="Permalink to this headline">¶</a></h1>
+<p><strong>inherit_from</strong>: [&#8216;plot&#8217;]</p>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">keyword</th>
+<th class="head">default</th>
+<th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>colorbar_title</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>lowercase</em></td>
+<td>False</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>comment</strong></td>
+<td>[]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>alias</em></td>
+<td>annotate</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>decorator</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>curve</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>alias</em></td>
+<td>curves</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>curve</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>datahook</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>graphics</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>graphics</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>has_legend</strong></td>
+<td>False</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>has_title</strong></td>
+<td>True</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>has_xtitle</strong></td>
+<td>False</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>has_ytitle</strong></td>
+<td>False</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>legend</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>plotlegend</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>plotdata</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>sort</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>validate</em></td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>increasing</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>decreasing</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>rank_increasing</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>rank_decreasing</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>title</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>lowercase</em></td>
+<td>False</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>title_font</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>plotfont</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>xaxis</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>alias</em></td>
+<td>x_axis</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>axis</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>xtitle</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>lowercase</em></td>
+<td>False</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>yaxis</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>alias</em></td>
+<td>y_axis</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>axis</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>ytitle</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>lowercase</em></td>
+<td>False</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="keywords">
+<h2>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="colorbar-title">
+<h3>colorbar_title<a class="headerlink" href="#colorbar-title" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>A string specifying the text template to use for the title of the colormap</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>lowercase</td>
+<td>False</td>
+</tr>
+<tr class="row-odd"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="comment">
+<h3>comment<a class="headerlink" href="#comment" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<p>A directive specifying special annotations on the plot (commentline, commenttext)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>alias</td>
+<td>annotate</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>decorator</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="curve">
+<h3>curve<a class="headerlink" href="#curve" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<p>A list of directives of type line, bar, dot etc...</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>alias</td>
+<td>curves</td>
+</tr>
+<tr class="row-odd"><td>type</td>
+<td>curve</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="datahook">
+<h3>datahook<a class="headerlink" href="#datahook" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>This is a callable which is called for each set of data retrieved / computed during the production of the plot. This is particularly handy for printing out values etc... A standard datahook is provided, it is called printhook</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="graphics">
+<h3>graphics<a class="headerlink" href="#graphics" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<p>A directive specifying graphics attributes for the plot, these are inherited by curves</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>graphics</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="has-legend">
+<h3>has_legend<a class="headerlink" href="#has-legend" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>False</strong></p>
+<p>Switches the display of the legend on and off</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="has-title">
+<h3>has_title<a class="headerlink" href="#has-title" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>True</strong></p>
+<p>Switches the display of the plot title on and off</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="has-xtitle">
+<h3>has_xtitle<a class="headerlink" href="#has-xtitle" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>False</strong></p>
+<p>Switches the display of the X axis title on and off</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="has-ytitle">
+<h3>has_ytitle<a class="headerlink" href="#has-ytitle" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>False</strong></p>
+<p>Switches the display of the Y axis title on and off</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="legend">
+<h3>legend<a class="headerlink" href="#legend" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<p>A string specifying the text template to use for the legend</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>plotlegend</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="plotdata">
+<h3>plotdata<a class="headerlink" href="#plotdata" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>A directive specifying meta data for the type of data being plotted (obssdate, odsdata, scoredata, etc...)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sort">
+<h3>sort<a class="headerlink" href="#sort" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>This option is useful when plotting bars. Sometimes we want the bars to be sorted to have increasing or decreasing bars in size and value. The special value None means no sorting.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>validate</td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>None</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>increasing</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>decreasing</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>rank_increasing</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>rank_decreasing</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="title">
+<h3>title<a class="headerlink" href="#title" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>This is a list of strings making the plot title. Each element of the list represents one different line. Plots have default templates for the title, if you would like to only override one line of the title and keep the other lines as the default definition, specify None for the lines which should have the default template.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>lowercase</td>
+<td>False</td>
+</tr>
+<tr class="row-odd"><td>optional</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="title-font">
+<h3>title_font<a class="headerlink" href="#title-font" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<p>A plotfont directive defining different parameters for the font to use for the title</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>plotfont</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xaxis">
+<h3>xaxis<a class="headerlink" href="#xaxis" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<p>A directive specifying the characteristics of the X axis</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>alias</td>
+<td>x_axis</td>
+</tr>
+<tr class="row-odd"><td>type</td>
+<td>axis</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="xtitle">
+<h3>xtitle<a class="headerlink" href="#xtitle" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>A string specifying the text template to use for the title along the X axis.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>lowercase</td>
+<td>False</td>
+</tr>
+<tr class="row-odd"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="yaxis">
+<h3>yaxis<a class="headerlink" href="#yaxis" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<p>A directive specifying the characteristics of the Y axis</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>alias</td>
+<td>y_axis</td>
+</tr>
+<tr class="row-odd"><td>type</td>
+<td>axis</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ytitle">
+<h3>ytitle<a class="headerlink" href="#ytitle" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>A string specifying the text template to use for the title along the Y axis.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>lowercase</td>
+<td>False</td>
+</tr>
+<tr class="row-odd"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<p>generated on 2012-11-04 20:07:45</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">levelplot</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#keywords">Keywords</a><ul>
+<li><a class="reference internal" href="#colorbar-title">colorbar_title</a></li>
+<li><a class="reference internal" href="#comment">comment</a></li>
+<li><a class="reference internal" href="#curve">curve</a></li>
+<li><a class="reference internal" href="#datahook">datahook</a></li>
+<li><a class="reference internal" href="#graphics">graphics</a></li>
+<li><a class="reference internal" href="#has-legend">has_legend</a></li>
+<li><a class="reference internal" href="#has-title">has_title</a></li>
+<li><a class="reference internal" href="#has-xtitle">has_xtitle</a></li>
+<li><a class="reference internal" href="#has-ytitle">has_ytitle</a></li>
+<li><a class="reference internal" href="#legend">legend</a></li>
+<li><a class="reference internal" href="#plotdata">plotdata</a></li>
+<li><a class="reference internal" href="#sort">sort</a></li>
+<li><a class="reference internal" href="#title">title</a></li>
+<li><a class="reference internal" href="#title-font">title_font</a></li>
+<li><a class="reference internal" href="#xaxis">xaxis</a></li>
+<li><a class="reference internal" href="#xtitle">xtitle</a></li>
+<li><a class="reference internal" href="#yaxis">yaxis</a></li>
+<li><a class="reference internal" href="#ytitle">ytitle</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="graphics.html"
+                        title="previous chapter">graphics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="meanplot.html"
+                        title="next chapter">meanplot</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/directives/levelplot.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="meanplot.html" title="meanplot"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="graphics.html" title="graphics"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="directives.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">directives</span></tt> &#8212; Application directives</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

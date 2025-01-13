@@ -1,0 +1,439 @@
+PHIS |Surface geopotential |m2 s-2 
+SGH |Standard deviation of topography for gravity wave drag |m
+FRLAKE |Fraction of lake type in grid box |1 
+FRLAND |Fraction of land type in grid box |1
+FRLANDICE |Fraction of land ice type in grid box |1
+FROCEAN |Fraction of ocean in grid box |1
+AREA |Area of grid box |m2
+SLP |Sea-level pressure |Pa
+PS |Surface pressure |Pa
+DELP |Layer pressure thickness |Pa
+PHIS |Surface Geopotential |m2 s-2
+H |Geopotential height |m
+O3 |Ozone mixing ratio |kg kg-1
+QV |Specific humidity |kg kg-1
+QL |Cloud liquid water mixing ratio |kg kg-1
+QI |Cloud ice mixing ratio |kg kg-1
+RH |Relative humidity |1
+T |Air temperature |K
+U |Eastward wind component |m s-1
+V |Northward wind component |m s-1
+EPV |Ertel potential vorticity |K m2 kg-1s-1
+OMEGA |Vertical pressure velocity |Pa s-1
+SLP |Sea-level pressure |Pa
+PS |Surface pressure |Pa
+DELP |Layer pressure thickness |Pa
+PHIS |Surface Geopotential |m2 s-2
+H |Geopotential height |m
+O3 |Ozone mixing ratio |kg kg-1
+QV |Specific humidity |kg kg-1
+QL |Cloud liquid water mixing ratio |kg kg-1
+QI |Cloud ice mixing ratio |kg kg-1
+RH |Relative humidity |1
+T |Air temperature |K
+U |Eastward wind component |m s-1
+V |Northward wind component |m s-1
+EPV |Ertel potential vorticity |K m2 kg-1s-1
+OMEGA |Vertical pressure velocity |Pa s-1
+PS |Surface pressure |Pa
+DELP |Layer pressure thickness |Pa
+RH |Relative humidity |1
+QLLS |Cloud liquid water mixing ratio - large-scale |kg kg-1
+QILS |Cloud ice mixing ratio - large-scale |kg kg-1
+QLAN |Cloud liquid water mixing ratio - anvils |kg kg-1
+QIAN |Cloud ice mixing ratio - anvils |kg kg-1
+QCCU |Cloud condensate mixing ratio - convective updraft |kg kg-1
+CFLS |3-D Cloud fraction - large scale |1
+CFAN |3-D Cloud fraction - anvils |1
+CFCU |3-D Cloud fraction - convective |1
+TAUCL|W 3-D Cloud optical thickness of water clouds |1
+TAUCLI |3-D Cloud optical thickness of ice clouds |1
+PS |Surface pressure |Pa
+DELP |Layer pressure thickness |Pa
+DQRCU |Precipitation production rate - convective |kg kg-1 s-1
+DQRLSAN |Precipitation production rate - large-scale+anvil |kg kg-1 s-1
+REEVAPCN |Evaporation of precipitating convective condensate |kg kg-1 s-1
+REEVAPLSAN |Evaporation of precipitating LS & anvil condensate |kg kg-1 s-1
+PLE |Air pressure |Pa
+CMFMC |Upward moist convective mass flux |kg m-2 s-1
+PFLCU |Downward flux of liquid precipitation - convective |kg m-2 s-1
+PFICU |Downward flux of ice precipitation - convective |kg m-2 s-1
+PFLLSAN |Downward flux of liquid precipitation - large-scale+anvil |kg m-2 s-1
+PFILSAN |Downward flux of ice precipitation - large-scale+anvil |kg m-2 s-1
+PLE |Air pressure |Pa
+CMFMC |Upward moist convective mass flux |kg m-2 s-1
+PFLCU |Downward flux of liquid precipitation - convective |kg m-2 s-1
+PFICU |Downward flux of ice precipitation - convective |kg m-2 s-1
+PFLLSAN |Downward flux of liquid precipitation - large-scale+anvil |kg m-2 s-1
+PFILSAN |Downward flux of ice precipitation - large-scale+anvil |kg m-2 s-1
+PLE |Air pressure Pa KM Momentum diffusivity |m2 s-1
+KMLS |Momentum diffusivity from Louis m2 |s-1
+KMLK |Momentum diffusivity from Lock m2 |s-1
+KH |Heat (scalar) diffusivity m2 |s-1
+KHLS |Heat (scalar) diffusivity from Louis |m2 s-1
+KHLK |Heat (scalar) diffusivity from Lock |m2 s-1
+KHRAD |Heat (scalar) diffusivity Lock radiative contribution |m2 s-1
+KHSFC |Heat (scalar) diffusivity Lock surface contribution |m2 s-1
+RI |Richardson Number |Nondimensional
+PS |Surface pressure Pa DELP Layer pressure thickness |Pa
+DTDTRAD |Temperature tendency from radiation |K s-1
+DTDTMST |Temperature tendency from moist physics |K s-1
+DTDTTRB |Temperature tendency from turbulence |K s-1
+DTDTFRI |Temperature tendency from frictional heating |K s-1
+DTDTGWD |Temperature tendency from gravity wave drag |K s-1
+DTDTTOT |Temperature tendency from physics |K s-1
+DTDTDYN |Temperature tendency from dynamics |K s-1
+DTDTANA |Temperature tendency from analysis |K s-1
+PS |Surface pressure |Pa
+DELP |Layer pressure thickness |Pa
+DUDTMST |U-wind tendency from moist physics |m s-2
+DUDTTRB |U-wind tendency from turbulence |m s-2
+DUDTGWD |U-wind tend from gravity wave drag |m s-2
+DUDTDYN |U-wind tendency from dynamics |m s-2
+DUDTANA |U-wind tendency from analysis |m s-2
+DVDTMST |V-wind tendency from moist physics |m s-2
+DVDTTRB |V-wind tendency from turbulence |m s-2
+DVDTGWD |V-wind tend from gravity wave drag |m s-2
+DVDTDYN |V-wind tendency from dynamics |m s-2
+DVDTANA |V-wind tendency from analysis |m s-2
+U |Eastward wind component |m s-1
+V |Northward wind component |m s-1
+OMEGA |Vertical pressure velocity |Pa s-1
+PS |Surface pressure |Pa
+DELP |Layer pressure thickness |Pa
+DQVDTMST |Water vapor tendency from moist physics |kg kg-1 s-1
+DQVDTTRB |Water vapor tendency from turbulence |kg kg-1 s-1
+DQVDTCHM |Water vapor tendency from chemistry |kg kg-1 s-1
+DQVDTDYN |Water vapor tendency from dynamics |kg kg-1 s-1
+DQVDTANA |Water vapor tendency from analysis |kg kg-1 s-1
+DQIDTMST |Ice tendency from moist physics |kg kg-1 s-1
+DQIDTTRB |Ice tendency from turbulence |kg kg-1 s-1
+DQIDTDYN |Ice tendency from dynamics |kg kg-1 s-1
+DQLDTMST |Liquid water tendency from moist physics |kg kg-1 s-1
+DQLDTTRB |Liquid tendency from turbulence |kg kg-1 s-1
+DQLDTDYN |Liquid tendency from dynamics |kg kg-1 s-1
+PS |Surface pressure |Pa
+DELP |Layer pressure thickness |Pa
+DOXDTMST |Ozone tendency from moist physics |kg kg-1 s-1
+DOXDTTRB |Ozone tendency from turbulence |kg kg-1 s-1
+DOXDTCHM |Ozone tendency from chemistry |mol mol-1 s-1
+DOXDTDYN |Ozone tendency from dynamics |kg kg-1 s-1
+DOXDTANA |Ozone tendency from analysis |1e-6 s-1
+SLP |Sea level pressure |Pa
+PS |Time averaged surface pressure |Pa
+U850 |Eastward wind at 850 |hPa m s-1
+U500 |Eastward wind at 500 |hPa m s-1
+U250 |Eastward wind at 250 |hPa m s-1
+V850 |Northward wind at 850 |hPa m s-1
+V500 |Northward wind at 500 |hPa m s-1
+V250 |Northward wind at 250 |hPa m s-1
+T850 |Temperature at 850 |hPa K
+T500 |Temperature at 500 |hPa K
+T250 |Temperature at 250 |hPa K
+Q850 |Specific humidity at 850 |hPa kg kg-1
+Q500 |Specific humidity at 500 |hPa kg kg-1
+Q250 |Specific humidity at 250 |hPa kg kg-1
+H1000| Height at 1000 |hPa m
+H850 |Height at 850 |hPa m
+H500 |Height at 500 |hPa m
+H250 |Height at 250 |hPa m
+OMEGA500 |Vertical pressure velocity at 500 |hPa Pa s-1
+U10M |Eastward wind at 10 m above displacement height |m s-1
+U2M |Eastward wind at 2 m above the displacement height |m s-1
+U50M |Eastward wind at 50 m above surface |m s-1
+V10M |Northward wind at 10 m above the displacement height |m s-1
+V2M |Northward wind at 2 m above the displacement height |m s-1
+V50M |Northward wind at 50 m above surface |m s-1
+T10M |Temperature at 10 m above the displacement height |K
+T2M |Temperature at 2 m above the displacement height |K
+QV10M |Specific humidity at 10 m above the displacement height |kg kg-1
+QV2M |Specific humidity at 2 m above the displacement height |kg kg-1
+TS |Surface skin temperature |K
+DISPH |Displacement height |m
+TROPPV |PV based tropopause pressure |Pa
+TROPPT |T based tropopause pressure |Pa
+TROPPB |Blended tropopause pressure |Pa
+TROPT |Tropopause temperature |K
+TROPQ |Tropopause specific humidity |kg kg-1
+CLDPRS |Cloud-top pressure |Pa
+CLDTMP |Cloud-top temperature |K
+TQV |Total column water vapor |kg m-2
+TQL |Total column cloud liquid water |kg m-2
+TQI |Total column cloud ice |kg m-2
+TOX |Total column odd oxygen |kg m-2
+EFLUX |Latent heat flux (positive upward) |W m-2
+EVAP |Surface evaporation |kg m-2 s-1
+HFLUX |Sensible heat flux (positive upward) |W m-2
+TAUX |Eastward surface wind stress |N m-2
+TAUY |Northward surface wind stress |N m-2
+TAUGWX |Eastward gravity wave surface stress |N m-2
+TAUGWY |Northward gravity wave surface stress |N m-2
+PBLH |Planetary boundary layer height |m
+DISPH |Displacement height |m
+BSTAR |Surface buoyancy scale |m s-2
+USTAR |Surface velocity scale |m s-1
+TSTAR |Surface temperature scale |K
+QSTAR |Surface humidity scale |kg kg-1
+RI |Surface Richardson number |1
+Z0H |Roughness length, sensible heat |m
+Z0M |Roughness length, momentum |m
+HLML |Height of center of lowest model layer |m
+TLML |Temperature of lowest model layer |K
+QLML |Specific humidity of lowest model layer |kg kg-1
+ULML |Eastward wind of lowest model layer |m s-1
+VLML |Northward wind of lowest model layer |m s-1
+RHOA |Surface air density |kg m-3
+SPEED |Effective surface wind speed |m s-1
+CDH |Surface exchange coefficient for heat |kg m-2 s-1
+CDQ |Surface exchange coefficient for moisture |kg m-2 s-1
+CDM |Surface exchange coefficient for momentum |kg m-2 s-1
+CN |Surface neutral drag coefficient |1
+TSH |Effective turbulence skin temperature |K
+QSH |Effective turbulence skin humidity |kg kg-1
+FRSEAICE |Fraction of sea-ice |1
+PRECANV |Surface precipitation flux from anvils |kg m-2 s-1
+PRECCON |Surface precipitation flux from convection |kg m-2 s-1
+PRECLSC |Surface precipitation flux from large-scale |kg m-2 s-1
+PRECSNO |Surface snowfall flux |kg m-2 s-1
+PRECTOT |Total surface precipitation flux |kg m-2 s-1
+PGENTOT |Total generation of precipitation |kg m-2 s-1
+PREVTOT |Total re-evaporation of precipitation |kg m-2 s-1
+EMIS |Surface emissivity |1
+TS |Surface skin temperature |K
+ALBEDO |Surface albedo |1
+ALBNIRDF |Diffuse beam NIR surface albedo |1
+ALBNIRDR |Direct beam NIR surface albedo |1
+ALBVISDF |Diffuse beam VIS-UV surface albedo |1
+ALBVISDR |Direct beam VIS-UV surface albedo |1
+LWGEM |Emitted longwave at the surface |W m-2
+LWGAB |Absorbed longwave at the surface |W m-2
+LWGABCLR |Absorbed longwave at the surface with no clouds |W m-2
+LWGABCLRCLN |Absorbed longwave at the surface with no clouds or aerosol |W m-2
+LWGNT |Net downward longwave flux at the surface |W m-2
+LWGNTCLR |Net downward longwave flux at the surface for cloud-free sky |W m-2
+LWGNTCLRCLN |Net downward longwave flux at the surface for clear sky |W m-2
+LWTUP |Upward longwave flux at top of atmosphere (TOA) |W m-2
+LWTUPCLR |Upward longwave flux at TOA assuming clear sky |W m-2
+LWTUPCLRCLN |Upward longwave flux at TOA assuming clear clean sky |W m-2
+SWTDN |TOA incident shortwave flux |W m-2
+SWGDN |Surface incident shortwave flux |W m-2
+SWGDNCLR |Surface incident shortwave flux assuming clear sky |W m-2
+SWGNT |Surface net downward shortwave flux |W m-2
+SWGNTCLR |Surface net downward shortwave flux assuming clear sky |W m-2
+SWGNTCLN |Surface net downward shortwave flux assuming clean sky |W m-2
+SWGNTCLRCLN |Surface net downward shortwave flux assuming clear clean sky |W m-2
+SWTNT |TOA net downward shortwave flux |W m-2
+SWTNTCLR |TOA net downward shortwave flux assuming clear sky |W m-2
+SWTNTCLN |TOA net downward shortwave flux assuming clean sky |W m-2
+SWTNTCLRCLN |TOA net downward shortwave flux assuming clear clean sky |W m-2
+TAUHGH |Optical thickness of high clouds |1
+TAULOW |Optical thickness of low clouds |1
+TAUMID |Optical thickness of mid-level clouds |1
+TAUTOT |Optical thickness of all clouds |1
+CLDHGH |High-level (above 400 hPa) cloud fraction |1
+CLDLOW |Low-level (1000-700 hPa) cloud fraction |1
+CLDMID |Mid-level (700-400 hPa) cloud fraction |1
+CLDTOT |Total cloud fraction |1
+GRN |Vegetation greenness fraction |1
+LAI |Leaf area index |1
+GWETROOT |Root zone soil wetness |1
+GWETTOP |Top soil layer wetness |1
+TPSNOW |Top snow layer temperature |K
+TUNST |Surface temperature of unsaturated zone |K
+TSAT |Surface temperature of saturated zone |K
+TWLT |Surface temperature of wilted zone |K
+PRECSNO |Surface snowfall |kg m-2 s-1
+PRECTOT |Total surface precipitation |kg m-2 s-1
+SNOMAS |Snow mass |kg m-2
+SNODP |Snow depth |m
+EVPSOIL |Bare soil evaporation |W m-2
+EVPTRNS |Latent heat flux due to transpiration |W m-2
+EVPINTR |Interception loss |W m-2
+EVPSBLN |Sublimation |W m-2
+RUNOFF |Overland runoff |kg m-2 s-1
+BASEFLOW |Baseflow |kg m-2 s-1
+SMLAND |Snowmelt |kg m-2 s-1
+FRUNST |Fractional unsaturated area |1
+FRSAT |Fractional saturated area |1
+FRSNO |Fractional snow-covered area |1
+FRWLT |Fractional wilting area |1
+PARDF |Surface downward PAR diffuse flux |W m-2
+PARDR |Surface downward PAR beam flux |W m-2
+SHLAND |Sensible heat flux from land |W m-2
+LHLAND |Latent heat flux from land |W m-2
+EVLAND |Evaporation from land |kg m-2 s-1
+LWLAND |Net downward longwave flux over land |W m-2
+SWLAND |Net downward shortwave flux over land |W m-2
+GHLAND |Downward heat flux at base of top soil layer |W m-2
+TWLAND |Total water store in land reservoirs |kg m-2
+TELAND |Energy store in all land reservoirs |J m-2
+WCHANGE |Total land water change per unit time |kg m-2 s-1
+ECHANGE |Total land energy change per unit time |W m-2
+SPLAND |Spurious land energy source |W m-2
+SPWATR |Spurious land water source |kg m-2 s-1
+SPSNOW |Spurious snow source |kg m-2 s-1
+U10M |Eastward wind at 10 m above displacement |height m s-1
+V10M |Northward wind at 10 m above the displacement |height m s-1
+T10M |Temperature at 10 m above the displacement |height K
+QV10M |Specific humidity at 10 m above the displacement |height kg kg-1
+SHWTR |Sensible heat flux over open water |W m-2
+SHICE |Sensible heat flux over ice |W m-2
+HLATWTR |Latent heat flux over open water |W m-2
+HLATICE |Latent heat flux over ice |W m-2
+LWNDWTR |Net downward longwave flux over open water |W m-2
+LWNDICE |Net downward longwave heat flux over ice |W m-2
+SWNDWTR |Net downward shortwave flux over open water |W m-2
+SWNDICE |Net downward shortwave heat flux over ice |W m-2
+SNOWOCN |Snowfall over ocean |kg m-2 s-1
+RAINOCN |Rainfall over ocean |kg m-2 s-1
+TAUXWTR |Eastward component of surface stress over open water |N m-2
+TAUYWTR |Northward component of surface stress over open water |N m-2
+TAUXICE |Eastward component of surface stress over ice |N m-2
+TAUYICE |Northward component of surface stress over ice |N m-2
+FRSEAICE |Fraction of ocean covered by sea ice |1
+BCEM001 |Black Carbon Emission Bin 001 |kg m-2 s-1
+BCEM002 |Black Carbon Emission Bin 002 |kg m-2 s-1
+BCDP001 |Black Carbon Dry Deposition Bin 001 |kg m-2 s-1
+BCDP002 |Black Carbon Dry Deposition Bin 002 |kg m-2 s-1
+BCWT001 |Black Carbon Wet Deposition Bin 001 |kg m-2 s-1
+BCWT002 |Black Carbon Wet Deposition Bin 002 |kg m-2 s-1
+BCSMASS |Black Carbon Surface Mass Concentration |kg m-3
+BCCMASS |Black Carbon Column Mass Amount |kg m-2
+BCEXTTAU |Black Carbon Extinction AOT [550 nm] |1
+BCSCATAU |Black Carbon Scattering AOT [550 nm] |1
+DUEM001 |Dust Emission Bin 001 |kg m-2 s-1
+DUEM002 |Dust Emission Bin 002 |kg m-2 s-1
+DUEM003 |Dust Emission Bin 003 |kg m-2 s-1
+DUEM004 |Dust Emission Bin 004 |kg m-2 s-1
+DUEM005 |Dust Emission Bin 005 |kg m-2 s-1
+DUSD001 |Dust Sedimentation Bin 001 |kg m-2 s-1
+DUSD002 |Dust Sedimentation Bin 002 |kg m-2 s-1
+DUSD003 |Dust Sedimentation Bin 003 |kg m-2 s-1
+DUSD004 |Dust Sedimentation Bin 004 |kg m-2 s-1
+DUSD005 |Dust Sedimentation Bin 005 |kg m-2 s-1
+DUDP001 |Dust Dry Deposition Bin 001 |kg m-2 s-1
+DUDP002 |Dust Dry Deposition Bin 002 |kg m-2 s-1
+DUDP003 |Dust Dry Deposition Bin 003 |kg m-2 s-1
+DUDP004 |Dust Dry Deposition Bin 005 |kg m-2 s-1
+DUDP005 |Dust Dry Deposition Bin 005 |kg m-2 s-1
+DUWT001 |Dust Wet Deposition Bin 001 |kg m-2 s-1
+DUWT002 |Dust Wet Deposition Bin 002 |kg m-2 s-1
+DUWT003 |Dust Wet Deposition Bin 003 |kg m-2 s-1
+DUWT004 |Dust Wet Deposition Bin 004 |kg m-2 s-1
+DUWT005 |Dust Wet Deposition Bin 005 |kg m-2 s-1
+DUSMASS |Dust Surface Mass Concentration |kg m-3
+DUCMASS |Dust Column Mass Density |kg m-2
+DUEXTTAU |Dust Extinction AOT [550 nm] |1
+DUSCATAU |Dust Scattering AOT [550 nm] |1
+DUSMASS25 |Dust Surface Mass Concentration - PM 2.5 |kg m-3
+DUCMASS25 |Dust Column Mass Density - PM 2.5 |kg m-2
+DUEXTT25 |Dust Extinction AOT [550 nm] - PM 2.5 |1
+DUSCAT25 |Dust Scattering AOT [550 nm] - PM 2.5 |1
+DUAERIDX |Dust TOMS UV Aerosol Index |1
+SSEM001 |Sea Salt Emission Bin 001 |kg m-2 s-1
+SSEM002 |Sea Salt Emission Bin 002 |kg m-2 s-1
+SSEM003 |Sea Salt Emission Bin 003 |kg m-2 s-1
+SSEM004 |Sea Salt Emission Bin 004 |kg m-2 s-1
+SSEM005 |Sea Salt Emission Bin 005 |kg m-2 s-1
+SSSD001 |Sea Salt Sedimentation Bin 001 |kg m-2 s-1
+SSSD002 |Sea Salt Sedimentation Bin 002 |kg m-2 s-1
+SSSD003 |Sea Salt Sedimentation Bin 003 |kg m-2 s-1
+SSSD004 |Sea Salt Sedimentation Bin 004 |kg m-2 s-1
+SSSD005 |Sea Salt Sedimentation Bin 005 |kg m-2 s-1
+SSDP001 |Sea Salt Dry Deposition Bin 001 |kg m-2 s-1
+SSDP002 |Sea Salt Dry Deposition Bin 002 |kg m-2 s-1
+SSDP003 |Sea Salt Dry Deposition Bin 003 |kg m-2 s-1
+SSDP004 |Sea Salt Dry Deposition Bin 004 |kg m-2 s-1
+SSDP005 |Sea Salt Dry Deposition Bin 005 |kg m-2 s-1
+SSWT001 |Sea Salt Wet Deposition Bin 001 |kg m-2 s-1
+SSWT002 |Sea Salt Wet Deposition Bin 002 |kg m-2 s-1
+SSWT003 |Sea Salt Wet Deposition Bin 003 |kg m-2 s-1
+SSWT004 |Sea Salt Wet Deposition Bin 004 |kg m-2 s-1
+SSWT005 |Sea Salt Wet Deposition Bin 005 |kg m-2 s-1
+SSSMASS |Sea Salt Surface Mass Concentration |kg m-3
+SSCMASS |Sea Salt Column Mass Density |kg m-2
+SSEXTTAU |Sea Salt Extinction AOT [550 nm] |1
+SSSCATAU |Sea Salt Scattering AOT [550 nm] |1
+SSSMASS25 |Sea Salt Surface Mass Concentration - PM 2.5 |kg m-3
+SSCMASS25 |Sea Salt Column Mass Density - PM 2.5 |kg m-2
+SSEXTT25 |Sea Salt Extinction AOT [550 nm] - PM 2.5 |1
+SSSCAT25 |Sea Salt Scattering AOT [550 nm] - PM 2.5 |1
+SSAERIDX |Sea Salt TOMS UV Aerosol Index |1
+SUEM001 |Sulfate Emission Bin 001 |kg m-2 s-1
+SUEM002 |Sulfate Emission Bin 002 |kg m-2 s-1
+SUEM003 |Sulfate Emission Bin 003 |kg m-2 s-1
+SUEM004 |Sulfate Emission Bin 004 |kg m-2 s-1
+SUDP001 |Sulfate Dry Deposition Bin 001 |kg m-2 s-1
+SUDP002 |Sulfate Dry Deposition Bin 002 |kg m-2 s-1
+SUDP003 |Sulfate Dry Deposition Bin 003 |kg m-2 s-1
+SUDP004 |Sulfate Dry Deposition Bin 004 |kg m-2 s-1
+SUWT001 |Sulfate Wet Deposition Bin 001 |kg m-2 s-1
+SUWT002 |Sulfate Wet Deposition Bin 002 |kg m-2 s-1
+SUWT003 |Sulfate Wet Deposition Bin 003 |kg m-2 s-1
+SUWT004 |Sulfate Wet Deposition Bin 004 |kg m-2 s-1
+SO2SMASS SO2 |Surface Mass Concentration |kg m-3
+SO2CMASS SO2 |Column Mass Density |kg m-2
+SO4SMASS SO4 |Surface Mass Concentration |kg m-3
+SO4CMASS SO4 |Column Mass Density |kg m-2
+DMSSMASS DMS |Surface Mass Concentration |kg m-3
+DMSCMASS DMS |Column Mass Density |kg m-2
+SUPSO2 SO2 |Prod from DMS Oxidation [column] |kg m-2 s-1
+SUPSO4G SO4 |Prod from Gaseous SO2 Oxidation [column] |kg m-2 s-1
+SUPSO4AQ SO4 |Prod from Aqueous SO2 Oxidation [column] |kg m-2 s-1
+SUPSO4WT SO4 |Prod from Aqueous SO2 Oxidation (wet dep) [column] |kg m-2 s-1
+SUPMSA MSA |Prod from DMS Oxidation [column] |kg m-2 s-1
+SUEXTTAU |SO4 Extinction AOT [550 nm] |1
+SUSCATAU |SO4 Scattering AOT [550 nm] |1
+OCDP001 |Organic Carbon Dry Deposition Bin 001 |kg m-2 s-1
+OCDP002 |Organic Carbon Dry Deposition Bin 002 |kg m-2 s-1
+OCWT001 |Organic Carbon Wet Deposition Bin 001 |kg m-2 s-1
+OCWT002 |Organic Carbon Wet Deposition Bin 002 |kg m-2 s-1
+OCSMASS |Organic Carbon Surface Mass Concentration |kg m-3
+OCCMASS |Organic Carbon Column Mass Density |kg m-2
+OCEXTTAU |Organic Carbon Extinction AOT [550 nm] |1
+OCSCATAU |Organic Carbon Scattering AOT [550 nm] |1
+OCEM001 |Organic Carbon Emission Bin 001 |kg m-2 s-1
+OCEM002 |Organic Carbon Emission Bin 002 |kg m-2 s-1
+DUSV |Dust Tendency Due to Convective Scavenging |kg m-2 s-1
+SSSV |Sea Salt Tendency Due to Convective Scavenging |kg m-2 s-1
+OCSV |Organic Carbon Tendency Due to Convective Scavenging |kg m-2 s-1
+BCSV |Black Carbon Tendency Due to Convective Scavenging |kg m-2 s-1
+SUSV |Sulfate Tendency Due to Convective Scavenging |kg m-2 s-1
+LWI |Land-Water-Ice Mask (0=land,1=water,2=ice) |1
+CO2EM |CO2 Emission |kg m-2 s-1
+CO2CL |CO2 Column Load |kg m-2
+CO2SC |CO2 Surface Concentration |1e-6
+COEM |CO Emission |kg m-2 s-1
+COPD |CO Chemical Production |kg m-2 s-1
+COLS |CO Chemical Loss |kg m-2 s-1
+COSC |CO Surface Concentration |1e-9
+COCL |CO Column Burden |kg m-2
+PS |Surface pressure |Pa
+DELP |Layer pressure thickness |Pa
+LWI |Land-Water-Ice Mask (land=0,water=1,ice=2) |1
+RH |Relative Humidity |1
+AIRDENS |Air Density |kg m-3
+DU001 |Dust mixing ratio in bin 1 |kg kg-1
+DU002 |Dust mixing ratio in bin 2 |kg kg-1
+DU003 |Dust mixing ratio in bin 3 |kg kg-1
+DU004 |Dust mixing ratio in bin 4 |kg kg-1
+DU005 |Dust mixing ratio in bin 5 |kg kg-1
+SS001 |Sea Salt mixing ratio in bin 1 |kg kg-1
+SS002 |Sea Salt mixing ratio in bin 2 |kg kg-1
+SS003 |Sea Salt mixing ratio in bin 3 |kg kg-1
+SS004 |Sea Salt mixing ratio in bin 4 |kg kg-1
+SS005 |Sea Salt mixing ratio in bin 5 |kg kg-1
+DMS |DMS mixing ratio |kg kg-1
+SO4 |SO4 mixing ratio |kg kg-1
+SO2 |SO2 mixing ratio |kg kg-1
+SO4 |SO4 mixing ratio |kg kg-1
+MSA |MSA mixing ratio |kg kg-1
+BCPHOBIC |Hydrophobic black carbon mixing ratio |kg kg-1
+BCPHILIC |Hydrophilic black carbon mixing ratio |kg kg-1
+OCPHOBIC |Hydrophobic organic carbon mixing ratio |kg kg-1
+OCPHILIC |Hydrophilic organic carbon mixing ratio |kg kg-1
+PS |Surface pressure |Pa
+DELP |Layer pressure thickness |Pa
+AIRDENS |Air Density |kg m-3
+CO |Carbon monoxide mixing ratio |mol mol-1
+CO2 |Carbon dioxide mixing ratio |mol mol-1

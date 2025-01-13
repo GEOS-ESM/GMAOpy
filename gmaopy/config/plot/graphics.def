@@ -1,0 +1,49 @@
+[coastlines]
+linewidth   = 1.0
+color       = k
+antialiased = True
+
+[continents]
+color       = #FFE2AB
+
+[boundary]
+linewidth   = 1.0
+color       = k
+
+[countries]
+linewidth   = 0.5
+color       = k
+antialiased = True
+
+[rivers]
+linewidth   = 0.5
+color       = k
+antialiased = True
+
+[colorbar]
+orientation = vertical
+extend      = neither
+spacing     = uniform
+filled      = True
+fraction    = 0.15
+aspect      = 20
+
+[parallels]
+default     = 1.0
+thresholds  = 90,45,20,10
+values      = 30.0,15.0,5.0,2.0
+
+[meridians]
+default     = 2.0
+thresholds  = 180,90,45,20
+values      = 60.0,30.0,10.0,4.0,2.0
+
+[__types__]
+antialiased = bool
+linewidth   = float
+filled      = bool
+fraction    = float
+aspect      = float
+default     = float
+thresholds  = float
+values      = float

@@ -1,0 +1,147 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dimensions — Different classes to handle different kinds of dimensions &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="slicing — Slicing multi-dimensional arrays" href="../slicingmodule.html" />
+    <link rel="next" title="The Dimension class — Base class for handling dimensions" href="dimension.html" />
+    <link rel="prev" title="The Slice to List Visitor — Slicing into a collection of multi-dimensional arrays" href="../slice2list.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dimension.html" title="The Dimension class — Base class for handling dimensions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../slice2list.html" title="The Slice to List Visitor — Slicing into a collection of multi-dimensional arrays"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../slicingmodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-slicing.dimensions">
+<span id="dimensions-different-classes-to-handle-different-kinds-of-dimensions"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">Dimensions</span></tt> &#8212; Different classes to handle different kinds of dimensions<a class="headerlink" href="#module-slicing.dimensions" title="Permalink to this headline">¶</a></h1>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dimension.html"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Dimension</span> <span class="pre">class</span></tt> &#8212; Base class for handling dimensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dimension.html#public-methods">Public methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dimension.html#private-methods">Private methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sortedascending.html"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">SortedAscendingDimension</span> <span class="pre">class</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sortedascending.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sorteddescending.html"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">SortedDescendingDimension</span> <span class="pre">class</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sorteddescending.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="indexed.html"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">IndexedDimension</span> <span class="pre">class</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="indexed.html#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../slice2list.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Slice</span> <span class="pre">to</span> <span class="pre">List</span> <span class="pre">Visitor</span></tt> &#8212; Slicing into a collection of multi-dimensional arrays</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dimension.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Dimension</span> <span class="pre">class</span></tt> &#8212; Base class for handling dimensions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/semperpy/slicing/dimensions/dimensionmodule.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dimension.html" title="The Dimension class — Base class for handling dimensions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../slice2list.html" title="The Slice to List Visitor — Slicing into a collection of multi-dimensional arrays"
+             >previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

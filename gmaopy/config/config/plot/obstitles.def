@@ -1,0 +1,52 @@
+[timeseriesplot]
+combinable = domain_name,statistic,variable,level
+index_columns = date
+title = GEOS-5 Time Series <expver>, <date_interval>,<domain_name> <level>,<name>,<statistic>
+legend = <expver> <level> <domain_name> <statistic>
+xtitle = 
+ytitle = <statistic> <unit>
+colorbartitle = <statistic> <unit>
+
+[summaryplot]
+combinable = domain_name,statistic,variable,level
+draw_index_columns = name
+title = GEOS-5 Summary, <date_interval>,<domain_name> <statistic>
+legend = 
+xtitle = <type> <unit>
+colorbartitle = <colormap_statistic> <colormap_unit>
+
+[verticalxsection]
+combinable = domain_name,statistic,variable,usage
+index_columns = level
+title = GEOS-5 Vertical XSection <variable>,<date_interval>,<expver> <domain_name>,<statistic>
+legend = <expver> <variable> <domain_name> <variable> <statistic>
+xtitle = <type> <variable> <unit>
+ytitle = <levtype>
+colorbartitle =
+
+[levelplot]
+combinable = domain_name,statistic,variable
+index_columns = level
+title = GEOS-5  <expver>, <date_interval>,<domain_name>,<name> <variable>,<statistic>
+legend = 
+xtitle = 
+ytitle = 
+colorbartitle = <statistic> <unit>
+
+[wavelengthplot]
+combinable = domain_name,statistic,variable
+index_columns = level
+title = GEOS-5, <date_interval>,<short_domain_name> <name> <statistic>
+legend = 
+xtitle = 
+ytitle = Wave length (nm)
+colorbartitle = <statistic> <unit>
+
+[channelplot]
+combinable = domain_name,statistic,variable
+index_columns = level
+title = GEOS-5 per channel, <date_interval>,<short_domain_name> <name> <statistic>
+legend = 
+xtitle = <statistic> <unit>
+ytitle = Channels
+colorbartitle = <colormap_statistic> <colormap_unit>

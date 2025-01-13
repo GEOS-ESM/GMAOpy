@@ -1,0 +1,171 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The CF10MetaData class &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="CF10 — Implementing dimensions for CF 1.0 compliant files" href="cf10module.html" />
+    <link rel="next" title="The DateDimension class" href="datedimension.html" />
+    <link rel="prev" title="CF10 — Implementing dimensions for CF 1.0 compliant files" href="cf10module.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="datedimension.html" title="The DateDimension class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cf10module.html" title="CF10 — Implementing dimensions for CF 1.0 compliant files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li>
+          <li><a href="cf10module.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">CF10</span></tt> &#8212; Implementing dimensions for CF 1.0 compliant files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-slicer.cf10">
+<span id="the-cf10metadata-class"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">CF10MetaData</span> <span class="pre">class</span></tt><a class="headerlink" href="#module-slicer.cf10" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="slicer.cf10.CF10MetaData">
+<em class="property">class </em><tt class="descclassname">slicer.cf10.</tt><tt class="descname">CF10MetaData</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#slicer.cf10.CF10MetaData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The CF10MetaData class implements a metadata handler which can be given to
+dimension objects at creation time. It has only one method:</p>
+<dl class="method">
+<dt>
+<tt class="descname">__call__(dimension,name):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dimension</strong> &#8211; the dimension object it was given to</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the name of the piece of metadata requested. When using netCDF variables, name could be <strong>long_name</strong> or <strong>units</strong> or <strong>missing_value</strong>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is implemented is such a way that it returns the attribute of the
+netCDF variable unless the dimension object has a method with the same name
+as the attribute. In that case the dimension class can implement such method
+to override the netCDF attributes or to make sure that they exist.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">CF10MetaData</span> <span class="pre">class</span></tt></a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cf10module.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">CF10</span></tt> &#8212; Implementing dimensions for CF 1.0 compliant files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="datedimension.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">DateDimension</span> <span class="pre">class</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/semperpy/slicing/cf10/cf10metadata.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="datedimension.html" title="The DateDimension class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cf10module.html" title="CF10 — Implementing dimensions for CF 1.0 compliant files"
+             >previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li>
+          <li><a href="cf10module.html" ><tt class="docutils literal docutils literal"><span class="pre">CF10</span></tt> &#8212; Implementing dimensions for CF 1.0 compliant files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

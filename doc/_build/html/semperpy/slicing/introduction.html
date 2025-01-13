@@ -1,0 +1,151 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="slicing — Slicing multi-dimensional arrays" href="slicingmodule.html" />
+    <link rel="next" title="The Slice class — Slicing netCDF variables and arrays" href="slicer.html" />
+    <link rel="prev" title="slicing — Slicing multi-dimensional arrays" href="slicingmodule.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="slicer.html" title="The Slice class — Slicing netCDF variables and arrays"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="slicingmodule.html" title="slicing — Slicing multi-dimensional arrays"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="slicingmodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<span id="slicing-introduction"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>The slicing module implements a general purpose multi-dimensional array slicing
+mechanism in the contents space. It comprises different components:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the Slicer, a general purpose algorithm to find slices along an arbitrary number of dimensions</li>
+<li>the dimensions, objects specialised in the type and organisation of the data along one particular dimension. A generic Dimension object exists, but also specialised classes which deal with sorted data (e.g. levels) or regularly spread data (e.g. latitude on a regular grid)</li>
+<li>the CF1.0 compliant dimensions (latitude, longitude, level, date)</li>
+</ul>
+</div></blockquote>
+<p>The algorithm is recursive, therefore any number of dimensions can be handled. The dimensions are classes instances, therefore most types of dimensions can be handled. The <em>Slicer</em> implements the algorithm by calling repeatedly a visitor. Two visitors have been implemented by default:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Slice2Array which creates a multi-dimensional array as the result of the slicing</li>
+<li>Slice2List which requires another visitor to create a list of separate fields (probably 2D arrays for plotting purposes).</li>
+</ul>
+</div></blockquote>
+<p>The numpy python module is used to handle the multi-dimensional arrays and the <em>ArrayGenerator</em> object implements the default behaviour for creating numpy arrays, it can be customised.</p>
+<p>When specifying slices, the following convention is used:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a list of values specifies a list of slices (e.g. level = [1000,500] -&gt; 2 slices)</li>
+<li>a dictionary specified an interval (e.g. level = {1000,500} -&gt; n slices for all levels found between 1000 and 500).</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="slicingmodule.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="slicer.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Slice</span> <span class="pre">class</span></tt> &#8212; Slicing netCDF variables and arrays</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/slicing/introduction.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="slicer.html" title="The Slice class — Slicing netCDF variables and arrays"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="slicingmodule.html" title="slicing — Slicing multi-dimensional arrays"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

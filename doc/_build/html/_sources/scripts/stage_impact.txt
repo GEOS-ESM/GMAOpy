@@ -1,0 +1,22 @@
+stage_impact.ksh
+================
+
+**stage_impact.ksh** stages files from the archive and copies them into a specified directory by date. It also deletes directories with ODS files which have been processed. The script is invoked as follows::
+
+    ./stage_impact.ksh /path/to/directory/where/things/happen streams.def
+
+This script takes care of the following things:
+
+    * reads the configuration file (streams.def) to determine which experiment versions and which dates should be retrieved.
+    * stages the files in the DMF if necessary
+    * copies the files into /path/to/directory/where/things/happen (date.expver.ready)
+    * when directories are processed and renamed to date.expver.done by the computing tasks, deletes the old directories.
+
+stage_impact has two important main constants which determines its behaviour and might need fine tuning (in stage.py):
+    
+    * max_ready: the maximum number of days to stage and copy. The bigger the better, but watch the disk space
+    * max_done: when files are processed, the .done directories should be deleted. This constant determines how many days should be kept on disk in case there would be a need to go back in time.
+
+**stage_impact.ksh** writes a file called *progress.def* which keeps track of the last day / expver copied online. If it fails or is killed, it can recover that file and start again where the work was left. If you need to restart from scratch, delete all *.ready* directories and delete the file *progress.def*.
+
+:note: Only one instance of this script should be started within one directory.

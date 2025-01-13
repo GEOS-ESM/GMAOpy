@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>innerpython — Python internals &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="core — Core classes" href="coremodule.html" />
+    <link rel="next" title="json — Conversion to and from json" href="json.html" />
+    <link rel="prev" title="index — Indexing data using flexible multiple criteria" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="json.html" title="json — Conversion to and from json"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="index — Indexing data using flexible multiple criteria"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-core.innerpython">
+<span id="innerpython-python-internals"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">innerpython</span></tt> &#8212; Python internals<a class="headerlink" href="#module-core.innerpython" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="the-innerpython-class">
+<h2>The InnerPython class<a class="headerlink" href="#the-innerpython-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="core.innerpython.InnerPython">
+<em class="property">class </em><tt class="descclassname">core.innerpython.</tt><tt class="descname">InnerPython</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#core.innerpython.InnerPython" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>InnerPython</strong> class encapsulates Python introspection mechanisms
+and internal functions. That way it is easier to adapt to language
+changes.</p>
+<dl class="classmethod">
+<dt id="core.innerpython.InnerPython.get_class">
+<em class="property">classmethod </em><tt class="descname">get_class</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#core.innerpython.InnerPython.get_class" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the name of a type or a class</td>
+</tr>
+</tbody>
+</table>
+<p>the get_class method attempts to find the class object for the
+specified class named <em>name</em>. The name can be specified fully, e.g.
+Core.Date. get_class will attempt to load the module if it was not
+imported. It also searched the builtin types.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="core.innerpython.InnerPython.in_globals">
+<em class="property">classmethod </em><tt class="descname">in_globals</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#core.innerpython.InnerPython.in_globals" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the variable</td>
+</tr>
+</tbody>
+</table>
+<p>searches the global variable called name and return its values if found
+or None otherwise.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="core.innerpython.InnerPython.load_module">
+<em class="property">classmethod </em><tt class="descname">load_module</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#core.innerpython.InnerPython.load_module" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of a module, can be fully specified (e.g. mod1.mod2.mod)</td>
+</tr>
+</tbody>
+</table>
+<p>attempts to load the module describes in name. The module can be fully
+specified:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.innerpython</span> <span class="kn">import</span> <span class="n">InnerPython</span> <span class="k">as</span> <span class="n">internal</span>
+
+<span class="n">date</span> <span class="o">=</span> <span class="n">internal</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="s">&#39;Core.Date&#39;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">Date</span><span class="p">(</span><span class="mi">20090101</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">d</span>
+<span class="mi">2009</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mo">01</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">innerpython</span></tt> &#8212; Python internals</a><ul>
+<li><a class="reference internal" href="#the-innerpython-class">The InnerPython class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">index</span></tt> &#8212; Indexing data using flexible multiple criteria</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="json.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">json</span></tt> &#8212; Conversion to and from json</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/core/innerpython.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="json.html" title="json — Conversion to and from json"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="index — Indexing data using flexible multiple criteria"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

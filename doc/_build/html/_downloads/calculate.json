@@ -1,0 +1,13 @@
+{
+    "directive" : "calculate",
+    "keywords" : {
+        "operator": {
+            "validate": ["Choice","+","-"],
+            "unique": true
+        },
+        "arguments": {
+            "type": "int",
+            "validate": ["DiffValidate",2]
+        }
+    }
+}

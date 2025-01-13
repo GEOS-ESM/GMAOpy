@@ -1,0 +1,127 @@
+.. _impactexperiment:
+
+Observation impact statistics
+*****************************
+
+    Computing statistics for observation impacts uses the same tools as for computing statistics
+    for observations. We invite you to refer to :ref:`obsexperiment` for more details on the 
+    explanation of different scripts, we will here document what is different.
+
+    You can compute statistics for observation impacts using *imp3_txe*.ods files created by your 
+    experiment and plot the results in a ways which is similar to the way this is done in operations.
+
+    You can find examples here:
+
+    http://gmao.gsfc.nasa.gov/products/forecasts/systems/fp/obs_impact/
+
+    In summary you can download the following scripts and configuration files:
+
+        - :download:`compute_impact_stats.py <compute_impact_stats.py>`
+        - :download:`summary_all.py <summary_all.py>`
+        - :download:`summary_radiances.py <summary_radiances.py>`
+        - :download:`timeseries_all.py <timeseries_all.py>`
+        - :download:`timeseries_radiances.py <timeseries_radiances.py>`
+        - :download:`channels.py <channels.py>`
+        - :download:`summary_all.def <summary_all.def>`
+        - :download:`summary_radiances.def <summary_radiances.def>`
+        - :download:`timeseries_all.def <timeseries_all.def>`
+        - :download:`timeseries_radiances.def <timeseries_radiances.def>`
+        - :download:`channels.def <channels.def>`
+
+    and read the rest of the documentation if required.
+
+Computing statistics
+--------------------
+        
+    The sample script for computing observation statistics is the following 
+    one (:download:`compute_impact_stats.py <compute_impact_stats.py>`):
+
+    .. literalinclude:: compute_impact_stats.py
+        :language: python
+    	:linenos:
+
+    The keywords which vary the most between experiments are defined at the top of the script
+    for convenience.
+
+    :warning: please make sure that there is no comma (**,**) at the end of the lines 3 to 7 (after the constants) as this would cause an error with a message which is not very clear.
+
+Plotting statistics
+-------------------
+    
+    Summary plots show the performance of observing systems in an single plot, enabling their comparison
+    (:download:`summary_all.py <summary_all.py>`):
+
+    .. literalinclude:: summary_all.py
+        :language: python
+    	:linenos:
+
+    This script generates 16 plots, one for each different statistic / domain_name combination:
+
+        - total impact,
+        - impact per observation,
+        - fraction of beneficial observations,
+        - observation count per analysis
+
+    :note: please notice that the keyword **filename** (lines 19, 33, 48, 70) defining the observing systems we want to plot is define at the level of the plot **summary_plot**, because all these systems will be displayed on the same plot.
+
+    This script produces (for the global domain):
+
+    .. image:: ./summary_all+global+impact_per_anl.png
+        :scale: 70%
+        :align: center
+
+    .. image:: ./summary_all+global+impact_per_ob.png
+        :scale: 70%
+        :align: center
+
+    .. image:: ./summary_all+global+beneficial.png
+        :scale: 70%
+        :align: center
+
+    .. image:: ./summary_all+global+count_per_anl.png
+        :scale: 70%
+        :align: center
+
+    :note: the keyword **level** is not specified, this means that all levels are used. Each bar in the plot is the aggregation of all daily statistics for all levels and all days specified in the script for one particular observing system and one particular geographical domain.
+
+    The script called (:download:`summary_radiances.py <summary_radiances.py>`) produces a similar plot using a 
+    different definition file to compare radiances only:
+
+    .. image:: ./summary_radiances+n.hem+impact_per_anl.png
+        :scale: 70%
+        :align: center
+
+    The script timeseries_all.py produces timeseries of impacts over any duration of time
+    (:download:`timeseries_all.py <timeseries_all.py>`):
+
+    .. literalinclude:: timeseries_all.py
+        :language: python
+    	:linenos:
+
+    This script generates 4 plots per statistic (4), per geographical domain (4) and per observing system (20 in the file (:download:`timeseries_all.def <timeseries_all.def>`), say 320 plots. Here is a sample:
+
+    .. image:: ./timeseries_all+radiosondes+global+impact_per_anl.png
+        :scale: 70%
+        :align: center
+
+    The script (:download:`timeseries_radiances.def <timeseries_radiances.def>`) generated an identical
+    result involving satellite radiances.
+
+    The script (:download:`channels.def <channels.def>`) show observation impacts for individual 
+    channels:
+
+    .. literalinclude:: channels.py
+        :language: python
+    	:linenos:
+
+    .. image:: ./channels_all+aqua_airs+global+impact_per_anl.png
+        :scale: 70%
+        :align: center
+
+    :note: the scripts presented above produce file names which are compatible with the web page:
+
+    http://gmao.gsfc.nasa.gov/products/forecasts/systems/fp/obs_impact/
+
+    so you can then easily access all your plots through a similar interface. Austin Conaty is the person 
+    to contact for more information regarding this.
+

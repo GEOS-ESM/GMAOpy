@@ -1,0 +1,160 @@
+Reading netCDF files / HDF files / opendap servers
+**************************************************
+
+    SemperPy provides tools to read netCDF 3.x and 4.x files, hdf 4.x and 5.x files 
+    and access opendap servers transparently thanks to the netcdf4 library which 
+    handles all these formats. Thanks to :mod:`slicing` and the support given
+    by :mod:`slicing.dimensions` and :mod:`slicing.cf10`, it becomes easy to slice 
+    variables read from those files:
+
+Reading into multi-dimensional numpy arrays
+-------------------------------------------
+
+    This method matches the way data is sliced and returned in grads (pygrads), this 
+    is more useful in interactive mode.
+
+    .. literalinclude:: read1.py
+        :language: python
+
+    :download:`Download example 1<read1.py>`
+
+    The output shows::
+
+        shape: (1, 1, 361, 540), mean: 255.139215
+
+    No latitudes or longitudes are specified, therefore the global field is returned (361,340).
+    Subareas can be specified:
+
+    .. literalinclude:: read2.py
+        :language: python
+
+    :download:`Download example 2<read2.py>`
+
+    The output shows::
+
+        (1, 1, 141, 196), mean: 259.202858
+
+    No latitudes or longitudes are specified, therefore the global field is returned (361,340).
+    Only one level is specified, more than level can be specified:
+
+    .. literalinclude:: read3.py
+        :language: python
+
+    :download:`Download example 3<read3.py>`
+
+    The output shows::
+
+        shape: (1, 2, 141, 196), mean: 269.782462
+
+    Two levels have now been returned. It can sometimes be useful to request "all available levels" between two values. A list describes discrete values [a,b,c,d], [~a,~b,~c,~d] is returned where **~** means **closest value**. A dictionary describes an interval {a:b}, [>=a,...,<=b] is returned including all values between a and b:
+
+    .. literalinclude:: read4.py
+        :language: python
+
+    :download:`Download example 4<read4.py>`
+
+    The output shows::
+
+        shape: (1, 15, 141, 196), mean: 276.723312
+
+    There are 15 levels available in the file: 1000, 975, 950, 925, 900, 875, 850, 825, 800, 750, 700, 650, 600, 550, 500.
+
+    .. literalinclude:: read5.py
+        :language: python
+
+    :download:`Download example 5<read5.py>`
+
+    The output shows::
+
+        shape: (1, 36, 1, 540), mean: 254.547819
+
+    This is a vertical slice along the equator.
+
+Reading into a collection of fields
+-----------------------------------
+
+    For some applications it can be more practical to read data into a collection of objects:
+
+    .. literalinclude:: f1.py
+        :language: python
+
+    :download:`Download example 1<f1.py>`
+
+    The output shows::
+
+        1
+
+        (15, 361, 540)
+        [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+        2010-07-10 00
+
+    The bundle (fieldset) contains a 3D field. Once again, if levels are specified as discrete values:
+    
+    .. literalinclude:: f2.py
+        :language: python
+
+    :download:`Download example 2<f2.py>`
+
+    The output shows::
+
+        2
+
+        (361, 540)
+        1000.0
+        2010-07-10 00
+
+        (361, 540)
+        500.0
+        2010-07-10 00
+
+    We now obtain a two 2D field bundle. However, a bundle could very well contain fields
+    which are vertical slices:
+    
+    .. literalinclude:: f3.py
+        :language: python
+
+    :download:`Download example 3<f3.py>`
+
+    The output shows::
+
+        6
+
+        (15, 540)
+        level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+        latitude 0.000000
+
+        (15, 540)
+        level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+        latitude 10.000000
+
+        (15, 540)
+        level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+        latitude 20.000000
+
+        (15, 540)
+        level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+        latitude 30.000000
+
+        (15, 540)
+        level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+        latitude 40.000000
+
+        (15, 540)
+        level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+        latitude 50.000000
+
+    Just the same way, we can access MERRA data through the opendap server:
+
+    .. literalinclude:: f4.py
+        :language: python
+
+    :download:`Download example 4<f4.py>`
+
+    The output shows::
+
+        124
+
+    The advantage in reading bundle is that fields are created without loading their data.
+    This makes the reading faster and enables to read a large number of fields without
+    using any memory. Memory is used as soon as field.values() is called, but when 
+    you are done with a field you can call field.unload().

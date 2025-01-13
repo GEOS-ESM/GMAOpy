@@ -1,0 +1,117 @@
+:mod:`The Directive class` --- Handling users' requests
+=======================================================
+
+.. module:: directive.directive
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: Directive(semperpy.core.tools.dictionary)
+
+Public methods
+--------------
+
+    .. method:: Directive(\*args,\**kargs):
+        
+        Constructor for a Directive instance, just calls its parents (dict)
+        constructor with the paramters.
+
+Private methods
+---------------
+
+    .. classmethod:: validate_language(directive_name,directive_reader):
+    	
+    	:param directive_name: name of the language definition (probably the name of the directive)
+    	:type directive_name: string
+    	:param directive_reader: an object able to return a dictionary compliant with what is defined in class:: `LanguageDefinition`. It receives the string *directive_name*. This means that the language definition can be stored in any format, or even be a python module.
+    	:type directive_reader: any callable object which returns the language definition from a single string parameter
+
+    	This method gets the language definition for a directive through the directive_reader,
+    	deals recursively with inherited language definitions if specified. It checks the validity
+    	of the language definitions and builds a final language definition from inherited
+    	definitions.
+
+    	Returns: the final language definition, the definition of how the language should 
+    	describe the directive and the definition of how the keywords should be defined.
+    	
+    .. classmethod:: inherit_from(parent,child):
+    
+    	:param parent: the dictionary to inherit from
+    	:type parent: dictionary
+    	:param child: the dictionary to inherit into
+    	:type child: dictionary
+
+    	Inserts into child any entry of parent which is not in child. From entries which are
+    	in child and in parent, inherit all the entries in the entry from parent into
+    	the child.
+
+    .. classmethod:: specialize_from(parent,child):
+
+    	:param parent: the dictionary to override values from
+    	:type parent: dictionary
+    	:param child: the dictionary to ovveride into
+    	:type child: dictionary
+
+    	Inserts into child any entry of parent which is not in child. Replaces in
+    	child any entry which is both in the parent and the child.
+
+    .. classmethod:: validate_language_part(semantic,language):
+
+    	:param semantic: the definition of how the language should be defined
+    	:type semantic: dictionary
+    	:param language: the language to check
+    	:type language: dictionary
+
+    	Checks that the language definition contains all the required keywords and
+    	ensures that the different entries are of the correct type.
+
+    	Returns the language after modification.
+
+    .. classmethod:: resolveSpecialKeywords(definition,directive,language):
+
+        :param definition: A dictionary written in the language definition under the keyword **specialize_from**.
+        :type definition: dictionary
+        :param directive: the directive given by the user.
+        :type directive: dictionary
+        :param language: the language being used to verify the directive
+        :type language: dictionary
+
+        This method tries to extract keywords from the different expressions in
+        **definition** which are defined in the language. It then applies the 
+        language definition to those keywords in order to make sure that, before
+        evaluating the expressions, the keywords exist (possible default
+        values) and are of the expected type.
+
+        In order to apply the language to a reduced set of keyword, this method
+        creates a reduced directive and builds in memory a reduced language
+        definition.
+
+    .. classmethod:: find_specials(definition,directive):
+
+        :param definition: A dictionary written in the language definition under the keyword **specialize_from**.
+        :type definition: dictionary
+        :param directive: the directive given by the user.
+        :type directive: dictionary
+
+        This methods evaluates expressions defined under the **specialize_from** in the
+        language definition. The syntax is as follows::
+            
+            ...
+            specialize_from = {
+                "value1 == 'hello' and value2 == 'world'": "hello",
+                "value3 < 12": "not_twelve"
+            }
+            ...
+
+        Where the keys are boolean expressions which can name any key in the user's
+        directive and the values are the name of directive definitions. The contents
+        of the directive definition is loaded and its keys replace the current
+        keys if they exist or they are added. If the evaluation of the expression
+        if False, nothing is done.
+
+        This is useful to define the semantics of directive depending on values of
+        some of its values.
+
+    .. classmethod evaluate_condition(condition,directive):
+
+        Evaluate an expression and returns a Boolean value.

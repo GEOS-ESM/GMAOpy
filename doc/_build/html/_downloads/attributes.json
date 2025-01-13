@@ -1,0 +1,15 @@
+{
+	"directive": "attributes",
+	"keywords" : {
+        "qc": {
+            "unique": true,
+            "default_value": "used",
+            "validate": ["ValidateChoice","used","passive","all"]
+        },
+        "type": {
+            "unique": true,
+            "default_value": "pl",
+            "validate": ["ValidateChoice","pl","sfc","rad"]
+        }
+    }
+}

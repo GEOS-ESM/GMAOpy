@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>observation impact timeseries — Computing observation impact timeseries from the archive &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Scripts" href="../scripts.html" />
+    <link rel="next" title="stage_impact.ksh" href="stage_impact.html" />
+    <link rel="prev" title="Scripts" href="../scripts.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="stage_impact.html" title="stage_impact.ksh"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../scripts.html" title="Scripts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../scripts.html" accesskey="U">Scripts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-impacttimeseries">
+<span id="observation-impact-timeseries-computing-observation-impact-timeseries-from-the-archive"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">observation</span> <span class="pre">impact</span> <span class="pre">timeseries</span></tt> &#8212; Computing observation impact timeseries from the archive<a class="headerlink" href="#module-impacttimeseries" title="Permalink to this headline">¶</a></h1>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<p>The <em>timeseries</em> scripts are designed to compute statistics for observation impact files. They optimise staging from the archive and computing. They are based on a producer / consumer model where:</p>
+<blockquote>
+<div><ul class="simple">
+<li>one job stages files and copies them locally, it is the producer</li>
+<li>one or more jobs behave like sweepers and process any directory available, the consumers.</li>
+</ul>
+</div></blockquote>
+<p>The producer script is called <strong>stage_impact.ksh</strong> the consumer script is called <strong>compute_impact.ksh</strong>.</p>
+<div class="section" id="how-it-works">
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>stager</strong> (stage_impact.ksh) stages files and copied them locally in the directory specified as an argument. When <em>max_ready</em> days are online, the scripts just waits and checks how many date.expver.done directories are present in the directory. When a number greater than <em>max_done</em> is reached, older directories are deleted. So this script just waits when it has:</p>
+<blockquote>
+<div><ul class="simple">
+<li>staged and copied <em>max_ready</em> days</li>
+<li>deleted .done directories to match <em>max_done</em></li>
+</ul>
+</div></blockquote>
+<p>The <strong>sweeper</strong> (compute_impact.ksh) consumes date.expver.ready directories. Whenever one is available, it renames the directory to date.expver.run and invokes the python script <em>compute.py</em> to calculate statistics for that particular day. When the computation is completed, the directory is renamed to date.expver.done for the <strong>stager</strong> to eventually dispose of. Many instances of the sweeper can be run concurrently. If there are no directories to process, the sweeper waits nicely until one become available by issuing a system sleep.</p>
+<p>At the moment, the sweeper writes directly into a postGreSQL database, but it would be easy to change this to writing into an text file and then load the file into the database from a node allowing it.</p>
+<p>The different stages for a directory containing data (e.g. 2010123000.e562p4_fp) are as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>.stage</strong> when created and while staging data</li>
+<li><strong>.copy</strong> when ODS files are being copied into that directory</li>
+<li><strong>.ready</strong> when the ODS files are ready to be used</li>
+<li><strong>.run</strong> when a computing job computes the statsitics</li>
+<li><strong>.done</strong> when computing has completed and nothing else needs to be done</li>
+</ul>
+</div></blockquote>
+<p>Here is an example of execution of the scripts:</p>
+<div class="highlight-python"><pre>pwd
+/home/cgibert/scratch/stage
+-rwxr-xr-x 1 cgibert g0620     685 2011-08-13 08:41 compute_impact.ksh
+-rw-r--r-- 1 cgibert g0620    1163 2011-08-12 17:06 compute.py
+-rw-r--r-- 1 cgibert g0620    1351 2011-08-11 18:28 impact.def
+-rwxr-xr-x 1 cgibert g0620     377 2011-08-12 20:57 stage_impact.ksh
+-rw-r--r-- 1 cgibert g0620    3017 2011-08-13 05:24 stage.py
+-rw-r--r-- 1 cgibert g0620     807 2011-08-11 18:28 streams.def
+
+nohup ./stage_impact.ksh /home/cgibert/scratch/stage /home/cgibert/scratch/stage/streams.def &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+
+later on....
+
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:24 2010123000.e562p4_fp.done
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:26 2010123100.e562p4_fp.done
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:27 2011010100.e562p4_fp.done
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:29 2011010200.e562p5_fp.done
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:32 2011010300.e562p5_fp.done
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:34 2011010400.e562p5_fp.run
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:36 2011010500.e562p5_fp.run
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:38 2011010600.e562p5_fp.run
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:39 2011010700.e562p5_fp.run
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:42 2011010800.e562p5_fp.run
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:44 2011010900.e562p5_fp.ready
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:46 2011011000.e562p5_fp.ready
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:47 2011011100.e562p5_fp.ready
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:49 2011011200.e562p5_fp.ready
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:50 2011011300.e562p5_fp.ready
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:52 2011011400.e562p5_fp.ready
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:54 2011011500.e562p5_fp.ready
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:56 2011011600.e562p5_fp.ready
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:57 2011011700.e562p5_fp.copy
+drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 08:44 2011011800.e562p5_fp.stage
+-rwxr-xr-x 1 cgibert g0620     685 2011-08-13 08:41 compute_impact.ksh
+-rw-r--r-- 1 cgibert g0620    1163 2011-08-12 17:06 compute.py
+-rw-r--r-- 1 cgibert g0620    1351 2011-08-11 18:28 impact.def
+-rw------- 1 cgibert g0620 8815224 2011-08-13 07:47 nohup.out
+-rw-r--r-- 1 cgibert g0620      21 2011-08-13 08:44 progress_streams.def
+-rwxr-xr-x 1 cgibert g0620     377 2011-08-12 20:57 stage_impact.ksh
+-rw-r--r-- 1 cgibert g0620    3017 2011-08-13 05:24 stage.py
+-rw-r--r-- 1 cgibert g0620     807 2011-08-11 18:28 streams.def</pre>
+</div>
+<p>Is this case there is one instance of stage_impact.ksh and 5 instances of compute_impact.ksh running. The configuration file <em>streams.def</em> looks like this:</p>
+<div class="highlight-python"><pre>[a]
+expver = e562p3_fp
+start = 20100816
+end = 20101101
+archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p3/e562p3_fp/obs
+
+[b]
+expver = e562p4_fp
+start = 20101102
+end = 20110101
+archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p4/e562p4_fp/obs</pre>
+</div>
+<p>You can run staging jobs in parallel as well. For example, if we split the previous file streams.def into two files:</p>
+<div class="highlight-python"><pre>streams1.def
+[a]
+expver = e562p3_fp
+start = 20100816
+end = 20101101
+archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p3/e562p3_fp/obs
+
+streams2.def
+[a]
+expver = e562p4_fp
+start = 20101102
+end = 20110101
+archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p4/e562p4_fp/obs</pre>
+</div>
+<p>We can now start the processing:</p>
+<div class="highlight-python"><pre>nohup ./stage_impact.ksh /home/cgibert/scratch/stage /home/cgibert/scratch/stage/streams1.def &amp;
+nohup ./stage_impact.ksh /home/cgibert/scratch/stage /home/cgibert/scratch/stage/streams2.def &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;
+nohup ./compute_impact.ksh /home/cgibert/scratch/stage &amp;</pre>
+</div>
+<p>How many staging processing can be run in parallel depends on how much data can be kept online. It is advisable to run parallel staging jobs
+for dates which are far apart to increase the chance that the same tapes are not required by the different staging jobs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body"><p class="first">A file is created by the job stage_impact.ksh to keep track of which date was last handled so that if all jobs were killed, restarting them would resume the computation at the same point. The file is named: progress_&lt;root_of_file&gt;.def where &lt;root_of_file&gt; is the root name of the file containing the date definitions. In the previous case two files would be created:</p>
+<ul class="last simple">
+<li>progress_streams1.def</li>
+<li>progress_streams2.def</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="contents">
+<h3>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="stage_impact.html">stage_impact.ksh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compute_impact.html">compute_impact.ksh</a></li>
+</ul>
+</div>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">observation</span> <span class="pre">impact</span> <span class="pre">timeseries</span></tt> &#8212; Computing observation impact timeseries from the archive</a><ul>
+<li><a class="reference internal" href="#how-it-works">How it works</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../scripts.html"
+                        title="previous chapter">Scripts</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="stage_impact.html"
+                        title="next chapter">stage_impact.ksh</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/scripts/timeseries.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="stage_impact.html" title="stage_impact.ksh"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../scripts.html" title="Scripts"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../scripts.html" >Scripts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+{
+	"directive": "curve",
+    "doc": true,
+	"keywords" : {
+        "plotdata": {
+            "optional": true,
+            "unique": true
+        },
+        "graphics": {
+            "type": "graphics",
+            "default_value": "",
+            "unique": true
+        },
+        "user_legend": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false,
+            "alias": "legend"
+        },
+        "kind": {
+            "unique": true,
+            "default_value": "line"
+        },
+        "symbol": {
+            "unique": true,
+            "default_value": "",
+            "type": "symbol"
+        },
+        "annotation": {
+            "unique": true,
+            "default_value": null
+        },
+        "annotation_font": {
+            "alias": "font",
+            "type": "plotfont",
+            "unique": true,
+            "default_value": ""
+        }
+	}
+}

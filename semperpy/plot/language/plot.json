@@ -1,0 +1,85 @@
+{
+	"directive": "plot",
+    "inherit_from": "baseplot",
+	"keywords" : {
+        "curve": {
+            "alias": ["curves"],
+            "default_value": "",
+            "type": "curve",
+            "help": ["A list of directives of type line, bar, dot etc..."]
+        },
+        "graphics": {
+            "type": "graphics",
+            "default_value": "",
+            "unique": true,
+            "help": ["A directive specifying graphics attributes for the plot, these are inherited by curves"]
+        },
+        "xaxis": {
+            "alias": ["x_axis"],
+            "type": "axis",
+            "default_value": "",
+            "unique": true,
+            "help": ["A directive specifying the characteristics of the X axis"]
+        },
+        "yaxis": {
+            "alias": ["y_axis"],
+            "type": "axis",
+            "default_value": "",
+            "unique": true,
+            "help": ["A directive specifying the characteristics of the Y axis"]
+        },
+        "comment": {
+            "alias": ["annotate","decorator"],
+            "default_value": [],
+            "help": ["A directive specifying special annotations on the plot (commentline, commenttext)"]
+        },
+        "sort": {
+            "default_value": null,
+            "unique": true,
+            "validate": ["ValidateChoice",null,"increasing","decreasing","rank_increasing","rank_decreasing"],
+            "help": ["This option is useful when plotting bars. Sometimes we want the bars to be sorted to have increasing or decreasing bars in size and value. The special value None means no sorting."]
+        },
+        "xtitle": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false,
+            "help": ["A string specifying the text template to use for the title along the X axis."]
+        },
+        "ytitle": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false,
+            "help": ["A string specifying the text template to use for the title along the Y axis."]
+        },
+        "legend": {
+            "type": "plotlegend",
+            "unique": true,
+            "default_value": "",
+            "help": ["A string specifying the text template to use for the legend"]
+        },
+        "has_xtitle": {
+            "default_value": false,
+            "unique": true,
+            "help": ["Switches the display of the X axis title on and off"]
+        },
+        "has_ytitle": {
+            "default_value": false,
+            "unique": true,
+            "help": ["Switches the display of the Y axis title on and off"]
+        },
+        "has_legend": {
+            "default_value": true,
+            "unique": true,
+            "help": ["Switches the display of the legend on and off"]
+        },
+        "datahook": {
+            "unique": true,
+            "optional": true,
+            "help": ["This is a callable which is called for each set of data retrieved / computed during the production","of the plot. This is particularly handy for printing out values etc... A standard datahook is provided, it is called printhook"]
+        },
+        "_curve_preference": {
+            "unique": true,
+            "default_value": "curve"
+        }
+	}
+}

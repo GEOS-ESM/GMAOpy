@@ -1,0 +1,91 @@
+:mod:`The File class` --- reading and slicing netCDF files
+==========================================================
+
+.. module:: netcdf
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: File(object)
+
+Public methods
+--------------
+
+    .. method:: File(filename,verbose = 0):
+
+    	:param filename: path to a hdf4, hdf5 or netcdf4 file or url to an opendap server
+    	:type filename: string
+        :param verbose: sets the level of output during the operations
+        :type verbose: int
+
+        Create a File instance, opens the file and attempts to create objects
+        for each of the dimensions.
+
+
+    .. classmethod:: registerDimension(name,officialName,class_instance,metadata_handler=None):
+
+        :param name: name of the dimension (name of the variable in the netCDF file)
+        :type name: string
+        :param officialName: name under which this dimension will be seen by the user
+        :type officialName: string
+        :param class_instance: The class to instanciate when a dimension with the **name** name is encountered
+        :type class_instance: class
+        :param metadata_handler: please see :class:`slicer.cf10.cf10metadata.CF10Metadata`
+
+        This class method enables the registering of classes to instanciate when some
+        particular dimensions are encountered, it acts as a factory.
+
+    .. method:: dimensions():
+
+        returns list of instances of dimensions objects.
+
+    .. method:: slice(varname,directive,visitor,**kargs):
+
+        :param varname: name of the variable in the netCDF file.
+        :type varname: string
+        :param directive: contains values to extract slices from the variable. The dictionary keys should correspond to offical names of the dimensions.
+        :type directive: dictionary
+        :param visitor: please see :class:`slicer.slicer.Slicer`, same visitor
+        :param kargs: arguments to be passed to the Slicer and the visitor.
+
+        Call this method to slice a variable contained in the netCDF file.
+
+    .. method:: readArray(directive,generator = None,**kargs):
+
+        :param directive: contains values to use to extract data including 'variable' defining the netCDF variable name.
+        :type directive: dictionary
+        :param generator: see :class:`slicing.arraygenerator.ArrayGenerator`, don't provide anything to obtain default behaviour
+        :type generator: ArrayGenerator
+
+        This method returns a numpy array with the shape and contents determined by the description in *directive*.
+
+    .. method:: readFieldSet(self,directive,visitor == None,**kargs):
+
+        :param directive: contains values to use to extract data including 'variable' defining the netCDF variable name.
+        :type directive: dictionary
+        :param visitor: optional argument. The default visitor creates a :class:`fields.fieldset.FieldSet` containing a collection of :class:`fields.field.Field`. Please see :class:`netcdf.fieldcreator.FieldCreator`
+
+        The default behaviour of this method using :class:`netcdf.fieldcreator.FieldCreator` is to create a fieldset of fields corresponding to the selection given in *directive*.
+
+        :synonyms: readBundle
+
+Private methods
+---------------
+
+    .. method:: createDimension(dimension,variable):
+
+        Instanciates dimension objects from the internal factory.
+
+    .. method:: createVariableMap(file):
+
+        :param file: enables to read the file
+        :type file: netCDF4.Dataset
+
+        There are issues between opening files directly and accessing data through opendap, 
+        in one case variable names are in uppercase, in the other in lowercase. In order to
+        make programs reusable, the File ignores case.
+
+        :warning: this causes another problem though, in some files (odas) variables exist in both uppercase and lowercase. In order to still be able to deal with these, lower case variables keep their name (e.g. **variable**) and upper case variable are called **variable_upper**.
+
+        This method returns a dictionary built according to the rules explained above.
+

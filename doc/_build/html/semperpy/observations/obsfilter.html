@@ -1,0 +1,165 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ObsFilter class — Filtering observations &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="observations — Handling observations" href="observationsmodule.html" />
+    <link rel="next" title="services — Client-Server utilities" href="../services/servicesmodule.html" />
+    <link rel="prev" title="The Observation class — Holding an observation array" href="observation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../services/servicesmodule.html" title="services — Client-Server utilities"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="observation.html" title="The Observation class — Holding an observation array"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="observationsmodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">observations</span></tt> &#8212; Handling observations</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-observations">
+<span id="the-obsfilter-class-filtering-observations"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">ObsFilter</span> <span class="pre">class</span></tt> &#8212; Filtering observations<a class="headerlink" href="#module-observations" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="observations.ObsFilter">
+<em class="property">class </em><tt class="descclassname">observations.</tt><tt class="descname">ObsFilter</tt><big>(</big><em>Observation</em><big>)</big><a class="headerlink" href="#observations.ObsFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>ObsFilter inherits from the observations.observation.Observation class and disables all
+the numerical operators as these do not make sense on arrays of Booleans.</p>
+</dd></dl>
+
+<div class="section" id="public-methods">
+<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">__call__(value = None):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>Observation or an array</em>) &#8211; The ObsFilter will select observations from the array value where its contents have True values.</td>
+</tr>
+</tbody>
+</table>
+<p>returns a one-dimensional array containing all values taken
+from <strong>value</strong> matching the True values in the ObsFilter.
+If <strong>value</strong> is not given, returns the array of observations, just like the
+<strong>values</strong> method.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">ObsFilter</span> <span class="pre">class</span></tt> &#8212; Filtering observations</a><ul>
+<li><a class="reference internal" href="#public-methods">Public methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="observation.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Observation</span> <span class="pre">class</span></tt> &#8212; Holding an observation array</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../services/servicesmodule.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">services</span></tt> &#8212; Client-Server utilities</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/observations/obsfilter.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../services/servicesmodule.html" title="services — Client-Server utilities"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="observation.html" title="The Observation class — Holding an observation array"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="observationsmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">observations</span></tt> &#8212; Handling observations</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>truthparser — Parsing Boolean expressions &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="core — Core classes" href="coremodule.html" />
+    <link rel="next" title="tools — Micellaneous language tools" href="tools.html" />
+    <link rel="prev" title="texttemplate — Handling text templates to generate titles" href="texttemplate.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tools.html" title="tools — Micellaneous language tools"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="texttemplate.html" title="texttemplate — Handling text templates to generate titles"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-core.truthparser">
+<span id="truthparser-parsing-boolean-expressions"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">truthparser</span></tt> &#8212; Parsing Boolean expressions<a class="headerlink" href="#module-core.truthparser" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="the-truthparser-class">
+<h2>The TruthParser class<a class="headerlink" href="#the-truthparser-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="core.truthparser.TruthParser">
+<em class="property">class </em><tt class="descclassname">core.truthparser.</tt><tt class="descname">TruthParser</tt><big>(</big><em>dict</em><big>)</big><a class="headerlink" href="#core.truthparser.TruthParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>The TruthParser analyses boolean expressions in the form: &#8220;<strong>a == 1 and b &lt; 3 or c == 0</strong>&#8221;.
+If then builds a tree from the reverse polish notation of the expresion, loading each
+node and leaf with user-defined object instances. It is then able to &#8220;execute&#8221; the
+tree to let the user&#8217;s objects do their job.</p>
+<p>The TruthParser uses pyparser Python module (<a class="reference external" href="http://pyparsing.wikispaces.com/">http://pyparsing.wikispaces.com/</a>) and handles
+comparison operator and logical operators: <strong>==, !=, &lt;, &lt;=, &gt;, &gt;=</strong> together with <strong>and</strong> and <strong>or</strong>.
+It is quite simple and crude and could be improved greatly particularly for handling
+user&#8217;s syntax errors, but it does the job it was required to do. It can be improved
+later.</p>
+<p>Some sort of abstraction has been put into developping the parser, it could be used
+for most applications which require truth parsing. The user of this class should implement
+a class with the following methods (what is the token parsed in the expression):</p>
+<blockquote>
+<div><ul class="simple">
+<li>createLogical(self,what): returns an object instance to deal with <strong>x and y</strong> or <strong>x or y</strong></li>
+<li>createComparison(self,what) returns an object instance to deal with operator <strong>==, !=, &lt;, &lt;=, &gt;, &gt;=</strong></li>
+<li>createVariable(self,what) returns an object instance to deal with variables defines in the expression, basically any string which is not a number or an operator</li>
+<li>createValue(self,what) returns an object instance to deal with hardcoded floating point values which are part of the expression.</li>
+</ul>
+</div></blockquote>
+<p>The TruthParser class provides default behaviour for nodes holding a logical (and, or),
+a comparison (&lt;,&gt;,== etc...) and a value (literal floating point value). Nothing can be supplied
+by default for Variable.</p>
+<p>Once the tree representing the expression is built, it is executed to produce a result. The
+following object methods are called during the process:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Object created by createLogical: __call__(self,a,b) returns the result of the logical operation between a and b (or whatever they contain)</li>
+<li>Object created by createComparison: __call__(self,a,b) returns the result of the comparison of a and b</li>
+<li>Object created by createVariable: __call__(self) returns the value of the variable in the expression</li>
+<li>Object created by createValue: __call__(self) returns the value.</li>
+</ul>
+</div></blockquote>
+<dl class="method">
+<dt id="core.truthparser.TruthParser.parse">
+<tt class="descname">parse</tt><big>(</big><em>expression</em>, <em>creator</em><big>)</big><a class="headerlink" href="#core.truthparser.TruthParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>expression</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the text expression to be parsed.</li>
+<li><strong>creator</strong> (<em>an object instance with the necessary methods see introduction</em>) &#8211; called with one parameter, the token found, should return an object instance to be stored in a node.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Parses the text, creates the expression tree and executes it calling the objects provided
+by the creator (please see introduction).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.truthparser.TruthParser.build">
+<tt class="descname">build</tt><big>(</big><em>x</em>, <em>creator</em><big>)</big><a class="headerlink" href="#core.truthparser.TruthParser.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the expression tree, <em>called internally</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.truthparser.TruthParser.execute">
+<tt class="descname">execute</tt><big>(</big><em>tree</em><big>)</big><a class="headerlink" href="#core.truthparser.TruthParser.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the tree by calling the object instances, <em>called internally</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="truthparser-examples">
+<h2>TruthParser Examples<a class="headerlink" href="#truthparser-examples" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Here is a simple example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.truthparser</span> <span class="kn">import</span> <span class="n">TruthParser</span>
+
+<span class="k">class</span> <span class="nc">MyParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">expression</span><span class="p">):</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">TruthParser</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">MyParser</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;2 &lt; 4 and (9 &lt; 1 or 2 == 2&#39;</span><span class="p">)</span>
+<span class="c"># returns True</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This is what the TruthParser can do by default, nice but it doesn&#8217;t take
+us very far. Let&#8217;s slighly improve it:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.truthparser</span> <span class="kn">import</span> <span class="n">TruthParser</span>
+
+<span class="k">class</span> <span class="nc">MyParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">createVariable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">what</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TruthParser</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables_</span><span class="p">[</span><span class="n">what</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">expression</span><span class="p">,</span><span class="o">**</span><span class="n">variables</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables_</span> <span class="o">=</span> <span class="n">variables</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">TruthParser</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">MyParser</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;z &lt;= 4 and (x &gt; 1 or y == 2)&#39;</span><span class="p">,</span><span class="n">x</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">20.0</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">)</span> <span class="c"># True</span>
+<span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;z &lt;= 4 and (x &gt; 1 or y == 2)&#39;</span><span class="p">,</span><span class="n">x</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">)</span>   <span class="c"># True</span>
+<span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;z &lt;= 4 and (x &gt; 1 or y == 2)&#39;</span><span class="p">,</span><span class="n">x</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">)</span>   <span class="c"># False</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This is slightly more useful if we know the expression in advance and the value
+of the variables at run time only. The TruthParser was designed for an application
+a little more sophisticated, the calculation of masks. This example shows how to compute
+a mask on arrays according to an expression:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">semperpy.core.truthparser</span> <span class="kn">import</span> <span class="n">TruthParser</span>
+
+<span class="k">class</span> <span class="nc">MyParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrays_</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">99</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">createVariable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">what</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TruthParser</span><span class="o">.</span><span class="n">Value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrays_</span><span class="p">[</span><span class="n">what</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">createLogical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">what</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">what</span> <span class="o">==</span> <span class="s">&#39;and&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">expression</span><span class="p">):</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">TruthParser</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">mask</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays_</span><span class="p">[</span><span class="s">&#39;z&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">MyParser</span><span class="p">()</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;x == 49 and y == 50&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">mask</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;x &lt; y&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">mask</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span>
+<span class="k">print</span> <span class="n">value</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The program produces the output:</p>
+<div class="highlight-python"><pre>[False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False  True False False False False False False False False False False &lt;-
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False]
+[ True  True  True  True  True  True  True  True  True  True  True  True &lt;-
+  True  True  True  True  True  True  True  True  True  True  True  True &lt;-
+  True  True  True  True  True  True  True  True  True  True  True  True &lt;-
+  True  True  True  True  True  True  True  True  True  True  True  True &lt;-
+  True  True False False False False False False False False False False &lt;-
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False]
+(50,)
+[ 74.81871765  51.32676716  80.04210581  44.91719832  91.08454225
+  79.85584726  41.72192775  83.58348206  15.76761108  28.59978859
+  62.13575457  60.91221397  50.9117611   24.52117651  83.9582438
+  66.06572606  14.7983316   62.25920367  10.28110361  35.65820036
+  32.09910369  38.49067582  24.58884459   5.61183983  73.55411382
+  11.84061137  78.59969057  94.35803136  53.61091119  55.52293499
+  15.16219035  10.34310616  42.76413067  32.72124625  91.36094832
+   9.59616351  14.48611709  72.42349225  90.82700306  10.03005652
+  45.08080076  11.23162564  82.12659091   5.65627268  95.54599445
+  36.45911579  32.76919863   7.9673354   33.95351563  23.11777119]</pre>
+</div>
+<p>A full working example is implemented in :class: <cite>observations.odsreader</cite>
+using netcdf files. Masks are calculated on arrays containing metadata,
+the mask is then used to read selected observations.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">truthparser</span></tt> &#8212; Parsing Boolean expressions</a><ul>
+<li><a class="reference internal" href="#the-truthparser-class">The TruthParser class</a></li>
+<li><a class="reference internal" href="#truthparser-examples">TruthParser Examples</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="texttemplate.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">texttemplate</span></tt> &#8212; Handling text templates to generate titles</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tools.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">tools</span></tt> &#8212; Micellaneous language tools</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/core/truthparser.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tools.html" title="tools — Micellaneous language tools"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="texttemplate.html" title="texttemplate — Handling text templates to generate titles"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

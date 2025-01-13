@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>index — Indexing data using flexible multiple criteria &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="core — Core classes" href="coremodule.html" />
+    <link rel="next" title="innerpython — Python internals" href="innerpython.html" />
+    <link rel="prev" title="factory — Factory class" href="factory.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="innerpython.html" title="innerpython — Python internals"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="factory.html" title="factory — Factory class"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-core.index">
+<span id="index-indexing-data-using-flexible-multiple-criteria"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">index</span></tt> &#8212; Indexing data using flexible multiple criteria<a class="headerlink" href="#module-core.index" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="the-index-class">
+<h2>The Index class<a class="headerlink" href="#the-index-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="core.index.Index">
+<em class="property">class </em><tt class="descclassname">core.index.</tt><tt class="descname">Index</tt><big>(</big><em>Core.tools.dictionary</em><big>)</big><a class="headerlink" href="#core.index.Index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>Index</strong> provides support for indexing data using multiple keys of any (hashable)
+data type. The Index is a dictionary of dictionaries.</p>
+<dl class="method">
+<dt id="core.index.Index.Index">
+<tt class="descname">Index</tt><big>(</big><em>*args</em>, <em>unique_keys = False</em>, <em>sort = False</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#core.index.Index.Index" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>args</strong> (<em>list of strings</em>) &#8211; provides the list of keywords used for indexing the data</li>
+<li><strong>unique_keys</strong> (<em>Boolean</em>) &#8211; by default, if two values are stored under the same keys, a list of values is created and stored. So one unique combination of keys could return more than one result. If this parameter is set to True, an IndexError exception is raised if there is an attempt to store a second value under a unique set of keys.</li>
+<li><strong>sort</strong> (<em>Boolean</em>) &#8211; specifies if values along each key should be sorted when displaying and accessing the index</li>
+<li><strong>kargs</strong> &#8211; you can specify here callables associated to keywords to sort along that keyword (e.g: names = mySortNames, where the callable is a sort function receiving two parameters)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.index.Index.keywords">
+<tt class="descname">keywords</tt><big>(</big><big>)</big><a class="headerlink" href="#core.index.Index.keywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of keywords use by this index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.index.Index.insert">
+<tt class="descname">insert</tt><big>(</big><em>value</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#core.index.Index.insert" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>any type</em>) &#8211; the data to be stored</li>
+<li><strong>kargs</strong> &#8211; list of <em>key=value</em> pairs which consitute the index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Builds the tree and inserts the data <em>value</em>. This method is called as many times
+as necessary to build the tree of data or meta-data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">access(_nolist=False,**kargs):</tt></dt>
+<dd><p>Retrieves data from the index based on the list of <em>key=value</em> pairs. Not all the
+keys specified in the constructor (<em>keywords</em>) need to be specified, an unspecified
+key means <em>all values</em>. A call to index.access() returns a list of all the values
+stored. If the parameter _nolist is set to True, if only one result is found, it is
+returned as a single value instead of a list of one value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">nolist is prefixed with underscore to avoid any possible clash with actual keywords in kargs.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.index.Index.constrained_access">
+<tt class="descname">constrained_access</tt><big>(</big><em>_nolist=True</em>, <em>_expect=1</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#core.index.Index.constrained_access" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>_nolist</strong> (<em>Boolean</em>) &#8211; same as in method <tt class="xref py py-meth docutils literal"><span class="pre">access()</span></tt></li>
+<li><strong>_expect</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the number of values expected</li>
+<li><strong>kargs</strong> &#8211; list of <em>key=value</em> pairs which consitute the index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#core.index.Index.constrained_access" title="core.index.Index.constrained_access"><tt class="xref py py-meth docutils literal"><span class="pre">constrained_access()</span></tt></a> method is the same as the <tt class="xref py py-meth docutils literal"><span class="pre">access()</span></tt> method, expect
+that it raises an expection if the number of values found is different from the
+number of expected values. This helps spotting problems in algorithms and datasets.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">The parameter _nolist is True by default for this method as it seems to make sense.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.index.Index.index_values">
+<tt class="descname">index_values</tt><big>(</big><big>)</big><a class="headerlink" href="#core.index.Index.index_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is a generator enabling to walk all the leaves of the index, basically
+it enables the user to see the whole index as a list of values. If you think of
+the index as a dictionary, the key is a combination of keys and the value is stored
+for each combination of keys.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.index.Index.index_keys">
+<tt class="descname">index_keys</tt><big>(</big><big>)</big><a class="headerlink" href="#core.index.Index.index_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is a generator returning all the keys of the index. Each keys is a
+combination of keys and is returned as a dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.index.Index.index_items">
+<tt class="descname">index_items</tt><big>(</big><big>)</big><a class="headerlink" href="#core.index.Index.index_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just like the dictionary.items() returns pairs of key, value, this method returns
+pairs of dictionary, value.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="an-example">
+<h2>An example<a class="headerlink" href="#an-example" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Let&#8217;s imagine that we keep a record of different DVDs we own. We want to index the DVDs
+with the movie title, genre, director and year and store for each movie its duration and
+its location in a shelf archive (<a class="reference download internal" href="../../_downloads/index_example.py"><tt class="xref download docutils literal"><span class="pre">DVDs</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.index</span> <span class="kn">import</span> <span class="n">Index</span>
+
+<span class="n">index</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">,</span><span class="s">&#39;genre&#39;</span><span class="p">,</span><span class="s">&#39;director&#39;</span><span class="p">,</span><span class="s">&#39;year&#39;</span><span class="p">)</span>
+<span class="n">index</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span><span class="n">location</span><span class="o">=</span><span class="s">&#39;3F&#39;</span><span class="p">),</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;Mr and Mrs Smith&#39;</span><span class="p">,</span><span class="n">genre</span><span class="o">=</span><span class="s">&#39;action&#39;</span><span class="p">,</span><span class="n">director</span><span class="o">=</span><span class="s">&#39;Doug Liman&#39;</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="mi">2005</span><span class="p">)</span>
+<span class="n">index</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">124</span><span class="p">,</span><span class="n">location</span><span class="o">=</span><span class="s">&#39;2A&#39;</span><span class="p">),</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;Notting Hill&#39;</span><span class="p">,</span><span class="n">genre</span><span class="o">=</span><span class="s">&#39;romantic comedy&#39;</span><span class="p">,</span><span class="n">director</span><span class="o">=</span><span class="s">&#39;Roger Michell&#39;</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="mi">1999</span><span class="p">)</span>
+<span class="n">index</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">117</span><span class="p">,</span><span class="n">location</span><span class="o">=</span><span class="s">&#39;17C&#39;</span><span class="p">),</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;Four Weddings and a Funeral&#39;</span><span class="p">,</span><span class="n">genre</span><span class="o">=</span><span class="s">&#39;romantic comedy&#39;</span><span class="p">,</span><span class="n">director</span><span class="o">=</span><span class="s">&#39;Mike Newell&#39;</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="mi">1994</span><span class="p">)</span>
+<span class="n">index</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">122</span><span class="p">,</span><span class="n">location</span><span class="o">=</span><span class="s">&#39;45Z&#39;</span><span class="p">),</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;Man to Man&#39;</span><span class="p">,</span><span class="n">genre</span><span class="o">=</span><span class="s">&#39;drama&#39;</span><span class="p">,</span><span class="n">director</span><span class="o">=</span><span class="s">&#39;Regis Wargnier&#39;</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="mi">2005</span><span class="p">)</span>
+<span class="n">index</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span><span class="n">location</span><span class="o">=</span><span class="s">&#39;12F&#39;</span><span class="p">),</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;An American Affair&#39;</span><span class="p">,</span><span class="n">genre</span><span class="o">=</span><span class="s">&#39;drama&#39;</span><span class="p">,</span><span class="n">director</span><span class="o">=</span><span class="s">&#39;William Olsson&#39;</span><span class="p">,</span><span class="n">year</span><span class="o">=</span><span class="mi">2009</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can now test the different features:</p>
+<div class="highlight-python"><pre>python -i index_example1.py
+&gt;&gt; print index</pre>
+</div>
+<p>The index can be printed in a formatted manner (inherited from <tt class="xref py py-class docutils literal"><span class="pre">Core.tools.dictionary</span></tt>):</p>
+<div class="highlight-python"><pre>Four Weddings and a Funeral:
+     romantic comedy:
+         Mike Newell:
+             1994:
+                     {'duration': 117, 'location': '17C'}
+ Man to Man:
+     drama:
+         Regis Wargnier:
+             2005:
+                     {'duration': 122, 'location': '45Z'}
+ Mr and Mrs Smith:
+     action:
+         Doug Liman:
+             2005:
+                     {'duration': 120, 'location': '3F'}
+ Notting Hill:
+     romantic comedy:
+         Roger Michell:
+             1999:
+                     {'duration': 124, 'location': '2A'}
+ An American Affair:
+     drama:
+         William Olsson:
+             2009:
+                     {'duration': 96, 'location': '12F'}</pre>
+</div>
+<p>Accessing data:</p>
+<div class="highlight-python"><pre>&gt;&gt; print index.access(genre='drama')
+    [{'duration': 122, 'location': '45Z'}, {'duration': 96, 'location': '12F'}]
+
+&gt;&gt; print index.access(genre='drama',year=2009)
+    [{'duration': 96, 'location': '12F'}]
+
+&gt;&gt; print index.access(year=2005)
+    [{'duration': 122, 'location': '45Z'}, {'duration': 120, 'location': '3F'}]
+
+&gt;&gt; print 'no list:\n',index.access(_nolist=True,year=1994)
+    no list:
+    {'duration': 117, 'location': '17C'}
+
+&gt;&gt; print 'making sure there are no movies from 2010\n',index.constrained_access(_expect=0,year=2010)
+    making sure there are no movies from 2010
+    []
+
+&gt;&gt; print index.constrained_access(_expect=0,year=1994)
+    Traceback (most recent call last):
+        ...
+    IndexError: Constrained access failed, expected 0 value(s), found 1 for: {'year': 1994}
+
+&gt;&gt; print index.constrained_access(_expect=3,year=2005)
+    Traceback (most recent call last):
+        ...
+    IndexError: Constrained access failed, expected 3 value(s), found 2 for: {'year': 2005}
+
+&gt;&gt; for a in index.index_values():
+      print a
+    {'duration': 117, 'location': '17C'}
+    {'duration': 122, 'location': '45Z'}
+    {'duration': 120, 'location': '3F'}
+    {'duration': 124, 'location': '2A'}
+    {'duration': 96, 'location': '12F'}
+
+&gt;&gt; print list(index.index_values())
+    [{'duration': 117, 'location': '17C'}, {'duration': 122, 'location': '45Z'}, {'duration': 120, 'location': '3F'}, {'duration': 124, 'location': '2A'}, {'duration': 96, 'location': '12F'}]
+
+&gt;&gt; for a in index.index_keys():
+      print a
+    {'genre': 'romantic comedy', 'director': 'Mike Newell', 'title': 'Four Weddings and a Funeral', 'year': 1994}
+    {'genre': 'drama', 'director': 'Regis Wargnier', 'title': 'Man to Man', 'year': 2005}
+    {'genre': 'action', 'director': 'Doug Liman', 'title': 'Mr and Mrs Smith', 'year': 2005}
+    {'genre': 'romantic comedy', 'director': 'Roger Michell', 'title': 'Notting Hill', 'year': 1999}
+    {'genre': 'drama', 'director': 'William Olsson', 'title': 'An American Affair', 'year': 2009}
+
+&gt;&gt; for a in index.index_items():
+      print a
+    ({'genre': 'romantic comedy', 'director': 'Mike Newell', 'title': 'Four Weddings and a Funeral', 'year': 1994}, {'duration': 117, 'location': '17C'})
+    ({'genre': 'drama', 'director': 'Regis Wargnier', 'title': 'Man to Man', 'year': 2005}, {'duration': 122, 'location': '45Z'})
+    ({'genre': 'action', 'director': 'Doug Liman', 'title': 'Mr and Mrs Smith', 'year': 2005}, {'duration': 120, 'location': '3F'})
+    ({'genre': 'romantic comedy', 'director': 'Roger Michell', 'title': 'Notting Hill', 'year': 1999}, {'duration': 124, 'location': '2A'})
+    ({'genre': 'drama', 'director': 'William Olsson', 'title': 'An American Affair', 'year': 2009}, {'duration': 96, 'location': '12F'})</pre>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">index</span></tt> &#8212; Indexing data using flexible multiple criteria</a><ul>
+<li><a class="reference internal" href="#the-index-class">The Index class</a></li>
+<li><a class="reference internal" href="#an-example">An example</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="factory.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">factory</span></tt> &#8212; Factory class</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="innerpython.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">innerpython</span></tt> &#8212; Python internals</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/core/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="innerpython.html" title="innerpython — Python internals"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="factory.html" title="factory — Factory class"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

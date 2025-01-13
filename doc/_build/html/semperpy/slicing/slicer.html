@@ -1,0 +1,217 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Slice class — Slicing netCDF variables and arrays &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="slicing — Slicing multi-dimensional arrays" href="slicingmodule.html" />
+    <link rel="next" title="The ArrayGenerator class — Creating numpy arrays" href="arraygenerator.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="arraygenerator.html" title="The ArrayGenerator class — Creating numpy arrays"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="slicingmodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-slicer.slicer">
+<span id="the-slice-class-slicing-netcdf-variables-and-arrays"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">Slice</span> <span class="pre">class</span></tt> &#8212; Slicing netCDF variables and arrays<a class="headerlink" href="#module-slicer.slicer" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="slicer.slicer.Slicer">
+<em class="property">class </em><tt class="descclassname">slicer.slicer.</tt><tt class="descname">Slicer</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#slicer.slicer.Slicer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="public-methods">
+<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">Slicer(dimensions):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dimensions</strong> (a list of class instances derived from <tt class="xref py py-class docutils literal"><span class="pre">slicing.dimensions.dimensions,</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">number</span> <span class="pre">as</span> <span class="pre">the</span> <span class="pre">shape</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">array(s)</span> <span class="pre">to</span> <span class="pre">slice.</span></tt>) &#8211; the objects which will handle each of the dimensions of the array(s) to slice</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__call__(variable,directive,visitor,verbose=0,**kargs):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variable</strong> (<em>a numpy array or any object being able to be sliced</em>) &#8211; the array to be sliced</li>
+<li><strong>directive</strong> (<em>dictionary</em>) &#8211; contains entries with the same name as the dimensions, specifying how to slice the array</li>
+<li><strong>visitor</strong> (<em>object implementing the right methods</em>) &#8211; will be called repeatedly as the variable is sliced.</li>
+<li><strong>verbose</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; sets the level of output during the operations</li>
+<li><strong>kargs</strong> &#8211; any parameters you want to be sent down to the visitor</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method does all the work of calling the dimension objects and slicing
+along all the dimensions. The visitor should have the following methods (please
+see for example <tt class="xref py py-class docutils literal"><span class="pre">slicing.slice2array.Slice2Array</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">slicing.slice2list.Slice2List</span></tt>):</p>
+<div class="highlight-python"><pre>def __call__(self,dimensions,variable,src,dst,meta,is_interval,**kargs):
+    # called for each slice to copy from source to destination
+    # dimensions: list of string giving the dimension names
+    # variable: the array being sliced
+    # src: list of slices to use from the variable
+    # dst: list of slices to use to the destination array
+    # meta: a dictionary representing the metadata taken from the directive (e.g. date=list of dates, levels = list of level) once intervals have been resolved
+    # is_interval: an array of booleans stating whether the successive dimensions are
+        discrete values or intervals
+
+def preProcess(self,dimensions,variable,shape,slices,metadata):
+   # called once right before __call__ is called for possible initialisations
+   # dimensions: a list of dimension-derived class intances
+   # variable: the array to be sliced
+   # shape: the shape of the array to be sliced
+   # slices: the list of slices which will be applied
+   # metadata: see above
+
+def postProcess(self,dimensions,variable,shape,slices,metadata):
+  # called once right before the slicing is done
+  # the parameters are identical to the preProcess method</pre>
+</div>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="private-methods">
+<h2>Private methods<a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">slice(dimensions,variable,slices,metadata,is_interval,visitor,index = 0,src=[],dst=[],meta=[],**kargs):</tt></dt>
+<dd><p>This method is the recursive method which does all the slicing work. Please see the
+source for details.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Slice</span> <span class="pre">class</span></tt> &#8212; Slicing netCDF variables and arrays</a><ul>
+<li><a class="reference internal" href="#public-methods">Public methods</a></li>
+<li><a class="reference internal" href="#private-methods">Private methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="arraygenerator.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">ArrayGenerator</span> <span class="pre">class</span></tt> &#8212; Creating numpy arrays</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/slicing/slicer.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="arraygenerator.html" title="The ArrayGenerator class — Creating numpy arrays"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

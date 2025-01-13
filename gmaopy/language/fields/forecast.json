@@ -1,0 +1,9 @@
+{
+	"directive": "forecast",
+	"inherit_from": "geofield",
+	"keywords" : {
+		"type": {
+			"default_value": "fc"
+		}
+	}	
+}

@@ -1,0 +1,18 @@
+{
+	"directive": "continents",
+    "doc": true,
+	"keywords" : {
+        "color": {
+            "unique": true,
+            "default_value": "#FFE2AB"
+        },
+        "lake_color": {
+            "unique": true,
+            "default_value": null
+        },
+        "zorder": {
+            "unique": true,
+            "default_value": 0
+        }
+	}
+}

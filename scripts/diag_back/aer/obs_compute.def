@@ -1,0 +1,452 @@
+[rstemp]
+kx = 120
+kt = 44
+rank = 300
+
+[airtemp_md]
+kx = 133
+kt = 44
+rank = 400
+
+[airtemp_as]
+kx = 131
+kt = 44
+rank = 500
+
+[airtemp_rep]
+kx = 130
+kt = 44
+rank = 600
+
+[droptemp]
+kx = 132
+kt = 44
+rank = 700
+
+[surfmartemp]
+kx = 180
+kt = 44
+rank = 800
+
+[spllevtemp]
+kx = 182
+kt = 44
+rank = 900
+
+[seasurftemp]
+kt = 39
+rank = 1000
+
+[metsurfpress]
+kx = 187
+kt = 33
+rank = 1200
+
+[landsurfpress]
+kx = 181
+kt = 33
+rank = 1300
+
+[surfmarpress]
+kx = 180
+kt = 33
+rank = 1400
+
+[rssurfpress]
+kx = 120
+kt = 33
+rank = 1500
+
+[spllevsurfpress]
+kx = 182
+kt = 33
+
+[austmsl]
+kx = 191
+kt = 33
+rank = 1700
+
+[irclouddrift]
+kx = 257
+kt = 4,5
+rank = 1900
+
+[watervapour]
+kx = 258
+kt = 4,5
+rank = 2000
+
+[rswind]
+kx = 220
+kt = 4,5
+rank = 2100
+
+[pibalwind]
+kx = 221
+kt = 4,5
+rank = 2200
+
+[profwind]
+kx = 223
+kt = 4,5
+rank = 2300
+
+[japprofwind]
+kx = 228
+kt = 4,5
+rank = 2400
+
+[nexradwind]
+kx = 224
+kt = 4,5
+rank = 2500
+
+[airwind_md]
+kx = 233
+kt = 4,5
+rank = 2600
+
+[airwind_as]
+kx = 231
+kt = 4,5
+rank = 2700
+
+[airwind_tam]
+kx = 234
+kt = 4,5
+rank = 2800
+
+[airwind_amd]
+kx = 235
+kt = 4,5
+rank = 2900
+
+[airwind_rep]
+kx = 230
+kt = 4,5
+rank = 3000
+
+[dropwind]
+kx = 232
+kt = 4,5
+rank = 3100
+
+[clouddrift_met]
+kx = 243,253
+kt = 4,5
+rank = 3200
+
+[clouddrift_gms]
+kx = 242,252
+kt = 4,5
+rank = 3300
+
+[clouddrift_goesir]
+kx = 245
+kt = 4,5
+rank = 3400
+
+[clouddrift_goeswv]
+kx = 246
+kt = 4,5
+rank = 3500
+
+[pilotwind]
+kx = 229
+kt = 4,5
+rank = 3600
+
+[surfmarwind]
+kx = 280
+kt = 4,5
+rank = 3700
+
+[buoywind_atlas]
+kx = 282
+kt = 4,5
+rank = 3800
+
+[ssmiwind]
+kx = 283
+kt = 12
+rank = 3900
+
+[windsatwind]
+kx = 289
+kt = 4,5
+rank = 4000
+
+[scattwind_ers]
+kx = 286
+kt = 4,5
+rank = 4100
+
+[scattwind_ascat]
+kx = 290
+kt = 4,5
+rank = 4200
+
+[rsspecihum]
+kx = 120
+kt = 11
+rank = 4400
+
+[surfmarspecihum]
+kx = 180
+kt = 11
+rank = 4500
+
+[spllevspecihum]
+kx = 182
+kt = 11
+rank = 4600
+
+[rainrate_tmi]
+kx = 211,84
+kt = 17
+rank = 4800
+
+[gpsro_sac]
+kx = 820
+kt = 88
+rank = 5100
+
+[gpsro_gracea]
+kx = 722
+kt = 88
+rank = 5200
+
+[gpsro_graceb]
+kx = 723
+kt = 88
+rank = 5300
+
+[gpsro_champ]
+kx = 41
+kt = 88
+rank = 5400
+
+[gpsro_cosmic1]
+kx = 740
+kt = 88
+rank = 5600
+
+[gpsro_cosmic2]
+kx = 741
+kt = 88
+rank = 5700
+
+[gpsro_cosmic3]
+kx = 742
+kt = 88
+rank = 5800
+
+[gpsro_cosmic4]
+kx = 743
+kt = 88
+rank = 5900
+
+[gpsro_cosmic5]
+kx = 744
+kt = 88
+rank = 6000
+
+[gpsro_cosmic6]
+kx = 745
+kt = 88
+rank = 6100
+
+[noaa14_ozone_lay]
+kx = 464
+kt = 22
+rank = 6300
+
+[noaa14_ozone_total]
+kx = 464
+kt = 21
+rank = 6400
+
+[noaa16_ozone_lay]
+kx = 466
+kt = 22
+rank = 6500
+
+[noaa16_ozone_total]
+kx = 466
+kt = 21
+rank = 6600
+
+[noaa17_ozone_lay]
+kx = 467
+kt = 22
+rank = 6700
+
+[noaa17_ozone_total]
+kx = 467
+kt = 21
+rank = 6800
+
+[noaa18_ozone_lay]
+kx = 468
+kt = 22
+rank = 6900
+
+[noaa18_ozone_total]
+kx = 468
+kt = 21
+rank = 7000
+
+[noaa15_btemp_hirs2]
+kx = 15
+kt = 40
+rank = 7200
+
+[noaa17_btemp_hirs3]
+kx = 17
+kt = 40
+rank = 7400
+
+[noaa18_btemp_hirs4]
+kx = 18
+kt = 40
+rank = 7500
+
+[noaa19_btemp_hirs4]
+kx = 19
+kt = 40
+rank = 7600
+
+[metopsa_btemp_hirs4]
+kx = 25
+kt = 40
+rank = 7700
+
+[noaa15_btemp_amsua]
+kx = 315
+kt = 40
+rank = 7800
+
+[noaa16_btemp_amsua]
+kx = 316
+kt = 40
+rank = 7900
+
+[noaa17_btemp_amsua]
+kx = 317
+kt = 40
+rank = 8000
+
+[noaa18_btemp_amsua]
+kx = 318
+kt = 40
+rank = 8100
+
+[noaa19_btemp_amsua]
+kx = 319
+kt = 40
+rank = 8200
+
+[metops_btemp_amsua]
+kx = 325
+kt = 40
+rank = 8300
+
+[aqua_btemp_amsua]
+kx = 300
+kt = 40
+rank = 8400
+
+[noaa15_btemp_amsub]
+kx = 415
+kt = 40
+rank = 8500
+
+[noaa16_btemp_amsub]
+kx = 416
+kt = 40
+rank = 8600
+
+[noaa17_btemp_amsub]
+kx = 417
+kt = 40
+rank = 8700
+
+[aqua_btemp_airs]
+kx = 49
+kt = 40
+rank = 8800
+
+[goes10_btemp]
+kx = 60
+kt = 40
+rank = 8900
+
+[goes11_btemp]
+kx = 61
+kt = 40
+rank = 9000
+
+[goes13_btemp]
+kx = 63
+kt = 40
+rank = 9100
+
+[dsmpf11_btemp_ssmi]
+kx = 711
+kt = 40
+rank = 9200
+
+[dsmpf13_btemp_ssmi]
+kx = 713
+kt = 40
+rank = 9300
+
+[dsmpf14_btemp_ssmi]
+kx = 714
+kt = 40
+rank = 9400
+
+[dsmpf15_btemp_ssmi]
+kx = 715
+kt = 40
+rank = 9500
+
+[noaa18_btemp_mhs]
+kx = 818
+kt = 40
+rank = 9600
+
+[noaa19_btemp_mhs]
+kx = 819
+kt = 40
+rank = 9700
+
+[metopa_btemp_mhs]
+kx = 825
+kt = 40
+rank = 9800
+
+[metopa_btemp_iasi]
+kx = 875
+kt = 40
+rank = 9900
+
+[aqua_high_btemp_amsre]
+kx = 549
+kt = 40
+rank = 10000
+
+[aqua_mid_btemp_amsre]
+kx = 548
+kt = 40
+rank = 10100
+
+[aqua_low_btemp_amsre]
+kx = 547
+kt = 40
+rank = 10200
+
+[allsynth]
+kx = 999
+kt = 4,5
+rank = 10300

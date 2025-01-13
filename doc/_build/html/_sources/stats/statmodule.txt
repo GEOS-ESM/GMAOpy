@@ -1,0 +1,15 @@
+:mod:`stats` --- Statistics
+===========================
+
+.. module:: stats
+   :synopsis: Statistics
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents
+********
+
+.. toctree::
+   :maxdepth: 1
+
+   statistics

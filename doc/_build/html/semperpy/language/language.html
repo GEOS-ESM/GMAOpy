@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Language class — Language validation &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="language — Language definition and analysis utilities" href="languagemodule.html" />
+    <link rel="next" title="The LanguageDefinition class — Validating the language definition" href="languagedefinition.html" />
+    <link rel="prev" title="Language definition" href="definitions.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="languagedefinition.html" title="The LanguageDefinition class — Validating the language definition"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="definitions.html" title="Language definition"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="languagemodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">language</span></tt> &#8212; Language definition and analysis utilities</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-language.language">
+<span id="the-language-class-language-validation"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">Language</span> <span class="pre">class</span></tt> &#8212; Language validation<a class="headerlink" href="#module-language.language" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="language.language.LanguageError">
+<em class="property">class </em><tt class="descclassname">language.language.</tt><tt class="descname">LanguageError</tt><big>(</big><em>Exception</em><big>)</big><a class="headerlink" href="#language.language.LanguageError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines an exception class to catch at higher levels if the error has to do with
+language checking. Other exceptions can be raised in this module</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="language.language.Language">
+<em class="property">class </em><tt class="descclassname">language.language.</tt><tt class="descname">Language</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#language.language.Language" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>Language</strong> class is not meant to instanciated, it implements class methods
+to read language definition modules and files and then apply these to a dictionary.</p>
+<p>The <strong>Language</strong> class offers one single public method. This method uses three
+pieces of information to &#8220;do the job&#8221;:</p>
+<ul class="simple">
+<li>a dictionary provided by the user which needs to be analysed and matched against
+rules (e.g. default values, required keywords, type conversions etc...)</li>
+<li>a language definition defining all these rules</li>
+<li>language definition rules which define rules for the language definition and default
+behaviour when information is not provided in the language (see the <tt class="xref py py-class docutils literal"><span class="pre">Language.LanguageDefinition.LanguageDefinition</span></tt> class).</li>
+</ul>
+<p>This may sound complicated but the user should never need to look at the third component:
+the language definition rules. The second component is only known to users
+who design a language.</p>
+</dd></dl>
+
+<div class="section" id="public-methods">
+<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="classmethod">
+<dt>
+<tt class="descname">resolveDirective(directive,directive_name,directive_reader):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directive</strong> (<em>a dictionary or any object behaving like a dictionary</em>) &#8211; the data to be checked against the language rules</li>
+<li><strong>directive_name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; a name which enables the directive reader to provide the language rules.</li>
+<li><strong>directive_reader</strong> (<em>any callable object which returns the language definition from a single string parameter</em>) &#8211; an object able to return a dictionary compliant with what is defined in class:: <cite>LanguageDefinition</cite>. It receives the string <em>directive_name</em>. This means that the language definition can be stored in any format, or even be a python module.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The class method <tt class="xref py py-meth docutils literal"><span class="pre">resolveDirective()</span></tt> raises a <tt class="xref py py-class docutils literal"><span class="pre">Language.Language.LanguageError</span></tt> exception if any of the steps goes wrong. However, it continues as far as possible and only raises the exception with a list of all errors encountered to facilitate debugging. It follows the following steps:</p>
+<ul class="simple">
+<li>retrieve the language definition through the directive_reader. This is a recursive
+process, if other language definitions are inherited, they are merged together,</li>
+<li>check the correctness of the language definition(s) in syntax and grammar,</li>
+<li><em>default language keywords</em> which were not provided in <em>directive</em> are inserted,</li>
+<li><em>aliases</em> are substituted for the <em>legal keyword</em></li>
+<li><em>default values</em> which were not provided are inserted</li>
+<li>the presence of required keywords is checked</li>
+<li>keywords which are allowed only one value are checked, keywords with more than
+one value are converted to lists,</li>
+<li>for each keyword, if a type (or class) is specified, the value is converted,</li>
+<li>values including environment variables are substituted with the value of the variable(s)</li>
+<li>string values are converted to lower case, unless specified otherwise</li>
+<li>at this stage an exception can be raised if at least one error has been detected in
+the previous stage.</li>
+<li>if no error occured, then one last step is necessary:
+to run <em>validators</em> on values to make sure everything is ok,
+values can be derived etc...,</li>
+<li>if not error is encountered, the directive cleaned up and checked is returned.</li>
+</ul>
+<p>The errors generated by this method are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>unknown keywords (not defined in the language),</li>
+<li>keywords with more one than one value which should only have one,</li>
+<li>errors while trying to convert values to specified types,</li>
+<li>errors while trying to substitute values with environment variables
+(environment variable missing),</li>
+<li>validation of the value(s) of a keyword failed.</li>
+</ol>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">At this stage it seems more interesting to gather as many errors as possible in one single <a class="reference internal" href="#language.language.LanguageError" title="language.language.LanguageError"><tt class="xref py py-class docutils literal"><span class="pre">language.language.LanguageError</span></tt></a> exception rather than generating specialised exceptions for each type of error.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Warning :</th><td class="field-body">The <em>directive</em> sent as the first parameter is the one which is returned, it is modified by this method. If you want to preserve it, you will need to duplicate it before calling this method. This is done deliberateley to avoid the systematic duplication of the parameter if it is not necessary.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">The parameter <strong>directive</strong> is expected to have two attributes: default_ and keywords_. They should both be instances of the <strong>set</strong> class. On return they contain respectively the list of keywords which received a default value and the list of keywords valid in this directive.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="private-methods">
+<h2>Private methods<a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="classmethod">
+<dt>
+<tt class="descname">validate_language(directive_name,directive_reader):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directive_name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the language definition (probably the name of the directive)</li>
+<li><strong>directive_reader</strong> (<em>any callable object which returns the language definition from a single string parameter</em>) &#8211; an object able to return a dictionary compliant with what is defined in class:: <cite>LanguageDefinition</cite>. It receives the string <em>directive_name</em>. This means that the language definition can be stored in any format, or even be a python module.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method gets the language definition for a directive through the directive_reader,
+deals recursively with inherited language definitions if specified. It checks the validity
+of the language definitions and builds a final language definition from inherited
+definitions.</p>
+<p>Returns: the final language definition, the definition of how the language should
+describe the directive and the definition of how the keywords should be defined.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">inherit_from(parent,child):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<em>dictionary</em>) &#8211; the dictionary to inherit from</li>
+<li><strong>child</strong> (<em>dictionary</em>) &#8211; the dictionary to inherit into</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Inserts into child any entry of parent which is not in child. From entries which are
+in child and in parent, inherit all the entries in the entry from parent into
+the child.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">specialize_from(parent,child):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<em>dictionary</em>) &#8211; the dictionary to override values from</li>
+<li><strong>child</strong> (<em>dictionary</em>) &#8211; the dictionary to ovveride into</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Inserts into child any entry of parent which is not in child. Replaces in
+child any entry which is both in the parent and the child.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">validate_language_part(semantic,language):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>semantic</strong> (<em>dictionary</em>) &#8211; the definition of how the language should be defined</li>
+<li><strong>language</strong> (<em>dictionary</em>) &#8211; the language to check</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Checks that the language definition contains all the required keywords and
+ensures that the different entries are of the correct type.</p>
+<p>Returns the language after modification.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">resolveSpecialKeywords(definition,directive,language):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>definition</strong> (<em>dictionary</em>) &#8211; A dictionary written in the language definition under the keyword <strong>specialize_from</strong>.</li>
+<li><strong>directive</strong> (<em>dictionary</em>) &#8211; the directive given by the user.</li>
+<li><strong>language</strong> (<em>dictionary</em>) &#8211; the language being used to verify the directive</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method tries to extract keywords from the different expressions in
+<strong>definition</strong> which are defined in the language. It then applies the
+language definition to those keywords in order to make sure that, before
+evaluating the expressions, the keywords exist (possible default
+values) and are of the expected type.</p>
+<p>In order to apply the language to a reduced set of keyword, this method
+creates a reduced directive and builds in memory a reduced language
+definition.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">find_specials(definition,directive):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>definition</strong> (<em>dictionary</em>) &#8211; A dictionary written in the language definition under the keyword <strong>specialize_from</strong>.</li>
+<li><strong>directive</strong> (<em>dictionary</em>) &#8211; the directive given by the user.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This methods evaluates expressions defined under the <strong>specialize_from</strong> in the
+language definition. The syntax is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="n">specialize_from</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;value1 == &#39;hello&#39; and value2 == &#39;world&#39;&quot;</span><span class="p">:</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span>
+    <span class="s">&quot;value3 &lt; 12&quot;</span><span class="p">:</span> <span class="s">&quot;not_twelve&quot;</span>
+<span class="p">}</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Where the keys are boolean expressions which can name any key in the user&#8217;s
+directive and the values are the name of directive definitions. The contents
+of the directive definition is loaded and its keys replace the current
+keys if they exist or they are added. If the evaluation of the expression
+if False, nothing is done.</p>
+<p>This is useful to define the semantics of directive depending on values of
+some of its values.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Language</span> <span class="pre">class</span></tt> &#8212; Language validation</a><ul>
+<li><a class="reference internal" href="#public-methods">Public methods</a></li>
+<li><a class="reference internal" href="#private-methods">Private methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="definitions.html"
+                        title="previous chapter">Language definition</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="languagedefinition.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">LanguageDefinition</span> <span class="pre">class</span></tt> &#8212; Validating the language definition</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/language/language.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="languagedefinition.html" title="The LanguageDefinition class — Validating the language definition"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="definitions.html" title="Language definition"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="languagemodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">language</span></tt> &#8212; Language definition and analysis utilities</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

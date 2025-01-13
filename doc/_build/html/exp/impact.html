@@ -1,0 +1,799 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Observation impact statistics &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../tutorials.html" />
+    <link rel="next" title="Forecast statistics" href="scores.html" />
+    <link rel="prev" title="Standard observation statistics" href="observations.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="scores.html" title="Forecast statistics"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="observations.html" title="Standard observation statistics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="observation-impact-statistics">
+<span id="impactexperiment"></span><h1>Observation impact statistics<a class="headerlink" href="#observation-impact-statistics" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>Computing statistics for observation impacts uses the same tools as for computing statistics
+for observations. We invite you to refer to <a class="reference internal" href="observations.html#obsexperiment"><em>Standard observation statistics</em></a> for more details on the
+explanation of different scripts, we will here document what is different.</p>
+<p>You can compute statistics for observation impacts using <em>imp3_txe</em>.ods files created by your
+experiment and plot the results in a ways which is similar to the way this is done in operations.</p>
+<p>You can find examples here:</p>
+<p><a class="reference external" href="http://gmao.gsfc.nasa.gov/products/forecasts/systems/fp/obs_impact/">http://gmao.gsfc.nasa.gov/products/forecasts/systems/fp/obs_impact/</a></p>
+<p>In summary you can download the following scripts and configuration files:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference download internal" href="../_downloads/compute_impact_stats.py"><tt class="xref download docutils literal"><span class="pre">compute_impact_stats.py</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/summary_all.py"><tt class="xref download docutils literal"><span class="pre">summary_all.py</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/summary_radiances.py"><tt class="xref download docutils literal"><span class="pre">summary_radiances.py</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/timeseries_all.py"><tt class="xref download docutils literal"><span class="pre">timeseries_all.py</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/timeseries_radiances.py"><tt class="xref download docutils literal"><span class="pre">timeseries_radiances.py</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/channels.py"><tt class="xref download docutils literal"><span class="pre">channels.py</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/summary_all.def"><tt class="xref download docutils literal"><span class="pre">summary_all.def</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/summary_radiances.def"><tt class="xref download docutils literal"><span class="pre">summary_radiances.def</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/timeseries_all.def"><tt class="xref download docutils literal"><span class="pre">timeseries_all.def</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/timeseries_radiances.def"><tt class="xref download docutils literal"><span class="pre">timeseries_radiances.def</span></tt></a></li>
+<li><a class="reference download internal" href="../_downloads/channels.def"><tt class="xref download docutils literal"><span class="pre">channels.def</span></tt></a></li>
+</ul>
+</div></blockquote>
+<p>and read the rest of the documentation if required.</p>
+</div></blockquote>
+<div class="section" id="computing-statistics">
+<h2>Computing statistics<a class="headerlink" href="#computing-statistics" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The sample script for computing observation statistics is the following
+one (<a class="reference download internal" href="../_downloads/compute_impact_stats.py"><tt class="xref download docutils literal"><span class="pre">compute_impact_stats.py</span></tt></a>):</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsstat</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">source</span> <span class="o">=</span> <span class="s">&#39;exp&#39;</span>
+<span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_exp&#39;</span>
+<span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012010100</span><span class="p">,</span><span class="mi">2012013100</span><span class="p">,</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;summary_all.def&#39;</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">obsstat</span><span class="p">(</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">source</span><span class="p">,</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span><span class="p">,</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="n">expver</span><span class="p">,</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">dates</span><span class="p">,</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">,</span><span class="s">&#39;s.hem&#39;</span><span class="p">,</span><span class="s">&#39;tropics&#39;</span><span class="p">],</span>
+    <span class="n">ignore_missing_files</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="s">&#39;beneficial&#39;</span><span class="p">],</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">observation</span><span class="p">(</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;summary_all.def&#39;</span><span class="p">],</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;xvec&#39;</span><span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>The keywords which vary the most between experiments are defined at the top of the script
+for convenience.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">warning:</th><td class="field-body">please make sure that there is no comma (<strong>,</strong>) at the end of the lines 3 to 7 (after the constants) as this would cause an error with a message which is not very clear.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="plotting-statistics">
+<h2>Plotting statistics<a class="headerlink" href="#plotting-statistics" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Summary plots show the performance of observing systems in an single plot, enabling their comparison
+(<a class="reference download internal" href="../_downloads/summary_all.py"><tt class="xref download docutils literal"><span class="pre">summary_all.py</span></tt></a>):</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;d572_sw&#39;</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2010080100</span><span class="p">,</span><span class="mi">2010090100</span><span class="p">,</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_exp&#39;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;summary_all.def&#39;</span>
+<span class="n">minimum</span> <span class="o">=</span> <span class="mf">1.0e+3</span>
+<span class="n">maximum</span> <span class="o">=</span> <span class="mf">1.0e+6</span>
+
+<span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;GEOS-5 24h Observation Impact Summary&#39;</span><span class="p">,</span><span class="s">&#39;&lt;date_interval_with_time&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;short_domain_name&gt;, &lt;statistic&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;db=&lt;database&gt; expid=&lt;expver&gt;&#39;</span><span class="p">]</span>
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="s">&#39;log&#39;</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;&lt;statistic&gt; &lt;unit&gt;&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_ob&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="s">&#39;log&#39;</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;&lt;statistic&gt; &lt;unit&gt;&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">minimum</span> <span class="o">=</span> <span class="mi">48</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">sort</span> <span class="o">=</span> <span class="s">&#39;decreasing&#39;</span><span class="p">,</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;beneficial&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="s">&#39;log&#39;</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">comment</span> <span class="o">=</span> <span class="n">commentline</span><span class="p">(</span>
+                    <span class="n">position</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                    <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;--&#39;</span><span class="p">,</span>
+                    <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;&lt;statistic&gt; &lt;unit&gt;&#39;</span><span class="p">,</span>
+            <span class="n">has_xtitle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span> <span class="p">},</span>
+            <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;Observation Count Per Analysis&#39;</span><span class="p">,</span>
+	    <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">absolute_max</span> <span class="o">=</span> <span class="mi">12</span><span class="p">),</span>
+            <span class="n">sort</span> <span class="o">=</span> <span class="s">&#39;decreasing&#39;</span><span class="p">,</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;GEOS-5 24h Observation Impact Summary&#39;</span><span class="p">,</span><span class="s">&#39;&lt;date_interval_with_time&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;short_domain_name&gt;, Observation Count&#39;</span><span class="p">],</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="s">&#39;log&#39;</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">dates</span><span class="p">,</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">,</span><span class="s">&#39;s.hem&#39;</span><span class="p">,</span><span class="s">&#39;tropics&#39;</span><span class="p">],</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="n">expver</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;summary_all+&lt;domain_name&gt;+&lt;statistic&gt;.png&#39;</span><span class="p">,</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mf">6.75</span><span class="p">,</span><span class="mf">4.77</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>This script generates 16 plots, one for each different statistic / domain_name combination:</p>
+<blockquote>
+<div><ul class="simple">
+<li>total impact,</li>
+<li>impact per observation,</li>
+<li>fraction of beneficial observations,</li>
+<li>observation count per analysis</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">please notice that the keyword <strong>filename</strong> (lines 19, 33, 48, 70) defining the observing systems we want to plot is define at the level of the plot <strong>summary_plot</strong>, because all these systems will be displayed on the same plot.</td>
+</tr>
+</tbody>
+</table>
+<p>This script produces (for the global domain):</p>
+<a class="reference internal image-reference" href="../_images/summary_all+global+impact_per_anl.png"><img alt="../_images/summary_all+global+impact_per_anl.png" class="align-center" src="../_images/summary_all+global+impact_per_anl.png" style="width: 472.5px; height: 333.2px;" /></a>
+<a class="reference internal image-reference" href="../_images/summary_all+global+impact_per_ob.png"><img alt="../_images/summary_all+global+impact_per_ob.png" class="align-center" src="../_images/summary_all+global+impact_per_ob.png" style="width: 472.5px; height: 333.2px;" /></a>
+<a class="reference internal image-reference" href="../_images/summary_all+global+beneficial.png"><img alt="../_images/summary_all+global+beneficial.png" class="align-center" src="../_images/summary_all+global+beneficial.png" style="width: 472.5px; height: 333.2px;" /></a>
+<a class="reference internal image-reference" href="../_images/summary_all+global+count_per_anl.png"><img alt="../_images/summary_all+global+count_per_anl.png" class="align-center" src="../_images/summary_all+global+count_per_anl.png" style="width: 472.5px; height: 333.2px;" /></a>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">the keyword <strong>level</strong> is not specified, this means that all levels are used. Each bar in the plot is the aggregation of all daily statistics for all levels and all days specified in the script for one particular observing system and one particular geographical domain.</td>
+</tr>
+</tbody>
+</table>
+<p>The script called (<a class="reference download internal" href="../_downloads/summary_radiances.py"><tt class="xref download docutils literal"><span class="pre">summary_radiances.py</span></tt></a>) produces a similar plot using a
+different definition file to compare radiances only:</p>
+<a class="reference internal image-reference" href="../_images/summary_radiances+n.hem+impact_per_anl.png"><img alt="../_images/summary_radiances+n.hem+impact_per_anl.png" class="align-center" src="../_images/summary_radiances+n.hem+impact_per_anl.png" style="width: 472.5px; height: 333.2px;" /></a>
+<p>The script timeseries_all.py produces timeseries of impacts over any duration of time
+(<a class="reference download internal" href="../_downloads/timeseries_all.py"><tt class="xref download docutils literal"><span class="pre">timeseries_all.py</span></tt></a>):</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;d572_sw&#39;</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2010080100</span><span class="p">,</span><span class="mi">2010090100</span><span class="p">,</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_exp&#39;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;timeseries_all.def&#39;</span>
+
+<span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;GEOS-5 24h Observation Impact Time Series&#39;</span><span class="p">,</span><span class="s">&#39;&lt;date_interval_with_time&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;short_domain_name&gt;, &lt;name&gt;, &lt;statistic&gt;, &lt;channel&gt;&#39;</span><span class="p">,</span><span class="s">&#39;db=&lt;database&gt; expid=&lt;expver&gt;&#39;</span><span class="p">]</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;bk&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span><span class="n">step</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;bk&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.e-5</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.e-8</span><span class="p">,</span><span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.e-8</span> <span class="o">-</span> <span class="o">-</span><span class="mf">1.e-5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_ob&#39;</span><span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;bk&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span> <span class="nb">min</span> <span class="o">=</span> <span class="mi">48</span><span class="p">),</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="mf">48.0</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="mf">54.0</span><span class="p">,</span><span class="n">step</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;beneficial&#39;</span><span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">comment</span> <span class="o">=</span> <span class="n">commentline</span><span class="p">(</span>
+                    <span class="n">position</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                    <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;--&#39;</span><span class="p">,</span>
+                    <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;bk&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+	        <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="mf">1.0e+3</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="mf">1.0e+6</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="s">&#39;log&#39;</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;GEOS-5 24h Observation Impact Time Series&#39;</span><span class="p">,</span><span class="s">&#39;&lt;date_interval_with_time&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;short_domain_name&gt;, &lt;name&gt;, Observation Count&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span>
+	    <span class="n">date</span> <span class="o">=</span> <span class="n">dates</span><span class="p">,</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">,</span><span class="s">&#39;s.hem&#39;</span><span class="p">,</span><span class="s">&#39;tropics&#39;</span><span class="p">],</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="n">expver</span>
+    <span class="p">),</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;timeseries_all+&lt;name&gt;+&lt;domain_name&gt;+&lt;statistic&gt;.png&#39;</span><span class="p">,</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mf">4.77</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>This script generates 4 plots per statistic (4), per geographical domain (4) and per observing system (20 in the file (<a class="reference download internal" href="../_downloads/timeseries_all.def"><tt class="xref download docutils literal"><span class="pre">timeseries_all.def</span></tt></a>), say 320 plots. Here is a sample:</p>
+<a class="reference internal image-reference" href="../_images/timeseries_all+radiosondes+global+impact_per_anl.png"><img alt="../_images/timeseries_all+radiosondes+global+impact_per_anl.png" class="align-center" src="../_images/timeseries_all+radiosondes+global+impact_per_anl.png" style="width: 630.0px; height: 333.2px;" /></a>
+<p>The script (<a class="reference download internal" href="../_downloads/timeseries_radiances.def"><tt class="xref download docutils literal"><span class="pre">timeseries_radiances.def</span></tt></a>) generated an identical
+result involving satellite radiances.</p>
+<p>The script (<a class="reference download internal" href="../_downloads/channels.def"><tt class="xref download docutils literal"><span class="pre">channels.def</span></tt></a>) show observation impacts for individual
+channels:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;d572_sw&#39;</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2010080100</span><span class="p">,</span><span class="mi">2010090100</span><span class="p">,</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_exp&#39;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;channels.def&#39;</span>
+<span class="n">minimum</span> <span class="o">=</span> <span class="mf">1.0e+3</span>
+<span class="n">maximum</span> <span class="o">=</span> <span class="mf">1.0e+4</span>
+
+<span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;GEOS-5 24h Observation Impact Per Channel&#39;</span><span class="p">,</span><span class="s">&#39;&lt;date_interval_with_time&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;short_domain_name&gt;, &lt;name&gt;, &lt;statistic&gt;&#39;</span><span class="p">,</span><span class="s">&#39;db=&lt;database&gt; expid=&lt;expver&gt;&#39;</span><span class="p">]</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">channelplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span>  <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">absolute_max</span> <span class="o">=</span> <span class="mi">12</span><span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="s">&#39;log&#39;</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">comment</span> <span class="o">=</span> <span class="n">commentline</span><span class="p">(</span>
+                    <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;-&#39;</span><span class="p">,</span>
+                    <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">channelplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span>  <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">absolute_max</span> <span class="o">=</span> <span class="mi">12</span><span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_ob&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="s">&#39;log&#39;</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">comment</span> <span class="o">=</span> <span class="n">commentline</span><span class="p">(</span>
+                    <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;-&#39;</span><span class="p">,</span>
+                    <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">channelplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span>  <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="nb">min</span> <span class="o">=</span> <span class="mi">48</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">absolute_max</span> <span class="o">=</span> <span class="mi">12</span><span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;beneficial&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="s">&#39;log&#39;</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">comment</span> <span class="o">=</span> <span class="n">commentline</span><span class="p">(</span>
+                    <span class="n">position</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                    <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;--&#39;</span><span class="p">,</span>
+                    <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">channelplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span>  <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">absolute_max</span> <span class="o">=</span> <span class="mi">12</span><span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;GEOS-5 24h Observation Impact Per Channel&#39;</span><span class="p">,</span><span class="s">&#39;&lt;date_interval_with_time&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;short_domain_name&gt;, &lt;name&gt;, Observation Count&#39;</span><span class="p">],</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;count_per_anl&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="n">maximum</span><span class="p">,</span><span class="n">scale</span> <span class="o">=</span> <span class="s">&#39;log&#39;</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span>
+	    <span class="n">date</span> <span class="o">=</span> <span class="n">dates</span><span class="p">,</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">,</span><span class="s">&#39;s.hem&#39;</span><span class="p">,</span><span class="s">&#39;tropics&#39;</span><span class="p">],</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span><span class="p">,</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="n">expver</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;channels_all+&lt;name&gt;+&lt;domain_name&gt;+&lt;statistic&gt;.png&#39;</span><span class="p">,</span> 
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mf">6.75</span><span class="p">,</span><span class="mf">4.77</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<a class="reference internal image-reference" href="../_images/channels_all+aqua_airs+global+impact_per_anl.png"><img alt="../_images/channels_all+aqua_airs+global+impact_per_anl.png" class="align-center" src="../_images/channels_all+aqua_airs+global+impact_per_anl.png" style="width: 472.5px; height: 333.2px;" /></a>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">the scripts presented above produce file names which are compatible with the web page:</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://gmao.gsfc.nasa.gov/products/forecasts/systems/fp/obs_impact/">http://gmao.gsfc.nasa.gov/products/forecasts/systems/fp/obs_impact/</a></p>
+<p>so you can then easily access all your plots through a similar interface. Austin Conaty is the person
+to contact for more information regarding this.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Observation impact statistics</a><ul>
+<li><a class="reference internal" href="#computing-statistics">Computing statistics</a></li>
+<li><a class="reference internal" href="#plotting-statistics">Plotting statistics</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="observations.html"
+                        title="previous chapter">Standard observation statistics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="scores.html"
+                        title="next chapter">Forecast statistics</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/exp/impact.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="scores.html" title="Forecast statistics"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="observations.html" title="Standard observation statistics"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

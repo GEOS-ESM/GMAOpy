@@ -1,0 +1,15 @@
+:mod:`Dimensions` --- Different classes to handle different kinds of dimensions
+===============================================================================
+
+.. module:: slicing.dimensions
+   :synopsis: Implementing the actual slicing along one single dimension
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. toctree::
+   :maxdepth: 2
+
+   dimension
+   sortedascending
+   sorteddescending
+   indexed

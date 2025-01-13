@@ -1,0 +1,16 @@
+:mod:`CF10` --- Implementing dimensions for CF 1.0 compliant files
+===================================================================
+
+.. module:: slicing.cf10
+   :synopsis: Implementing dimension classes which work on CF 1.0 files.
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. toctree::
+   :maxdepth: 2
+
+   cf10metadata
+   datedimension
+   latdimension
+   londimension
+   leveldimension

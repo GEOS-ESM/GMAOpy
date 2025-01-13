@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Dimension class — Base class for handling dimensions &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Dimensions — Different classes to handle different kinds of dimensions" href="dimensionmodule.html" />
+    <link rel="next" title="The SortedAscendingDimension class" href="sortedascending.html" />
+    <link rel="prev" title="Dimensions — Different classes to handle different kinds of dimensions" href="dimensionmodule.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sortedascending.html" title="The SortedAscendingDimension class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dimensionmodule.html" title="Dimensions — Different classes to handle different kinds of dimensions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li>
+          <li><a href="dimensionmodule.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">Dimensions</span></tt> &#8212; Different classes to handle different kinds of dimensions</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-slicer.dimensions">
+<span id="the-dimension-class-base-class-for-handling-dimensions"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">Dimension</span> <span class="pre">class</span></tt> &#8212; Base class for handling dimensions<a class="headerlink" href="#module-slicer.dimensions" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="slicer.dimensions.Dimension">
+<em class="property">class </em><tt class="descclassname">slicer.dimensions.</tt><tt class="descname">Dimension</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#slicer.dimensions.Dimension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="public-methods">
+<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">Dimension(name,officialName,variable,metadata_handler = None):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the dimension. Typically the name of the variable in a netCDF file</li>
+<li><strong>officialName</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name used by the system to identify this variable, for example <strong>latitude</strong> can be used officially but the name of the variable in a netCDF file could be <strong>lat</strong>.</li>
+<li><strong>variable</strong> (<a class="reference external" href="http://docs.python.org/library/array.html#array" title="(in Python v2.7)"><em>array</em></a>) &#8211; the array describing the dimension.</li>
+<li><strong>metadata_handler</strong> &#8211; a function or callable object which receives the dimension object and a string naming the metadata and returns the value (e.g. <tt class="xref py py-class docutils literal"><span class="pre">slicer.cf10.cf10metadata.CF10Metadata</span></tt>)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Build the Dimension object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">name(newname = None):</tt></dt>
+<dd><p>return the name of the dimension. If newname is specified, replaces the name
+with newname and returns it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">officialName(newname = None):</tt></dt>
+<dd><p>return the official name of the dimension. If newname is specified, replaces the official name with newname and returns it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">metadata(name):</tt></dt>
+<dd><p>Calls the metadata handler passed at creation time with the parameter <em>name</em>
+and returns the result.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">slice(aSlice):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>aSlice</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#slice" title="(in Python v2.7)"><em>slice</em></a>) &#8211; a slice to extract from the dimension.</td>
+</tr>
+</tbody>
+</table>
+<p>The slice method returns a slice of the data of the dimension, for example, if the
+dimension is a latitude, returns the list of the latitudes in that slice. This is
+used by the <a class="reference internal" href="../slicer.html#slicer.slicer.Slicer" title="slicer.slicer.Slicer"><tt class="xref py py-class docutils literal"><span class="pre">slicer.slicer.Slicer</span></tt></a> to build meta data:</p>
+<div class="highlight-python"><pre>import numpy as np
+from semperpy.slicing.dimensions.dimension import Dimension
+
+variable = np.array([12,13,14,15,16,17,18,19,20])
+dim = Dimension('dimension','official',variable)
+
+v = dim.slice(slice(1,4,1))
+print 'slice:',v
+-&gt; slice: [13, 14, 15]</pre>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">findSlice(values):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>values</strong> (<em>list or dictionary</em>) &#8211; values in contents space to find in the dimension</td>
+</tr>
+</tbody>
+</table>
+<p>This method returns a list of slice objects corresponding to the requested values:</p>
+<div class="highlight-python"><pre>import numpy as np
+from semperpy.slicing.dimensions.dimension import Dimension
+
+variable = np.array([12,13,14,15,16,17,18,19,20])
+dim = Dimension('dimension','official',variable)
+
+s = dim.findSlice([12,20])
+print s
+-&gt; [slice(0, 1, 1), slice(8, 9, 1)]
+s = dim.findSlice({13:17})
+print s
+-&gt; [slice(1, 6, 1)]</pre>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__str__():</tt></dt>
+<dd><p>Implements a neat printing of the bounds of the dimension.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">limits():</tt></dt>
+<dd><p>returns the first and last elements of the variable holding the values of the
+dimension.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">contains(value):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>same type as dimension array elements</em>) &#8211; a particular value</td>
+</tr>
+</tbody>
+</table>
+<p>returns whether a value is in the dimension or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Warning :</th><td class="field-body">some implementations of dimensions (e.g. indexed or sorted dimensions) assume that is a value is between its lower and higher bound it is in the dimension although the actual value may not be in there.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">find(value):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>same type as dimension array elements</em>) &#8211; a particular value</td>
+</tr>
+</tbody>
+</table>
+<p>searches the value in the dimension. As opposed to the method <strong>contains</strong>, this
+method only returns True is the value is in the dimension. This is a systematic
+search and it can therefore be costly for large dimensions.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="private-methods">
+<h2>Private methods<a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">__call__(values,is_interval):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>values</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; values in contents space to find in the dimension</li>
+<li><strong>is_interval</strong> (<em>Boolean</em>) &#8211; True is values is an interval (in that case it is a list of 2 elements), False if values contains a list of discrete values</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method must return a list of slice objects corresponding to the requested values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">although findSlice is the method to call, __call__ is the method to redefine if you create a new dimension inheriting from Dimension</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">hash_slice(aSlice):</tt></dt>
+<dd><p>Used internally, creates hashing values for slices (which are not hashable) to be
+able to store them in a dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">extract_slice(aSlice):</tt></dt>
+<dd><p>Actually extracts a slice and return a list of the value(s). This is
+called by the method <strong>slice</strong> but it can be redefined if necessary.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Dimension</span> <span class="pre">class</span></tt> &#8212; Base class for handling dimensions</a><ul>
+<li><a class="reference internal" href="#public-methods">Public methods</a></li>
+<li><a class="reference internal" href="#private-methods">Private methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dimensionmodule.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">Dimensions</span></tt> &#8212; Different classes to handle different kinds of dimensions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sortedascending.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">SortedAscendingDimension</span> <span class="pre">class</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/semperpy/slicing/dimensions/dimension.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sortedascending.html" title="The SortedAscendingDimension class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dimensionmodule.html" title="Dimensions — Different classes to handle different kinds of dimensions"
+             >previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li>
+          <li><a href="dimensionmodule.html" ><tt class="docutils literal docutils literal"><span class="pre">Dimensions</span></tt> &#8212; Different classes to handle different kinds of dimensions</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

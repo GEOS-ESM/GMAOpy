@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>factory — Factory class &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="core — Core classes" href="coremodule.html" />
+    <link rel="next" title="index — Indexing data using flexible multiple criteria" href="index.html" />
+    <link rel="prev" title="dategroup — Date grouping tools" href="dategroup.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="index — Indexing data using flexible multiple criteria"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dategroup.html" title="dategroup — Date grouping tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-core.factory">
+<span id="factory-factory-class"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">factory</span></tt> &#8212; Factory class<a class="headerlink" href="#module-core.factory" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="the-factory-class">
+<h2>The Factory class<a class="headerlink" href="#the-factory-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="core.factory.Factory">
+<em class="property">class </em><tt class="descclassname">core.factory.</tt><tt class="descname">Factory</tt><big>(</big><em>dict</em><big>)</big><a class="headerlink" href="#core.factory.Factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>Factory</strong> class registers functions and classes with an associated identifier
+either a string or anything hashable.</p>
+<dl class="method">
+<dt id="core.factory.Factory.Factory">
+<tt class="descname">Factory</tt><big>(</big><em>noduplicates = True</em>, <em>hasdefault = True</em><big>)</big><a class="headerlink" href="#core.factory.Factory.Factory" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>noduplicates</strong> &#8211; if True, a IndexError is raised if the user attempts to register the same identifier twice. Otherwise the second register overrides the first one.</li>
+<li><strong>hasdefault</strong> &#8211; if True, when an identifier is not found by the default functions, the special string &#8216;__default__&#8217; is searched.  If it has been registered, then any unknown identifier will trigger the creation of what was registered under the &#8216;__default__&#8217; keyword.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.factory.Factory.register">
+<tt class="descname">register</tt><big>(</big><em>name</em>, <em>what</em><big>)</big><a class="headerlink" href="#core.factory.Factory.register" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>a hashable object</em>) &#8211; the identifier used to later instanciate an object</li>
+<li><strong>what</strong> &#8211; a class or a callable object</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Registers a callable object under the name <em>name</em>. Any hashable object
+can be used for <em>name</em>. <em>What</em> is a callable object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.factory.Factory.create">
+<tt class="descname">create</tt><big>(</big><em>what</em>, <em>*args</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#core.factory.Factory.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the entry under the name <em>what</em> and calls the object stored there with
+the arguments *args, **kargs. Whatever is returned by the callable object is
+returned by this function. If there is no default, and what is not found,
+an IndexError is raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">get(what):</tt></dt>
+<dd><p>This is identical to <a class="reference internal" href="#core.factory.Factory.create" title="core.factory.Factory.create"><tt class="xref py py-func docutils literal"><span class="pre">create()</span></tt></a> except that it does not instanciate
+classes or call functions, it just returns the callable which was registered
+in the factory.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.factory.SingletonFactory">
+<em class="property">class </em><tt class="descclassname">core.factory.</tt><tt class="descname">SingletonFactory</tt><big>(</big><em>Factory</em><big>)</big><a class="headerlink" href="#core.factory.SingletonFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits the behaviour from Factory. The difference is that when create is
+called for an identifier, the result is cached. Whenever it is called again
+with the same identifier, the cache is returned. This results in creating
+singletons if a class is registered.</p>
+</dd></dl>
+
+<p>An example:</p>
+<div class="highlight-python"><pre>from semperpy.core.factory import Factory, SingletonFactory
+
+class IntWrapper(object):
+
+    def __init__(self,value):
+            self.value = value
+
+    def __str__(self):
+            return str(self.value)
+
+    def increment(self):
+            self.value += 1
+
+def no(*args,**kargs):
+    raise IndexError('This is the default function')
+
+
+f = Factory()
+f.register('int',IntWrapper)
+f.register('__default__',no)
+
+i = f.create('int',2)
+print i
+2
+
+s = SingletonFactory()
+s.register('int',IntWrapper)
+i = s.create('int',2)
+print i
+2
+i.increment()
+print i
+3
+j = s.create('int',2)
+print j
+3
+
+f.create('unknown')
+Traceback (most recent call last):
+IndexError: Factory does not know how to create "unknown"</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">factory</span></tt> &#8212; Factory class</a><ul>
+<li><a class="reference internal" href="#the-factory-class">The Factory class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dategroup.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">dategroup</span></tt> &#8212; Date grouping tools</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">index</span></tt> &#8212; Indexing data using flexible multiple criteria</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/core/factory.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="index — Indexing data using flexible multiple criteria"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dategroup.html" title="dategroup — Date grouping tools"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+{
+	"directive": "dot",
+    "inherit_from": "curve",
+	"keywords" : {
+	}
+}

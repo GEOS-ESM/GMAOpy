@@ -1,0 +1,9 @@
+Download and install
+====================
+
+    To be done
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

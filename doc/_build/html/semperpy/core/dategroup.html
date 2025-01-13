@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dategroup — Date grouping tools &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="core — Core classes" href="coremodule.html" />
+    <link rel="next" title="factory — Factory class" href="factory.html" />
+    <link rel="prev" title="date — Date manipulation" href="date.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="factory.html" title="factory — Factory class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="date.html" title="date — Date manipulation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-semperpy.core.dategroup">
+<span id="dategroup-date-grouping-tools"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">dategroup</span></tt> &#8212; Date grouping tools<a class="headerlink" href="#module-semperpy.core.dategroup" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="the-dategroup-class">
+<h2>The DateGroup class<a class="headerlink" href="#the-dategroup-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="semperpy.core.dategroup.DateGroup">
+<em class="property">class </em><tt class="descclassname">semperpy.core.dategroup.</tt><tt class="descname">DateGroup</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#semperpy.core.dategroup.DateGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>DateGroup</strong> class is an interface to different actors which are able
+to group dates accoring to different criteria. Actors are also implemented in
+this module:</p>
+<div class="highlight-python"><pre>from semperpy.core.date import Dates
+from semperpy.core.dategroup import DateGroup
+
+def displayData(groups):
+    for group in groups.iterator():
+        r = []
+        for date,value in group:
+            r.append(str(date) + ' ' + str(value))
+        print ', '.join(r)
+
+d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+g = DateGroup.createGroup('hour',d)
+displayData(g)
+
+2011010100 None, 2011010200 None
+2011010101 None, 2011010201 None
+2011010102 None, 2011010202 None
+2011010103 None, 2011010203 None
+2011010104 None, 2011010204 None
+2011010105 None, 2011010205 None
+2011010106 None, 2011010206 None
+2011010107 None, 2011010207 None
+2011010108 None, 2011010208 None
+2011010109 None, 2011010209 None
+2011010110 None, 2011010210 None
+2011010111 None, 2011010211 None
+2011010112 None, 2011010212 None</pre>
+</div>
+<p>Please ignore <em>None</em> for now. The grouping <strong>hour</strong> groups together all dates having the same hour independently of the
+the day, month or year. This is different from:</p>
+<div class="highlight-python"><pre>d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+g = DateGroup.createGroup('hourly',d)
+displayData(g)
+
+2011010100 None
+2011010101 None
+2011010102 None
+2011010103 None
+2011010104 None
+2011010105 None
+2011010106 None
+2011010107 None
+2011010108 None
+2011010109 None
+2011010110 None
+2011010111 None
+2011010112 None
+2011010200 None
+2011010201 None
+2011010202 None
+2011010203 None
+2011010204 None
+2011010205 None
+2011010206 None
+2011010207 None
+2011010208 None
+2011010209 None
+2011010210 None
+2011010211 None
+2011010212 None</pre>
+</div>
+<p>In this case, the grouping doesn&#8217;t create any groups because <strong>hourly</strong> means having the same hour
+but also the same day, month year. A parameter can be added, the number of units of grouping
+(the number of hours here):</p>
+<div class="highlight-python"><pre>d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+g = DateGroup.createGroup('hourly',d,3)
+displayData(g)
+
+2011010100 None, 2011010101 None, 2011010102 None
+2011010103 None, 2011010104 None, 2011010105 None
+2011010106 None, 2011010107 None, 2011010108 None
+2011010109 None, 2011010110 None, 2011010111 None
+2011010112 None
+2011010200 None, 2011010201 None, 2011010202 None
+2011010203 None, 2011010204 None, 2011010205 None
+2011010206 None, 2011010207 None, 2011010208 None
+2011010209 None, 2011010210 None, 2011010211 None
+2011010212 None</pre>
+</div>
+<p>The data is now grouped by chunks of 3 hours. The data can be grouped:</p>
+<blockquote>
+<div><ul class="simple">
+<li>per hour (hour)</li>
+<li>hourly (hourly,N)</li>
+<li>per day (day)</li>
+<li>daily (daily,N)</li>
+<li>per month (month)</li>
+<li>monthly (monthly,N)</li>
+<li>per year (year)</li>
+<li>yearly (yearly,N)</li>
+</ul>
+</div></blockquote>
+<p>This grouping is designed to help with iterating over dates when some meaningful organisation
+is needed:</p>
+<div class="highlight-python"><pre>data = {}
+d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+for i in range(len(d)):
+    data[d[i]] = i + 1
+g = DateGroup.createGroup('hourly',data,3)
+displayData(g)
+print
+g.add(2011010213,99)
+displayData(g)
+
+2011010100 1, 2011010101 2, 2011010102 3
+2011010103 4, 2011010104 5, 2011010105 6
+2011010106 7, 2011010107 8, 2011010108 9
+2011010109 10, 2011010110 11, 2011010111 12
+2011010112 13
+2011010200 14, 2011010201 15, 2011010202 16
+2011010203 17, 2011010204 18, 2011010205 19
+2011010206 20, 2011010207 21, 2011010208 22
+2011010209 23, 2011010210 24, 2011010211 25
+2011010212 26
+
+2011010100 1, 2011010101 2, 2011010102 3
+2011010103 4, 2011010104 5, 2011010105 6
+2011010106 7, 2011010107 8, 2011010108 9
+2011010109 10, 2011010110 11, 2011010111 12
+2011010112 13
+2011010200 14, 2011010201 15, 2011010202 16
+2011010203 17, 2011010204 18, 2011010205 19
+2011010206 20, 2011010207 21, 2011010208 22
+2011010209 23, 2011010210 24, 2011010211 25
+2011010212 26, 2011010213 99</pre>
+</div>
+<p>An example of application of this is when staging data from an archive. Files are stored in an
+archive, each file corresponds to data for a particular date-time. You suspect that all files
+from the same day are probably on the same tape and you know that it is safe to stage a whole
+day. You organise all the files involved in a dictionary which keys are the date and the value
+is the filename. You group the dictionary daily and write the loop:</p>
+<div class="highlight-python"><pre>for group in groups.iterator():
+    files = group.values()
+    stage(files)
+    for date,filename in group:
+        # do whatever</pre>
+</div>
+<p>This way if you find that grouping the data 6 hourly or even 12 hourly, there is no need to
+change anything in the algorithm.</p>
+<dl class="classmethod">
+<dt id="semperpy.core.dategroup.DateGroup.createGroup">
+<em class="property">classmethod </em><tt class="descname">createGroup</tt><big>(</big><em>name</em>, <em>container = None</em>, <em>count = 1</em><big>)</big><a class="headerlink" href="#semperpy.core.dategroup.DateGroup.createGroup" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the grouping method</li>
+<li><strong>container</strong> (<em>list of dict</em>) &#8211; a list of dates or a { date: data }</li>
+<li><strong>count</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the number of basic group units</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method returns a DateGroup instance. The container can either be a list of date or a
+dictionary which keys are dates and values can be or any arbitrary type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.dategroup.DateGroup.iterator">
+<tt class="descname">iterator</tt><big>(</big><big>)</big><a class="headerlink" href="#semperpy.core.dategroup.DateGroup.iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterators on the groups which attempts to iterate chronologically. For each
+iteration, an iterator is returned. That iterator returns tuples (date,value) for each
+couple present in a group by chronological order:</p>
+<div class="highlight-python"><pre>d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+g = DateGroup.createGroup('hourlyGroup',d,6)
+for group in g.iterator():
+    for date, value in group:
+        # do something
+    # do something you want to do for each group of 6 hours.</pre>
+</div>
+<p>The iterator returned for each group has also two methods which are dictionary-like:</p>
+<blockquote>
+<div><ul class="simple">
+<li>keys(): returns a sorted list all keys</li>
+<li>values(): returns a list of all values in the order of sorted keys.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">dategroup</span></tt> &#8212; Date grouping tools</a><ul>
+<li><a class="reference internal" href="#the-dategroup-class">The DateGroup class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="date.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">date</span></tt> &#8212; Date manipulation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="factory.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">factory</span></tt> &#8212; Factory class</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/core/dategroup.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="factory.html" title="factory — Factory class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="date.html" title="date — Date manipulation"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

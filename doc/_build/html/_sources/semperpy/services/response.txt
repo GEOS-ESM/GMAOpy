@@ -1,0 +1,52 @@
+:mod:`The Response class` 
+=========================
+
+.. module:: services.response
+
+.. class:: Response(object)
+
+    The **Response** implements some utilities to send an http response to a request.
+    It is a semi-abstract class, it cannot be used as such, a subclass needs to be
+    written (see :mod:`Responses`)
+
+Public methods
+--------------
+
+    .. method:: setRequest(request)
+
+    	:param request: name of the service
+    	:type request: twisted.web.http.Request
+
+    	Attaches a request to the current Response object
+
+    .. method:: send_http_response(response,code)
+    	
+    	:param response: an arbitrary Python structure to be encoded into json and sent back to the client.
+    	:param code: http code to attach to the response (e.g. 200 is ok).
+    	:type code: int
+
+    	Encodes the data to be sent, sets some http request header values and finishes the request by calling twisted.web.http.Request.finish
+    	
+    .. method:: send(response,code):
+
+    	Same as :meth:`send_http_response` but forces the http code in the request to ok (200).
+
+    .. method:: __call__(service,execute,*args,**kargs)
+
+    	:param service: is set to True if we are executing a service through POST, to false if it is a page being served through GET.
+    	:type service: Boolean
+    	:param execute: any callable function, bound method or callable object to call.
+    	:type execute: callable
+    	
+    	This method is not implemented, it raises a SystemError. This is the method subclasses
+    	should override to implement a response. The arguments are sent to the callable 
+    	*execute*. A simple implementation would be to call the callable straight away and
+    	ignore errors::
+
+    		from twisted.web import http
+
+    		class DirectResponse(Response):
+
+    			def __call__(service,execute,*args,**kargs):
+    				result = execute(*args,**kargs)
+    				self.send_http_response(result,http.OK)

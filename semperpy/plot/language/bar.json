@@ -1,0 +1,7 @@
+{
+	"directive": "bar",
+    "doc": true,
+    "inherit_from": "curve",
+	"keywords" : {
+	}
+}

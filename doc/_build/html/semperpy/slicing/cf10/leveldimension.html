@@ -1,0 +1,152 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The LevelDimension class &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="CF10 — Implementing dimensions for CF 1.0 compliant files" href="cf10module.html" />
+    <link rel="next" title="Reference" href="../../../reference.html" />
+    <link rel="prev" title="The LonDimension class" href="londimension.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../reference.html" title="Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="londimension.html" title="The LonDimension class"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li>
+          <li><a href="cf10module.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">CF10</span></tt> &#8212; Implementing dimensions for CF 1.0 compliant files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-slicer.cf10">
+<span id="the-leveldimension-class"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">LevelDimension</span> <span class="pre">class</span></tt><a class="headerlink" href="#module-slicer.cf10" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="slicer.cf10.LevelDimension">
+<em class="property">class </em><tt class="descclassname">slicer.cf10.</tt><tt class="descname">LevelDimension</tt><big>(</big><em>Dimension</em><big>)</big><a class="headerlink" href="#slicer.cf10.LevelDimension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>This module actually implements three classes, <strong>LevelDimension</strong> is a convenience
+class which tests in which order the dimension is sorted and becomes (specializes into)
+either an instance of the <strong>LevelDimensionDescending</strong> class or
+the <strong>LevelDimensionAscending</strong> class which inherit respectively
+from the <strong>SortedDescendingDimension</strong> and <strong>SortedAscendingDimension</strong> classes.</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">LevelDimension</span> <span class="pre">class</span></tt></a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="londimension.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">The</span> <span class="pre">LonDimension</span> <span class="pre">class</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../../reference.html"
+                        title="next chapter">Reference</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/semperpy/slicing/cf10/leveldimension.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../reference.html" title="Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="londimension.html" title="The LonDimension class"
+             >previous</a> |</li>
+        <li><a href="../../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="../slicingmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">slicing</span></tt> &#8212; Slicing multi-dimensional arrays</a> &raquo;</li>
+          <li><a href="cf10module.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">CF10</span></tt> &#8212; Implementing dimensions for CF 1.0 compliant files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

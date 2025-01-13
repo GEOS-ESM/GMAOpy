@@ -1,0 +1,27 @@
+[TERRA MODIS Aerosol (Ocean Algorithm)]
+kx=301
+kt=43
+
+[TERRA MODIS Aerosol (Land Algorithm)]
+kx=302
+kt=43
+
+[AQUA MODIS Aerosol (Ocean Algorithm)]
+kx=311
+kt=43
+
+[AQUA MODIS Aerosol (Land Algorithm)]
+kx=312
+kt=43
+
+[MISR (Multi-angle Imaging SpectroRadiometer)]
+kx=313
+kt=43
+
+[OMI (Ozone Monitoring Instrument)]
+kx=79,314
+kt=43
+
+[AERONET]
+kx=323
+kt=43

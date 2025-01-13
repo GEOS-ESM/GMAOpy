@@ -1,0 +1,6 @@
+{
+	"directive": "stackedbar",
+    "inherit_from": "curve",
+	"keywords" : {
+	}
+}

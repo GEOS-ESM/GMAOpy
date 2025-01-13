@@ -1,0 +1,234 @@
+.. currentmodule:: gmaopy.stats.statistics
+
+The Statistics class
+--------------------
+
+.. class:: Statistics(object)
+
+    .. attribute:: missing_value = 1.7E38
+
+        The official missing value used by SemperPy for statistics
+
+    .. automethod:: register
+
+        :param category: the are different groups of statistics for different applications, to date, there is *obsstat* for observation (impact) statistics, *score* for forecast skill scores, *product* for statistics on analyses
+        :type category: str
+        :param name: name of the statistic. This is the official name which will be used by the user
+        :type name: string
+        :param what: A class to instanciate to implement the statistics named *name*
+        :type what: class
+
+        Registers classes to implement different statistics. Once a class is registered, its name
+        is known by the system and it can be stored in a database.
+
+        :note: class method
+
+    .. automethod:: create
+        
+        :param category: the category under which we are working,
+        :type category: str
+        :param name: name of the statistic to instanticiate
+        :type name: string
+
+        Instanciates the class corresponding to that name in the given category. 
+        If an instance of that class has been created earlier, it is returned (singleton), 
+        this speeds up the process.
+
+        :warning: statistics classes are not supposed to store attributes.
+
+        :note: class method
+
+
+    .. automethod:: data2np
+
+        :param data: the data as passed to the compute method
+        :type data: list
+        :param index: index in the tuple
+        :type index: int
+
+        The data is sent to the compute methods as represented by the SQL client, it is a list of 
+        tuple, each tuple contains the value of each column described in the select statement. By default,
+        this tuple is: level,variable,statistic,date,value,count,expver.
+
+        This method returns a numpy array containing all the values in the list of value number *index*
+        in the tuple. It slices data vertically, for example::
+
+            data = [
+                (500.0,'h','sum',2012010100,4.5,34,'expver1'),
+                (500.0,'h','sum',2012010100,40.5,134,'expver2'),
+                (500.0,'h','sum',2012010100,14.5,354,'expver3'),
+                (500.0,'t','sum',2012010100,379.5,2500,'expver3'),
+            ]
+            print s.data2np(data,4)
+            numpy array: [4.5,40.5,14.5,379.5]
+
+        :note: utility method
+
+    .. automethod:: split
+
+        :param data: the data as passed to the compute method
+        :type data: list
+        :param index: index in the tuple
+        :type index: int
+
+        This method splits the list of data into as many lists as different values of column number *index*
+        is found and returns a dictionary with each list. For example::
+
+            data = [
+                (500.0,'h','sum',2012010100,4.5,34,'expver1'),
+                (500.0,'h','sum',2012010100,40.5,134,'expver2'),
+                (500.0,'h','sum',2012010100,14.5,354,'expver3'),
+                (500.0,'t','sum',2012010100,379.5,2500,'expver3'),
+            ]
+            print s.splitData(data,6)
+            {
+                'expver1': [(500.0,'h','sum',2012010100,4.5,34,'expver1')],
+                'expver2': [(500.0,'h','sum',2012010100,40.5,134,'expver2')],
+                'expver3': [(500.0,'h','sum',2012010100,14.5,354,'expver3'),
+                            (500.0,'t','sum',2012010100,379.5,2500,'expver3')]
+            }
+
+        This method can be called as many times as needed on results from previous call
+
+        :note: utility method
+
+    .. automethod:: store
+
+        :param storer: the storer passed to the compute method
+        :type storer: hidden
+        :param record: the record data passed to the compute method
+        :type record: dict
+        :param kargs: values to insert in the record before storing it
+
+        This method is also a utility function, it stores data::
+
+            s.stor(storer,record,value=24.3,count=2000)
+
+        :note: utility method
+
+    .. automethod:: array
+
+        :param value: the value to store in an array
+        :type value: float
+
+        This utility method builds a masked array of one value, this is useful to return the 
+        final floating point value after aggregating statistics from a database.
+
+        :note: utility method
+
+    .. automethod:: requirements_raw
+
+        This method must return the name of a variable to be extracted from the raw file,
+        variable for gridded field or variable for ODS files. By default it returns
+        ['var'] which means *whichever variable the user specified*. However, sometimes it
+        can get a little more complicated. To compute the normalized cost we need whichever
+        variable the user specified (oma or omf) and xvec, in that case this method should::
+
+            def requirements_raw(self):
+                return ['var','xvec']
+
+        :note: information method
+
+        To compute the estimared sigo, we want to ignore the variable the user specified
+        because we need two variables, oma and omf. In that case this method should::
+
+            def requirements_raw(self):
+                    return ['oma','omf']
+    
+    .. automethod:: requirements_db
+
+        This method is only used when computing statistics from the database. By 
+        default it returns the name of the statistic computed by this object.
+        The final name of a statistic (e.g. rms) is often different from the name of the
+        statistic stored in the database which is used to compute it (e.g. sumsquare).
+        This method should return the name of the statistic to fetch from the database. It can also
+        return the name of statistics for a particular variable (e.g. ['sumsquare:omf'].
+        If you specify that you want to compute the root mean square (rms), the system uses this method
+        to determine which statistic(s) from raw data to generate. When plotting, the system calls this
+        method to determine which partial statistic(s) to retrieve from the database, for rms::
+
+            def requirements_db():
+                return 'sumsquare'
+
+        :note: information method
+
+    .. automethod:: unit
+
+        This method must either return None (no specific unit) or a unit for that statistic. By default
+        None is returned and the variable is used to determine the unit (e.g. rms of meters is meters).
+        If the statistic has a unit, like for example a coefficient (%), it should be returned here and it
+        will be used instead of the unit from the variable.
+
+        :note: information method
+
+    .. automethod:: moreIsBetter
+
+        This method is needed when plotting to determine sometimes how data needs to be presented.
+        By default it return False (e.g. rms, the higher the worse). This enables to orient colorbars
+        in a consistent way.
+
+        :note: information method
+
+    .. automethod:: columns
+
+        This method returns an empty list by default. If a statistic requires more columns from the 
+        database than returned by default, it can add here the extra required column names.
+
+        :note: information method
+
+    ..automethod:: prepareProcessing
+
+        :param what: the name of the plot being processed (its class)
+        :type what: str
+
+        This method is called once only at the very beginning of computing
+        statistics to give objects a chance to initialise data, or open
+        files etc...
+
+    ..automethod:: completeProcessing
+
+        :param what: the name of the plot being processed (its class)
+        :type what: str
+
+        This method is called once only at the very end of computing
+        statistics to give objects a chance to close files, normalize
+        data etc...
+
+    .. method:: name()
+    
+        This method must return the official name of this statistic
+
+        :note: abstract method must be overwritten
+
+    .. method:: compute_raw(variables,name,storer,record)
+
+        :param variables: a dictionary of masked arrays for each variable requested for that statistic
+        :type variables: dict
+        :param name: name of the variable which was specified by the user
+        :type name: str
+        :param storer: an object in charge of storing data
+        :param record: a record containing all the information about the statistic we are about to compute
+        :type record: dict
+
+        This method is called when the data specified by the user has been extracted from the raw data. At
+        this stage, the variable *record* was filled with all the details to describe the piece of data
+        (expver, date, level, etc...), this method is supposed to compute and fill in two keywords:
+            
+            - value
+            - count (could be optional)
+
+        Please see examples in :ref:`makeyourownstat` for more information.
+
+    .. method:: compute_db(columns,data,name)
+
+        :param columns: a dictionary indexed by the name of columns form the database, containing an index in the tuple representing the data
+        :type columns: dict
+        :param data: A dictionanry of list of tuples containing data from the database, please see :func:`data2np`
+        :type data: dict
+        :param name: name of the variable which was specified by the user
+        :type name: str
+
+        This method is called when the data specified by the user has been extracted from database and
+        aggregated according to the user's specifications.
+
+        Please see examples in :ref:`makeyourownstat` for more information.

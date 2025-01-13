@@ -1,0 +1,128 @@
+{
+    "directive": "graphics",
+    "doc": true,
+    "keywords": {
+        "line_color": {
+            "default_value": [ "blue","crimson","darkgreen","olive","mediumvioletred","blueviolet","mediumseagreen","darkgoldenrod","maroon","dimgrey"],
+            "help": "a list of colors which are affected in turn and in a cyclic way to each line (curve) in a single plot."
+        },
+        "bar_color": {
+            "default_value": [ "wheat","olive","yellow","darkmagenta","tan","orange","salmon","rosybrown","palevioletred","cadetblue","seagreen","darkgoldenrod","brown","darkkhaki","lightslategrey","darkslateblue","navy","maroon","dodgerblue","firebrick","floralwhite","lemonchiffon","lightseagreen"],
+            "help": "a list of colors which are affected in turn and in a cyclic way to each bar (part of a curve) in a single plot."
+        },
+        "dot_color": {
+            "default_value": [ "wheat","olive","yellow","darkmagenta","tan","orange","salmon","rosybrown","palevioletred","cadetblue","seagreen","darkgoldenrod","brown","darkkhaki","lightslategrey","darkslateblue","navy","maroon"],
+            "help": "a list of colors which are affected in turn and in a cyclic way to each dot (part of a curve) in a single plot."
+        },
+        "stackedbar_color": {
+            "default_value": "bar_color",
+            "unique": true
+        },
+        "shiftedbar_color": {
+            "default_value": "bar_color",
+            "unique": true
+        },
+        "splitbar_color": {
+            "default_value": "bar_color",
+            "unique": true
+        },
+        "boxedline_color": {
+            "default_value": "line_color",
+            "unique": true
+        },
+        "sym_color": {
+            "default_value": ["purple","darkgreen","red","olive","mediumvioletred","blueviolet","mediumseagreen","darkgoldenrod","maroon","dimgrey"],
+            "help": "a list of colors which are affected in turn and in a cyclic way to each group of symbols in a single plot."
+        },
+        "color": {
+            "unique": true,
+            "optional": true
+        },
+        "edgecolor": {
+            "unique": true,
+            "optional": true
+        },
+        "bar_width_factor": {
+            "unique": true,
+            "default_value": 0.85,
+            "type": "float",
+            "help": "when plotting bars, each bar is allocated a space (the length of its axis divided by the number of bars) to be plotted. This value is the percentage of that space. A value of 1 means that all bars will touch each others, less than 1 introduces gaps between them."
+        },
+        "style": {
+            "alias": ["styles"],
+            "default_value": ["solid"],
+            "help": "when drawing lines, determines the style of the line (e.g. solid, dash etc...)."
+        },
+        "alpha": {
+            "alias": ["alpha_channel"],
+            "unique": true,
+            "type": "float",
+            "default_value": 0.9,
+            "help": "this is a percentage of opacity for the alpha channel, 0 is transparent, 1 is full color"
+        },
+        "linewidth": {
+            "unique": true,
+            "type": "float",
+            "default_value": 1.8,
+            "help": "when drawing line, determines the thickness of the line"
+        },
+        "edgewidth": {
+            "unique": true,
+            "optional": true
+        },
+        "marker": {
+            "unique": true,
+            "default_value": "",
+            "help": "defines the marker to plot"
+        },
+        "markersize": {
+            "unique": true,
+            "type": "float",
+            "default_value": 5.0,
+            "help": "when drawing markers, determines the size of the markers."
+        },
+        "markerfacecolor": {
+            "unique": true,
+            "optional": true
+        },
+        "markeredgecolor": {
+            "unique": true,
+            "optional": true
+        },
+        "horizontal": {
+            "unique": true,
+            "default_value": true,
+            "type": "bool",
+            "help": "this attribute determines the orientation of the plot, for example in a time series, by default the dates are on the x-axis and the data values on the y-axis. If this parameter is set to True, the dates are on the y-axis and the data values on the x-axis."
+        },
+        "grid": {
+            "unique": true,
+            "default_value": true,
+            "type": "bool",
+            "help": "draws a grid on the background of the plot"
+        },
+        "automatic_edge": {
+            "unique": true,
+            "default_value": true,
+            "help": "when drawing bars, the edges of the bars are drawn in black by default. When the number of bars increases, the black of the edge may hide the actual bar color. In automatic edge mode, the black edge is removed, or changed to the value of edgewidth if it is defined when the number of bars exceeds the attribute edge_limit. If set to False, the edge is always drawn."
+        },
+        "edge_limit": {
+            "unique": true,
+            "default_value": 120,
+            "help": "when drawing bars, the edges of the bars are drawn in black by default. When the number of bars increases, the black of the edge may hide the actual bar color. In automatic edge mode, the black edge is removed when the number of bars exceeds the attribute edge_limit. If set to False, the edge is always drawn."
+        },
+        "custom_bar_width_limit": {
+            "unique": true,
+            "default_value": 0,
+            "help": "when drawing few bars, they sometimes look too bulky, this keyword set the limit under which a custom width for the bar should be used, see 'custom_bar_width'"
+        },
+        "custom_bar_width": {
+            "unique": true,
+            "default_value": 0.40,
+            "help": "sets the value to use for the width of the bar (a percentage 0 to 1 of the width between two consecutive ticks)"
+        },
+        "_categories": {
+            "default_value": ["line","bar","dot","sym"]
+        }
+    }
+}

@@ -1,0 +1,841 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Databases &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="next" title="Tutorials for the end user" href="../tutorials.html" />
+    <link rel="prev" title="Configuring SemperPy" href="../config/configure.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../tutorials.html" title="Tutorials for the end user"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../config/configure.html" title="Configuring SemperPy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="databases">
+<span id="id1"></span><h1>Databases<a class="headerlink" href="#databases" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>This chapter is intended both for end-users and administrators / developers.</p>
+<p>The majority of the applications in Semperpy work on the same model whenever possible:</p>
+<blockquote>
+<div><ul class="simple">
+<li>raw data is extracted from files</li>
+<li>partial or final statistics are computed for different types of data</li>
+<li>those results are stored in a database,</li>
+<li>later on, partial or final statistics are read from the database, aggregated over different dimensions if applicable and printed or plotted etc...</li>
+</ul>
+</div></blockquote>
+<p>The idea of that model is to extract information from large data files and store much smaller information resulting
+usually from a geographical aggregation of data and computing statistics.</p>
+<p>The type of database used is an &#8220;SQL database&#8221;, the particular implementation installed is PostGreSQL. It works following a client/server model:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the server runs on a machine (in our case the Data Portal)</li>
+<li>clients run on different machines (in our case particularly on NCCS nodes)</li>
+</ul>
+</div></blockquote>
+<p>Reading and writing from and to a database is done through the network. There are sometimes restrictions for security
+reasons as of which nodes can access a database server. On NCCS, please note the PostGreSQL server can only be
+accessed by interactive nodes (not computing nodes). This could cause problems but there are workarounds used.
+example, in operations.</p>
+</div></blockquote>
+<div class="section" id="physical-databases-logical-databases-and-security">
+<h2>Physical databases, logical databases and security<a class="headerlink" href="#physical-databases-logical-databases-and-security" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Like in all systems, there is security involved in database reading and writing. PostGreSQL enables to us to define
+physical databases, these are created manually by database administrators. The database server keeps the definition
+of users with different credentials, just as well as Linux. Credentials are given to a particular user on a particular
+database. In order to avoid having to make too many requests from the administrators and to keep good security
+practice, the following scheme was put in place:</p>
+<blockquote>
+<div><ul class="simple">
+<li>logical databases are created in physical databases in order to keep the freedom of creating and deleting databases,</li>
+<li>three levels of user credentials are used,</li>
+<li>only a one-off setup is necessary by the database administrators</li>
+</ul>
+</div></blockquote>
+<p>Three different profiles of users were identified:</p>
+<blockquote>
+<div><ul class="simple">
+<li>users who need to read data from any database</li>
+<li>users who run research experiments and who need to store statistics for those experiments</li>
+<li>users who run operational jobs and need to store statistics</li>
+</ul>
+</div></blockquote>
+<p>In order to achive the above, the following strategy was implemented:</p>
+<blockquote>
+<div><ul class="simple">
+<li>two physical databases were created by the administrators (gmao_stats and semper)</li>
+<li>three database users were created by the administrators (gmao_user, gmao_rd, gmao_ops)</li>
+</ul>
+</div></blockquote>
+<p>The following credentials were setup:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">User / Database</th>
+<th class="head">gmao_stats</th>
+<th class="head">semperpy</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>gmao_user</td>
+<td>read</td>
+<td>read</td>
+</tr>
+<tr class="row-odd"><td>gmao_rd</td>
+<td>read</td>
+<td>read/write</td>
+</tr>
+<tr class="row-even"><td>gmao_ops</td>
+<td>read/write</td>
+<td>read</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Any user of SemperPy is a <strong>gmao_user</strong>, therefore any user can read any database, this makes sense, it would be rather
+impractical to need to setup a password just to plot some dats. By default, for user <strong>gmao_user</strong>, nothing needs
+to be done, invoking SemperPy to generate plots works from any database.</p>
+</div></blockquote>
+<blockquote id="pgpass">
+<div><p>If you run research experiments and would like to store statistics, you will need to request a password from the
+<strong>SemperPy Administrator</strong>, no one has been officially been given that function yet, but requesting the password
+from Austin or Denis would be a good start. PostGreSQL requires that the password of the database user be
+stored in the user&#8217;s home directory in a file called .pgpass which cannot be read by anyone else:</p>
+<div class="highlight-python"><pre>cd $HOME
+touch .pgpass
+chmod go-r .pgpass</pre>
+</div>
+<p>You will then need to write this line in the file:</p>
+<div class="highlight-python"><pre>dpdb:*:*:gmao_rd:password-given-to-you</pre>
+</div>
+<p>You can then write and delete data to and from the <strong>semper</strong> database.</p>
+<p>If you need to write data into an operational database, then you will need to request the password and
+follow the instructions above.</p>
+<p>You will then need to write this line in the file:</p>
+<div class="highlight-python"><pre>dpdb:*:*:gmao_ops:password-given-to-you</pre>
+</div>
+<p>You can then write and delete data to and from the <strong>gmao_stats</strong> database.</p>
+<p>The security put in place through two different physical databases and three different user IDs is only
+for safety purposes in order to avoid deleting or overwriting data.</p>
+<p>During the lifetime of SemperPy and the deployment of new applications, new databases will be created and probalby deleted,
+so in order to keep the freedom of doing this at will, logical databases have been created.
+As of now, <strong>logical databases</strong> are the only databases we will talk about. A <strong>logical database</strong> is a storage
+compartment with a special name (for the expert, a PostGreSQL schema) to enable a different storage place for data.
+The advantage of <strong>logical databases</strong> is that many of these can be created either by the SemperPy administrator
+or the end user. This enables to create logical chunks in the data (e.g. observations, observation impacts,
+forecast skill scores, operational, experimental, test, etc...). Those chunks make it then practical to
+delete data, copy data, duplicate data, dump data etc...</p>
+</div></blockquote>
+</div>
+<div class="section" id="database-definition">
+<span id="databasedefinition"></span><h2>Database definition<a class="headerlink" href="#database-definition" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>In the configuration directory of SemperPy, there is a directory called db, containing a configuration file
+called databases.def. This is the system configuration file defining the database used system-wide both for
+operations, research experiments and tests. Let&#8217;s examine the definition of two similar databases, im_ops and
+im_exp, the former is the database for operational impact statistics, the latter is the database for
+experimental impact statistics:</p>
+<div class="highlight-python"><pre>[im_ops]
+host = dpdb
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+protected = yes
+comment = operational database for observation impact statistics
+
+[im_exp]
+host = dpdb
+database = semper
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_rd
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+protected = yes
+comment = experiment database for observation impact statistics</pre>
+</div>
+<p>The keywords are defined as follows:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">[im_ops] between square brackets is the name of the <strong>logical database</strong>.</p>
+</li>
+<li><p class="first">host, the host running the PostGreSQL server, in our case <strong>dbdb</strong>.</p>
+</li>
+<li><p class="first">database, the <strong>physical database</strong> holding the <strong>logical database</strong>, gmao_stats for operations and semper for research experiments and private databases.</p>
+</li>
+<li><p class="first">schema, describes which file holds the definition of the database keywords for SemperPy to be able to process correctly. There are currently three different schemas: schema/ob_schema for observation statistics (including impact atatistics), schema/sc_schema for forecast skill scores, and schema/pr_schema for statistic on limited areas of analysis gridded data (fields).</p>
+</li>
+<li><p class="first">recordtype, describes which directive defines an pre-initialized record to work with that particular database and schema, obsstat for observation statistics, scores for forecast skill scores, and product for statistics of analyses.</p>
+</li>
+<li><p class="first">userw, defines which user is allowed to write in that database.</p>
+</li>
+<li><p class="first">userr is always gmao_user (the user who can read all databases)</p>
+</li>
+<li><p class="first">password is gmao_user&#8217;s password in PostGreSQL, this is public because that user can only read data.</p>
+</li>
+<li><p class="first">grantr is always gmao_user (because that user can read all databases)</p>
+</li>
+<li><p class="first">engine is always psql (for PostGreSQL), but could possibly be mysql or other.</p>
+</li>
+<li><p class="first">buffer, defines the number of records to store int the database to be held in memory before flushing to the PostGreSQL server. The bigger that number, the less communication with the server and the smaller SQL requests for writing data, but the bigger that number the more memory is needed for a computing job. This hasn&#8217;t been tuned much.</p>
+</li>
+<li><p class="first">the protected flag indicates that this database is important and it can therefore not be deleted by a standard command, an administrator is required to do this. This is to prevent deleting an big database with a single command by mistake.</p>
+</li>
+<li><p class="first">comment, is the line which appears in the dynamic documentation when issuing the command:</p>
+<div class="highlight-python"><pre>spy_doc databases</pre>
+</div>
+</li>
+</ul>
+<p>The command <strong>spy_doc databases</strong> reads this configuration file and displays:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the name of the logical database,</li>
+<li>the type of database (recordtype)</li>
+<li>the writer, which PostGreSQL user is allowed to write in that database (userw),</li>
+<li>the comment</li>
+</ul>
+</div></blockquote>
+<p>The command <strong>spy_doc database &lt;database&gt;</strong> display the contents of the configuration together with
+the list of keywords associated with that database (recordtype):</p>
+<div class="highlight-python"><pre>spy_doc databases im_ops
+
+im_ops:
+buffer     = 2000
+comment    = operational database for observation impact statistics
+database   = gmao_stats
+engine     = psql
+grantr     = gmao_user
+host       = dpdb
+password   = hemperUI9#
+protected  = yes
+recordtype = obsstat
+schema     = schema/ob_schema.def
+userr      = gmao_user
+userw      = gmao_ops
+
+Keywords for im_ops: count, date, domain_name, east, expver, kt, kx, level, levtype, north, source, south, statistic, type, usage, value, variable, west
+
+
+generated on 2012-05-02 23:57:37</pre>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="scripts-for-database-management">
+<h2>Scripts for database management<a class="headerlink" href="#scripts-for-database-management" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>There are a few scripts to help both the administrator and the end user
+to handle SemperPy databases:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>spy_createdb</strong>: creates (and possibly overwrites) a database</li>
+<li><strong>spy_dropdb</strong>: deletes a whole logical database</li>
+<li><strong>spy_deletedb</strong>: deletes selected data from a database (e.g. experiment)</li>
+<li><strong>spy_db2txt</strong>: dumps whole or part of the contents of a database into a text file</li>
+<li><strong>spy_txt2db</strong>: loads the contents of the text file generated by spy_db2txt or by computing scores into a text file into a database</li>
+<li><strong>spy_sql</strong>: starts the PostGreSQL shell on the right physical database.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="creating-a-database">
+<span id="createdb"></span><h3>Creating a database<a class="headerlink" href="#creating-a-database" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>You can use the script called <strong>spy_createdb</strong> to create a database. The database needs to be part of
+the database definition so that it is known by the system. Here is the syntax of the command:</p>
+<div class="highlight-python"><pre>spy_createdb --help
+usage: createdb.py [-h] [--drop] [--drop_only] [--grant_only] database
+
+generates the SQL instructions to create a logical database
+
+positional arguments:
+  database      name of the database to be created
+
+optional arguments:
+  -h, --help    show this help message and exit
+  --drop        drop the database if it already exists
+  --drop_only   drop the database if it already exists and does nothing else
+  --grant_only  only generate the sql GRANT instructions</pre>
+</div>
+<p>The different types of databases (to date) are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>obsstat, an observation and observation impact statistic database</li>
+<li>score, an forecast skill score database</li>
+<li>product, a product based database, statistics over limited domains of analyses</li>
+</ul>
+</div></blockquote>
+<p>The option &#8211;drop_only is equivalent to the command <strong>spy_dropdb</strong>. The &#8211;drop options instructs to
+first delete the existing database. The option &#8211;grant_only is irrelevant. Databases which are protected
+(protected = yes) are not dropped by this command, even if the &#8211;drop or &#8211;drop_only flags are used.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>spy_createdb im_ops
+create schema im_ops;
+
+create table im_ops.domain (
+id serial primary key,
+north float,
+west float,
+south float,
+east float,
+domain_name varchar(25),
+unique (north,west,south,east,domain_name)
+);
+
+
+
+create table im_ops.stats (
+id serial primary key,
+level float,
+levtype varchar(5),
+expver varchar(20),
+source varchar(10),
+variable varchar(15),
+statistic varchar(15),
+type varchar(10),
+kx int,
+kt int,
+usage varchar(10),
+domain_id int not null references im_ops.domain(id),
+unique (level,expver,source,variable,statistic,type,kx,kt,usage,domain_id)
+);
+create index stats_0_idx on im_ops.stats (type);
+create index stats_1_idx on im_ops.stats (expver);
+create index stats_2_idx on im_ops.stats (variable);
+create index stats_3_idx on im_ops.stats (statistic);
+create index stats_4_idx on im_ops.stats (kx);
+create index stats_5_idx on im_ops.stats (kt);
+create index stats_6_idx on im_ops.stats (usage);
+create index stats_7_idx on im_ops.stats (level);
+create index stats_8_idx on im_ops.stats (usage);
+create index stats_9_idx on im_ops.stats (variable,level,type,domain_id,expver,kx,kt,usage);
+
+
+create table im_ops.value (
+date int not null,
+value float,
+count float,
+stats_id int not null references im_ops.stats (id)
+);
+create index value_10_idx on im_ops.value (date);
+create index value_11_idx on im_ops.value (stats_id);
+alter table im_ops.value add primary key (date,stats_id);
+
+
+
+create or replace view im_ops.v_view (north,west,south,east,domain_name,level,levtype,expver,source,variable,statistic,type,kx,kt,usage,date,value,count)
+as select north,west,south,east,domain_name,level,levtype,expver,source,variable,statistic,type,kx,kt,usage,date,value,count
+from im_ops.domain,im_ops.stats,im_ops.value where stats.domain_id = domain.id and value.stats_id = stats.id;
+
+grant usage on schema im_ops to gmao_user;
+grant select on table im_ops.domain to gmao_user;
+grant select on table im_ops.stats to gmao_user;
+grant select on table im_ops.value to gmao_user;
+grant select on table im_ops.v_view to gmao_user;</pre>
+</div>
+<p>The command issues the SQL commands into the standard output. In order to have these commands executed,
+the output needs to be sent to the PostGreSQL shell, for example:</p>
+<div class="highlight-python"><pre>spy_createdb im_ops | spy_sql -w im_ops</pre>
+</div>
+<p>Please check the paragraph about <a class="reference internal" href="#postgresql"><em>Using the PostGreSQL shell</em></a>. In order to create a database, you are required to
+have the credentials to write into a physical database (semper for gmao_rd and gmao_stats for gmao_ops).
+Those credentials can be obtained by getting the password for the right user and creating or updating
+your <a class="reference internal" href="#pgpass"><em>.pgpass</em></a> file.</p>
+<p>You can create your own database, so that you can experiment and perhaps just drop it later on. To do so,
+you need to:</p>
+<blockquote>
+<div><ul class="simple">
+<li>define your database</li>
+<li>let SemperPy know about your definition</li>
+<li>use the spy_createdb script</li>
+<li>specify that database name in your computing and plotting scripts.</li>
+</ul>
+</div></blockquote>
+<p>To define your database, please refer to <a class="reference internal" href="../config/configure.html#configuration"><em>Configuring SemperPy</em></a> for background information. In your private
+configuration directory, you need to create a directory called <strong>db</strong>, in which you create a file called
+databases.def. That file can contain database definition(s):</p>
+<div class="highlight-python"><pre>[my_db]
+host = dpdb
+database = semper            # or gmao_stats depending on your credentials
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_rd              # or gmao_ops if you specified database = gmao_stats
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+protected = no               # unless you are a little paranoid
+comment = my own database I can experiment with</pre>
+</div>
+<p>You then need to let SemperPy know that you have your own configuration directory:</p>
+<div class="highlight-python"><pre>setenv SEMPERPY_CONFIG /my/path/to/my/configuration/directory:$SEMPERPY_CONFIG
+or
+export SEMPERPY_CONFIG=/my/path/to/my/configuration/directory:$SEMPERPY_CONFIG</pre>
+</div>
+<p>From that stage, you database is part of the system. You can create it and start using it. If
+you type:</p>
+<div class="highlight-python"><pre>spy_doc databases
+fc_exp  : type = score    writer = gmao_rd  experiment database for forecast scores
+fc_ops  : type = score    writer = gmao_ops operational database for forecast scores
+im_exp  : type = obsstat  writer = gmao_rd  experiment database for observation impact statistics
+im_ops  : type = obsstat  writer = gmao_ops operational database for observation impact statistics
+my_db   : type = obsstat  writer = gmao_rd my own database I can experiment with &lt;---------
+ob_exp  : type = obsstat  writer = gmao_rd  experiment database for observation statistics
+ob_ops  : type = obsstat  writer = gmao_ops operational database for observation statistics
+ocean   : type = obsstat  writer = gmao_rd  database for observation statistics for the ocean
+pr_ops  : type = product  writer = gmao_ops test database for statistics on field products
+test_exp: type = obsstat  writer = gmao_rd  test database for experiments, can be deleted at anytime
+test_ops: type = obsstat  writer = gmao_ops test database for operations, can be deleted at anytime
+
+generated on 2012-05-03 23:21:28</pre>
+</div>
+<p>and obtain information:</p>
+<div class="highlight-python"><pre>spy_doc databases my_db
+
+my_db:
+buffer     = 2000
+comment    = my own database I can experiment with
+database   = semper
+engine     = psql
+grantr     = gmao_user
+host       = dpdb
+password   = hemperUI9#
+protected  = no
+recordtype = obsstat
+schema     = schema/ob_schema.def
+userr      = gmao_user
+userw      = gmao_rd
+
+Keywords for my_db: count, date, domain_name, east, expver, kt, kx, level, levtype, north, source, south, statistic, type, usage, value, variable, west
+
+
+generated on 2012-05-03 23:24:12</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="dropping-a-whole-database">
+<h3>Dropping a whole database<a class="headerlink" href="#dropping-a-whole-database" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>This command should be used with great caution provided that a whole database can be deleted using this
+command in less than a second independently of its size. This command is provided to delete users&#8217; own
+databases when they are not used anymore, <em>official</em> databases are protected and will not be deleted by
+this command. This command (which actually invokes <strong>spy_createdb</strong> with the right arguments), writes the SQL
+commands to delete the database in the standard output.  In order to have these commands executed,
+the output needs to be sent to the PostGreSQL shell, for example:</p>
+<div class="highlight-python"><pre>spy_dropdb my_db | spy_sql -w my_db</pre>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="deleting-part-of-a-database">
+<h3>Deleting part of a database<a class="headerlink" href="#deleting-part-of-a-database" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Most of the time when computing statistics, you are given the option to overwrite the data, so that if
+you need to re-compute statistics, you can just replace the contents of a database for one particular
+experiment and dates etc.. It could sometimes be useful to be able to delete a whole expriment because
+it is not useful anymore and as a good person, you delete it to free some space, or just because
+you want to re-compute all the statistics and it is much faster to <em>write</em> than to <em>overwrite</em>:</p>
+<div class="highlight-python"><pre>py_deletedb --help
+usage: deletedb.py [-h] [--begindate BEGINDATE] [--enddate ENDDATE]
+                   [--expver EXPVER] [--level LEVEL] [--kx KX] [--kt KT]
+                   [--domain_name DOMAIN_NAME] [--statistic STATISTIC]
+                   [--usage {used,passive,rejected}] [--variable VARIABLE]
+                   [--dryrun]
+                   database
+
+Delete selected statistics. Please not that not all keywords are valid for all
+databases, support is provided, if a wrong keyword is specified
+
+positional arguments:
+  database              name of the database to delete data from
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --begindate BEGINDATE
+                        start date in the form YYYYMMDDHH
+  --enddate ENDDATE     end date in the form YYYYMMDDHH
+  --expver EXPVER       experiment ID of the data to dump
+  --level LEVEL         list of pressure level to dump
+  --kx KX               list of kx
+  --kt KT               list of kt
+  --domain_name DOMAIN_NAME
+                        name of a geographical area
+  --statistic STATISTIC
+                        name of a statistic
+  --usage {used,passive,rejected}
+                        data usage flag
+  --variable VARIABLE   name of a variable
+  --dryrun              only displays sql commands without executing them</pre>
+</div>
+<p>Please be careful with deleting data, particularly because not specifying a keyword is equivalent to
+&#8220;delete all of these&#8221;. This command will not delete anything if nothing is specified. Please note the
+argument <em>&#8211;dryrun</em> which displays the SQL command for deletion but does not execute them. This could
+give you an idea of the number of records to delete and might help you correct mistakes in your selection.</p>
+<p>If the database you want to delete from is protected, you will need to confirm your intention to delete
+from that database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">unlike dropping a database, deleting selected data can take a very long time, if you try to delete a very long experiment, it can literally take hours.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="dumping-and-loading-a-database">
+<h3>Dumping and loading a database<a class="headerlink" href="#dumping-and-loading-a-database" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Just as well as you can select data to be deleted from a database, you can select data to be dumped into
+a text file. The script <strong>spy_db2txt</strong> has arguments which are very similar to <strong>spy_deletedb</strong>:</p>
+<div class="highlight-python"><pre>spy_db2txt --help
+usage: db2txt.py [-h] [--begindate BEGINDATE] [--enddate ENDDATE]
+                 [--expver EXPVER] [--level LEVEL] [--kx KX] [--kt KT]
+                 [--domain_name DOMAIN_NAME] [--statistic STATISTIC]
+                 [--usage {used,passive,rejected}] [--variable VARIABLE]
+                 [--append]
+                 database filename
+
+Dump the whole contents or part of an SQL database into a text file. Please
+not that not all keywords are valid for all databases, support is provided, if
+a wrong keyword is specified
+
+positional arguments:
+  database              name of the database to dump
+  filename              filename of the text file to create
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --begindate BEGINDATE
+                        start date in the form YYYYMMDDHH
+  --enddate ENDDATE     end date in the form YYYYMMDDHH
+  --expver EXPVER       experiment ID of the data to dump
+  --level LEVEL         list of pressure level to dump
+  --kx KX               list of kx
+  --kt KT               list of kt
+  --domain_name DOMAIN_NAME
+                        name of a geographical area
+  --statistic STATISTIC
+                        name of a (raw) statistic
+  --usage {used,passive,rejected}
+                        data usage flag
+  --variable VARIABLE   name of a variable
+  --append              if the file exists, append data to the file</pre>
+</div>
+<p>For example, if you want to save all observation impact statistics for radiosondes in March 2012:</p>
+<div class="highlight-python"><pre>spy_db2txt --expver=e572p2_fp --kx=120,220 --kt=4,5,11,33,44 --begindate=2012030100 --enddate=2012033100 im_ops  rs_Mar2012.txt</pre>
+</div>
+<p>We speficied the experiment id (expver) to make sure that if there were any parallel runs at the same time, these would not be
+dumped with the rest of the data.</p>
+<p>The file rs_Mar2012.txt is generated, the first few lines look like this:</p>
+<div class="highlight-python"><pre>count|date|domain_name|east|expver|kt|kx|level|levtype|north|source|south|statistic|type|usage|value|variable|west
+2916.0|2012032200|global|180.0|e572p2_fp|11|120|700.0|pl|90.0|oper|-90.0|beneficial|im|used|1450.0|xvec|-180.0
+2677.0|2012031900|global|180.0|e572p2_fp|11|120|700.0|pl|90.0|oper|-90.0|beneficial|im|used|1342.0|xvec|-180.0
+2634.0|2012031800|global|180.0|e572p2_fp|11|120|700.0|pl|90.0|oper|-90.0|beneficial|im|used|1260.0|xvec|-180.0
+2713.0|2012031600|global|180.0|e572p2_fp|11|120|700.0|pl|90.0|oper|-90.0|beneficial|im|used|1368.0|xvec|-180.0
+2589.0|2012031400|global|180.0|e572p2_fp|11|120|700.0|pl|90.0|oper|-90.0|beneficial|im|used|1401.0|xvec|-180.0
+2721.0|2012031700|global|180.0|e572p2_fp|11|120|700.0|pl|90.0|oper|-90.0|beneficial|im|used|1467.0|xvec|-180.0</pre>
+</div>
+<p>This way you can dump a whole database, a whole experiment or some more selective data. When computing statistics from
+original files, you can set the option to store the statistics in a text file instead of a database. In that case, the file
+created has exactly the same format as the files created by a database dump (please see, for example <a class="reference internal" href="../obs/stattutorial.html#obsstattutorial"><em>Observation statistic - computing</em></a>).
+You can then use this text file to load the data into another database (duplication of database or
+&#8220;export&#8221; onto a different site). In order to load the data you need to invoke the command <strong>spy_txt2db</strong>:</p>
+<div class="highlight-python"><pre>spy_txt2db --help
+usage: txt2db.py [-h] [--overwrite] [--no_check_domains] [--dry_run]
+                 [--missing_value MISSING_VALUE]
+                 database filename [filename ...]
+
+Populates an SQL database using data from a text file
+
+positional arguments:
+  database              name of the database to populate
+  filename              filename(s) of the text files containing data, more
+                        than one filename can be specified
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --overwrite           overwrites data in the database if already present
+  --no_check_domains    don't check that domain coordinates defined in the
+                        text file match those defined in SemperPy
+  --dry_run             don't check that domain coordinates defined in the
+                        text file match those defined in SemperPy
+  --missing_value MISSING_VALUE
+                        value of missing value if applicable, lines containing
+                        missing value are not loaded into the database</pre>
+</div>
+<p>To reload the data we just dumped, we can use the command:</p>
+<div class="highlight-python"><pre>spy_txt2db test_exp rs_Mar2012.txt</pre>
+</div>
+<p>The data is then loaded. The loading program checks that the columns in the text files corresponds to the keywords of the
+database it needs to be loaded into, if these don&#8217;t match the program fails.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">some databases are quite small, for example, the contents of the observation impact statistic database from 16 August 2010 until 2 May 2012 is a 390MB text file which gzips to 44MB. This is how I can easily have copies of operational databases on my laptop. For observation statistics, it is a different story, one month of data (Jan 2012) is 786MB.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="using-the-postgresql-shell">
+<span id="postgresql"></span><h3>Using the PostGreSQL shell<a class="headerlink" href="#using-the-postgresql-shell" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The PostGreSQL shell is the binary utility delivered with the database package which enbles users to interact
+with databases using the SQL language. Although the end user should not have to worry much about using it,
+it is useful to know how to start it to run the <strong>spy_createdb</strong> or the <strong>spy_dropdb</strong> commands. It can also be
+useful to explore a database and find out what is in it. It sometimes disconcerting when you compute statistics
+and when you plot them you end up with empty plots. Using the database shell to double check if the data is in
+the database could be useful.</p>
+<p>There are three different contexts in which you might need to start the PostGreSQL shell:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">you just want to browse the database, in this case you will need to have the gmao_user password in your <em>.pgpass</em> file, please see <a class="reference internal" href="#pgpass"><em>.pgpass</em></a> about how to create that file. You will need to add the line:</p>
+<div class="highlight-python"><pre>dpdb:*:*:gmao_user:hemperUI9#</pre>
+</div>
+</li>
+<li><p class="first">you want to have write access to or create a logical database in the physical database semper. In that case you <em>.pgpass</em> files needs to contain the line:</p>
+<div class="highlight-python"><pre>dpdb:*:*:gmao_rd:&lt;the password you were given&gt;</pre>
+</div>
+</li>
+<li><p class="first">you want to have write access to or create a logical database in the physical database gmao_stats. In that case you <em>.pgpass</em> files needs to contain the line:</p>
+<div class="highlight-python"><pre>dpdb:*:*:gmao_ops:&lt;the password you were given&gt;</pre>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>Invoking the shell is easy:</p>
+<div class="highlight-python"><pre>spy_sql &lt;database&gt;
+# read-only mode
+
+spy_sql -w &lt;database&gt;
+# write / creation mode, depending on where the logical database &lt;database&gt; is,
+# you will need the credentials of either gmao_rd or gmao_ops.</pre>
+</div>
+<p>Once you have started the shell, here are a few commands which might prove useful to explore a database. Let&#8217;s use
+a real example so that you can try these out (operational database of observation impact statistics im_ops):</p>
+<div class="highlight-python"><pre>spy_sql im_ops
+gmao_stats=#</pre>
+</div>
+<p>Find out all experiments in that database:</p>
+<div class="highlight-python"><pre>gmao_stats=# select distinct expver from im_ops.v_view;
+  expver
+-----------
+ e571p1_fp
+ e572p2_fp
+ e571_fp
+ e572p1_fp
+ e562p3_fp
+ e562p4_fp
+ e562p5_fp
+ e572_fp
+(8 rows)</pre>
+</div>
+<p>Find out all experiments in that database over a period of time:</p>
+<div class="highlight-python"><pre>gmao_stats=# select distinct expver from im_ops.v_view where date &gt;= 2011030100 and date &lt;= 2011053100;
+  expver
+-----------
+ e571p1_fp
+ e571_fp
+ e562p5_fp
+(3 rows)</pre>
+</div>
+<p>Find out which observation types are available for one experiment:</p>
+<div class="highlight-python"><pre>gmao_stats=# select distinct kt from im_ops.v_view where expver='e571_fp';
+ kt
+----
+ 40
+ 11
+  4
+  5
+ 44
+ 17
+ 88
+ 33
+(8 rows)</pre>
+</div>
+<p>Find out which observation types are available for one experiment and observation sources:</p>
+<div class="highlight-python"><pre>gmao_stats=# select distinct kt from im_ops.v_view where expver='e571_fp' and kx in (220,120);
+ kt
+----
+ 11
+ 33
+  4
+ 44
+  5
+(5 rows)</pre>
+</div>
+<p>Find out which geographical domain is available for one particular statistic:</p>
+<div class="highlight-python"><pre>gmao_stats=# select distinct domain_name from im_ops.v_view where statistic='sum';
+ domain_name
+-------------
+ s.hem
+ tropics
+ global
+ n.hem
+(4 rows)</pre>
+</div>
+<p>Compute the impact per observation over the northern hemisphere for amsua in June 2011:</p>
+<div class="highlight-python"><pre>select sum(value)/sum(count) from im_ops.v_view where date &gt;= 2011060100 and date &lt;= 2011063000 and kt=40 and kx in (315,316,317,318,319,300,325) and statistic='sum' and domain_name='n.hem';
+----------------------
+ -4.3235352802456e-07
+(1 row)</pre>
+</div>
+<p>Compute the total impact for one particular experiment for one day:</p>
+<div class="highlight-python"><pre>gmao_stats=# select sum(value) from im_ops.v_view where expver='e572p2_fp' and date=2012020100 and statistic='sum';
+        sum
+-------------------
+ -2.98355053420586
+(1 row)</pre>
+</div>
+<p>Take a look at which systems provide non beneficial surface pressure impacts and in which domain(s) in one particular day:</p>
+<div class="highlight-python"><pre>gmao_stats=# select kx,date,domain_name from im_ops.v_view where statistic='sum' and value &gt; 0 and kt=33
+ kx  |    date    | domain_name
+-----+------------+-------------
+ 187 | 2012010100 | tropics
+ 180 | 2012010100 | n.hem
+ 180 | 2012010100 | global
+ 120 | 2012010100 | tropics
+ 180 | 2012010100 | tropics
+ 180 | 2012010100 | s.hem
+(6 rows)</pre>
+</div>
+<p>More complex SQL requests can be issued but this is outside the scope of this documentation.</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Databases</a><ul>
+<li><a class="reference internal" href="#physical-databases-logical-databases-and-security">Physical databases, logical databases and security</a></li>
+<li><a class="reference internal" href="#database-definition">Database definition</a></li>
+<li><a class="reference internal" href="#scripts-for-database-management">Scripts for database management</a><ul>
+<li><a class="reference internal" href="#creating-a-database">Creating a database</a></li>
+<li><a class="reference internal" href="#dropping-a-whole-database">Dropping a whole database</a></li>
+<li><a class="reference internal" href="#deleting-part-of-a-database">Deleting part of a database</a></li>
+<li><a class="reference internal" href="#dumping-and-loading-a-database">Dumping and loading a database</a></li>
+<li><a class="reference internal" href="#using-the-postgresql-shell">Using the PostGreSQL shell</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../config/configure.html"
+                        title="previous chapter">Configuring SemperPy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../tutorials.html"
+                        title="next chapter">Tutorials for the end user</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/databases/databases.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../tutorials.html" title="Tutorials for the end user"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../config/configure.html" title="Configuring SemperPy"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

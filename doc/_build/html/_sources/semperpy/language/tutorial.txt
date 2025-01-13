@@ -1,0 +1,390 @@
+.. _languagegtutorial:
+
+Language - validating data
+**************************
+
+    It is difficult to find useful examples of a language while keeping them simple. For a full
+    reference for the language please see :ref:`language_definitions`.
+    Lets try to define the language we gave as an example in the :ref:`language_introduction` of the :mod:`Language` module.
+
+Simple example
+--------------
+
+    We can start with a very simple definition of the keywords (:download:`Example 1<langdef1.py>`):
+
+    .. literalinclude:: langdef1.py
+        :language: python
+
+    When we run the program we get::
+
+        {'date': [2020101012], 'experiment_version': ['0012'], 'parameter': ['geopotential'], 'step': [24, 48], 'level': [500, 1000]}
+
+    So so far we have a tool which returns the dictionary we submit to it, it's a start. However,
+    if we run::
+
+        directive = dict(
+            date = 2020101012,
+            step = [24,48],
+            parameter = "geopotential",
+            level = [500,1000],
+            experiment_version = "0012",
+            type = "forecast"
+        ) 
+
+    we get::
+
+        Traceback (most recent call last):
+          File "langdef1.py", line 33, in <module>
+            print Language.resolveDirective(directive, "retrieve", reader)
+          File "Language/Language.py", line 135, in resolveDirective
+            error.check()
+          File "Core/tools.py", line 161, in check
+            raise self.exception('\n' + '\n'.join(self.msg))
+        Language.Language.LanguageError: 
+        Unknow keyword 'type'
+    
+    At least there is already some control on the validity of dictionary we submit to be
+    checked against the language. If we run::
+
+        directive = dict(
+            date = 2020101012,
+            step = ['24','49'],
+            parameter = "geopotential",
+            level = [500,1000],
+            experiment_version = ["0012","0013"],
+        )
+
+        {'date': [2020101012], 'experiment_version': ['0012', '0013'], 'parameter': ['geopotential'], 'step': ['24', '49'], 'level': [500, 1000]}
+
+
+Specifying more
+---------------
+
+    There are four problems in *Example 1*.
+
+    * we would like the steps to be integers and not strings and we don't want to depend on the way
+      these are input by the user
+    * we know that we will not find step 49 in the archive, we might as well try to get
+      rid of wrong requests before starting to read / retrieve data.
+    * we would like to limit a request to one single experiment version in order to
+      limit the size of the data which is returned.
+    * *experiment_version* is a long name, it could be useful to use something like:
+      *ev* or *expver*.
+    
+    We can cater for these as in :download:`Example 2<langdef2.py>`:
+
+    .. literalinclude:: langdef2.py
+        :language: python
+
+    When we run the program we now get::
+
+        Traceback (most recent call last):
+          File "langdef2.py", line 37, in <module>
+            print Language.resolveDirective(directive, "retrieve", reader)
+          File "Language/Language.py", line 135, in resolveDirective
+            error.check()
+          File "Core/tools.py", line 161, in check
+            raise self.exception('\n' + '\n'.join(self.msg))
+        Language.Language.LanguageError: 
+        The keyword 'experiment_version' only takes one value
+
+    So we are now protected against the input of too many values. Please note that the
+    message displays *experiment_version* and not *exvper* which was input. This is 
+    because the alias was replaced with the real name of the keyword.
+
+    If we now run::
+
+        directive = dict(
+            date = 2020101012,
+            step = ['24','49'],
+            parameter = "geopotential",
+            level = [500,1000],
+            expver = "0012",
+        )
+
+        {'level': [500, 1000], 'experiment_version': '0012', 'step': [24, 49], 'date': [2020101012], 'parameter': ['geopotential']}
+
+Validators
+----------
+
+    The steps are now integers and *expver* is converted to *experiment_version*. We still need to cater for step 49, :download:`Example 3<langdef3.py>`:
+    
+    :note: We specified here *type int*, but any existing Python class would work as well.
+
+    .. literalinclude:: langdef3.py
+        :language: python
+
+    When we run this::
+
+        Traceback (most recent call last):
+          File "langdef3.py", line 49, in <module>
+            print Language.resolveDirective(directive, "retrieve", reader)
+          File "Language/Language.py", line 157, in resolveDirective
+            error.check()
+          File "Core/tools.py", line 161, in check
+            raise self.exception('\n' + '\n'.join(self.msg))
+        Language.Language.LanguageError: 
+        Validation error for keyword step. The value: '49' is not in the set: 24, 48, 72, 96, 120, 144, 168
+
+Inheritance
+-----------
+
+    It is sometimes useful to define a language in different chunks which can be reused
+    by different languages, this is basically called modularity. Please see the following
+    example, although it is not extremely useful, it shows how to use inheritance (:download:`Example 4<langdef4.py>`):
+
+    .. literalinclude:: langdef4.py
+        :language: python
+
+    :note: Inheritance is a very useful tool, a language can inherit the definition of multiple languages. The inheritance is carried out from left to right with precedence to the left: in **date**, the definition of the keyword **level** has no effect, because the definition of **level** in **parameter** has precedence.  
+
+    It may happen that you want to inherit from a language definition, but do not want to inherit
+    all keywords. You can get rid of the unwanted keywords as follows::
+
+
+        from semperpy.language.language import Language
+
+        a = dict(
+            directive = "a",
+            keywords = dict(
+            	hello = dict(
+            	),
+            	world = dict(
+            	)
+            )
+        )
+
+        b = dict(
+            directive = "b",
+            inherit_from = "a",
+            keywords = dict(
+            	world = dict(
+            	remove = True
+            	)
+            )
+        )
+
+        def reader(s):
+            if s == "a":
+            	return a
+            else:
+            	return b
+
+        directive = dict(
+            hello = 1,
+            world = 2
+        )
+
+        print Language.resolveDirective(directive, "a", reader)
+        print Language.resolveDirective(directive, "b", reader)
+
+        {'world': [2], 'hello': [1]}
+
+        Traceback (most recent call last):
+          File "t.py", line 35, in <module>
+            print Language.resolveDirective(directive, "b", reader)
+          File "Language/Language.py", line 142, in resolveDirective
+            error.check()
+          File "Core/tools.py", line 161, in check
+            raise self.exception('\n' + '\n'.join(self.msg))
+        Language.Language.LanguageError: 
+        Unknown keyword 'world'
+
+    The first call succeeds while the second one fails, because the keyword **world** is
+    undefined in the **b** language.
+
+Specialization
+--------------
+
+    It is also useful to be able to specify different definitions of the language
+    depending on some of the values supplied by the user. Depending on the value
+    of one of the entries in the directive, we may want to change some definitions,
+    change default values or add or remove keywords. This is analoguous to dynamic 
+    inheritance in object-oriented programming. This is defined using the keyword
+    **specialize_from** (:download:`Example 5<langdef5.py>`):
+
+    .. literalinclude:: langdef5.py
+        :language: python
+
+    What we are doing here is to define a default language for a directive comprising:
+
+        - source
+        - type
+        - level
+        - leveltype
+        - parameter
+
+    There are default values for some of the keywords. We decide to automatically 
+    accommodate some special cases. When the source is **merra** we want to force
+    the type to "an" (analysis) and we add a new keyword **dataset**. Whenever the
+    parameter is a surface parameter we want to force the level type to **surface**
+    and remove the keyword **level**.
+
+    If we try this language definition::
+
+        directive = dict(
+            source = 'oper',
+            level = 500,
+            parameter = 'gh',
+        )
+        print Language.resolveDirective(directive, "field", reader)
+        --> 
+            source:
+                    oper
+            parameter:
+                    gh
+            leveltype:
+                    pl
+            type:
+                    fc
+            level:
+                    500 
+
+    Now we change the source and walk though different errors::
+
+        directive = dict(
+            source = 'merra',
+            level = 500,
+            parameter = 'gh',
+        )
+        print dictionary(Language.resolveDirective(directive, "field", reader))
+        --> Keyword dataset is missing and is required
+
+    The fact that we introduced the source as being **merra**, we inserted a new
+    required keyword **dataset** so the system rightfully complains. If we correct
+    that::
+
+        directive = dict(
+            source = 'merra',
+            level = 500,
+            parameter = 'gh',
+            dataset = 'MAI3CPASM'
+        )
+        print dictionary(Language.resolveDirective(directive, "field", reader))
+        --> 
+            source:
+                    merra
+            level:
+                    500
+            type:
+                    an
+            leveltype:
+                    pl
+            parameter:
+                    gh
+            dataset:
+                    mai3cpasm
+
+    We now change the parameter to **t2m** (two meter temperature)::
+
+        directive = dict(
+            source = 'merra',
+            level = 500,
+            parameter = 't2m',
+            dataset = 'MAI3CPASM'
+        )
+        print dictionary(Language.resolveDirective(directive, "field", reader))
+        --> Unknown keyword 'level'
+
+    The fact that we introduce a surface parameter removes the keyword **level**, so
+    the system, once again, rightfully complains. When we fix it::
+
+       directive = dict(
+            source = 'merra',
+            parameter = 't2m',
+            dataset = 'MAI3CPASM'
+        )
+        print dictionary(Language.resolveDirective(directive, "field", reader))
+        -->
+            source:
+                    merra
+            parameter:
+                    t2m
+            leveltype:
+                    sfc
+            type:
+                    an
+            dataset:
+                    mai3cpasm 
+
+    If we change the source back to **oper**::
+
+        directive = dict(
+            source = 'oper',
+            parameter = 't2m',
+            dataset = 'MAI3CPASM'
+        )
+        print dictionary(Language.resolveDirective(directive, "field", reader))
+        --> Unknown keyword 'dataset'
+
+    The **dataset** keyword is not valid anymore. Let's remove it::
+
+        directive = dict(
+            source = 'oper',
+            parameter = 't2m',
+        )
+        print dictionary(Language.resolveDirective(directive, "field", reader))
+        -->
+            source:
+                    oper
+            leveltype:
+                    sfc
+            parameter:
+                    t2m
+            type:
+                    fc
+
+    And we are back to a valid directive.
+
+Language format
+---------------
+
+    So far we have shown examples using Python dictionaries to define languages. This is the
+    format which is expected eventually by the :mod:`Language` module, but defining languages 
+    in the actual Python language may not be the best way of doing it. If for some reason a
+    language definition needed to be shared with another language this wouldn't be very practical.
+    Pretty much any file format can be used to store language definition information provided that
+    the reader converts the file to the expected dictionary.
+
+    At this stage it seems like a good idea to use **json** which is used heavily in web technologies
+    to store the language definitions. It has some advantages:
+    * it looks very much like Python,
+    * decoding it is fast and straightforward,
+    * decoders are available for many languages.
+    XML could also be used.    
+
+    Here is an example of how a language can be written in json (:download:`Example 6<retrieve.json>`):
+
+    .. literalinclude:: retrieve.json
+        :language: python
+
+    The Python program then becomes::
+
+        from semperpy.language.language import Language
+        from semperpy.core.json import JSon
+
+        def ValidateChoice(directive,keyword,values,*args):
+            for value in values:
+            	if not value in args:
+            		raise ValueError("for keyword %s. The value: '%s' is not in the set: %s" % (keyword, value, ', '.join([str(x) for x in args])))
+            return values
+
+        def reader(name):
+            f = open(name + ".json","r") # a configuration path could be used
+            s = JSon.decode(f)
+            f.close()
+            return s
+
+        directive = dict(
+            date = 2020101012,
+            step = [24,48],
+            param = "geopotential",
+            level = [500,1000],
+            experiment_version = "0012",
+        )
+        print Language.resolveDirective(directive, "retrieve", reader)
+
+    The syntax in json is a little more cumbersome than in Python, but having configuration
+    files which are not in the language used is a good thing. Please note that both the type
+    *int* and the function *ValidateChoice* are written as strings. The Language finds
+    them at run time (if they are defined).

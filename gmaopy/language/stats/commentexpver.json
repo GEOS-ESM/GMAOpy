@@ -1,0 +1,47 @@
+{
+	"directive": "commentexpver",
+    "doc": true,
+    "inherit_from": "comment",
+	"keywords" : {
+        "linewidth": {
+            "unique": true,
+            "type": "float",
+            "default_value": 0.5,
+            "help": "width of the vertical line if it is drawn"
+        },
+        "linecolor": {
+            "unique": true,
+            "default_value": "black",
+            "help": "color of the vertical line if it is drawn"
+        },
+        "font": {
+            "default_value": {
+                "size": "x-small"
+            },
+            "type": "plotfont",
+            "unique": true,
+            "help": "the characteristics of the text to be drawn please see directive <plotfont>"
+        },
+        "display": {
+            "default_value": "line",
+            "validate": ["ValidateChoice","line","expver","date"],
+            "help": "<display> is a list of items the user decides to display. If it is empty, nothing is shown. Add as many keywords as required."
+        },
+        "date_format": {
+            "unique": true,
+            "default_value": "%e %b",
+            "help": "If the date is displayed, this is the format for drawing it. You can get help on date formats by typing 'man strftime'"
+        },
+        "position": {
+            "unique": true,
+            "default_value": "top_angled",
+            "validate": ["ValidateChoice","top","bottom","top_and_bottom","top_indented","bottom_indented","best_indented","top_angled","bottom_angled","best_angled"],
+            "help": "This determines where the text will go and how it will be organised. For 'top' and 'bottom' all the texts are drawn horizontally, they may overlap. For 'top_indented' and 'bottom_indented', the text is drawn horizontally, but if there is an overlap, the text is 'crenelled' or indented. For 'top_angled' and 'bottom_angled', the text is drawn at an angle (please see the keyword <angle>), this is the safest and most readable way of drawing text without overlaps. The text may cover the contents of the plot though, if this is the case, a good move is to set a negative <rank> to the comment, so that it is drawn before the contents of the plot. For 'best_angled' and 'best_indented', the application decideds whether the text should go at the top or at the bottom of the plot, depending on available space"
+        },
+        "angle": {
+            "unique": true,
+            "default_value": 30,
+            "help": "Determines the angle used to display angled text. The bigger the angle, the longer the text can be, but the more risks to cover the contents of the plot"
+        }
+	}
+}

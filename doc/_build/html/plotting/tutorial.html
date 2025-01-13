@@ -1,0 +1,1967 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Observation statistic - plotting &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../tutorials.html" />
+    <link rel="next" title="Add your own statistic" href="../stats/yourown.html" />
+    <link rel="prev" title="Observation statistic - computing" href="../obs/stattutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../stats/yourown.html" title="Add your own statistic"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../obs/stattutorial.html" title="Observation statistic - computing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="observation-statistic-plotting">
+<span id="plottingtutorial"></span><h1>Observation statistic - plotting<a class="headerlink" href="#observation-statistic-plotting" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>The plotting system can be alimented by different sources of data or <strong>storage</strong> systems, for example, an SQL database or a text file.
+It is flexible enough to enable:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a high level of customization of the plots by the end-user</li>
+<li>an easy addition of new plot types to find better representations of features in the data or to handle new data types</li>
+</ul>
+</div></blockquote>
+<p>Those two features have a cost: <strong>complexity</strong>. Some sort of compromise between the complexity
+of the software and the flexibility of the system had to be made. The plotting
+system presents capabilities for:</p>
+<blockquote>
+<div><ul class="simple">
+<li>retrieving data from a database, a file or any other medium for which a <strong>reader</strong> can be provided</li>
+<li>computing statistics from intermediate results which were generated during a <strong>computing</strong> stage.</li>
+</ul>
+</div></blockquote>
+<p>The plotting systems handles:</p>
+<blockquote>
+<div><ul class="simple">
+<li>curves</li>
+<li>bars, histograms</li>
+<li>dots</li>
+<li>scatter plots</li>
+<li>plot titles</li>
+<li>legends</li>
+<li>axis titles</li>
+<li>color maps</li>
+</ul>
+</div></blockquote>
+<p>This is carried out automatically, most of the features can be customized.</p>
+</div></blockquote>
+<div class="section" id="plotting-data">
+<h2>Plotting data<a class="headerlink" href="#plotting-data" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Let&#8217;s start with a simple example (<a class="reference download internal" href="../_downloads/example11.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">1</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;n.hem&#39;</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="c"># RaobDsnd</span>
+                <span class="n">kx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">220</span><span class="p">,</span><span class="mi">221</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">229</span><span class="p">,</span><span class="mi">232</span><span class="p">],</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="c"># we want to generate a file, interactive = True would open a window</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example1.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example11.png"><img alt="../_images/example11.png" class="align-center" src="../_images/example11.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Explanation:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the first line imports all the modules necessary to plot observation statistics</li>
+<li>an <em>obsdocument</em> is an object which contains observation (or observation impact) statistic plots.</li>
+<li>the document contains one plot <strong>template</strong>, plot which is a <strong>timeseriesplot</strong>. Plots of this kind display statistic values against dates which are specified.</li>
+<li>the plot contains a curve wich is a line, that line should show <em>radiosonde wind vector</em> data. In the document part, <strong>type=&#8217;im&#8217;</strong> specifies that we are plotting observation impacts, <strong>type=&#8217;ob&#8217;</strong> would request observation data.</li>
+<li><strong>variable</strong> is the ODS file variable the statistics were computed on.</li>
+<li>the other keywords should be self explanatory.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">the plot main title, legend and y-title are generated automatically using the metadata available from the directives. These can be tailored or overwritten by the user. We will come back to these later in the tutorial.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="the-doc-plot-curve-relationship">
+<h2>The doc-plot-curve relationship<a class="headerlink" href="#the-doc-plot-curve-relationship" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>We have three main classes involved in creating this plot:</p>
+<blockquote>
+<div><ul class="simple">
+<li>obsdocument</li>
+<li>timeseriesplot</li>
+<li>curve</li>
+</ul>
+</div></blockquote>
+<p>Let&#8217;s first explain how their relationship influences the production of plots
+(let&#8217;s call it the doc-plot-curve relationship). This relationship conditions all
+kinds of plots.
+In the observing system, there is a list of keywords (dimensions) which
+determine the choice of observations (this list could possibly evolve in the future):</p>
+<blockquote>
+<div><ul class="simple">
+<li>kx</li>
+<li>kt</li>
+<li>date</li>
+<li>level</li>
+<li>type of level</li>
+<li>domain_name</li>
+<li>variable (original name of the ODS variable)</li>
+<li>statistic name</li>
+<li>usage (used, all, passive)</li>
+</ul>
+</div></blockquote>
+<p>We can add, in order to make sure that each observation is unique (this list could possibly evolve in the future):</p>
+<blockquote>
+<div><ul>
+<li><p class="first">expver or expid, the experiment id</p>
+</li>
+<li><dl class="first docutils">
+<dt>source, this is an arbitrary parameter which is necessary for the system to function properly, at the time of writing, it could be:</dt>
+<dd><ul class="first last simple">
+<li><strong>oper</strong> generated by a system handled by OPS</li>
+<li><strong>exp</strong> generated by a research experiment</li>
+<li><strong>odas</strong> generated by the ocean analysis system</li>
+<li><strong>aer</strong> generated by the aerosol system.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>All these properties can be defined at any level in the doc-plot-curve relationship, but
+the lower down they are defined (towards the curve)  the more precedence they have.</p>
+<p>A list of values specified at document level means: <em>create a separate plot for each value in this list</em>
+(<a class="reference download internal" href="../_downloads/example21.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">2</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">],</span>  <span class="c"># &lt;-- the change</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">levtype</span> <span class="o">=</span> <span class="s">&#39;pl&#39;</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="c"># RaobDsnd</span>
+                <span class="n">kx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">220</span><span class="p">,</span><span class="mi">221</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">229</span><span class="p">,</span><span class="mi">232</span><span class="p">],</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span><span class="p">]</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>               <span class="c"># &lt;-- another change</span>
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>             <span class="c"># &lt;-- just one title at document level</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example2.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example21.png"><img alt="../_images/example21.png" class="align-center" src="../_images/example21.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Please note that since the graphical layout has more than one plot per page,
+we added the statement <strong>has_title=True</strong> in the document to have unique title
+for all the plots. This is often more suitable, but if the user wants to keep
+a title for each plot, it is also possible although there are often physical
+overlaps beetween graphics and texts.</p>
+<p>A list of values specified at plot level means: <em>create a separate curve for each value in this list</em>  (<a class="reference download internal" href="../_downloads/example31.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">3</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+            <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">],</span>  <span class="c"># &lt;-- the change</span>
+        <span class="p">),</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="c"># RaobDsnd</span>
+                <span class="n">kx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">220</span><span class="p">,</span><span class="mi">221</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">229</span><span class="p">,</span><span class="mi">232</span><span class="p">],</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>               <span class="c"># &lt;-- back to one plot a page</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example3.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example31.png"><img alt="../_images/example31.png" class="align-center" src="../_images/example31.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p><strong>Small digression</strong>:</p>
+<div class="highlight-python"><pre>in this example, the line:
+    curve = line(...
+specifies explicitely that a line is expected to be drawn,
+
+try it with:
+    curve = bar(...
+or
+    curve = dot(...
+
+see the two following figures:</pre>
+</div>
+<a class="reference internal image-reference" href="../_images/example3.1.png"><img alt="../_images/example3.1.png" class="align-center" src="../_images/example3.1.png" style="width: 560.0px; height: 420.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/example3.2.png"><img alt="../_images/example3.2.png" class="align-center" src="../_images/example3.2.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p><strong>End of digression</strong>.</p>
+<p>In the first case two plots with one curve are created, in the second case, one plot
+and two curves are generated. Please note that the plot of example 2 is not very easy
+to read since the scales of the curves are different, we can fix that and at the
+same time introduce some graphical attributes:
+(<a class="reference download internal" href="../_downloads/example4.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">4</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">],</span>  
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="c"># RaobDsnd</span>
+                <span class="n">kx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">220</span><span class="p">,</span><span class="mi">221</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">229</span><span class="p">,</span><span class="mi">232</span><span class="p">],</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span>                       <span class="c"># &lt;-</span>
+            <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.04</span><span class="p">,</span>                    <span class="c"># &lt;- change</span>
+            <span class="nb">max</span> <span class="o">=</span> <span class="mf">0.02</span>                      <span class="c"># &lt;-</span>
+        <span class="p">),</span>                                  <span class="c"># &lt;-</span>
+        <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>                <span class="c"># &lt;-</span>
+            <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>                  <span class="c"># &lt;- change</span>
+            <span class="n">grid</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>                   <span class="c"># &lt;-</span>
+        <span class="p">),</span>                                  <span class="c"># &lt;-</span>
+    <span class="p">),</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>              
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>           
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example4.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example4.png"><img alt="../_images/example4.png" class="align-center" src="../_images/example4.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>This is fine, but specifying different attributes can be lengthy,
+and the lines <strong>graphics=graphics(</strong> and <strong>yaxis=axis(</strong> are rather
+redundent. A way around that is provided, if preferred by the user, the first
+parameter when creating a plot can be a dictionary in which the keys are
+full paths to attributes, this is probably more readable as it groups
+graphical attributes together:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">obsdocument</span><span class="p">(</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s">&#39;graphics.linewidth&#39;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="s">&#39;yaxis.min&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.04</span><span class="p">,</span>
+            <span class="s">&#39;yaxis.max&#39;</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span>
+            <span class="c"># RaobDsnd</span>
+            <span class="n">kx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">220</span><span class="p">,</span><span class="mi">221</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">229</span><span class="p">,</span><span class="mi">232</span><span class="p">],</span>
+            <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span><span class="p">]</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">],</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example4.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>At document level, a new plot is generated for each value specified in lists, but also
+combinations are generated between different keywords. If we modify example 2
+(<a class="reference download internal" href="../_downloads/example5.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">5</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">],</span>  <span class="c"># &lt;-- two domains</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">500</span><span class="p">],</span>           <span class="c"># &lt;-- two levels</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s">&#39;graphics.bar_color&#39;</span> <span class="p">:</span> <span class="s">&#39;khaki&#39;</span>
+        <span class="p">},</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">kx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">220</span><span class="p">,</span><span class="mi">221</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">229</span><span class="p">,</span><span class="mi">232</span><span class="p">],</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">has_ytitle</span> <span class="o">=</span> <span class="bp">False</span>        <span class="c"># &lt;-- not enough room for that</span>
+    <span class="p">),</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>               <span class="c"># &lt;-- room for more plots</span>
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>             
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example5.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example5.png"><img alt="../_images/example5.png" class="align-center" src="../_images/example5.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Two comments need to be made regarding this plot:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the legend in the top right plot is a little too close to the bars,</li>
+<li>the default templates for the document title and the legend do not work very well in this scenario for the plot.</li>
+</ul>
+</div></blockquote>
+<p>We can fix all that (<a class="reference download internal" href="../_downloads/example6.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">6</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">],</span> 
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">500</span><span class="p">],</span>          
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s">&#39;graphics.bar_color&#39;</span> <span class="p">:</span> <span class="s">&#39;khaki&#39;</span><span class="p">,</span>
+            <span class="s">&#39;yaxis.max_bound_padding&#39;</span> <span class="p">:</span> <span class="mf">0.15</span>          <span class="c">#&lt;- give some space</span>
+        <span class="p">},</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="s">&#39;&lt;statistic&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;parameter&gt;&#39;</span><span class="p">],</span>  <span class="c">#&lt;- modify title template</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">kx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">220</span><span class="p">,</span><span class="mi">221</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">229</span><span class="p">,</span><span class="mi">232</span><span class="p">],</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span><span class="p">],</span>
+            <span class="p">),</span>
+            <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;&lt;domain_name&gt; &lt;level&gt;&#39;</span><span class="p">,</span>         <span class="c">#&lt;- modify legend template</span>
+        <span class="p">),</span>
+        <span class="n">has_ytitle</span> <span class="o">=</span> <span class="bp">False</span>       
+    <span class="p">),</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>             
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>             
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example6.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example6.png"><img alt="../_images/example6.png" class="align-center" src="../_images/example6.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>In order to fix the two problems:</p>
+<blockquote>
+<div><ul class="simple">
+<li>we set the attribute max_bound_padding of the yaxis to 0.15 (the default is 0.10). This represent the percentage of max - min to be added at the top of the plot as padding.</li>
+<li>we modified the template of the document. It is a list of strings, each element represents a line. None in the list means <em>keep the standard template</em>. Any text can be written in each line, &lt;variables&gt; are enclosed in &lt;&gt;. The same is done for the legend which is a single line.</li>
+</ul>
+</div></blockquote>
+<p>There are many different structures enabling the customization of plots. You can find a
+complete reference in <a class="reference internal" href="../directives/directives.html#module-directives" title="directives"><tt class="xref py py-mod docutils literal"><span class="pre">directives</span></tt></a> where you can find there the documentation for
+<a class="reference internal" href="../directives/graphics.html#graphics"><em>graphics</em></a> and <a class="reference internal" href="../directives/axis.html#axis"><em>axis</em></a>. We could have &#8220;fixed&#8221; the top right plot by specifying:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&#39;graphics.bar_color&#39;</span> <span class="p">:</span> <span class="s">&#39;khaki&#39;</span><span class="p">,</span>
+    <span class="s">&#39;legend.loc&#39;</span><span class="p">:</span> <span class="s">&#39;lower left&#39;</span><span class="p">,</span>
+    <span class="s">&#39;legend.prop.size&#39;</span><span class="p">:</span> <span class="s">&#39;x-small&#39;</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+<p>Please refer to <a class="reference internal" href="../directives/plotlegend.html#plotlegend"><em>plotlegend</em></a> and <a class="reference internal" href="../directives/plotfont.html#plotfont"><em>plotfont</em></a> for more information.</p>
+<p>If you have set your PATH variable to point to $GMAOPY, you can issue the command:</p>
+<div class="highlight-python"><pre>dirdoc plotlegend (or any valid name)</pre>
+</div>
+<p>to see that documentation inline. The command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dirdoc</span>
+</pre></div>
+</div>
+<p>shows the list of valid directives.</p>
+</div></blockquote>
+</div>
+<div class="section" id="observation-description-file">
+<h2>Observation description file<a class="headerlink" href="#observation-description-file" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>In the examples below, <em>kt</em> and <em>kx</em> are specified at curve level. Depending of the
+type of plot we want to generate, the distribution of <em>kt</em> / <em>kx</em> combinations can change.
+In an attempt to avoid comlicating the system too much we settled for the following
+approach:</p>
+<blockquote>
+<div><ul class="simple">
+<li>at document level, you can optionally specify a file name containing a list of kt and kx. A plot will be generated for each <em>kt</em> / <em>kx</em> combination.</li>
+<li>at plot level, you can also specifiy a filename, a curve (or bar) will be generated for each <em>kt</em> / <em>kx</em> combination.</li>
+<li>at curve level, you can specify <em>kt</em> / <em>kx</em> combinations manually, no file can be specified.</li>
+</ul>
+</div></blockquote>
+<p>Here is an example of a file with the definition of observation groups: <a class="reference download internal" href="../_downloads/summary_all1.def"><tt class="xref download docutils literal"><span class="pre">kt/kx</span> <span class="pre">combinations`</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">aircraft</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">130</span><span class="p">,</span><span class="mi">131</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">133</span><span class="p">,</span><span class="mi">134</span><span class="p">,</span><span class="mi">135</span><span class="p">,</span><span class="mi">230</span><span class="p">,</span><span class="mi">231</span><span class="p">,</span><span class="mi">232</span><span class="p">,</span><span class="mi">233</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mi">235</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">aqua_airs</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">49</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">amsre</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">547</span><span class="p">,</span><span class="mi">548</span><span class="p">,</span><span class="mi">549</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">amsua</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">315</span><span class="p">,</span><span class="mi">316</span><span class="p">,</span><span class="mi">317</span><span class="p">,</span><span class="mi">318</span><span class="p">,</span><span class="mi">319</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">325</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">amsub</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">415</span><span class="p">,</span><span class="mi">416</span><span class="p">,</span><span class="mi">417</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">ascat_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">290</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">dropsondes</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">132</span><span class="p">,</span><span class="mi">232</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">goes</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">57</span><span class="p">,</span><span class="mi">58</span><span class="p">,</span><span class="mi">59</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">61</span><span class="p">,</span><span class="mi">62</span><span class="p">,</span><span class="mi">63</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">gpsro</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">722</span><span class="p">,</span><span class="mi">723</span><span class="p">,</span><span class="mi">740</span><span class="p">,</span><span class="mi">741</span><span class="p">,</span><span class="mi">742</span><span class="p">,</span><span class="mi">743</span><span class="p">,</span><span class="mi">744</span><span class="p">,</span><span class="mi">745</span><span class="p">,</span><span class="mi">786</span><span class="p">,</span><span class="mi">820</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">88</span>
+
+<span class="p">[</span><span class="n">hirs</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">25</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">iasi</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">875</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">land_sfc</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">181</span><span class="p">,</span><span class="mi">187</span><span class="p">,</span><span class="mi">281</span><span class="p">,</span><span class="mi">287</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">marine_sfc</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">180</span><span class="p">,</span><span class="mi">182</span><span class="p">,</span><span class="mi">183</span><span class="p">,</span><span class="mi">280</span><span class="p">,</span><span class="mi">282</span><span class="p">,</span><span class="mi">284</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">mhs</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">818</span><span class="p">,</span><span class="mi">819</span><span class="p">,</span><span class="mi">825</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">modis_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">257</span><span class="p">,</span><span class="mi">258</span><span class="p">,</span><span class="mi">259</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">msu</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">205</span><span class="p">,</span><span class="mi">206</span><span class="p">,</span><span class="mi">207</span><span class="p">,</span><span class="mi">208</span><span class="p">,</span><span class="mi">209</span><span class="p">,</span><span class="mi">210</span><span class="p">,</span><span class="mi">211</span><span class="p">,</span><span class="mi">212</span><span class="p">,</span><span class="mi">214</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">nexrad_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">pibal</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">221</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">profiler_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">223</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">radiosondes</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span><span class="mi">220</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">satellite_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">241</span><span class="p">,</span><span class="mi">242</span><span class="p">,</span><span class="mi">243</span><span class="p">,</span><span class="mi">245</span><span class="p">,</span><span class="mi">246</span><span class="p">,</span><span class="mi">247</span><span class="p">,</span><span class="mi">248</span><span class="p">,</span><span class="mi">249</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">251</span><span class="p">,</span><span class="mi">252</span><span class="p">,</span><span class="mi">253</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">256</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="c">#[sbuv_ozone]</span>
+<span class="c">#kx = 457,458,459,460,461,462,464,465,466,467,468,469</span>
+<span class="c">#kt = 21,22</span>
+
+<span class="p">[</span><span class="n">ssmi_rad</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">708</span><span class="p">,</span><span class="mi">710</span><span class="p">,</span><span class="mi">711</span><span class="p">,</span><span class="mi">713</span><span class="p">,</span><span class="mi">714</span><span class="p">,</span><span class="mi">715</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">ssu</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">305</span><span class="p">,</span><span class="mi">306</span><span class="p">,</span><span class="mi">307</span><span class="p">,</span><span class="mi">308</span><span class="p">,</span><span class="mi">309</span><span class="p">,</span><span class="mi">310</span><span class="p">,</span><span class="mi">311</span><span class="p">,</span><span class="mi">312</span><span class="p">,</span><span class="mi">314</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">tmi_rain_rate</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">211</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">17</span>
+
+<span class="p">[</span><span class="n">windsat_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">289</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="summary-observation-impact-statistics-plots">
+<h2>Summary observation impact statistics plots<a class="headerlink" href="#summary-observation-impact-statistics-plots" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>We can now use this definition file to introduce a new type of plot, the summary of averaged observation impacts for different observation groups (<a class="reference download internal" href="../_downloads/example7.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">7</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;summary_all.def&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example7.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Configuration files can be a great shortcut for plots like this one: We obtain a plot summarizing the performance of different observing systems:</p>
+<a class="reference internal image-reference" href="../_images/example7.png"><img alt="../_images/example7.png" class="align-center" src="../_images/example7.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>As you can see, the bars are sorted in an increasing order, this is the default behaviour.
+You can control that by adding the statement:</p>
+<div class="highlight-python"><pre>d = obsdocument(
+    plot = [
+        summaryplot(
+            statistic = 'impact_per_anl',
+            filename = 'summary_all.def',
+            sort = 'descreasing'
+        )
+    ],
+    ...</pre>
+</div>
+<p>to obtain:</p>
+<a class="reference internal image-reference" href="../_images/example7.1.png"><img alt="../_images/example7.1.png" class="align-center" src="../_images/example7.1.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>or to keep the order in which the file &#8216;summary_all.def&#8217; is read (random):</p>
+<div class="highlight-python"><pre>d = obsdocument(
+    plot = [
+        summaryplot(
+            statistic = 'impact_per_anl',
+            filename = 'summary_all.def',
+            sort = None
+        )
+    ],
+    ...</pre>
+</div>
+<p>to obtain:</p>
+<a class="reference internal image-reference" href="../_images/example7.2.png"><img alt="../_images/example7.2.png" class="align-center" src="../_images/example7.2.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>You can add a field called &#8216;rank&#8217; in each group allowing you to then sort the curve according with the rank:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">aircraft</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">130</span><span class="p">,</span><span class="mi">131</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">133</span><span class="p">,</span><span class="mi">134</span><span class="p">,</span><span class="mi">135</span><span class="p">,</span><span class="mi">230</span><span class="p">,</span><span class="mi">231</span><span class="p">,</span><span class="mi">232</span><span class="p">,</span><span class="mi">233</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mi">235</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">44</span>
+<span class="n">rank</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="p">[</span><span class="n">aqua_airs</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">49</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">rank</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>You can then specify:</p>
+<div class="highlight-python"><pre>d = obsdocument(
+    plot = [
+        summaryplot(
+            statistic = 'impact_per_anl',
+            filename = 'summary_all.def',
+            sort = 'rank_increasing' # or 'rank_decreasing'
+        )
+    ],
+    ...</pre>
+</div>
+<p>to obtain:</p>
+<a class="reference internal image-reference" href="../_images/example7.3.png"><img alt="../_images/example7.3.png" class="align-center" src="../_images/example7.3.png" style="width: 560.0px; height: 420.0px;" /></a>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">in the previous examples, the same color is allocated to the same observing system independently of the way the bars are sorted. This is to facilitate the comparison between plots. Please also note that if observing systems are missing, they are eliminated from the plot. This could cause some difficulties when comparing plots where observing systems are present only for some of them. If you wish to have missing systems displayed as well, set the plot option &#8216;removeMissing&#8217; to False.</td>
+</tr>
+</tbody>
+</table>
+<p>Should you want to change the bar colors (<a class="reference download internal" href="../_downloads/example8.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">8</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;summary_all.def&#39;</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;impact_per_anl&#39;</span><span class="p">],</span>
+            <span class="p">),</span>
+            <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                <span class="n">bar_color</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;salmon&#39;</span><span class="p">,</span><span class="s">&#39;navy&#39;</span><span class="p">,</span><span class="s">&#39;mistyrose&#39;</span><span class="p">,</span><span class="s">&#39;grey&#39;</span><span class="p">,</span><span class="s">&#39;lightpink&#39;</span><span class="p">,</span><span class="s">&#39;darkred&#39;</span><span class="p">,</span><span class="s">&#39;lightgrey&#39;</span><span class="p">,</span><span class="s">&#39;lightgreen&#39;</span><span class="p">,</span><span class="s">&#39;lightyellow&#39;</span><span class="p">,</span><span class="s">&#39;orange&#39;</span><span class="p">,</span><span class="s">&#39;pink&#39;</span><span class="p">,</span><span class="s">&#39;green&#39;</span><span class="p">,</span><span class="s">&#39;red&#39;</span><span class="p">,</span><span class="s">&#39;cyan&#39;</span><span class="p">,</span><span class="s">&#39;white&#39;</span><span class="p">,</span><span class="s">&#39;orange&#39;</span><span class="p">,</span><span class="s">&#39;black&#39;</span><span class="p">,</span><span class="s">&#39;blue&#39;</span><span class="p">,</span><span class="s">&#39;yellow&#39;</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example8.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example8.png"><img alt="../_images/example8.png" class="align-center" src="../_images/example8.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>You can also specify a reptitive pattern (<a class="reference download internal" href="../_downloads/example9.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">9</span></tt></a>):</p>
+<a class="reference internal image-reference" href="../_images/example9.png"><img alt="../_images/example9.png" class="align-center" src="../_images/example9.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>It can be useful to use a color map to represent the colors we use, there are quite
+a few defined in matplotlib. When using the same scale for all plots, colors give a
+good indication of the values on different plots, even if they have a different yaxis
+scale. In this example, the values are valid for the <strong>impact per analysis</strong> statistic
+(<a class="reference download internal" href="../_downloads/example10.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">10</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;summary_all.def&#39;</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;impact_per_anl&#39;</span><span class="p">],</span>
+            <span class="p">),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">,</span>
+                <span class="nb">max</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                <span class="n">step</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example10.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example10.png"><img alt="../_images/example10.png" class="align-center" src="../_images/example10.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>An alternative way of using color maps is to use each color to give an indication of
+another statistic. This can be done using the dualobservingsystem plot
+(<a class="reference download internal" href="../_downloads/example111.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">11</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;summary_all.def&#39;</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;count&#39;</span>
+            <span class="p">),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">()</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example11.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example111.png"><img alt="../_images/example111.png" class="align-center" src="../_images/example111.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Any pair of statistics can be defined (<a class="reference download internal" href="../_downloads/example12.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">12</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;summary_all.def&#39;</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;beneficial&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">()</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example12.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example12.png"><img alt="../_images/example12.png" class="align-center" src="../_images/example12.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>The other way around (<a class="reference download internal" href="../_downloads/example13.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">13</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">summaryplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;summary_all.def&#39;</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+                <span class="n">colormap_statistic</span> <span class="o">=</span> <span class="s">&#39;beneficial&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">()</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example13.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example13.png"><img alt="../_images/example13.png" class="align-center" src="../_images/example13.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Please note that color map is reversed to ensure that the greener the color,
+the better the statistic (here the fraction of benefical observations is a percentage).</p>
+</div></blockquote>
+</div>
+<div class="section" id="vertical-cross-section">
+<h2>Vertical cross section<a class="headerlink" href="#vertical-cross-section" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>We can introduce another plot which draws a vertical cross-section
+(<a class="reference download internal" href="../_downloads/example14.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">14</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;global&#39;</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">verticalxsection</span><span class="p">(</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                    <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                    <span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;Impact&#39;</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example14.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example14.png"><img alt="../_images/example14.png" class="align-center" src="../_images/example14.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>We can for example, compare two different months (<a class="reference download internal" href="../_downloads/example15.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">15</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;global&#39;</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">verticalxsection</span><span class="p">(</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">line</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+                        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011020100</span><span class="p">,</span><span class="mi">2011022800</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;&lt;parameter&gt;,Feb&#39;</span>
+                <span class="p">),</span>
+                <span class="n">line</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+                        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011031000</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;&lt;parameter&gt;,Mar&#39;</span>
+                <span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;Impact&#39;</span><span class="p">,</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">]</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example15.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example15.png"><img alt="../_images/example15.png" class="align-center" src="../_images/example15.png" style="width: 560.0px; height: 420.0px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="plots-by-levels">
+<h2>Plots by levels<a class="headerlink" href="#plots-by-levels" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>We can introduce another type of plot which draws statistics for different pressure levels
+(<a class="reference download internal" href="../_downloads/example16.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">16</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+   <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;ob_ops&#39;</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e572p2_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012010100</span><span class="p">,</span><span class="mi">2012013118</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span>
+   <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">levelplot</span><span class="p">(</span>
+            <span class="p">{</span> 
+                <span class="s">&#39;graphics.bar_color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;lime&#39;</span><span class="p">,</span><span class="s">&#39;red&#39;</span><span class="p">],</span> <span class="s">&#39;graphics.alpha&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="s">&#39;xaxis.min&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;oma&#39;</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;count&#39;</span><span class="p">,</span>
+                <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+                <span class="c">#level = [5.0, 7.0, 10.0, 20.0, 30.0, 50.0, 70.0, 100.0, 150.0, 200.0, 250.0, 300.0, 400.0, 500.0, 700.0, 850.0, 925.0, 1000.0]</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">stackedbar</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="s">&quot;used&quot;</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">stackedbar</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="s">&quot;passive&quot;</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">],</span>
+            <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                <span class="n">grid</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example16.png&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example16.png"><img alt="../_images/example16.png" class="align-center" src="../_images/example16.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Different statistics can be displayed (<a class="reference download internal" href="../_downloads/example17.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">17</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;ob_ops&#39;</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e572p2_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012010100</span><span class="p">,</span><span class="mi">2012013118</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">levelplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;red&#39;</span><span class="p">,</span><span class="s">&#39;blue&#39;</span><span class="p">,</span><span class="s">&#39;gold&#39;</span><span class="p">,</span><span class="s">&#39;cyan&#39;</span><span class="p">],</span> <span class="s">&#39;graphics.alpha&#39;</span><span class="p">:</span> <span class="mf">1.0</span> <span class="p">},</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;normcost&#39;</span><span class="p">],</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;oma&#39;</span><span class="p">,</span><span class="s">&#39;omf&#39;</span><span class="p">],</span>
+                <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                <span class="n">grid</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">shiftedbar</span><span class="p">(</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                    <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                    <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example17.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example17.png"><img alt="../_images/example17.png" class="align-center" src="../_images/example17.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>And finally a rather familiar plot (<a class="reference download internal" href="../_downloads/example18.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">18</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;ob_ops&#39;</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e572p2_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012010100</span><span class="p">,</span><span class="mi">2012013118</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">levelplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;lime&#39;</span><span class="p">,</span><span class="s">&#39;darkorange&#39;</span><span class="p">,</span><span class="s">&#39;red&#39;</span><span class="p">],</span> <span class="s">&#39;graphics.alpha&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;xaxis.min&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;yaxis.absolute_max&#39;</span><span class="p">:</span> <span class="mi">8</span> <span class="p">},</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;oma&#39;</span><span class="p">,</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;count&#39;</span><span class="p">,</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">stackedbar</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="s">&quot;used&quot;</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">stackedbar</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="s">&quot;passive&quot;</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">stackedbar</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="s">&quot;unused&quot;</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">],</span>
+            <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                <span class="n">grid</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">levelplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;blue&#39;</span><span class="p">,</span><span class="s">&#39;red&#39;</span><span class="p">,</span><span class="s">&#39;cyan&#39;</span><span class="p">,</span><span class="s">&#39;darkorange&#39;</span><span class="p">],</span> <span class="s">&#39;graphics.alpha&#39;</span><span class="p">:</span> <span class="mf">1.0</span> <span class="p">,</span> <span class="s">&#39;yaxis.absolute_max&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;rms&#39;</span><span class="p">,</span><span class="s">&#39;mean&#39;</span><span class="p">],</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+                <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;used&quot;</span><span class="p">,</span><span class="s">&quot;passive&quot;</span><span class="p">],</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;omf&#39;</span><span class="p">,</span><span class="s">&#39;oma&#39;</span><span class="p">],</span>
+            <span class="p">),</span>
+            <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                <span class="n">grid</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">shiftedbar</span><span class="p">(</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                    <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                    <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">levelplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;blue&#39;</span><span class="p">,</span><span class="s">&#39;red&#39;</span><span class="p">],</span> <span class="s">&#39;graphics.alpha&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;xaxis.min&#39;</span> <span class="p">:</span> <span class="mi">0</span> <span class="p">,</span> <span class="s">&#39;yaxis.absolute_max&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;normcost&#39;</span><span class="p">],</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;omf&#39;</span><span class="p">,</span><span class="s">&#39;oma&#39;</span><span class="p">],</span>
+                <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;used&quot;</span><span class="p">,</span><span class="s">&quot;passive&quot;</span><span class="p">],</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                <span class="n">grid</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">shiftedbar</span><span class="p">(</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                    <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                    <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">levelplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_color&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;cyan&#39;</span><span class="p">,</span><span class="s">&#39;blue&#39;</span><span class="p">],</span> <span class="s">&#39;graphics.alpha&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;xaxis.min&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;yaxis.absolute_max&#39;</span><span class="p">:</span> <span class="mi">8</span> <span class="p">},</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">bar</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;mean&#39;</span><span class="p">,</span>
+                        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">bar</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;rms&#39;</span><span class="p">,</span>
+                        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">dot</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;esigo&#39;</span><span class="p">,</span>
+                        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;esigo&#39;</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;used&quot;</span><span class="p">,</span><span class="s">&quot;passive&quot;</span><span class="p">],</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+                    <span class="p">),</span>
+                    <span class="n">graphics</span> <span class="o">=</span> <span class="n">item</span><span class="p">(</span>
+                        <span class="n">color</span> <span class="o">=</span> <span class="s">&#39;darkorange&#39;</span><span class="p">,</span>
+                        <span class="n">markersize</span> <span class="o">=</span> <span class="mi">8</span>
+                    <span class="p">)</span>
+                   <span class="p">),</span>
+                <span class="n">dot</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;esigb&#39;</span><span class="p">,</span>
+                        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;esigb&#39;</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;used&quot;</span><span class="p">,</span><span class="s">&quot;passive&quot;</span><span class="p">],</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+                    <span class="p">),</span>
+                    <span class="n">graphics</span> <span class="o">=</span> <span class="n">item</span><span class="p">(</span>
+                        <span class="n">color</span> <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">,</span>
+                        <span class="n">markersize</span> <span class="o">=</span> <span class="mi">8</span>
+                    <span class="p">)</span>
+                   <span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                <span class="n">grid</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;GEOS-5 Observation Monitoring&#39;</span><span class="p">,</span><span class="s">&#39;&lt;name&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;month&gt;&#39;</span><span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example18.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example18.png"><img alt="../_images/example18.png" class="align-center" src="../_images/example18.png" style="width: 700.0px; height: 490.0px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="plots-by-channels">
+<h2>Plots by channels<a class="headerlink" href="#plots-by-channels" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>This is plot is a slight variation of the plot by level (<a class="reference download internal" href="../_downloads/example19.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">19</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011080100</span><span class="p">,</span><span class="mi">2011083100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e572p1_fp&#39;</span><span class="p">,</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">channelplot</span><span class="p">(</span>
+        <span class="p">{</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span> <span class="p">},</span>
+        <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+            <span class="n">channel</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span>
+            <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.22</span><span class="p">,</span>
+            <span class="nb">max</span> <span class="o">=</span> <span class="mf">0.14</span><span class="p">,</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="c"># airs</span>
+                <span class="n">kx</span> <span class="o">=</span> <span class="mi">49</span><span class="p">,</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example19.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example19.png"><img alt="../_images/example19.png" class="align-center" src="../_images/example19.png" style="width: 560.0px; height: 420.0px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="plotting-using-configuration-files">
+<h2>Plotting using configuration files<a class="headerlink" href="#plotting-using-configuration-files" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>As we have seen above, a configuration file can be used to specify the groups of observations
+we want to plot, these an be used for mass plotting. This script is similar to a script running
+in operations, see //<a class="reference external" href="http://gmao.gsfc.nasa.gov/products/forecasts/systems/fp/obs_impact/">http://gmao.gsfc.nasa.gov/products/forecasts/systems/fp/obs_impact/</a> (<a class="reference download internal" href="../_downloads/impact.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">20</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;timeseries_all.def&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2010090100</span><span class="p">,</span><span class="mi">2011083100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span>
+            <span class="p">),</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">,</span>
+                <span class="nb">max</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                <span class="n">step</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                    <span class="n">datefile</span> <span class="o">=</span> <span class="s">&#39;dates.def&#39;</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_ob&#39;</span>
+            <span class="p">),</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.e-5</span><span class="p">,</span>
+                <span class="nb">max</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.e-8</span><span class="p">,</span>
+                <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.e-8</span> <span class="o">-</span> <span class="o">-</span><span class="mf">1.e-5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                    <span class="n">datefile</span> <span class="o">=</span> <span class="s">&#39;dates.def&#39;</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;beneficial&#39;</span>
+            <span class="p">),</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="mf">48.0</span><span class="p">,</span>
+                <span class="nb">max</span> <span class="o">=</span> <span class="mf">54.0</span><span class="p">,</span>
+                <span class="n">step</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                    <span class="n">datefile</span> <span class="o">=</span> <span class="s">&#39;dates.def&#39;</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;timeseries_&lt;name&gt;_&lt;domain_name&gt;_&lt;statistic&gt;.png&#39;</span><span class="p">,</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Here is a sample of what is produced by the plot:</p>
+<a class="reference internal image-reference" href="../_images/example20.png"><img alt="../_images/example20.png" class="align-center" src="../_images/example20.png" style="width: 770.0px; height: 420.0px;" /></a>
+<p>We need to explain further three features in this plot:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the observation file,</li>
+<li>the date file,</li>
+<li>the output name</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="observation-file">
+<h3>Observation file<a class="headerlink" href="#observation-file" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>The file timeseries_all.def contains a list of groups of observations to be plotted <a class="reference download internal" href="../_downloads/timeseries_all1.def"><tt class="xref download docutils literal"><span class="pre">kt/kx</span> <span class="pre">combinations`</span></tt></a>.</div></blockquote>
+</div>
+<div class="section" id="date-file">
+<h3>Date file<a class="headerlink" href="#date-file" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Whenever you need to plot long timeseries or aggregate statistics over a long period of time,
+the data you need to retrieve from the database might be tagged with different experiment IDs.
+The curve object accepts a keyword: <strong>datefile</strong> which is a file which defines date intervals
+together with experiment IDS (expver):</p>
+<blockquote>
+<div><div class="highlight-python"><pre>[a]
+expver = e562p3_fp
+start = 2010081600
+end = 2010110118
+step = 6
+archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p3/e562p3_fp/obs
+
+[b]
+expver = e562p4_fp
+start = 2010110200
+end = 2011010118
+step = 6
+archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p4/e562p4_fp/obs
+
+[c]
+expver = e562p5_fp
+start = 2011010200
+end = 2011033118
+step = 6
+archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p5/e562p5_fp/obs
+
+[d]
+expver = e571_fp
+start = 2011040100
+end = 2011050118
+step = 6
+archive_location = /archive/dao_ops/GEOS-5.7.1/GEOSadas-5_7_1/e571_fp/obs
+
+[e]
+expver = e571p1_fp
+start = 2011050200
+end = 2011062918
+step = 6
+archive_location = /archive/dao_ops/GEOS-5.7.1/GEOSadas-5_7_1_p1/e571p1_fp/obs
+
+[f]
+expver = e572_fp
+start = 2011063000
+end = 2011073118
+step = 6
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2/e572_fp/obs
+
+[g]
+expver = e572p1_fp
+start = 2011080100
+end = 2011083118
+step = 6
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p1/e572p1_fp/obs
+
+[h]
+expver = e572p2_fp
+start = 2011090100
+end = 2011120618
+step = 6
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p2/e572p2_fp/obs
+
+[i]
+expver = e572p2_fp
+start = 2011120600
+end = 2012040418
+step = 6
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p2_m1/e572p2_fp/obs
+
+[j]
+expver = e572p5_fp
+start = 2012040500
+end = 2012050918
+step = 6
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p5/e572p5_fp/obs
+
+[k]
+expver = e572p5_fp
+start = 2012051000
+end = 2012083118
+step = 6
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p5_m1/e572p5_fp/obs
+</pre>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">the name of the section (between square brackets), are abitrary, anything can be used provded that it is unique.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="output-name">
+<h3>Output name<a class="headerlink" href="#output-name" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The <strong>output</strong> keyword in this directive defines the filename of the graphics file(s) to generate.
+When many plots are generated, it is preferable to follow some file naming convention. The file name
+can be parameterized in a way which is rather similar to the titles (although not everything which
+works for a title might work for the file name):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">output</span> <span class="o">=</span> <span class="s">&#39;timeseries_&lt;name&gt;_&lt;domain_name&gt;_&lt;statistic&gt;.png&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>If the filename is not parameterized in satisfactory way, the program will complain and stop in order
+to avoid overwriting an existing file. In doubt, you can always add &lt;count&gt; in the filename, which is
+a counter per unique file name, this ensures that file names are unique.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="plotting-directly-from-ods-files">
+<h2>Plotting directly from ODS files<a class="headerlink" href="#plotting-directly-from-ods-files" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>A mechanism to read data from ODS files has been put in place to enable the creation of plots
+handling raw data. Some standard plots are available, while new ones can quite easily be programmed
+requiring a little knowledge of <strong>matplotlib</strong>. Since observations are accessed directly from an ODS file,
+ODS plot directives are quite similar to Obsstat directives.</div></blockquote>
+<div class="section" id="data-coverage-plot">
+<h3>Data coverage plot<a class="headerlink" href="#data-coverage-plot" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>A useful application of this is to plot geographical data coverage (<a class="reference download internal" href="../_downloads/example211.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">21</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2011020100</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>   <span class="c"># this is required to be able to find the ODS files</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="n">curve</span> <span class="o">=</span> 
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;lime&#39;</span><span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example21.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example211.png"><img alt="../_images/example211.png" class="align-center" src="../_images/example211.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>The curve contains the description of the observation(s) required to create the plot. Just as the Obsstat directive,
+data can be aggregated (e.g. all level, different days, runs, observation types etc...), the coverage of a couple of days
+or a whole month can be plotted (<a class="reference download internal" href="../_downloads/example22.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">22</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011020100</span><span class="p">,</span><span class="mi">2011020100</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="n">curve</span> <span class="o">=</span> 
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;lime&#39;</span><span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example22.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example22.png"><img alt="../_images/example22.png" class="align-center" src="../_images/example22.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>By specifying a collection of curves, different attributes can be modified (<a class="reference download internal" href="../_downloads/example23.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">23</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2011020100</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;darkorange&#39;</span><span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;passive&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;red&#39;</span><span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;unused&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;lime&#39;</span><span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example23.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example23.png"><img alt="../_images/example23.png" class="align-center" src="../_images/example23.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Please note that the order of the curves does matter (<a class="reference download internal" href="../_downloads/example24.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">24</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2011020100</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;symbol.alpha&#39;</span><span class="p">:</span> <span class="mf">0.5</span> <span class="p">},</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;lime&#39;</span><span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;red&#39;</span><span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;unused&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;darkorange&#39;</span> <span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;passive&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example24.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example24.png"><img alt="../_images/example24.png" class="align-center" src="../_images/example24.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Defining observers: observers are python objects which can be specified and called regularly to
+count observations or perhaps even compute global statistics. A predefined observer has been
+created to work with ODS plots, it is called <strong>odscounter</strong>. An observer is given a name which is then
+recognized by the application and be used as a variable in titles, legends etc... The format is optional,
+it can either be a standard python formatting string (.e.g &#8220;%d&#8221; or &#8220;value: %d&#8221;) or the name of a function
+in semperpy.core.format. In this example, an odscounter is defined in each curve, to count the number of
+observations defined in that curve, while an odscounter is created at plot level, counting all the observations
+in all the curves, therefore obtaining the total number of observations.
+(<a class="reference download internal" href="../_downloads/example24.0.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">24</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2011020100</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;symbol.alpha&#39;</span><span class="p">:</span> <span class="mf">0.5</span> <span class="p">},</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                <span class="n">observer</span> <span class="o">=</span> <span class="n">odscounter</span><span class="p">(</span><span class="n">varname</span><span class="o">=</span><span class="s">&#39;total_obs&#39;</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;bigNumber&#39;</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="s">&#39;Total number of observations: &lt;total_obs&gt;&#39;</span><span class="p">],</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;lime&#39;</span><span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">],</span>
+                        <span class="n">observer</span> <span class="o">=</span> <span class="n">odscounter</span><span class="p">(</span><span class="n">varname</span><span class="o">=</span><span class="s">&#39;total_used&#39;</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;bigNumber&#39;</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;&lt;total_used&gt; used&#39;</span>
+                <span class="p">),</span>
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;red&#39;</span><span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;unused&#39;</span><span class="p">],</span>
+                        <span class="n">observer</span> <span class="o">=</span> <span class="n">odscounter</span><span class="p">(</span><span class="n">varname</span><span class="o">=</span><span class="s">&#39;total_rejected&#39;</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;bigNumber&#39;</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;&lt;total_rejected&gt; rejected&#39;</span>
+                <span class="p">),</span>
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="p">{</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;darkorange&#39;</span> <span class="p">},</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;passive&#39;</span><span class="p">],</span>
+                        <span class="n">observer</span> <span class="o">=</span> <span class="n">odscounter</span><span class="p">(</span><span class="n">varname</span><span class="o">=</span><span class="s">&#39;total_passive&#39;</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s">&#39;bigNumber&#39;</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;&lt;total_passive&gt; passive&#39;</span>
+                <span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">has_xtitle</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">legend</span> <span class="o">=</span> <span class="n">plotlegend</span><span class="p">(</span>
+                <span class="n">mode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+                <span class="n">loc</span> <span class="o">=</span> <span class="s">&#39;outside bottom&#39;</span><span class="p">,</span>
+                <span class="n">prop</span> <span class="o">=</span> <span class="n">plotfont</span><span class="p">(</span>
+                    <span class="n">size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span>
+                <span class="p">),</span>
+                <span class="n">handletextpad</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example24.0.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example24.0.png"><img alt="../_images/example24.0.png" class="align-center" src="../_images/example24.0.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Another useful application of the coverage plot, is to display symbols for each observation
+location and color code it so that the plot gives an indication of the values of the variable
+being plotted. Let us assume that we would like to look at the values of omf over the globe,
+we can specify (<a class="reference download internal" href="../_downloads/example24.1.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">24.1</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2011020100</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>   <span class="c"># this is required to be able to find the ODS files</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;omf&#39;</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> 
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example24.1.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example24.1.png"><img alt="../_images/example24.1.png" class="align-center" src="../_images/example24.1.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>The color coding uses matplotlib standard colormaps, you can specify the colormap you wish
+to use (see for example: <a class="reference external" href="http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps">http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps</a>). If you
+postfix the name of the colormap with &#8216;_r&#8217; it is reversed. You can also specify a colormap
+object you instanciated: (<a class="reference download internal" href="../_downloads/example24.2.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">24.2</span></tt></a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2011020100</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>   <span class="c"># this is required to be able to find the ODS files</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;omf&#39;</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> 
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="n">cmap</span> <span class="o">=</span> <span class="s">&quot;winter&quot;</span><span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example24.2.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example24.2.png"><img alt="../_images/example24.2.png" class="align-center" src="../_images/example24.2.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>The coverage plot uses a special directive called <a class="reference internal" href="../directives/geography.html#geography"><em>geography</em></a> which enables you
+to specify geographical attributes, such as projection, coastlines, continents, parallels,
+meridians etc... (<a class="reference download internal" href="../_downloads/example24.3.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">24.3</span></tt></a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;n.hem&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2011020100</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>   <span class="c"># this is required to be able to find the ODS files</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;omf&#39;</span>
+            <span class="p">),</span>
+            <span class="n">geography</span> <span class="o">=</span> <span class="n">geography</span><span class="p">(</span>
+                <span class="n">projection</span> <span class="o">=</span> <span class="s">&#39;stere&#39;</span><span class="p">,</span>
+                <span class="n">lon_0</span> <span class="o">=</span> <span class="mi">270</span><span class="p">,</span>
+                <span class="n">hemisphere</span> <span class="o">=</span> <span class="s">&#39;north&#39;</span><span class="p">,</span>
+                <span class="n">plot_over</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;coastlines&quot;</span><span class="p">,</span><span class="s">&quot;parallels&quot;</span><span class="p">,</span><span class="s">&quot;meridians&quot;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> 
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example24.3.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example24.3.png"><img alt="../_images/example24.3.png" class="align-center" src="../_images/example24.3.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>In this case, we specify n.hem for the area, but if we wanted to take a closer look
+at the north, we can force the geography to a different bounding box, using the
+keywords west, south, east and north (<a class="reference download internal" href="../_downloads/example24.4.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">24.4</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;n.hem&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2011020100</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>   <span class="c"># this is required to be able to find the ODS files</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;omf&#39;</span>
+            <span class="p">),</span>
+            <span class="n">geography</span> <span class="o">=</span> <span class="n">geography</span><span class="p">(</span>
+                <span class="n">projection</span> <span class="o">=</span> <span class="s">&#39;stere&#39;</span><span class="p">,</span>
+                <span class="n">lon_0</span> <span class="o">=</span> <span class="mi">270</span><span class="p">,</span>
+                <span class="n">hemisphere</span> <span class="o">=</span> <span class="s">&#39;north&#39;</span><span class="p">,</span>
+                <span class="n">south</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                <span class="n">plot_over</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;coastlines&quot;</span><span class="p">,</span><span class="s">&quot;parallels&quot;</span><span class="p">,</span><span class="s">&quot;meridians&quot;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> 
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example24.4.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example24.4.png"><img alt="../_images/example24.4.png" class="align-center" src="../_images/example24.4.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>If you need to better discriminate between values, you can set you own minimum and maximum values
+(<a class="reference download internal" href="../_downloads/example24.5.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">24.5</span></tt></a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;n.hem&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2011020100</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>   <span class="c"># this is required to be able to find the ODS files</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">coverageplot</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;omf&#39;</span>
+            <span class="p">),</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span>
+                <span class="nb">max</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">geography</span> <span class="o">=</span> <span class="n">geography</span><span class="p">(</span>
+                <span class="n">projection</span> <span class="o">=</span> <span class="s">&#39;stere&#39;</span><span class="p">,</span>
+                <span class="n">lon_0</span> <span class="o">=</span> <span class="mi">270</span><span class="p">,</span>
+                <span class="n">hemisphere</span> <span class="o">=</span> <span class="s">&#39;north&#39;</span><span class="p">,</span>
+                <span class="n">south</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                <span class="n">plot_over</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;coastlines&quot;</span><span class="p">,</span><span class="s">&quot;parallels&quot;</span><span class="p">,</span><span class="s">&quot;meridians&quot;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> 
+                <span class="n">curve</span><span class="p">(</span>
+                    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                        <span class="n">kt</span> <span class="o">=</span> <span class="mi">44</span><span class="p">,</span>
+                        <span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span>
+                        <span class="n">usage</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;used&#39;</span><span class="p">],</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example24.5.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example24.5.png"><img alt="../_images/example24.5.png" class="align-center" src="../_images/example24.5.png" style="width: 560.0px; height: 420.0px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="scatter-plot">
+<h3>Scatter plot<a class="headerlink" href="#scatter-plot" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Another useful application is a scatter plot, for examples, scatter observation impacts versus the innovation (xvec vs. omf)  (<a class="reference download internal" href="../_downloads/example25.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">25</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p3_fp&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2010101300</span><span class="p">,</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">scatterplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;symbol.edgecolor&#39;</span><span class="p">:</span> <span class="s">&#39;grey&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;purple&#39;</span> <span class="p">},</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;omf&#39;</span><span class="p">,</span><span class="s">&#39;xvec&#39;</span><span class="p">],</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">curve</span><span class="p">(</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">odsdata</span><span class="p">(</span>
+                    <span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span> <span class="n">kx</span> <span class="o">=</span> <span class="mi">319</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.8</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.00025</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="mf">0.00025</span><span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example25.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/example25.png"><img alt="../_images/example25.png" class="align-center" src="../_images/example25.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Please note that the first variable specified is along the y axis, while the second one is along the x-axis.</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Observation statistic - plotting</a><ul>
+<li><a class="reference internal" href="#plotting-data">Plotting data</a></li>
+<li><a class="reference internal" href="#the-doc-plot-curve-relationship">The doc-plot-curve relationship</a></li>
+<li><a class="reference internal" href="#observation-description-file">Observation description file</a></li>
+<li><a class="reference internal" href="#summary-observation-impact-statistics-plots">Summary observation impact statistics plots</a></li>
+<li><a class="reference internal" href="#vertical-cross-section">Vertical cross section</a></li>
+<li><a class="reference internal" href="#plots-by-levels">Plots by levels</a></li>
+<li><a class="reference internal" href="#plots-by-channels">Plots by channels</a></li>
+<li><a class="reference internal" href="#plotting-using-configuration-files">Plotting using configuration files</a><ul>
+<li><a class="reference internal" href="#observation-file">Observation file</a></li>
+<li><a class="reference internal" href="#date-file">Date file</a></li>
+<li><a class="reference internal" href="#output-name">Output name</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plotting-directly-from-ods-files">Plotting directly from ODS files</a><ul>
+<li><a class="reference internal" href="#data-coverage-plot">Data coverage plot</a></li>
+<li><a class="reference internal" href="#scatter-plot">Scatter plot</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../obs/stattutorial.html"
+                        title="previous chapter">Observation statistic - computing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../stats/yourown.html"
+                        title="next chapter">Add your own statistic</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/plotting/tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../stats/yourown.html" title="Add your own statistic"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../obs/stattutorial.html" title="Observation statistic - computing"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+#!/bin/ksh
+
+set -aeu
+
+function usage {
+    echo "usage: spy_sql [-w] database_name"
+    echo " "
+    exit 1 
+}
+
+if [[ $# -lt 1 ]]; then
+    usage
+fi
+
+where=$(dirname $0)
+write=0
+
+while getopts w var 
+do
+    case $var in
+        w) write=1;;
+        *) usage;;
+    esac
+done
+shift $OPTIND-1
+
+user=gmao_user
+database=$(python $where/whichdb.py $@)
+set $database
+database=$1
+if [[ $write -eq 1 ]]; then
+    user=$2
+fi
+
+psql --user=$user --host=edb1 $database

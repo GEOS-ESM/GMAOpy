@@ -1,0 +1,41 @@
+.. _language_introduction:
+
+Introduction
+************
+
+	In most applications there is a need to send arguments to a program in order
+	to specify parameterised features which are required by the user. There are
+	different ways of doing so, program arguments, environment variables and other
+	means. The Language module implements utilities to specify program behaviour
+	through **directives**. Directives are basically Python dictionaries, or can
+	be turned into more advanced objects which are specified by a user either
+	manually, through a user interface either GUI or web, or through process
+	communication. A directive also includes a verb or an action to be taken.
+
+	If you think of a data retrieval system from an archive, you can specify
+	data to be retrieved through a 'retrieve' directive::
+
+		retrieve(
+			date = 2010010100,
+			step = [12,24,48,60,72],
+			parameter = "geopotential",
+			level = [1000,500],
+			version = "oper",
+			etc...
+		)
+
+	The same data could be used to request the archive to first stage the data::
+
+		stage(
+			date = 2010010100,
+			step = [12,24,48,60,72],
+			parameter = "geopotential",
+			level = [1000,500],
+			version = "oper",
+			etc...
+		)
+
+	The Language utilities check that the keywords used are valid, that if some keywords
+	are compulsary, they are provided, sets some default values, convert data to the right
+	type or class etc... That way we can make sure that the data provided to objects and
+	functions are valid and clean, no more tests are required.

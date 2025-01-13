@@ -1,0 +1,8 @@
+{
+	"directive": "plotdata",
+	"keywords" : {
+        "transform": {
+            "optional": true
+        }
+	}
+}

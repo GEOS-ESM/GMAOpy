@@ -1,0 +1,17 @@
+{
+    "directive" : "retrieve",
+    "keywords" : {
+        "date": {},
+        "step": {
+            "type": "int",
+            "validate": ["ValidateChoice",24,48,72,96,120,144,168]
+        },
+        "parameter": {
+            "alias" : "param"
+        },
+        "level": {},
+        "experiment_version": {
+            "unique": true
+        }
+    }
+}

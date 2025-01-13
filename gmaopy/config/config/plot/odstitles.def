@@ -1,0 +1,42 @@
+[coverageplot]
+combinable = domain_name
+index_columns = 
+title = GEOS-5 Coverage Plot <expver>, <date_interval_with_time>,<domain_name>
+legend = 
+xtitle = <variable>
+ytitle = Channels
+colorbartitle = <coverage_variable>
+
+[scatterplot]
+combinable = domain_name
+index_columns = 
+title = GEOS-5 Scatter Plot <expver>, <date_interval>,<domain_name>,<name> channel <level>
+legend = 
+xtitle = <x_scatter_variable> <variable>
+ytitle = <y_scatter_variable> <variable>
+colorbartitle = <colormap_statistic> <colormap_unit>
+
+[obsuncertaintyplot]
+combinable = domain_name,date
+index_columns = 
+title = GEOS-5 <expver>, <date_interval>,<domain_name>,<name> channel <level>
+legend = 
+xtitle = Delta T
+ytitle = Gamma (O minus A) / (F minus A)
+colorbartitle = <colormap_statistic> <colormap_unit>
+
+[odslevelplot]
+combinable = domain_name
+index_columns = level
+title = GEOS-5  <expver>, <date_interval>,<domain_name>,<name> <variable>,<statistic>
+legend = 
+xtitle = 
+ytitle = 
+
+[odssummaryplot]
+combinable = domain_name
+index_columns = name
+title = GEOS-5  <expver>, <date_interval>,<domain_name>,<name> <variable>,<statistic>
+legend = 
+xtitle = 
+ytitle = <name>

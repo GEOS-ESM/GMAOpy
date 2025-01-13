@@ -1,0 +1,18 @@
+{
+	"directive": "scatterplot",
+    "inherit_from": "odsplot",
+    "doc": true,
+	"keywords" : {
+        "symbol": {
+            "unique": true,
+            "default_value": "",
+            "type": "symbol"
+        },
+        "has_xtitle": {
+            "default_value": true
+        },
+        "has_ytitle": {
+            "default_value": true
+        }
+	}
+}

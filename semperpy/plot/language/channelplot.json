@@ -1,0 +1,32 @@
+{
+	"directive": "channelplot",
+    "doc": true,
+    "inherit_from": "levelplot",
+	"keywords" : {
+        "_title_template": {
+            "default_value": ["GEOS-5 per channel", "<date_interval>","<short_domain_name> <name> <statistic>"],
+            "lowercase": false
+        },
+        "colormap": {
+            "unique": true,
+            "optional": true
+        },
+        "has_xtitle": {
+            "default_value": true
+        },
+        "_xtitle_template": {
+            "default_value": "<statistic> <unit>"
+        },
+        "has_ytitle": {
+            "default_value": true
+        },
+        "_ytitle_template": {
+            "default_value": "Channels"
+        },
+        "_colorbar_title": {
+            "default_value": "<colormap_statistic> <colormap_unit>",
+            "unique": true,
+            "alias": "colorbar_title"
+        }
+	}
+}

@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Plotting features &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../tutorials.html" />
+    <link rel="next" title="Observation statistic - computing" href="../obs/stattutorial.html" />
+    <link rel="prev" title="ODS - reading and filtering ODS files" href="../ods/tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../obs/stattutorial.html" title="Observation statistic - computing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ods/tutorial.html" title="ODS - reading and filtering ODS files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="plotting-features">
+<span id="tipsandtricks"></span><h1>Plotting features<a class="headerlink" href="#plotting-features" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>SemperPy is based on matplolib for plotting and many of the configurable parameters
+in matplotlib can be specified in either Document, Plot and Curve classes. This is
+documented as much a possible, it is advisable to take a look at the <a class="reference internal" href="../directives/directives.html#module-directives" title="directives"><tt class="xref py py-mod docutils literal"><span class="pre">directives</span></tt></a>
+reference section to see the different parameters which can be adjusted in various
+directives. Particularly relevant directives are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="../directives/axis.html#axis"><em>axis</em></a></li>
+<li><a class="reference internal" href="../directives/bar.html#bar"><em>bar</em></a></li>
+<li><a class="reference internal" href="../directives/boxedline.html#boxedline"><em>boxedline</em></a></li>
+<li><a class="reference internal" href="../directives/colormap.html#colormap"><em>colormap</em></a></li>
+<li><a class="reference internal" href="../directives/commentexpver.html#commentexpver"><em>commentexpver</em></a></li>
+<li><a class="reference internal" href="../directives/commentline.html#commentline"><em>commentline</em></a></li>
+<li><a class="reference internal" href="../directives/commenttext.html#commenttext"><em>commenttext</em></a></li>
+<li><a class="reference internal" href="../directives/continents.html#continents"><em>continents</em></a></li>
+<li><a class="reference internal" href="../directives/countries.html#countries"><em>countries</em></a></li>
+<li><a class="reference internal" href="../directives/document.html#document"><em>document</em></a></li>
+<li><a class="reference internal" href="../directives/geography.html#geography"><em>geography</em></a></li>
+<li><a class="reference internal" href="../directives/graphics.html#graphics"><em>graphics</em></a></li>
+<li><a class="reference internal" href="../directives/meridians.html#meridians"><em>meridians</em></a></li>
+<li><a class="reference internal" href="../directives/meridians.html#meridians"><em>meridians</em></a></li>
+<li><a class="reference internal" href="../directives/parallels.html#parallels"><em>parallels</em></a></li>
+<li><a class="reference internal" href="../directives/plotfont.html#plotfont"><em>plotfont</em></a></li>
+<li><a class="reference internal" href="../directives/plotfont.html#plotfont"><em>plotfont</em></a></li>
+<li><a class="reference internal" href="../directives/plotlegend.html#plotlegend"><em>plotlegend</em></a></li>
+<li><a class="reference internal" href="../directives/rivers.html#rivers"><em>rivers</em></a></li>
+<li><a class="reference internal" href="../directives/states.html#states"><em>states</em></a></li>
+<li><a class="reference internal" href="../directives/symbol.html#symbol"><em>symbol</em></a></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="plot-titles">
+<h2>Plot titles<a class="headerlink" href="#plot-titles" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="the-graphics-directive">
+<h2>The <strong>graphics</strong> directive<a class="headerlink" href="#the-graphics-directive" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Each class Document, Plot and Curve have a keyword <strong>graphics</strong> which is a <a class="reference internal" href="../directives/graphics.html#graphics"><em>graphics</em></a>
+directive.</p>
+<p>The different keywords enable the customization of graphics attributes. If you consider
+that the document is at the top level and the curve is at the bottom level, the lower the
+keyword the bigger the precedence:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">document</span><span class="p">(</span>
+    <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                <span class="n">grid</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">3.0</span>
+            <span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">line</span><span class="p">(</span>
+                    <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                        <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">1.0</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">line</span><span class="p">(</span>
+                    <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                        <span class="n">color</span> <span class="o">=</span> <span class="s">&#39;red&#39;</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">),</span>
+        <span class="n">levelplot</span><span class="p">(</span>
+            <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span>
+                <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.2</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Explanation:</p>
+<blockquote>
+<div><ul class="simple">
+<li>line 3 states that none of the plots in the document will display a grid</li>
+<li>line 8 states that the timeseries plot, unlike the other plots will display a grid and that all line curves in that plot will have a 3.0 width</li>
+<li>line 26 states that all graphical objects in the levelplot will have an alpha channel of 0.2</li>
+<li>line 14 states that the first curve, unlike the others will have a width of 1.0</li>
+<li>line 19 states that the second curve will not inherit the standard color but will be red.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Reminder:</th><td class="field-body">&#8220;The lower the keyword, the bigger the precedence&#8221; principle works for all keywords.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="changing-color-tables">
+<h2>Changing color tables<a class="headerlink" href="#changing-color-tables" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Each Plot object holds a list of colors to use for each of its curve, or bars or dots or symbols
+with the following keywords:</p>
+<blockquote>
+<div><ul class="simple">
+<li>line_color</li>
+<li>bar_color</li>
+<li>dot_color</li>
+<li>sym_color</li>
+</ul>
+</div></blockquote>
+<p>Each of the keyword hold a list of color which are attributed to graphical objects in order.
+You can redefine those.</p>
+</div></blockquote>
+</div>
+<div class="section" id="customizing-axis">
+<h2>Customizing axis<a class="headerlink" href="#customizing-axis" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Each plot object holds two different directives, xaxis and yaxis (<a class="reference internal" href="../directives/axis.html#axis"><em>axis</em></a>). Each axis
+can be customized. The scale of the axis can be forced.</div></blockquote>
+</div>
+<div class="section" id="data-hooks">
+<h2>Data hooks<a class="headerlink" href="#data-hooks" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Each plot object can be specified a data hook. A data hook is called for all the curves and
+can either process the values, or display them. A standard data hook is provided, it is called
+printhook, it prints values out.</p>
+<p>The printhooks takes the following arguments:</p>
+<div class="highlight-python"><pre>hidemissing = True # does not display missing values
+separator = ','    # the character used to separate columns
+arguments: a list of keywords to display
+
+For example:
+printhook('date','domain_name','statistic','value',separator='|',hidemissing=True)</pre>
+</div>
+<p>Example in a timeseries:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.date</span> <span class="kn">import</span> <span class="n">date</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">expver</span>          <span class="o">=</span> <span class="s">&#39;e572p2_fp&#39;</span>
+<span class="n">database</span>        <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span>
+<span class="n">option</span>          <span class="o">=</span> <span class="s">&#39;all&#39;</span>
+
+<span class="n">begin</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">2012032900</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="mi">2012033100</span>
+
+<span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;GEOS-5 24h Observation Impact Time Series&#39;</span><span class="p">,</span><span class="s">&#39;&lt;date_interval_with_time&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;short_domain_name&gt;, &lt;name&gt;, &lt;statistic&gt;, &lt;channel&gt;&#39;</span><span class="p">]</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;bk&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span><span class="n">step</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(</span><span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">datefile</span> <span class="o">=</span> <span class="s">&#39;dates.def&#39;</span><span class="p">)),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">),</span>
+            <span class="n">comment</span> <span class="o">=</span> <span class="n">commentexpver</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;line&#39;</span><span class="p">,</span><span class="s">&#39;expver&#39;</span><span class="p">],</span><span class="n">position</span><span class="o">=</span><span class="s">&#39;best_angled&#39;</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s">&#39;--&#39;</span><span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;bk&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.e-5</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.e-8</span><span class="p">,</span><span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.e-8</span> <span class="o">-</span> <span class="o">-</span><span class="mf">1.e-5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(</span><span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">datefile</span> <span class="o">=</span> <span class="s">&#39;dates.def&#39;</span><span class="p">)),</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_ob&#39;</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">comment</span> <span class="o">=</span> <span class="n">commentexpver</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;line&#39;</span><span class="p">,</span><span class="s">&#39;expver&#39;</span><span class="p">,</span><span class="s">&#39;date&#39;</span><span class="p">],</span><span class="n">position</span><span class="o">=</span><span class="s">&#39;best_angled&#39;</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s">&#39;--&#39;</span><span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">timeseriesplot</span><span class="p">(</span>
+            <span class="p">{</span> <span class="s">&#39;graphics.bar_width_factor&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s">&#39;title_font.size&#39;</span><span class="p">:</span> <span class="s">&#39;medium&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.grid&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">&#39;graphics.edgewidth&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s">&#39;graphics.color&#39;</span><span class="p">:</span> <span class="s">&#39;bk&#39;</span> <span class="p">},</span>
+            <span class="n">xaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">yaxis</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">tick_label_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span><span class="n">title_size</span> <span class="o">=</span> <span class="s">&#39;small&#39;</span><span class="p">,</span> <span class="nb">min</span> <span class="o">=</span> <span class="mi">48</span><span class="p">),</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="nb">min</span> <span class="o">=</span> <span class="mf">48.0</span><span class="p">,</span><span class="nb">max</span> <span class="o">=</span> <span class="mf">54.0</span><span class="p">,</span><span class="n">step</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span><span class="n">tick_label_size</span><span class="o">=</span><span class="s">&#39;x-small&#39;</span><span class="p">,</span><span class="n">title_size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">),</span>
+            <span class="n">curve</span> <span class="o">=</span> <span class="n">bar</span><span class="p">(</span><span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">datefile</span> <span class="o">=</span> <span class="s">&#39;dates.def&#39;</span><span class="p">)),</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span><span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;beneficial&#39;</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">),</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">comment</span> <span class="o">=</span> <span class="p">[</span><span class="n">commentline</span><span class="p">(</span>
+                    <span class="n">position</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                    <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;--&#39;</span><span class="p">,</span>
+                    <span class="n">linewidth</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">commentexpver</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;line&#39;</span><span class="p">,</span><span class="s">&#39;date&#39;</span><span class="p">],</span><span class="n">position</span><span class="o">=</span><span class="s">&#39;best_angled&#39;</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s">&#39;--&#39;</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+	    <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span><span class="n">end</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span><span class="p">,</span>
+        <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+        <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;radiosonde wind&#39;</span>
+    <span class="p">),</span>
+    <span class="n">datahook</span> <span class="o">=</span> <span class="n">printhook</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;domain_name&#39;</span><span class="p">,</span><span class="s">&#39;date&#39;</span><span class="p">,</span><span class="s">&#39;statistic&#39;</span><span class="p">,</span><span class="s">&#39;value&#39;</span><span class="p">,</span><span class="n">hidemissing</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;timeseries&#39;</span> <span class="o">+</span> <span class="s">&#39;&lt;name&gt;__&lt;statistic&gt;.png&#39;</span><span class="p">,</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mf">4.77</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Outputs:</p>
+<div class="highlight-python"><pre>name, domain_name, date, statistic, value
+radiosonde wind, global, 2012032900, impact_per_anl, -0.245859568
+radiosonde wind, global, 2012033000, impact_per_anl, -0.206111816
+radiosonde wind, global, 2012033100, impact_per_anl, -0.189974906
+
+name, domain_name, date, statistic, value
+radiosonde wind, global, 2012032900, impact_per_ob, -3.56008641761e-06
+radiosonde wind, global, 2012033000, impact_per_ob, -2.91151282631e-06
+radiosonde wind, global, 2012033100, impact_per_ob, -2.71641080416e-06
+
+name, domain_name, date, statistic, value
+radiosonde wind, global, 2012032900, beneficial, 50.864465682
+radiosonde wind, global, 2012033000, beneficial, 52.0115267262
+radiosonde wind, global, 2012033100, beneficial, 51.1767902082</pre>
+</div>
+<p>New data hooks can be developed (e.g. to plot the data using a different plotting package
+or to store the data into some repository).</p>
+</div></blockquote>
+</div>
+<div class="section" id="comments-or-decorators">
+<h2>Comments (or Decorators)<a class="headerlink" href="#comments-or-decorators" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>A plot object can hold a <strong>comment</strong> or <strong>decorator</strong> object. These objects
+usually draw something extra on the plot. There are at the moment three
+different classes defined, more can be developed by the maintainers of
+SemperPy:</p>
+<blockquote>
+<div><ul class="simple">
+<li>commentline</li>
+<li>commenttext</li>
+<li>commentexpver</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="commentline">
+<h3>commentline<a class="headerlink" href="#commentline" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="commenttext">
+<h3>commenttext<a class="headerlink" href="#commenttext" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="commentexpver">
+<h3>commentexpver<a class="headerlink" href="#commentexpver" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="observers">
+<h3>observers<a class="headerlink" href="#observers" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Plotting features</a><ul>
+<li><a class="reference internal" href="#plot-titles">Plot titles</a></li>
+<li><a class="reference internal" href="#the-graphics-directive">The <strong>graphics</strong> directive</a></li>
+<li><a class="reference internal" href="#changing-color-tables">Changing color tables</a></li>
+<li><a class="reference internal" href="#customizing-axis">Customizing axis</a></li>
+<li><a class="reference internal" href="#data-hooks">Data hooks</a></li>
+<li><a class="reference internal" href="#comments-or-decorators">Comments (or Decorators)</a><ul>
+<li><a class="reference internal" href="#commentline">commentline</a></li>
+<li><a class="reference internal" href="#commenttext">commenttext</a></li>
+<li><a class="reference internal" href="#commentexpver">commentexpver</a></li>
+<li><a class="reference internal" href="#observers">observers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../ods/tutorial.html"
+                        title="previous chapter">ODS - reading and filtering ODS files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../obs/stattutorial.html"
+                        title="next chapter">Observation statistic - computing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/plotting/plotting.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../obs/stattutorial.html" title="Observation statistic - computing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ods/tutorial.html" title="ODS - reading and filtering ODS files"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

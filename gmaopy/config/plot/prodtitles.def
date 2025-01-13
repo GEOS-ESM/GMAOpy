@@ -1,0 +1,17 @@
+[timeseriesplot]
+combinable = statistic,domain_name,level,variable
+index_columns = date
+title = GEOS-5 Time Series <expver>, <date_interval>,<domain_name> <level>,<name>,<variable> <statistic>
+legend = <expver> <level> <domain_name> <statistic>
+xtitle = 
+ytitle = <statistic> <unit>
+colorbartitle = <statistic> <unit>
+
+[levelplot]
+combinable = domain_name,statistic,variable
+index_columns = level
+title = GEOS-5  <expver>, <date_interval>,<domain_name>,<name> <variable>,<statistic>
+legend = 
+xtitle = 
+ytitle = 
+colorbartitle = <statistic> <unit>

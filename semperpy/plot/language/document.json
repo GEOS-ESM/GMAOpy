@@ -1,0 +1,52 @@
+{
+    "directive": "document",
+    "doc": true,
+    "keywords": {
+        "plot": {
+            "alias": ["plots"]
+        },
+        "plotdata": {
+            "optional": true,
+            "unique": true
+        },
+        "layout": {
+            "default_value": [1,1],
+            "unique": true
+        },
+        "layout_tiles": {
+            "default_value": []
+        },
+        "size": {
+            "default_value": [],
+            "alias": ["documentSize","documentsize"]
+        },
+        "interactive": {
+            "default_value": true,
+            "unique": true,
+            "type": "bool"
+        },
+        "output": {
+            "default_value": "plot.png",
+            "unique": true,
+            "lowercase": false
+        },
+        "has_title": {
+            "default_value": false,
+            "unique": true
+        },
+        "title": {
+            "optional": true,
+            "lowercase": false
+        },
+        "title_font": {
+            "unique": true,
+            "default_value": "",
+            "type": "plotfont"
+        },
+        "datahook": {
+            "unique": true,
+            "optional": true,
+            "help": ["This is a callable which is called for each set of data retrieved / computed during the production","of the plot. This is particularly handy for printing out values etc... A standard datahook is provided, it is called printhook"]
+        }
+    }
+}

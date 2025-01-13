@@ -1,0 +1,27 @@
+{
+	"directive": "summaryplot",
+    "doc": true,
+    "inherit_from": "plot",
+	"keywords" : {
+        "sort": {
+            "default_value": "increasing"
+        },
+        "_curve_preference": {
+            "default_value": "bar"
+        },
+        "has_legend": {
+            "default_value": false
+        },
+        "has_xtitle": {
+            "default_value": true
+        },
+        "colormap": {
+            "unique": true,
+            "optional": true
+        },
+        "removeMissing": {
+            "unique": true,
+            "default_value": true
+        }
+	}
+}

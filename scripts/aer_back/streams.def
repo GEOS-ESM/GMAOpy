@@ -1,0 +1,6 @@
+[a]
+expver = e572p2_fp
+start = 2012010100
+end = 2012031521
+step = 3
+archive_location = /home/dao_ops/e572p2_fp/run/.../archive/obs

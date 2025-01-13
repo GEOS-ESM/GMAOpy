@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuring SemperPy &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="next" title="Databases" href="../databases/databases.html" />
+    <link rel="prev" title="Using SemperPy" href="../using/using.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../databases/databases.html" title="Databases"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../using/using.html" title="Using SemperPy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configuring-semperpy">
+<span id="configuration"></span><h1>Configuring SemperPy<a class="headerlink" href="#configuring-semperpy" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>SemperPy is distributed with configuration files (let call them system files) which
+are suited for GMAO in the general case. Under the main configuration directory
+(you can obtain its location by issuing the command <em>spy_doc config</em>) there are
+different directories for different components of SemperPy.</p>
+<p>In most cases, the user of the SemperPy applications can customize the standard
+configuration. In order to do so, the user needs to create a configuration directory
+and tell SemperPy to take it into account by issuing the command (shell dependent):</p>
+<div class="highlight-python"><pre>setenv SEMPERPY_CONFIG /my/path/to/my/configuration/directory:$SEMPERPY_CONFIG
+or
+export SEMPERPY_CONFIG=/my/path/to/my/configuration/directory:$SEMPERPY_CONFIG</pre>
+</div>
+<p>Then, the subdirectory for the component you want to customize needs to be created,
+containing a file with the same name as the system file. To clarify the mechanism,
+let&#8217;s customize the data in plot titles and the &#8220;pretty&#8221; version of different
+keywords.</p>
+</div></blockquote>
+<div class="section" id="titles">
+<h2>Titles<a class="headerlink" href="#titles" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Let&#8217;s start with example1 in <a class="reference internal" href="../plotting/tutorial.html#plottingtutorial"><em>Observation statistic - plotting</em></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;n.hem&#39;</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;impact_per_anl&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="c"># RaobDsnd</span>
+                <span class="n">kx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span><span class="mi">220</span><span class="p">,</span><span class="mi">221</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">229</span><span class="p">,</span><span class="mi">232</span><span class="p">],</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="c"># we want to generate a file, interactive = True would open a window</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;example1.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This script produces:</p>
+<a class="reference internal image-reference" href="../_images/example1.png"><img alt="../_images/example1.png" class="align-center" src="../_images/example1.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>For the sake of this example, let&#8217;s assume that we would like to change the title,
+by removing the first line and putting the experiment ID on the last line. In our
+main configuration directory, we create a directory called <strong>plot</strong> and we create
+a file called <strong>obstitles.def</strong> (you will have checked the system file first to find
+out that information) with the following contents:</p>
+<div class="highlight-python"><pre>[timeseriesplot]
+title = &lt;date_interval&gt;,&lt;domain_name&gt; &lt;level&gt;,&lt;name&gt;,&lt;expver&gt; &lt;statistic&gt;</pre>
+</div>
+<p>In the title template, the text beetwen comas is a line of the title (please
+refer to <a class="reference internal" href="../plotting/tutorial.html#plottingtutorial"><em>Observation statistic - plotting</em></a>. When running the script again, we obtain:</p>
+<a class="reference internal image-reference" href="../_images/example2.png"><img alt="../_images/example2.png" class="align-center" src="../_images/example2.png" style="width: 560.0px; height: 420.0px;" /></a>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">If you look at <a class="reference internal" href="../plotting/tutorial.html#plottingtutorial"><em>Observation statistic - plotting</em></a> you will see that you can do this in the plot directive itself. The difference here is that the change you made by customizing the title file will apply to all <strong>timeseriesplot</strong> directives you use.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="text-substitution-beautify">
+<span id="beautifyconfig"></span><h2>Text substitution (beautify)<a class="headerlink" href="#text-substitution-beautify" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>SemperPy has a <em>beautifying</em> system. The contents of keywords is converted to more
+presentable text using a beautifier and a configuration file. This configuration file
+can also be customized. Beautifying occurs in different contexts, for example in a title
+or in a legend where we tend to keep the text short (abbreviated) for each context the
+value of a keyword is given a more intelligible value. The domain name <strong>n.hem</strong> is
+short for <strong>Northern Hemisphere</strong>, let&#8217;s redefine it to become <strong>Up North</strong>.</p>
+<p>Let&#8217;s create a directory called <em>main</em> and a file called <strong>beauty.def</strong>. Looking at the
+original system file <strong>beauty.def</strong> we find that <strong>n.hem</strong> appears twice, once in the
+[title] section and once in the [abbreviated] section, let&#8217;s replace both:</p>
+<div class="highlight-python"><pre>[title]
+n.hem = Up North
+
+[abbreviated]
+n.hem = Up North</pre>
+</div>
+<p>and let&#8217;s run the script again:</p>
+<a class="reference internal image-reference" href="../_images/example3.png"><img alt="../_images/example3.png" class="align-center" src="../_images/example3.png" style="width: 560.0px; height: 420.0px;" /></a>
+<p>Now the text is replaced with what we wrote in the configuration file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">The only way to modify the way the beautifying process work is to customize the configuration file, there is no facility at script level.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="custom-observations-and-observation-files">
+<h2>Custom observations and observation files<a class="headerlink" href="#custom-observations-and-observation-files" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>In order to handle observation sources and types properly, SemperPy uses a cross reference
+of all the data which was generated once by mining observation files in the archive and
+now updated manually.</p>
+<p>This file contains 5 different sections for observation data, here is a small sample:</p>
+<div class="highlight-python"><pre>[kx]
+4 = 88
+16 = 40
+17 = 40
+18 = 40
+
+[kt]
+4 = 220,221,223,224,228,230,231,232,233,234,235,242,243,245,246,250,251,252,253,254,257,258,259,280,281,282,284,287,289,290
+5 = 220,221,223,224,228,230,231,232,233,234,235,242,243,245,246,250,251,252,253,254,257,258,259,280,281,282,284,287,289,290
+11 = 120,132,133,134,180,181,182,183,187
+
+
+[files]
+00004-00088 = conv
+00016-00040 = hirs3_n16
+00017-00040 = hirs3_n17
+
+[levels]
+00000-00000 = 5.0,7.0,10.0,20.0,30.0,50.0,70.0,100.0,150.0,200.0,250.0,300.0,400.0,500.0,700.0,850.0,925.0,1000.0
+00004-00088 = 0.24,0.5,1.0,2.0,4.0,5.0,7.0,10.0,20.0,30.0,50.0,70.0,100.0,150.0,200.0,250.0,300.0,400.0,500.0,700.0,850.0,925.0,1000.0
+00016-00040 = 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+00017-00040 = 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+00018-00040 = 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+
+[leveltypes]
+00000-00000 = pl
+00004-00088 = pl
+00016-00040 = ch
+00120-00033 = sfc
+00120-00039 = sfc</pre>
+</div>
+<p>Each section needs to contain information about observations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>kx: for each kx all existing kt&#8217;s.</li>
+<li>kt: for each kt all existing kx&#8217;s.</li>
+<li>files: the name of the collection (file) which contains a particular kx-kt combination (e.g. conv, hirs4_n18, amsua_aqua etc...)</li>
+<li>levels: all the possible levels or channels for that particular kx-kt combination. If it is standard pressure levels or surface, there is no need to specify it.</li>
+<li>leveltypes: the type of level for that particular kx-kt combination. the possible values are &#8220;pl&#8221; for pressure level, &#8220;sfc&#8221; for surface, &#8220;ch&#8221; for channel, &#8220;depth&#8221; for ocean levels and &#8220;wl&#8221; for wavelength (aerosols).</li>
+</ul>
+<p>Whenever a new observation source (or type) goes into operations, the administrator of
+SemperPy is expected to update the cross reference systemwide. If you define a new kx or kt
+within the context of an experiment, you can create your own configuration file with
+relevant information. All you need to do is define ods/xref.def in the main configuration
+directory and write a file with at least four of the five sections (levels can be
+optional).</p>
+<p>As an example, within the context of a study on buoys, some ODS files were created with
+kx=180, kt=33 and kx=280 and kt=4,5 as the observation type without any buoys and
+kx=562, kt=33,4,5 for buoy only observations. In order to define the observation for
+computing statistics, the following file was created:</p>
+<div class="highlight-python"><pre>[kx]
+562 = 33,4,5
+
+[kt]
+4 = 220,221,223,224,228,230,231,232,233,234,235,242,243,245,246,250,251,252,253,254,257,258,259,280,281,282,284,287,289,290,562
+5 = 220,221,223,224,228,230,231,232,233,234,235,242,243,245,246,250,251,252,253,254,257,258,259,280,281,282,284,287,289,290,562
+33 = 120,132,180,181,182,183,187,562
+
+[files]
+00280-00004 = shp
+00280-00005 = shp
+00180-00033 = shp
+00562-00004 = shp
+00562-00005 = shp
+00562-00033 = shp
+
+[levels]
+00562-00004 = 0
+00562-00005 = 0
+00562-00033 = 0
+
+[leveltypes]
+00562-00004 = sfc
+00562-00005 = sfc
+00562-00033 = sfc</pre>
+</div>
+<p>Please note that the files were named:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">e572p2_fp</span><span class="o">.</span><span class="n">imp3_txe_shp</span><span class="o">.</span><span class="n">DATE</span><span class="o">.</span><span class="n">ods</span>
+</pre></div>
+</div>
+<p>This is why the [files] section had to be defined. In order to compute statistics,
+the following directive was issued:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.obsstat</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">obsstat</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012010100</span><span class="p">,</span><span class="mi">2012013100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">,</span><span class="s">&#39;s.hem&#39;</span><span class="p">,</span><span class="s">&#39;tropics&#39;</span><span class="p">],</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="s">&#39;beneficial&#39;</span><span class="p">],</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e572p2_fp&#39;</span><span class="p">,</span>
+    <span class="n">ignore_missing_files</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;ops&#39;</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span><span class="p">,</span>
+    <span class="n">root_tmpl</span> <span class="o">=</span> <span class="s">&#39;/path/to/where/the/files/are&#39;</span><span class="p">,</span>
+    <span class="n">tree_tmpl</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">file_tmpl</span> <span class="o">=</span> <span class="s">&#39;&lt;expver&gt;.imp3_txe_&lt;collection&gt;.date(@Y@m@d_@Hz).ods&#39;</span><span class="p">,</span>
+    <span class="n">archive_type</span> <span class="o">=</span> <span class="s">&#39;filesystem&#39;</span><span class="p">,</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">observation</span><span class="p">(</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;impact.def&#39;</span><span class="p">],</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The file specifying which observations to compute was impact.def:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">no_buoys</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">180</span><span class="p">,</span><span class="mi">280</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">33</span>
+
+<span class="p">[</span><span class="n">buoys</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">562</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">33</span>
+</pre></div>
+</div>
+<p>In order to run the compute directive, the environment variable SEMPERPY_CONFIG needed to
+be defined to point to where the directory was.</p>
+</div></blockquote>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuring SemperPy</a><ul>
+<li><a class="reference internal" href="#titles">Titles</a></li>
+<li><a class="reference internal" href="#text-substitution-beautify">Text substitution (beautify)</a></li>
+<li><a class="reference internal" href="#custom-observations-and-observation-files">Custom observations and observation files</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../using/using.html"
+                        title="previous chapter">Using SemperPy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../databases/databases.html"
+                        title="next chapter">Databases</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/config/configure.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../databases/databases.html" title="Databases"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../using/using.html" title="Using SemperPy"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

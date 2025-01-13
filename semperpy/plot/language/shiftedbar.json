@@ -1,0 +1,6 @@
+{
+	"directive": "shiftedbar",
+    "inherit_from": "curve",
+	"keywords" : {
+	}
+}

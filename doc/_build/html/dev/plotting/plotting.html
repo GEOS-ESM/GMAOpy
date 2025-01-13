@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Class - Language association &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="plotting — Plotting observation statistics" href="plottingmodule.html" />
+    <link rel="next" title="Scripts" href="../../scripts.html" />
+    <link rel="prev" title="plotting — Plotting observation statistics" href="plottingmodule.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../scripts.html" title="Scripts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="plottingmodule.html" title="plotting — Plotting observation statistics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../dev.html" >Developer&#8217;s guide</a> &raquo;</li>
+          <li><a href="plottingmodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal"><span class="pre">plotting</span></tt> &#8212; Plotting observation statistics</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="class-language-association">
+<h1>Class - Language association<a class="headerlink" href="#class-language-association" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>Please refer to <a class="reference internal" href="../../semperpy/language/tutorial.html#languagegtutorial"><em>Language - validating data</em></a>, <a class="reference internal" href="../../semperpy/language/introduction.html#language-introduction"><em>Introduction</em></a> and <a class="reference internal" href="../../semperpy/language/language.html#module-language.language" title="language.language"><tt class="xref py py-mod docutils literal"><span class="pre">language.language</span></tt></a> for more information.
+In a nutshell:</p>
+<blockquote>
+<div><ul class="simple">
+<li>we use dictionaries to deal with user&#8217;s requests, these are called directives. A directive can contain other directives etc...</li>
+<li>the Language enables the developer to define semantics for the different directives, including flexibility of namming of keys, default values, converting values to defined types etc...</li>
+<li>once the Language has checked the validity of a directive, the developer has the assurance that the dictionary which is received by the application complies with rules expressed at development time by the programmer.</li>
+</ul>
+</div></blockquote>
+<p>In GMAOPy, the following coding rules have been established:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the directives are described in JSon files located in the GMAOPy installation in gmaopy/config/language. JSon has a syntax very similar to Python and is fast and easy to parse, hence the choice.</li>
+<li>the directives inherit from semperpy.directive.directive.Directive. This class set the file format to JSon, reads the file location from the environment variable GMAOPy_LANGUAGE, parses the file and by using the Language, validates the directive. It also offers utilities to merge directives, inherit from a directive etc...</li>
+<li>a JSon file is associated to a class MyDirective (subclass of Directive), by calling the file mydirective.json.</li>
+</ul>
+</div></blockquote>
+<p>Using directives together enables the creation of very flexibles descriptions
+of what the user needs, but it requires significant finger-work from the programmer.
+Let&#8217;s use an example to illustrate the concept, we start with the language
+(<a class="reference download internal" href="../../_downloads/data1.json"><tt class="xref download docutils literal"><span class="pre">data1</span></tt></a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+	<span class="s">&quot;directive&quot;</span><span class="p">:</span> <span class="s">&quot;data&quot;</span><span class="p">,</span>
+	<span class="s">&quot;keywords&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;kt&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;alias&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;obstype&quot;</span><span class="p">],</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;int&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;kx&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;alias&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;obssource&quot;</span><span class="p">],</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;int&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;level&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;alias&quot;</span><span class="p">:</span> <span class="s">&quot;channel&quot;</span><span class="p">,</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;float&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;date&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;int&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;domain_name&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;validate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;ValidateChoice&quot;</span><span class="p">,</span><span class="s">&quot;global&quot;</span><span class="p">,</span><span class="s">&quot;n.hem&quot;</span><span class="p">,</span><span class="s">&quot;s.hem&quot;</span><span class="p">],</span>
+            <span class="s">&quot;unique&quot;</span><span class="p">:</span> <span class="n">true</span>
+        <span class="p">},</span>
+        <span class="s">&quot;variable&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;default_value&quot;</span><span class="p">:</span> <span class="s">&quot;obs&quot;</span><span class="p">,</span>
+            <span class="s">&quot;unique&quot;</span><span class="p">:</span> <span class="n">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This language file states that the keywords of our directive Data1 are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>kt, is a list containing int values, it can also be called <em>obstype</em>, it is a required keyword</li>
+<li>kx, is a list containing int values, it can also be called <em>obssource</em>, it is a required keyword</li>
+<li>level, is a list containing float values, it can also be called <em>channel</em>, it is a required keyword</li>
+<li>date, is a list containing int values, it is a required keyword</li>
+<li>domain_name is a single value which can only be &#8220;global&#8221;, &#8220;n.hem&#8221;, &#8220;s.hem&#8221;. &#8220;ValidateChoice&#8221; is a data validator part of SemperPy, you can write you own validators.</li>
+<li>variable is a single value, it is not required from the user as it has a default value</li>
+</ul>
+</div></blockquote>
+<p>Since the file data1.json is in the current directory, you should type in the shell either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>export GMAOPY_LANGUAGE=.</li>
+<li>setenv GMAOPY_LANGUAGE .</li>
+</ul>
+</div></blockquote>
+<p>The python program (<a class="reference download internal" href="../../_downloads/data1.py"><tt class="xref download docutils literal"><span class="pre">data1</span></tt></a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.directive.directive</span> <span class="kn">import</span> <span class="n">Directive</span>
+
+<span class="k">class</span> <span class="nc">Data1</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Data1</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkLanguage</span><span class="p">()</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">Data1</span><span class="p">(</span>
+    <span class="n">domain_name</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;glob&#39;</span><span class="p">],</span>
+    <span class="n">channel</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+    <span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="n">kx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">314</span><span class="p">,</span><span class="mi">315</span><span class="p">,</span><span class="mi">316</span><span class="p">,</span><span class="mi">317</span><span class="p">,</span><span class="mi">318</span><span class="p">,</span><span class="mi">319</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">325</span><span class="p">],</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="s">&#39;2011010100&#39;</span>
+<span class="p">)</span>
+
+<span class="k">print</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>data1:
+    variable = obs
+    kx = [314,315,316,317,318,319,300,325],
+    level = [1.0, 2.0, 3.0, 4.0, 5.0]
+    date = [2011010100]
+    kt = [40]
+    domain_name = global</pre>
+</div>
+<dl class="docutils">
+<dt>We can check that:</dt>
+<dd><ul class="first last simple">
+<li>although we entered a single value for <strong>kt</strong>, it came out as a list. This is because the language specifies that this is a list. That way we have the assurance that this is a list when we access it.</li>
+<li>the list of channels was converted to float and the keyword was changed to its official name <strong>level</strong>. This just enables to call the same entry different names.</li>
+<li><strong>date</strong> was converted to int.</li>
+<li>although we entered <strong>domain_name</strong> as a list, it is now a string.</li>
+</ul>
+</dd>
+</dl>
+<p>If we enter <strong>domain_name = &#8216;glob&#8217;</strong> the output shows:</p>
+<div class="highlight-python"><pre>Validation error for keyword domain_name. The value: 'glob' is not in the set: global, n.hem, s.hem</pre>
+</div>
+<p>We can now associate an attribute to a piece of data by creating another directive
+(<a class="reference download internal" href="../../_downloads/attributes.json"><tt class="xref download docutils literal"><span class="pre">attributes.json</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+	<span class="s">&quot;directive&quot;</span><span class="p">:</span> <span class="s">&quot;attributes&quot;</span><span class="p">,</span>
+	<span class="s">&quot;keywords&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;qc&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;unique&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+            <span class="s">&quot;default_value&quot;</span><span class="p">:</span> <span class="s">&quot;used&quot;</span><span class="p">,</span>
+            <span class="s">&quot;validate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;ValidateChoice&quot;</span><span class="p">,</span><span class="s">&quot;used&quot;</span><span class="p">,</span><span class="s">&quot;passive&quot;</span><span class="p">,</span><span class="s">&quot;all&quot;</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;unique&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+            <span class="s">&quot;default_value&quot;</span><span class="p">:</span> <span class="s">&quot;pl&quot;</span><span class="p">,</span>
+            <span class="s">&quot;validate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;ValidateChoice&quot;</span><span class="p">,</span><span class="s">&quot;pl&quot;</span><span class="p">,</span><span class="s">&quot;sfc&quot;</span><span class="p">,</span><span class="s">&quot;rad&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We now associate it to the data (<a class="reference download internal" href="../../_downloads/data2.json"><tt class="xref download docutils literal"><span class="pre">data2.json</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+	<span class="s">&quot;directive&quot;</span><span class="p">:</span> <span class="s">&quot;data&quot;</span><span class="p">,</span>
+	<span class="s">&quot;keywords&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;kt&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;alias&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;obstype&quot;</span><span class="p">],</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;int&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;kx&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;alias&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;obssource&quot;</span><span class="p">],</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;int&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;level&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;alias&quot;</span><span class="p">:</span> <span class="s">&quot;channel&quot;</span><span class="p">,</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;float&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;date&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;int&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;domain_name&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;validate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;ValidateChoice&quot;</span><span class="p">,</span><span class="s">&quot;global&quot;</span><span class="p">,</span><span class="s">&quot;n.hem&quot;</span><span class="p">,</span><span class="s">&quot;s.hem&quot;</span><span class="p">],</span>
+            <span class="s">&quot;unique&quot;</span><span class="p">:</span> <span class="n">true</span>
+        <span class="p">},</span>
+        <span class="s">&quot;variable&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;default_value&quot;</span><span class="p">:</span> <span class="s">&quot;obs&quot;</span>
+        <span class="p">},</span>
+        <span class="s">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;alias&quot;</span><span class="p">:</span> <span class="s">&quot;attrs&quot;</span><span class="p">,</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;Attributes&quot;</span><span class="p">,</span>
+            <span class="s">&quot;unique&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+            <span class="s">&quot;default_value&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Data has a unique attribute of class <strong>Attributes</strong>. The Python program becomes
+(<a class="reference download internal" href="../../_downloads/data2.py"><tt class="xref download docutils literal"><span class="pre">data2.py</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.directive.directive</span> <span class="kn">import</span> <span class="n">Directive</span>
+
+<span class="k">class</span> <span class="nc">Data2</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Data2</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkLanguage</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Attributes</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">Data2</span><span class="p">(</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;1000&#39;</span><span class="p">,</span><span class="s">&#39;500&#39;</span><span class="p">],</span>
+    <span class="n">domain_name</span> <span class="o">=</span> <span class="s">&#39;global&#39;</span><span class="p">,</span>
+    <span class="n">channel</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+    <span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="s">&#39;2011010100&#39;</span>
+<span class="p">)</span>
+
+<span class="k">print</span> <span class="n">d</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>data2:
+     variable = ['obs']
+     kx = [220]
+     level = [1.0, 2.0, 3.0, 4.0, 5.0]
+     date = [2011010100]
+     attributes =
+     attributes:
+         qc = used
+         type = pl
+     kt = [4]
+     domain_name = global</pre>
+</div>
+<p>In this case we didn&#8217;t specify attributes, they are created automatically.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">Unlike the Data2 class, the Attribute class does not redefine the constructor to call the method <strong>checkLanguage</strong>. This is not necessary, the <strong>checkLanguage</strong> method is called recursively on all directives contained in directives.</td>
+</tr>
+</tbody>
+</table>
+<p>Directives once processed by the language, contain all the data specified by the user plus
+possible default data. The Directive class keeps track of which keywords were set by default
+and which ones were assigned by the user. A directive can <strong>inherit from</strong> or <strong>overwrite from</strong>
+another directive:</p>
+<blockquote>
+<div><ul class="simple">
+<li>when directive A inherits from directive B, it is assigned all the keywords in B which are part of the language of A which are not in A or for which A has a default value
+and B has a value assigned by the user.</li>
+<li>when directive A overwrites from directive B, it is assigned all the keywords in B which are part of the language of A which are not in A or are a default value of A, independently of the history of that keyword in B.</li>
+</ul>
+</div></blockquote>
+<p>Those relations are important when propagating values between directives.</p>
+</div></blockquote>
+</div>
+<div class="section" id="generating-the-request-s">
+<h1>Generating the request(s)<a class="headerlink" href="#generating-the-request-s" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>From this point, classes we refer to are located in gmaopy/obs and language files in
+gmaopy/config/language, unless otherwise specified.
+First of all we need to retrieve data to feed the statistic objects with
+obtain final statistics. This is the part where the doc-plot-curve relation is
+important.</p>
+<p>Taking a top-down approach, we need to examine the ObsDocument class first. Its language
+definition file (obsdocument.json) inherits from obsidentifier (obsidentifier.json) which
+itself inherits from identifier (identifier.json). As a summary, the ObsDocument directive
+takes the following keywords:</p>
+<blockquote>
+<div><ul class="simple">
+<li>source: enables to retrieve the data. source can be <strong>oper</strong> for runs produced by ops, <strong>merra</strong> for the re-analysis, <strong>odas</strong> for ocean analysis, etc...</li>
+<li>expver: the experiment id.</li>
+<li>type: type of the data. For observation we have <strong>obs</strong> for diag files and <strong>im</strong> for observation impact files.</li>
+<li>user: the user id of the owner of a research experiment. By default it is set to &#8220;dao_ops&#8221;</li>
+<li>statistic name of the statistic (list)</li>
+<li>date (list)</li>
+<li>domain_name (list)</li>
+<li>usage takes three values: used, pasive, all (list)</li>
+<li>variable, the name of the ODS variable (list)</li>
+<li>level: pressure level or channel (list)</li>
+<li>filename: a file containing description of kx, kt (see <a class="reference internal" href="../../plotting/tutorial.html#plottingtutorial"><em>Observation statistic - plotting</em></a>)</li>
+<li>obsgroup: in the file specified by filename, each entry is a section with a name between square brackets. A list of section names can be provided if not all the sections in the file should be processed.</li>
+<li>database: logical name of the database to read the data from. This will change.</li>
+<li>layout: a two-element list specifying the number of plots per column and per row in a single page.</li>
+<li>interactive: display the plots interactively (default) or create a graphical file</li>
+<li>output: when creating a file, the file name (default: plot.png)</li>
+<li>plot: <strong>a list of plot directives</strong></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">It seems a little messy and confusing to have all (or most) attributes in one single directive (e.g. attributes relating to identifying data mixed with graphical properties and information about how to retrieve data). Separating physically all these categories makes the code extremely complicated for little benefit.</td>
+</tr>
+</tbody>
+</table>
+<p>The plot directives specified in the <strong>plot</strong> keyword, are directives which inherit from the
+class ObsPlot. It has the following keywords:</p>
+<blockquote>
+<div><ul class="simple">
+<li>source: enables to retrieve the data. source can be <strong>oper</strong> for runs produced by ops, <strong>merra</strong> for the re-analysis, <strong>odas</strong> for ocean analysis, etc...</li>
+<li>expver: the experiment id.</li>
+<li>type: type of the data. For observation we have <strong>obs</strong> for diag files and <strong>im</strong> for observation impact files.</li>
+<li>user: the user id of the owner of a research experiment. By default it is set to &#8220;dao_ops&#8221;</li>
+<li>statistic name of the statistic (list)</li>
+<li>date (list)</li>
+<li>domain_name (list)</li>
+<li>usage takes three values: used, pasive, all (list)</li>
+<li>variable, the name of the ODS variable (list)</li>
+<li>level: pressure level or channel (list)</li>
+<li>filename: a file containing description of kx, kt (see <a class="reference internal" href="../../plotting/tutorial.html#plottingtutorial"><em>Observation statistic - plotting</em></a>)</li>
+<li>obsgroup: in the file specified by filename, each entry is a section with a name between square brackets. A list of section names can be provided if not all the sections in the file should be processed.</li>
+<li>database: logical name of the database to read the data from. This will change.</li>
+<li>title: unused at the moment</li>
+<li>xaxis and yaxis: directives of type <strong>axis</strong> which enable to customize properties of the axis such as limits, scale, ticks etc...</li>
+<li>graphics: a directive containing graphical properties such as colors and styles to use, orientation of the plot etc...</li>
+<li>curve: <strong>a list of curve directives</strong></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">you will find keywords in the json files which are not mentioned here and which name starts with an underscore. This are used as &#8220;local variables&#8221; for that directive and are not printed in the output, they are used to configure the system, we will explain these in details later.</td>
+</tr>
+</tbody>
+</table>
+<p>The curve directives specified in the <strong>curve</strong> keyword, are directive which inherit from the
+class ObsCurve. It has the same keywords as ObsDocument except for:</p>
+<blockquote>
+<div><ul class="simple">
+<li>source: enables to retrieve the data. source can be <strong>oper</strong> for runs produced by ops, <strong>merra</strong> for the re-analysis, <strong>odas</strong> for ocean analysis, etc...</li>
+<li>expver: the experiment id.</li>
+<li>type: type of the data. For observation we have <strong>obs</strong> for diag files and <strong>im</strong> for observation impact files.</li>
+<li>statistic name of the statistic (unique)</li>
+<li>date (list)</li>
+<li>domain_name (list)</li>
+<li>usage takes three values: used, pasive, all (unique)</li>
+<li>variable, the name of the ODS variable (unique)</li>
+<li>level: pressure level or channel (list)</li>
+<li>graphics: a directive containing graphical properties such as colors and styles to use, orientation of the plot etc...</li>
+<li>database: logical name of the database to read the data from. This will change.</li>
+<li>name: represents the name of the group of observations defined by kt and kx, it is optional, normally extracted from files,</li>
+<li>kt and kt to describe observations (list)</li>
+</ul>
+</div></blockquote>
+<p>As a summary, ObsDocument and ObsPlot share the same keywords except for:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>ObsDocument</strong> also has layout, interactive, output and plot</li>
+<li><strong>ObsPlot</strong> also has xaxis, yaxis, graphics and curve</li>
+</ul>
+</div></blockquote>
+<p>ObsPlot and ObsCurve share the same keywords except for:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>ObsPlot</strong> also has xaxis, yaxis, filename, obsgroup and curve</li>
+<li><strong>ObsCurve</strong> also has kt and kx, does not have filename or obsgroup</li>
+</ul>
+</div></blockquote>
+<p>The algorithm for distributing and propagating the data from the document to the curve, retrieving the data and plotting is in theory quite simple.</p>
+</div></blockquote>
+<div class="section" id="the-document-obsdocument">
+<h2>The document (ObsDocument)<a class="headerlink" href="#the-document-obsdocument" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>The document calls <strong>checkLanguage</strong> which is applied recursively to all directives in the hierarchy including plot, curve, graphics, xaxis, yaxis etc...</li>
+<li>If the <strong>filename</strong> keyword is present, the file is read creating a list of observations (class gmaopy.obs.Observation) including kt, kx, level and name using the class ObsExpander.</li>
+<li>Using the keyword _combinable defined in the language as the list of keywords which generate different plots, the document call the function semperpy.core.tools.nestedLoops to generate all the combinations of all list of combinable keywords. The result of this is N copies of the initial ObsDocument directive, each of them containing a unique combination of the different keywords. If a file was read, the observations are also distributed manually because they constitue a special case and are not part of the language, yes it never ends being as simple as it sounds.</li>
+<li>For each copy of the document, the keywords are passed on all the plots contained in that document calling the <strong>overwrite_from</strong> on each plot_instance. That way, any keyword non specified in the plot is inherited from the document. If a filename was specified, the list of observations is also inherited. Please remember that the way the inheritance is carried out, values specified in the plot have precedence over the values in the document, they are only inherited is they are missing or default.</li>
+<li>Each plot is then required to distribute its data to the curve by calling its <strong>distribute</strong> method, please see the next paragraph.</li>
+<li>The <strong>finalize</strong> method is then called on each plot to give them a change to carry out some task at the end of the process.</li>
+<li>All the keywords which were inherited by the plot are then removed from each copy of the document, this is only cosmetic, when printing out the final directive it is more readable in the output.</li>
+<li>The <strong>draw</strong> method is then called on each copy of the document.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="the-plot-obsplot">
+<h2>The plot (ObsPlot)<a class="headerlink" href="#the-plot-obsplot" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul>
+<li><p class="first">The plot does not need to do anything at initialisation time, because it is necessary to wait for data propagation from the document. In the <strong>distribute</strong> method, at this stage, keywords from the document have been inherited, the plot checks if it has a filename and expands it if it is the case, once again it has precedence over a filename given to the document.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Then, there are two possible scenarios:</dt>
+<dd><ul class="first last simple">
+<li>The plot does not have an observation list: this is the easiest case. The plot loops over all its curves, has them inherit from its keywords and generates all combinations, just like the document, using its _combinable keyword. It them calls the <strong>finalize</strong> method on each combination of curve. In that case, kt and kx combinations were specified manually by the user in the directive.</li>
+<li>The plot has an observation list: the plot inherits an observation list from the document, it gets each Observation object in the list to inherit from its own keywords to make sure all keywords are propagated. If the observation list is read from a file by the plot, all keywords are also inherited. For each observation (gathered from the file), the plot loops over all its curves (which are used here like templates), duplicates each curve and gets it to inherit from the observation. The <strong>finalize</strong> method is then called. At the end of the process there are <em>N observations</em> multiplied by <em>M curves</em> curves in the list.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">All the keywords which were inherited by the curve are then removed from the plot, this is only cosmetic, when printing out the final directive it is more readable in the output.</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="retrieving-data">
+<h1>Retrieving data<a class="headerlink" href="#retrieving-data" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>The way the data propagation is carried out is designed with two goals in mind:</p>
+<blockquote>
+<div><ul class="simple">
+<li>to enable the flexible creation of plots using combinations to group plots on a page, curves on a plot etc...</li>
+<li>to create curves which contain the definition of an atom of data: all the data needed to compute the final statistic.</li>
+</ul>
+</div></blockquote>
+<p>When retrieving data to show the fraction of beneficial observations for amsu-a, we want to include all channels for a particular period of time, a particular domain etc... The object which compute statistics are fed with all that data mixed. If we want to show it for just one channel then the curve should only contain data for one channel.</p>
+<p>Because the curve contains the final description of the data to retrieve, it seems natural to give it the responsilibility to retrieve the data. However, how the data needs to be retrieved depend on the type of plot we are creating and only the plot knows how the data should be organized. This is why plots have two other hidden keywords in their language:</p>
+<blockquote>
+<div><ul class="simple">
+<li>_columns determine which columns of the database should be retrieved. The minimun the system needs is &#8216;statistic&#8217;, &#8216;date&#8217;, &#8216;value&#8217;, &#8216;count&#8217; where <em>value</em> is the pre-computed statistics (could be a sum, a sum squared etc...) and <em>count</em> is the number of observations involved in computing <em>value</em>.</li>
+<li>_index_columns determines how the data should be indexed. It basically describes which keyword will be used for the other axis. For timeseries, _index_columns is &#8216;date&#8217;, for a vertical cross-section it is &#8216;level&#8217;, for the <em>observingsystems</em> plot, none is required.</li>
+</ul>
+</div></blockquote>
+<p>The plot does not need to do much to retrieve data, ObsPlot.retrieve is shown here, please
+note that if the original text is modified, this one may not be so always refer to
+the source code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">()</span>
+    <span class="n">data_columns</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)):</span>
+        <span class="n">data_columns</span><span class="p">[</span><span class="n">columns</span><span class="p">[</span><span class="n">index</span><span class="p">]]</span> <span class="o">=</span> <span class="n">index</span>
+    <span class="k">for</span> <span class="n">curve</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="s">&#39;curve&#39;</span><span class="p">]:</span>
+        <span class="n">curve</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_columns</span><span class="p">(),</span><span class="n">columns</span><span class="p">,</span><span class="n">data_columns</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Most of the work is carried out in the <em>retrieve</em> method of the ObsCurve. In a
+nutshell, the algorithm is as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>get a handler to retrieve the data. At the moment it gets a handler of the database, in the future we may want to cater for more media.</li>
+<li>create an object dedicated to compute the statistics contained in the curve (there is always only one)</li>
+<li>retrieve the data which is returned as an array of lists of n columns. Each list represents the columns sent by the plot, the number of elements in the array is the number of atomic pieces of data (kx, kt, level, statistic, domain_name).</li>
+<li>using _index_columns sent by the plot, submit the data to the statistic object to comoute the the final statistic (please see the next section).</li>
+<li>the algorithm as it is implemented now can deal with any number of index columns, if it is empty an array of 1 element (0 dimensional) is returned, if it contains one element a one - dimensional array is returned, if more than one index column are used (e.g. N) a N dimensional array is returned, its dimensions are the index columns in the order they are received. This will be useful in the future for contours and possibly 3D plots.</li>
+<li>at that stage the result is stored in the curve and can be accessed through the <em>value</em> method.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="computing-statistics">
+<h1>Computing statistics<a class="headerlink" href="#computing-statistics" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>Statistics can be computed in two different contexts:</p>
+<blockquote>
+<div><ul class="simple">
+<li>when feeding the database, data is read from ODS files and temporary (or possibly final) results are computed from variable coming from the files</li>
+<li>when extracting data from the database to compute final statistic to display, plot or generally use.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="plotting-data">
+<h1>Plotting data<a class="headerlink" href="#plotting-data" title="Permalink to this headline">¶</a></h1>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Class - Language association</a></li>
+<li><a class="reference internal" href="#generating-the-request-s">Generating the request(s)</a><ul>
+<li><a class="reference internal" href="#the-document-obsdocument">The document (ObsDocument)</a></li>
+<li><a class="reference internal" href="#the-plot-obsplot">The plot (ObsPlot)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#retrieving-data">Retrieving data</a></li>
+<li><a class="reference internal" href="#computing-statistics">Computing statistics</a></li>
+<li><a class="reference internal" href="#plotting-data">Plotting data</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="plottingmodule.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">plotting</span></tt> &#8212; Plotting observation statistics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../scripts.html"
+                        title="next chapter">Scripts</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/dev/plotting/plotting.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../scripts.html" title="Scripts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="plottingmodule.html" title="plotting — Plotting observation statistics"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../dev.html" >Developer&#8217;s guide</a> &raquo;</li>
+          <li><a href="plottingmodule.html" ><tt class="docutils literal docutils literal docutils literal"><span class="pre">plotting</span></tt> &#8212; Plotting observation statistics</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

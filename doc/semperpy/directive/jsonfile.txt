@@ -1,0 +1,16 @@
+:mod:`The JSonFile class` --- Reading json encoded dictionaries
+===============================================================
+
+.. module:: directive.directive
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: JSonFile(semperpy.core.spjson.JSon)
+
+Public methods
+--------------
+
+Private methods
+---------------
+

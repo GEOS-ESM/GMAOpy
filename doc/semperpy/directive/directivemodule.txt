@@ -1,0 +1,18 @@
+:mod:`directive` --- A class enhancing python dictionaries
+==================================================================
+
+.. module:: directive
+   :synopsis: The Directive is a python dictionary which is checked and
+              setup by using the language module.
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents:
+*********
+
+.. toctree::
+   :maxdepth: 2
+
+   introduction
+   directive
+   jsonfile

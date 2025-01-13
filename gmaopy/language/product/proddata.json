@@ -1,0 +1,54 @@
+{
+	"directive": "proddata",
+    "inherit_from": "identifier",
+    "doc": true,
+	"keywords" : {
+        "statistic": {
+            "alias": ["stat","stats","statistics"],
+            "optional": true,
+            "help": ["the list of statistics to compute or retrieve for the specified set of observations","current statistics: {statisticList(flat)}"]
+        },
+        "date": {
+            "type":"int",
+            "optional": true,
+            "help": ["A list of dates. The convenience function in <semperpy.core.date.Dates> can ","generate lists of dates from an interval and an increment"]
+        },
+        "domain_name": {
+            "alias": ["domain"],
+            "optional": true,
+            "validate": ["ValidateDomains","semperpy"],
+            "help": ["Pre-defined geographical areas or domains: {domainList(semperpy)}"]
+        },
+        "variable": {
+            "optional": true
+        },
+        "level": {
+            "type":"float",
+            "optional": true
+        },
+        "levtype": {
+            "alias": "leveltype",
+            "default_value": "pl",
+            "unique": true
+        },
+        "type": {
+			"validate": ["ValidateChoice","an","fc"],
+            "default_value": "an",
+            "unique": true
+        },
+        "database": {
+            "default_value": "product",
+            "unique": true
+        },
+        "storage": {
+            "unique": true,
+            "default_value": "dbreader"
+        },
+        "source": {
+            "default_value": "oper"
+        },
+        "_columns": {
+            "default_value": ["level","statistic","date","value","count"]
+        }
+    }
+}

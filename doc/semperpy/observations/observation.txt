@@ -1,0 +1,56 @@
+:mod:`The Observation class` --- Holding an observation array
+=============================================================
+
+.. module:: observations
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: Observation(object)
+
+Public methods
+--------------
+
+    .. method:: Observation(value = None, info = None):
+
+    	:param value: a indexed variable holding observation values
+    	:type value: array, numpy array, sequence
+        :param info: additional information stored in the object
+        :type info: any type
+
+        Creates an Observation instance.
+
+    .. method:: values():
+        
+        returns the array of observations
+
+    .. method:: info():
+        
+        return the information passed when instanciating the object as is.
+
+    .. method:: __call__(value == None):
+        
+        :param value: selects the observations where a True value is stored. The parameter **value** must have the same shape as the array held by this instance.
+        :type value: ObsFilter or an array of Booleans
+        
+        returns a one-dimensional array containing all values matching True values.
+        If **value** is not given, returns the array of observations, just like the
+        **values** method.
+
+Other  methods
+--------------
+
+    Observation implements all numerical and logical operators. It also delegates all unknown
+    calls to the variable it holds. If initialised with a numpy array::
+
+        import numpy as np
+        from semperpy.observations.observation import Observation
+
+        a = np.arange(12)
+        o = Observation(a)
+        print o.shape
+          -->(12,)
+        print o.mean()
+          -->5.5
+
+    The shape **attribute** and the **mean** method are delegated to numpy.

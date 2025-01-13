@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Statistics class &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="stats — Statistics" href="statmodule.html" />
+    <link rel="next" title="directives — Application directives" href="../directives/directives.html" />
+    <link rel="prev" title="stats — Statistics" href="statmodule.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../directives/directives.html" title="directives — Application directives"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="statmodule.html" title="stats — Statistics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="statmodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal"><span class="pre">stats</span></tt> &#8212; Statistics</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-statistics-class">
+<h1>The Statistics class<a class="headerlink" href="#the-statistics-class" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gmaopy.stats.statistics.Statistics">
+<em class="property">class </em><tt class="descclassname">gmaopy.stats.statistics.</tt><tt class="descname">Statistics</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt>
+<tt class="descname">missing_value = 1.7E38</tt></dt>
+<dd><p>The official missing value used by SemperPy for statistics</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gmaopy.stats.statistics.Statistics.register">
+<em class="property">classmethod </em><tt class="descname">register</tt><big>(</big><em>category</em>, <em>name</em>, <em>what</em><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.register" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>category</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; the are different groups of statistics for different applications, to date, there is <em>obsstat</em> for observation (impact) statistics, <em>score</em> for forecast skill scores, <em>product</em> for statistics on analyses</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the statistic. This is the official name which will be used by the user</li>
+<li><strong>what</strong> (<em>class</em>) &#8211; A class to instanciate to implement the statistics named <em>name</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Registers classes to implement different statistics. Once a class is registered, its name
+is known by the system and it can be stored in a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">class method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gmaopy.stats.statistics.Statistics.create">
+<em class="property">classmethod </em><tt class="descname">create</tt><big>(</big><em>category</em>, <em>name</em><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.create" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>category</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; the category under which we are working,</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the statistic to instanticiate</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Instanciates the class corresponding to that name in the given category.
+If an instance of that class has been created earlier, it is returned (singleton),
+this speeds up the process.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Warning :</th><td class="field-body">statistics classes are not supposed to store attributes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Note :</th><td class="field-body">class method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.data2np">
+<tt class="descname">data2np</tt><big>(</big><em>data</em>, <em>index</em><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.data2np" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; the data as passed to the compute method</li>
+<li><strong>index</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; index in the tuple</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The data is sent to the compute methods as represented by the SQL client, it is a list of
+tuple, each tuple contains the value of each column described in the select statement. By default,
+this tuple is: level,variable,statistic,date,value,count,expver.</p>
+<p>This method returns a numpy array containing all the values in the list of value number <em>index</em>
+in the tuple. It slices data vertically, for example:</p>
+<div class="highlight-python"><pre>data = [
+    (500.0,'h','sum',2012010100,4.5,34,'expver1'),
+    (500.0,'h','sum',2012010100,40.5,134,'expver2'),
+    (500.0,'h','sum',2012010100,14.5,354,'expver3'),
+    (500.0,'t','sum',2012010100,379.5,2500,'expver3'),
+]
+print s.data2np(data,4)
+numpy array: [4.5,40.5,14.5,379.5]</pre>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">utility method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.split">
+<tt class="descname">split</tt><big>(</big><em>data</em>, <em>index</em><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.split" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; the data as passed to the compute method</li>
+<li><strong>index</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; index in the tuple</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method splits the list of data into as many lists as different values of column number <em>index</em>
+is found and returns a dictionary with each list. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mf">500.0</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="mi">2012010100</span><span class="p">,</span><span class="mf">4.5</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="s">&#39;expver1&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">500.0</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="mi">2012010100</span><span class="p">,</span><span class="mf">40.5</span><span class="p">,</span><span class="mi">134</span><span class="p">,</span><span class="s">&#39;expver2&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">500.0</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="mi">2012010100</span><span class="p">,</span><span class="mf">14.5</span><span class="p">,</span><span class="mi">354</span><span class="p">,</span><span class="s">&#39;expver3&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">500.0</span><span class="p">,</span><span class="s">&#39;t&#39;</span><span class="p">,</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="mi">2012010100</span><span class="p">,</span><span class="mf">379.5</span><span class="p">,</span><span class="mi">2500</span><span class="p">,</span><span class="s">&#39;expver3&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">splitData</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="s">&#39;expver1&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mf">500.0</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="mi">2012010100</span><span class="p">,</span><span class="mf">4.5</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="s">&#39;expver1&#39;</span><span class="p">)],</span>
+    <span class="s">&#39;expver2&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mf">500.0</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="mi">2012010100</span><span class="p">,</span><span class="mf">40.5</span><span class="p">,</span><span class="mi">134</span><span class="p">,</span><span class="s">&#39;expver2&#39;</span><span class="p">)],</span>
+    <span class="s">&#39;expver3&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mf">500.0</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="mi">2012010100</span><span class="p">,</span><span class="mf">14.5</span><span class="p">,</span><span class="mi">354</span><span class="p">,</span><span class="s">&#39;expver3&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">500.0</span><span class="p">,</span><span class="s">&#39;t&#39;</span><span class="p">,</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="mi">2012010100</span><span class="p">,</span><span class="mf">379.5</span><span class="p">,</span><span class="mi">2500</span><span class="p">,</span><span class="s">&#39;expver3&#39;</span><span class="p">)]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This method can be called as many times as needed on results from previous call</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">utility method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.store">
+<tt class="descname">store</tt><big>(</big><em>storer</em>, <em>record</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.store" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>storer</strong> (<em>hidden</em>) &#8211; the storer passed to the compute method</li>
+<li><strong>record</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; the record data passed to the compute method</li>
+<li><strong>kargs</strong> &#8211; values to insert in the record before storing it</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is also a utility function, it stores data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s</span><span class="o">.</span><span class="n">stor</span><span class="p">(</span><span class="n">storer</span><span class="p">,</span><span class="n">record</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">24.3</span><span class="p">,</span><span class="n">count</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">utility method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.array">
+<tt class="descname">array</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.array" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; the value to store in an array</td>
+</tr>
+</tbody>
+</table>
+<p>This utility method builds a masked array of one value, this is useful to return the
+final floating point value after aggregating statistics from a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">utility method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.requirements_raw">
+<tt class="descname">requirements_raw</tt><big>(</big><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.requirements_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must return the name of a variable to be extracted from the raw file,
+variable for gridded field or variable for ODS files. By default it returns
+[&#8216;var&#8217;] which means <em>whichever variable the user specified</em>. However, sometimes it
+can get a little more complicated. To compute the normalized cost we need whichever
+variable the user specified (oma or omf) and xvec, in that case this method should:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">requirements_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s">&#39;var&#39;</span><span class="p">,</span><span class="s">&#39;xvec&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">information method</td>
+</tr>
+</tbody>
+</table>
+<p>To compute the estimared sigo, we want to ignore the variable the user specified
+because we need two variables, oma and omf. In that case this method should:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">requirements_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s">&#39;oma&#39;</span><span class="p">,</span><span class="s">&#39;omf&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.requirements_db">
+<tt class="descname">requirements_db</tt><big>(</big><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.requirements_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is only used when computing statistics from the database. By
+default it returns the name of the statistic computed by this object.
+The final name of a statistic (e.g. rms) is often different from the name of the
+statistic stored in the database which is used to compute it (e.g. sumsquare).
+This method should return the name of the statistic to fetch from the database. It can also
+return the name of statistics for a particular variable (e.g. [&#8216;sumsquare:omf&#8217;].
+If you specify that you want to compute the root mean square (rms), the system uses this method
+to determine which statistic(s) from raw data to generate. When plotting, the system calls this
+method to determine which partial statistic(s) to retrieve from the database, for rms:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">requirements_db</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">&#39;sumsquare&#39;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">information method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.unit">
+<tt class="descname">unit</tt><big>(</big><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must either return None (no specific unit) or a unit for that statistic. By default
+None is returned and the variable is used to determine the unit (e.g. rms of meters is meters).
+If the statistic has a unit, like for example a coefficient (%), it should be returned here and it
+will be used instead of the unit from the variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">information method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.moreIsBetter">
+<tt class="descname">moreIsBetter</tt><big>(</big><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.moreIsBetter" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is needed when plotting to determine sometimes how data needs to be presented.
+By default it return False (e.g. rms, the higher the worse). This enables to orient colorbars
+in a consistent way.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">information method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.columns">
+<tt class="descname">columns</tt><big>(</big><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns an empty list by default. If a statistic requires more columns from the
+database than returned by default, it can add here the extra required column names.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">information method</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>..automethod:: prepareProcessing</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param what:</th><td class="field-body">the name of the plot being processed (its class)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type what:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<p>This method is called once only at the very beginning of computing
+statistics to give objects a chance to initialise data, or open
+files etc...</p>
+</div></blockquote>
+<p>..automethod:: completeProcessing</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param what:</th><td class="field-body">the name of the plot being processed (its class)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type what:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<p>This method is called once only at the very end of computing
+statistics to give objects a chance to close files, normalize
+data etc...</p>
+</div></blockquote>
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.name">
+<tt class="descname">name</tt><big>(</big><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must return the official name of this statistic</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">abstract method must be overwritten</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.compute_raw">
+<tt class="descname">compute_raw</tt><big>(</big><em>variables</em>, <em>name</em>, <em>storer</em>, <em>record</em><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.compute_raw" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variables</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; a dictionary of masked arrays for each variable requested for that statistic</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the variable which was specified by the user</li>
+<li><strong>storer</strong> &#8211; an object in charge of storing data</li>
+<li><strong>record</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; a record containing all the information about the statistic we are about to compute</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is called when the data specified by the user has been extracted from the raw data. At
+this stage, the variable <em>record</em> was filled with all the details to describe the piece of data
+(expver, date, level, etc...), this method is supposed to compute and fill in two keywords:</p>
+<blockquote>
+<div><ul class="simple">
+<li>value</li>
+<li>count (could be optional)</li>
+</ul>
+</div></blockquote>
+<p>Please see examples in <a class="reference internal" href="yourown.html#makeyourownstat"><em>Add your own statistic</em></a> for more information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.stats.statistics.Statistics.compute_db">
+<tt class="descname">compute_db</tt><big>(</big><em>columns</em>, <em>data</em>, <em>name</em><big>)</big><a class="headerlink" href="#gmaopy.stats.statistics.Statistics.compute_db" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>columns</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; a dictionary indexed by the name of columns form the database, containing an index in the tuple representing the data</li>
+<li><strong>data</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; A dictionanry of list of tuples containing data from the database, please see <a class="reference internal" href="#gmaopy.stats.statistics.Statistics.data2np" title="gmaopy.stats.statistics.Statistics.data2np"><tt class="xref py py-func docutils literal"><span class="pre">data2np()</span></tt></a></li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name of the variable which was specified by the user</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is called when the data specified by the user has been extracted from database and
+aggregated according to the user&#8217;s specifications.</p>
+<p>Please see examples in <a class="reference internal" href="yourown.html#makeyourownstat"><em>Add your own statistic</em></a> for more information.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="statmodule.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">stats</span></tt> &#8212; Statistics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../directives/directives.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">directives</span></tt> &#8212; Application directives</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/stats/statistics.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../directives/directives.html" title="directives — Application directives"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="statmodule.html" title="stats — Statistics"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="statmodule.html" ><tt class="docutils literal docutils literal docutils literal"><span class="pre">stats</span></tt> &#8212; Statistics</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

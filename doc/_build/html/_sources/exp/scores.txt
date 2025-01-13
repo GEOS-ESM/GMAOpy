@@ -1,0 +1,135 @@
+.. _scoreexperiment:
+
+Forecast statistics
+*******************
+
+    Forecast statistics are computed in operations and research experiments and loaded
+    into a SemperPy database.
+
+Computing statistics
+--------------------
+
+    SemperPy does not compute forecast skill scores because there is an existing application
+    which computes statitics on forecast fields. To actions were taken:
+
+        - the statistic computation application was modified (Ricardo Todling) to generate a text file which can be read by SemperPy to populate the database. Every new forecast generated will have an associated text file, both in operations and for research experiments. This works for the present and future.
+        - a grad script (Autin Conaty) read the forecast statistic binary files and generates text files which can be read by SemperPy. This is the mode to use for statistics generated in the past.
+
+    In both cases a file (e.g. score.txt) SemperPy can understand is generated::
+
+        count|date|domain_name|east|expver|forecast|level|levtype|north|source|south|statistic|step|type|value|variable|verify|west
+        0.0|2012040100|global|180.0|e572p2_fp|gmao|500.0|pl|90.0|gmao|-90.0|rms_dsp|0|fc|0.0|u|gmao|-180.0
+        0.0|2012040100|global|180.0|e572p2_fp|gmao|1000.0|pl|90.0|gmao|-90.0|cor|0|fc|1.0|v|gmao|-180.0
+        0.0|2012040100|global|180.0|e572p2_fp|gmao|700.0|pl|90.0|gmao|-90.0|rms_ran|0|fc|0.0|v|gmao|-180.0
+
+    To upload that file in a database called fc_example::
+
+        spy_txt2db --no_check_domains fc_example score.txt
+
+    The option --no_check_domains tell SemperPy not to compare domain boundaries defined in the
+    file with domain boundaries defined in SemperPy because in the case of forecast statistics,
+    they are different.
+
+Plotting statistics
+-------------------
+
+    Two specific plots have been implemented to visualize forecast scores, adding to the standard timeseries
+    plot:
+
+        - :ref:`timeseriesplot`
+        - :ref:`meanplot`
+        - :ref:`diffplot`
+
+Timeseriesplot
+^^^^^^^^^^^^^^
+
+    A typical timeseries plot: :download:`score_timeseries.py<score_timeseries.py>`:
+
+    .. literalinclude:: score_timeseries.py
+        :language: python
+
+    produces:
+
+    .. image:: ./score_timeseries_cor.png
+        :scale: 70%
+        :align: center
+
+    .. image:: ./score_timeseries_rms.png
+        :scale: 70%
+        :align: center
+
+Meanplot
+^^^^^^^^
+
+    The mean plot compute means of forecast scores over time periods and displays the result against
+    the valid time of the forecast. These are also known as "die off curves"
+    :download:`score_mean.py<score_mean.py>`:
+
+    .. literalinclude:: score_mean.py
+        :language: python
+
+    produces:
+
+    .. image:: ./mean_rms-cor.png
+        :scale: 70%
+        :align: center
+
+Diffplot
+^^^^^^^^
+
+    The diffplot reproduces a plot produced originally by Larry Takacs and Stepthen Bloom where the refence is
+    a straight line on the 0 coordinate and other curves represent the difference of the mean of the values for
+    each curve and the mean of the values of the reference. Significance boxes can also be displayed.
+
+    For anomaly correlations, all the calculations all the computation are done after applying a Z-transform, the 
+    result is then transformed back.
+
+    An example :download:`score_diff.py<score_diff.py>`
+
+    .. literalinclude:: score_diff.py
+        :language: python
+
+    produces:
+
+    .. image:: ./diff_rms-cor.png
+        :scale: 70%
+        :align: center
+
+    There are a few options regarding the representation of significance. By default error bars are used to
+    show the significance interval. Two other options exist:
+        
+        - do not display significance intervals
+        - display significance boxes following the representation used previously 
+
+    In the diffplot, the keyword :ref:`significance` can be specified to change the mode of display
+    of the significance intervals and other graphical parameters. To display boxes on the reference
+    curve :download:`score_diff_boxes.py<score_diff_boxes.py>`:
+
+    .. literalinclude:: score_diff_boxes.py
+        :language: python
+
+    produces:
+
+    .. image:: ./diff_boxes_rms-cor.png
+        :scale: 70%
+        :align: center
+
+Combined plot
+^^^^^^^^^^^^^
+
+    Using meanplot and diffplot, the familiar combination plot can be generated
+    :download:`score_combined.py<score_combined.py>`
+   
+    .. literalinclude:: score_combined.py
+        :language: python
+
+    produces:
+
+    .. image:: ./combined_cor.png
+        :scale: 70%
+        :align: center
+
+    .. image:: ./combined_rms.png
+        :scale: 70%
+        :align: center
+

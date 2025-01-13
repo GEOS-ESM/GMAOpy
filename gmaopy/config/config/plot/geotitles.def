@@ -1,0 +1,10 @@
+[geoplot]
+combinable = domain_name,parameter,level,step
+title = GEOS-5 Time Series <expver>, <date_interval> <step>,<domain_name> <level> <parameter>,<name>
+colorbartitle = <unit>
+
+[xsection]
+combinable = domain_name,parameter,level
+title = GEOS-5 Time Series <expver>, <date_interval>,<domain_name> <level> <parameter>,<name>
+legend = <source> <level> <domain_name>
+colorbartitle = <unit>

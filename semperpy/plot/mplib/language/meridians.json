@@ -1,0 +1,51 @@
+{
+	"directive": "meridians",
+    "doc": true,
+	"keywords" : {
+        "increment": {
+            "unique": true,
+            "default_value": 20
+        },
+        "linewidth": {
+            "unique": true,
+            "default_value": 1.0
+        },
+        "color": {
+            "unique": true,
+            "default_value": "k"
+        },
+        "zorder": {
+            "unique": true,
+            "default_value": null
+        },
+        "dashes": {
+            "default_value": [1,1]
+        },
+        "labels": {
+            "default_value": [0,0,0,0]
+        },
+        "labelstyle": {
+            "unique": true,
+            "default_value": null
+        },
+        "fmt": {
+            "unique": true,
+            "default_value": "%g" 
+        },
+        "xoffset": {
+            "unique": true,
+            "default_value": null
+        },
+        "yoffset": {
+            "unique": true,
+            "default_value": null
+        },
+        "latmax": {
+            "unique": true,
+            "default_value": null
+        },
+        "_non_keywords": {
+            "default_value": ["_non_keywords","increment"]
+        }
+	}
+}

@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ODS class &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="ods — Reading ODS files" href="odsmodule.html" />
+    <link rel="next" title="The ODSGroup class" href="odsgroup.html" />
+    <link rel="prev" title="ods — Reading ODS files" href="odsmodule.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="odsgroup.html" title="The ODSGroup class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="odsmodule.html" title="ods — Reading ODS files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="odsmodule.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">ods</span></tt> &#8212; Reading ODS files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-ods-class">
+<h1>The ODS class<a class="headerlink" href="#the-ods-class" title="Permalink to this headline">¶</a></h1>
+<p>Please check the <a class="reference internal" href="tutorial.html#odstutorial"><em>ODS - reading and filtering ODS files</em></a> tutorial for examples of how to use ODS and how to write filtering expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">In order to use Python&#8217;s expression parsing capabilities, the ODS and the ODSVariable classes make use of operator overloading. However, since the operators <em>and</em>, <em>or</em> and <em>not</em> cannot be redefined, the bitwise operators <strong>&amp;</strong>, <strong>|</strong> and <strong>~</strong> are used. This is not semantically wrong since we handle arrays of booleans. <strong>a &amp; b</strong> where a and b are arrays of booleans with the same shape, returns an array of booleans with the same shape.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">warning:</th><td class="field-body">the operator precedence in Python is such that bitwise operators have higher precedence than comparison operators. The expression <strong>a &lt; 2 &amp; c &gt; 3</strong> is parsed executing <strong>2 &amp; c</strong> first. You should therefore be careful to uses brackets (parenthesis) to modify the precedence: <strong>(a &lt; 2) &amp; (c &gt; 3)</strong>. This is slightly inconvenient, but it is at least never ambiguous.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="gmaopy.ods.ods.ODS">
+<em class="property">class </em><tt class="descclassname">gmaopy.ods.ods.</tt><tt class="descname">ODS</tt><big>(</big><em>filename</em>, <em>masking=None</em><big>)</big><a class="headerlink" href="#gmaopy.ods.ods.ODS" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>ODS</strong> class provides support reading ODS files and selecting observations
+according to different criteria.</p>
+<dl class="method">
+<dt id="gmaopy.ods.ods.ODS.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>filename</em>, <em>masking=None</em><big>)</big><a class="headerlink" href="#gmaopy.ods.ods.ODS.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; ods file to be read</li>
+<li><strong>masking</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#callable" title="(in Python v2.7)"><em>callable</em></a>) &#8211; a callable which is given a chance to carry out extra data masking</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Opens the specified file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.ods.ods.ODS.compile">
+<tt class="descname">compile</tt><big>(</big><em>expression</em>, <em>used_observations=True</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#gmaopy.ods.ods.ODS.compile" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>expression</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; a truth expression containing floating point literals and making reference to variable names in the netcdf file (ods file).</li>
+<li><strong>used_observations</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; by default set to True, only observations used in the analysis are processed. If set to False, all observations are processed, in that case the variable qcexcl can be part of the expression.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compiles a text based expression by parsing it and executing it. The value returned is
+an object instance of class ODSVariable containing a numpy array of boolean.
+It has the same shape as the variables which are part of the expression
+and can be used to extract data using the mask.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.ods.ods.ODS.extract">
+<tt class="descname">extract</tt><big>(</big><em>name</em>, <em>filter=None</em><big>)</big><a class="headerlink" href="#gmaopy.ods.ods.ODS.extract" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the name of the variable to extract.</li>
+<li><strong>filter</strong> (numpy array of booleans or a :class: <cite>ODSVariable</cite>) &#8211; a filter (or mask) as returned by the method compile.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns a numpy array for the specified variable. If not filter is provided, the whole
+variable is returned, otherwise an array of the size corresponding to the number of
+True values in the filter is returned with values taken from the specified variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Synonym :</th><td class="field-body">read</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.ods.ods.ODS.sampleLevels">
+<tt class="descname">sampleLevels</tt><big>(</big><em>variable_name='lev'</em>, <em>levels=None</em>, <em>bins=None</em><big>)</big><a class="headerlink" href="#gmaopy.ods.ods.ODS.sampleLevels" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variableName</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the variable in the ODS file (by default it is &#8216;lev&#8217;)</li>
+<li><strong>levels</strong> (<em>float or list of floats</em>) &#8211; list of levels to consider, all if not specified</li>
+<li><strong>bins</strong> (<em>float or list of floats</em>) &#8211; list of bins to use for binning</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method loads the variable containing all the observations levels
+(in variableName) and matches them to the list of observations provided in
+argument levelList. The closest match is stored in an array to allow further
+selection of observations. The method returns an instance of class LevelFilter.
+The filter returned by this method is valid for one single ODS file, one filter if
+specified and a list of levels. If any of these 3 criteria changes, the method
+sampleLevels should be called again (see method validateLevelFilter).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Warning :</th><td class="field-body">matches are found by choosing the closest level specified in levelList to the level contained in the &#8216;lev&#8217; variable independently of their &#8220;distance&#8221;. If levelList contains only a few levels, some matches may not make sense.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.ods.ods.ODS.sampleLinearLevels">
+<tt class="descname">sampleLinearLevels</tt><big>(</big><em>variable_name='lev'</em>, <em>levels=None</em>, <em>bins=None</em><big>)</big><a class="headerlink" href="#gmaopy.ods.ods.ODS.sampleLinearLevels" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variableName</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the variable in the ODS file (by default it is &#8216;lev&#8217;)</li>
+<li><strong>levels</strong> (<em>float or list of floats</em>) &#8211; list of levels to consider, all if not specified</li>
+<li><strong>bins</strong> (<em>float or list of floats</em>) &#8211; list of bins to use for binning</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method is identical to <a class="reference internal" href="#gmaopy.ods.ods.ODS.sampleLevels" title="gmaopy.ods.ods.ODS.sampleLevels"><tt class="xref py py-func docutils literal"><span class="pre">sampleLevels()</span></tt></a> except that unlike pressure levels, the levels
+are linear, this is useful for instrument channels and ocean depth.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.ods.ods.ODS.validateObsFilter">
+<tt class="descname">validateObsFilter</tt><big>(</big><em>filter</em><big>)</big><a class="headerlink" href="#gmaopy.ods.ods.ODS.validateObsFilter" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter</strong> (<em>ObsFilter</em>) &#8211; a filter returned by the method <strong>compile</strong></td>
+</tr>
+</tbody>
+</table>
+<p>This method checks that the filter provided was computed by that ODS instance. A
+ValueError exception is raised if it is not the case.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gmaopy.ods.ods.ODS.validateLevelFilter">
+<tt class="descname">validateLevelFilter</tt><big>(</big><em>levels</em>, <em>levelfilter</em><big>)</big><a class="headerlink" href="#gmaopy.ods.ods.ODS.validateLevelFilter" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>levels</strong> (<em>float or list of floats</em>) &#8211; levels which should have been matched</li>
+<li><strong>levelfilter</strong> (<em>LevelFilter</em>) &#8211; instance returned by the method sampleLevels</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method makes sure that the filter <em>levelfilter</em> was computed for the same file
+and the same list of levels. If there is a mismatch, a ValueError exception is raised.
+You can use this method for debugging purposes to make sure that you are associating the
+right filters with the right data.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="odsmodule.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">ods</span></tt> &#8212; Reading ODS files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="odsgroup.html"
+                        title="next chapter">The ODSGroup class</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/ods/ods.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="odsgroup.html" title="The ODSGroup class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="odsmodule.html" title="ods — Reading ODS files"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="odsmodule.html" ><tt class="docutils literal docutils literal"><span class="pre">ods</span></tt> &#8212; Reading ODS files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

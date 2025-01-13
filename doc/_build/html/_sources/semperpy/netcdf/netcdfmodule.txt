@@ -1,0 +1,15 @@
+:mod:`netcdf` --- Reading and slicing netCDF files
+==================================================
+
+.. module:: netcdf
+   :synopsis: A netcdf file reader which implements a basic slicing infrastructure.
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents:
+*********
+
+.. toctree::
+   :maxdepth: 2
+
+   file

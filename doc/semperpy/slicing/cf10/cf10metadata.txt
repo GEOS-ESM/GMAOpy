@@ -1,0 +1,26 @@
+:mod:`The CF10MetaData class`
+=============================
+
+.. module:: slicer.cf10
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: CF10MetaData(object)
+
+Summary
+-------
+
+    The CF10MetaData class implements a metadata handler which can be given to 
+    dimension objects at creation time. It has only one method:
+
+    .. method:: __call__(dimension,name):
+
+        :param dimension: the dimension object it was given to
+        :param name: the name of the piece of metadata requested. When using netCDF variables, name could be **long_name** or **units** or **missing_value**.
+        :type name: string
+
+        This method is implemented is such a way that it returns the attribute of the
+        netCDF variable unless the dimension object has a method with the same name
+        as the attribute. In that case the dimension class can implement such method
+        to override the netCDF attributes or to make sure that they exist.

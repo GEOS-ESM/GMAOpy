@@ -1,0 +1,231 @@
+Hints and tips
+**************
+
+    Learning Python, just as well as learning Perl or Ruby does not only consist
+    in learning a new syntax, if your background is in C or Fortran programming.
+    The data types you manipulate and the programming technique can be somewhat
+    different.
+
+Data types
+----------
+
+    Since version 2.2, everything in Python is an object, even modules,
+    functions, numbers. New types have been introduced in the Python language
+    over the years, you can also define your own types.
+
+Basic types
+===========
+
+    - booleans: True and False
+    - numeric: int, long, float, complex
+    - alphanumerical: string
+
+Structured types
+================
+                
+    - sequences: list, tuple, string, buffer, collections etc...
+    - mapping: dictionaries
+    - sets: set, frozenset
+    - ios: file
+    - array
+
+Annoying features
+------------------
+
+Indentation
+===========
+
+    A block in Python (group of instructions which are part of a
+    loop or a alternative) is identified by indentation. Most people find it annoying
+    at the beginning, we end up getting used to it. A typical bug::
+
+        a = [[1,2,3],[4,5,6],[7,8,9],[10,11,12],[13,14,15]]
+        result = []
+        for sublist in a:
+            keep = []
+            for v in sublist:
+                if v > 4 and v < 12:
+                    keep.append(v)
+                result.append(keep)
+        print result
+        --> [[], [], [], [5, 6], [5, 6], [5, 6], [7, 8, 9], [7, 8, 9], [7, 8, 9], [10, 11], [10, 11], [10, 11], [], [], []]
+
+    This is not what we expect to obtain, because the statement *result.append(keep)*
+    in indented one level too far, it is part of the inner loop, which we need it
+    to only be part of the outer loop. So watch your indentations, those mistakes tend
+    to happen when you ident or unindent blocks of code because of changes in your program.
+
+Tuples
+======
+
+    Many people seem to be confused with tuples and it is understandable. Tuples are
+    non-mutable lists (they just cannot be changed), that is all. Tuples have a great
+    advantage over lists, because they are non-mutable, they can be used as keys for
+    dictionaries. Using Python and other people's modules you will probably manipulate
+    tuples, without knowing it.
+
+    Here is an error prone Python syntax related to tuples::
+
+        a = 12,
+        print a
+        --> (12,)
+
+    Because there is a coma at the end of the line, **a** is interpreted as being
+    a tuple. This happens when you change code where a dictionary or a list was used
+    and all members are coma separated.
+
+Range
+=====
+
+    In Python, just like in C and C++, but unlike Fortran, arrays and sequence are
+    indexed from 0 and not 1. You can access a list with 2 elements::
+
+        a = [1,2]
+        print a[0]
+        print a[1]
+
+    The range function was developped with this in mind and although it is very
+    understandable, it can also be confusing:
+
+        print range(5)
+        --> [0, 1, 2, 3, 4]
+
+    When used in a loop it makes sense, but what do you think of::
+
+        # iterating over the daily runs
+        for i in range(0,18,6):  # 00 to 18 by 6h
+            print i 
+        --> 0
+            6
+            12
+
+    This means that to have your four runs you would need to write::
+
+        runs = range(0,19,6)
+
+    This is ridiculous. SemperPy implements some functions for dates, steps etc...
+    to make this look better.
+
+    The range function returns a list of integers, the creation of the list can use
+    both time and memory if the upper limit of range is a big number. In that case you
+    can use the function **xrange** which returns an object of class xrange which behaves
+    like a sequence without storing all the values (like an iterator).
+
+References
+----------
+
+    For the exception of basic types, arguments to functions are passed by reference,
+    this means that a pointer to the data is passed to the function and if you make 
+    changes to the data, the original data is changed::
+
+        def function(a,b,c):
+            a = 12
+            b.append(12)
+            del(c['b'])
+
+        v1 = 10
+        v2 = [1,2,3]
+        v3 = {
+            'a':1,
+            'b':2,
+        }
+        function(v1,v2,v3)
+        print v1,v2,v3
+        --> 10 [1, 2, 3, 12] {'a': 1}
+
+    If you want to preserve the contents of the variables::
+
+        def function(a,b,c):
+            a = 12
+            b = list(b)
+            b.append(12)
+            c = dict(c)
+            del(c['b'])
+
+        v1 = 10
+        v2 = [1,2,3]
+        v3 = {
+            'a':1,
+            'b':2,
+        }
+        function(v1,v2,v3)
+        print v1,v2,v3
+        --> 10 [1, 2, 3] {'a': 1, 'b': 2}
+
+Testing None
+------------
+
+    Quite often, you define a method or a function with a parameter which is **None**
+    by default. You then need to test if that argument is **None** in the body of the function::
+
+        def myFunc(a,b,c = None):
+            if c is None: # This is how it should be done
+                pass
+
+    This is stated in PEP-8 (http://www.python.org/dev/peps/pep-0008/).
+
+Exceptions
+----------
+    
+    Error handling in programs is often difficult to achieve and makes programs
+    difficult to read. Exceptions consitute a mechanism to interrupt the program
+    flow and control what is happening. Python defines the **Exception** class 
+    together with classes dedicated to different problems::
+
+        a = [1,2]
+        print a[3]
+        print "end"
+        -> IndexError: list index out of range
+
+    This is an exception of class IndexError which was raised by Python and it
+    interrupted and terminated the program (**end** was not printed). 
+    What we can do::
+
+        a = [1,2]
+        try:
+            print a[3]
+        except:
+            pass
+        print "end"
+        --> end
+
+    This means that we try an action (everything in the **try** block) and if an
+    exception is **raised** we **catch** it. This is a very good way to handle
+    errors because even if the error should be fatal to the program, the except
+    block gives you the opportunity to close open files, or finish processes or
+    signal a server that you are dying. This example is a little crude though,
+    what if::
+
+        a = [1,2]
+        try:
+            print b[3]
+        except:
+            pass
+        print "end"
+        --> end
+
+    We are printing **b** which is not defined, it is correct to just ignore the
+    error? We made a type and won't know about it straight away. This is why the class
+    used for an exception matters::
+
+        a = [1,2]
+        try:
+            print b[3]
+        except IndexError,e:
+            pass
+        print "end"
+        --> NameError: name 'b' is not defined
+
+    We only ignore IndexError exceptions, all the other exeptions will terminate the
+    program. You can create your own classes of exceptions and by carefully choosing
+    which classes are caught in different places of your code, you can write robust code.
+    You can raise exceptions anywhere::
+
+        def sort(a_list):
+            if len(a_list) == 0:
+                raise ValueError('Cannot sort an empty list')
+            b = list(a)
+            b.sort()
+            return b
+
+    You can also use the **raise** statement within an **except** block.

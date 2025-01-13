@@ -1,0 +1,25 @@
+{
+	"directive": "odslevelplot",
+    "inherit_from": "odsplot",
+    "doc": true,
+	"keywords" : {
+        "plotdata": {
+            "default_value": {
+                "variable": ["oma"],
+                "statistic": "count"
+            }
+        },
+        "has_xtitle": {
+            "default_value": true
+        },
+        "_curve_preference": {
+            "default_value": "bar"
+        },
+        "has_legend": {
+            "default_value": false
+        },
+        "_attributes": {
+            "default_value": ["continents","coastlines"]
+        }
+	}
+}

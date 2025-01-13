@@ -1,0 +1,53 @@
+:mod:`The IndexedDimension class` 
+=================================
+
+.. module:: slicer.dimensions
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: IndexedDimension(Dimension)
+
+Summary
+-------
+
+    The IndexDimension class implements a special dimension which assumes that
+    the values in the dimension are sorted and spaced equally, typically a latitude
+    and a longitude on a resular grid. The index of a values can thus be calculated
+    instead of searched, this is much more efficient.
+
+    The IndexDimension class implements two more methods which can be overridden
+    by its possible descendants. This assumes that the values contained in the
+    dimension are not the actual values used by the user, but a transposition. A 
+    typical example would be a date where the array for the dimension contains offsets
+    from a reference date. Those methods are called everytime a conversion is needed:
+
+    ..method:: codeToValue(code):
+
+        :param code: code if the value stored in the dimension (e.g. an offset for the date). 
+
+        In that case, codeToValue should return a date.
+
+    ..method:: valueToCode(value):
+
+        :param value: value is the value manipulated by the user (e.g. a date).
+
+        In that case, valueToCode should return an offset from a reference date.
+
+    Another method used internally should be documented as it could be useful:
+
+    ..method:: indice(value,where='left'):
+
+        :param value: the value we want the index of
+        :param where: preferences for the match ('left','right','nearest')
+        :type where: string
+
+        This method returns the index of a value in the dimension variable. If the value is
+        not in the variable, three options can be chosen:
+
+            - return the index of the value on its left 
+            - return the index of the value on its right
+            - return the index of the nearest value
+
+        The first two options are useful when selecting an interval while the third
+        one is useful for discrete values.

@@ -1,0 +1,249 @@
+:mod:`date` --- Date manipulation
+=================================
+
+.. module:: semperpy.core.date
+   :synopsis: Date class and Date management functions.
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The Date class
+--------------
+
+.. class:: Date(oject)
+
+    The **Date** class encapsulates the standard Python datetime object but offers some
+    easier way to manipulate dates. A date is created with an implicit "accuracy", e.g.
+    its smaller representation: **Date** handles year, month, day, hour, minute and 
+    seconds, and basic operations::
+
+        from semperpy.core.date import *
+
+        d = Date(2010)
+        print d.datetime()
+        2010-01-01 00:00:00
+        print d + 1, d - 1
+        2011, 2009
+
+        d = Date(201004)
+        print d.datetime()
+        2010-04-01 00:00:00
+        print d + 1, d - 1
+        2010-05, 2010-03
+
+        d = Date(20100401)
+        print d.datetime()
+        2010-04-01 00:00:00
+        print d + 1, d - 1
+        2010-04-02 2010-03-31
+
+        d = Date(2010040112)
+        print d.datetime()
+        2010-04-01 12:00:00
+        print d + 1, d - 1
+        2010-04-01 13 2010-04-01 11
+
+        d = Date(201004011200)
+        print d.datetime()
+        2010-04-01 12:00:00
+        print d + 1, d - 1
+        2010-04-01 12:01 2010-04-01 11:59
+
+        d = Date(20100401120030)
+        print d.datetime()
+        2010-04-01 12:00:30
+        print d + 1, d - 1
+        2010-04-01 12:00:31 2010-04-01 12:00:29
+
+    Standard operations on Dates are supported, including the difference, 
+    expressed in the unit of the left hand side **Date** in the operation::
+
+        from semperpy.core.date import *
+
+        a = Date(20090425)
+        b = Date(20090418)
+        print a - b
+        7
+        print b - a
+        -7
+
+        a = Date(2009042512)
+        b = Date(2009041800)
+        print a - b
+        180
+        print b - a
+        -180
+
+        a = Date(20090425)
+        b = Date(2009041812)
+        print a - b # days
+        7
+        print b - a
+        -156 # hours
+        print Day(b) - a
+        -7 # days
+
+        a = Date(2010030112)
+        b = Date(20090401)
+        print Month(a) - Month(b)
+        11 # months
+        print Year(a) - Year(b)
+        1 # year
+
+    **Date** objects are:
+    
+    * hashable
+    * comparable: <, >, ==, <=, >=, !=
+    * support basic arithmetics:
+            
+        * \+ (int | :class:`DateIncrement`)
+        * \- (int | Date | :class:`DateIncrement`)
+        * += (int | :class:`DateIncrement`)
+        * -= (int | :class:`DateIncrement`).
+
+    .. method:: Date(date)
+
+        :param date: another Date, a datetime or an integer (yyyy, yyyymm, yyyymmdd, yyyymmddhh etc..)
+
+        The **Date** class is a generic entry point into the Core.Date module,
+        it returns an object allocated from another class, Year, Month, Day,
+        Hour, Minute, Second.
+
+        Depending on the "accuracy" of the date, the right class will be allocated,
+        either Year, Month, Day, Hour, Minute or Second. If a datetime is given,
+        the class Second is used. You can specify which type you would like::
+
+            from datetime import datetime
+            from semperpy.core.date import *
+
+            d = datetime(2009,12,25,23,59)
+            myDateInDays = Day(d)
+            print d
+            2009-12-25
+
+            # these two statements are equivalent
+            d = Date(20090101)
+            d = Day(20090101)
+
+            # these two statements are equivalent
+            d = Date(200901011230)
+            d = Minute(200901011230)
+
+    .. method:: datetime()
+
+        returns the Python datetime encapsulated.
+
+    .. method:: year()
+
+        returns the year.
+
+    .. method:: month()
+
+        returns the month.
+
+    .. method:: day()
+
+        returns the day.
+
+    .. method:: hour()
+
+        returns the hour.
+
+    .. method:: minute()
+
+        returns the minute.
+
+    .. method:: second()
+
+        returns the second.
+
+    .. method:: intvalue()
+
+        returns the date as an integer or long integer in the form yyyy[mm[dd[hh[MM[ss]]]]].
+
+    .. method:: format(format = None)
+
+        :param format: a datetime.strftime date format    
+        :type format: string
+
+        returns a string formatted by datetime.strftime. The statement "*print d.format()*" is equivalent
+        to *"print d"*.
+
+
+The DateIncrement class
+-----------------------
+.. class:: DateIncrement(object)
+
+    The **DateIncrement** is designed to give flexibility for various needs in
+    date manipulation in different fields. **DateIncrement** makes it possible to
+    increment a date by N months or N years or a combination of both. It is 
+    particularly useful for incrementing months::
+
+        d = Date(20050115)
+        inc = DateIncrement(months=3)
+        d += inc
+        print d
+        2005-04-15
+
+    DateIncrement is printable, can be negated and tested for equality against
+    another DateIncrement.
+
+    .. method:: DateIncrement(years=0,months=0,days=0,hours=0,minutes=0,seconds=0)
+
+        Creates a **DateIncrement**. All parameters are integers, these can either be
+        positive of negative.
+
+        .. seealso:: :ref:`Dates <datesequence>` for examples.
+
+.. class:: Year
+
+    see Date.
+
+.. class:: Month
+
+    see Date.
+
+.. class:: Day
+
+    see Date.
+
+.. class:: Hour
+
+    see Date.
+
+.. class:: Minute
+
+    see Date.
+
+.. class:: Second
+
+    see Date.
+
+The Dates function
+------------------
+.. _datesequence:
+.. function:: Dates(start1,end1,incr1,start2,end2,incr2,...,startN,endN,incrN,format = None)
+
+    The **Dates** function (a sysnonym is **DateSequence**) generates a list
+    of dates as integers from start1 to end1 with an increment of incr1 etc...
+    if the parameter *format* is specified (as an strftime format), a list
+    of string in that format is returned::
+
+        from semperpy.core.date import *
+
+        print Dates(20090115,20090415,DateIncrement(months=1))
+        [20090115, 20090215, 20090315, 20090415]
+
+        print Dates(20090115,20090415,DateIncrement(months=1),format="%Y-%m")
+        ['2009-01', '2009-02', '2009-03', '2009-04']
+
+        print Dates(20090115,20090415,DateIncrement(months=1),20080115,20080415,DateIncrement(months=2))
+        [20090115, 20090215, 20090315, 20090415, 20080115, 20080315]
+
+        print Dates(20090115,20090430,DateIncrement(months=1,days=1))
+        [20090115, 20090216, 20090317, 20090418]
+
+        print Dates(2009011500,2009011612,12)
+        [2009011500, 2009011512, 2009011600, 2009011612]
+    
+    :synonym: DateSequence

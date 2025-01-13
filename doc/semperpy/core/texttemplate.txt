@@ -1,0 +1,98 @@
+:mod:`texttemplate` --- Handling text templates to generate titles
+==================================================================
+
+.. module:: core.texttemplate
+   :synopsis: TextTemplate to generate text at runtime.
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The TextTemplate class
+-----------------------
+
+.. class:: TextTemplate(object)
+
+    The class **TextTemplate** provides basic mechanisms to substitute text in 
+    text templates from data supplied in dictionaries. It is also meant to be
+    derived to treat special cases.
+
+    The text template can contain any text, any text between < and > will be
+    interpreted as the name of a variable. If you need to use the characters < or >
+    in the template, you need to backslash them::
+
+        template = 'If <value2> \< <value1> then something went wrong'
+
+    .. method:: processText(template,directive,**kargs)
+    	
+    	:param template: the text to use as a template
+    	:type template: string
+    	:param directive: a dictionary where entries with names of variables found in the template can be found
+    	:type directive: dict
+        :param kargs: key / value pair to add to or replace in directive
+        :type kargs: named parameters
+
+        This method matches all variable in the text **template** and replaces each
+        occurence with:
+
+            - if a method with the name of a variable exists in the class, the result of the call to that method: method(key,directive)
+            - otherwise if a key in the directive exists, the value for that key
+            - an empty string.
+
+        Example::
+
+            from semperpy.core.texttemplate import TextTemplate
+
+            class MyTemplate(TextTemplate):
+
+                def value2(self,key,directive):
+                    return directive['value1'] * 2 
+
+            t = MyTemplate()
+            dir = { 'value1': 12 }
+            print t.processText('If <value2> \< <value1> then something went wrong',dir)
+            --> If 24 < 12 then something went wrong
+
+    .. method:: despatchVariables(a,b,directive)
+
+        :param a: text template
+        :type a: string
+        :param b: text template
+        :type b: string
+        :param directive: a name / value association
+        :type directive: dict
+
+        This methods finds all variables in text templates a and b and for the variables
+        which are found in both templates applies the following algorithm:
+
+            - if the variable is not in the directive, the variable stays in b and is removed from a
+            - if the variable is in the directive and the entry has only one element, the variable stays in a and is removed from b
+            - if the variable is in the directive and the entry has more than one element, the variable stays in b and is removed from b.
+
+        This method is intended to work with titles and legends on plots. If a variable 
+        is unique for the whole plot, it is displayed in the plot title, if it is not 
+        unique (different values for different curves), it is displayed as part of 
+        the legend. There might be more applications of this.
+    
+        Example::
+
+            from semperpy.core.texttemplate import TextTemplate
+
+            class MyTemplate(TextTemplate):
+
+                def value2(self,key,directive):
+                    return directive['value1'] * 2 
+
+            t = MyTemplate()
+            dir = dict(
+                expver = 'ct12',
+                level = [500,1000],
+            )
+            a = '<expver> <domain_name> <level>'
+            b = '<expver> <domain_name> <level>'
+            a,b = t.despatchVariables(a,b,dir)
+            print a
+            print b
+            --> <expver>
+            --> <domain_name> <level>
+
+        :note: despatchVariables is aliased to dispatchVariables

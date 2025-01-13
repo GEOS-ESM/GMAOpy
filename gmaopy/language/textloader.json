@@ -1,0 +1,26 @@
+{
+	"directive": "textloader",
+    "doc": true,
+	"keywords" : {
+        "database": {
+			"unique": true,
+            "default_value": "obs"
+        },
+        "overwrite": {
+            "unique": true,
+            "default_value": false
+        },
+		"files": {
+            "alias": "file",
+            "lowercase": false
+		},
+        "check_domains": {
+            "unique": true,
+            "default_value": true
+        },
+        "dry_run": {
+            "unique": true,
+            "default_value": false
+        }
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"directive": "plotobserver",
+	"keywords" : {
+        "varname": {
+            "default_value": "observer",
+            "unique": true
+        },
+        "format": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        }
+	}
+}

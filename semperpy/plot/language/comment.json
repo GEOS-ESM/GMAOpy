@@ -1,0 +1,27 @@
+{
+	"directive": "comment",
+	"keywords" : {
+        "color": {
+            "unique": true,
+            "default_value": "black"
+        },
+        "style": {
+            "default_value": ["-"],
+            "unique": true,
+            "help": "style used for drawing the line."
+        },
+        "alpha": {
+            "alias": ["alpha_channel"],
+            "unique": true,
+            "type": "float",
+            "default_value": 0.9,
+            "help": "this is a percentage of opacity for the alpha channel, 0 is transparent, 1 is full color"
+        },
+        "rank": {
+            "unique": true,
+            "default_value": 100,
+            "type": "int",
+            "help": "The rank determines at which point of drawing this particular comment should be drawn. Negatives values mean before any curves are plotted, positive values mean mean after plotting the curves. The comments are plotted in the order of the rank so the user has control over the order in which graphical comments are drawn."
+        }
+	}
+}

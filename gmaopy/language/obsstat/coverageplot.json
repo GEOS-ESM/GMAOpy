@@ -1,0 +1,28 @@
+{
+	"directive": "coverageplot",
+    "inherit_from": "odscolorbarplot",
+    "doc": true,
+	"keywords" : {
+        "plotdata": {
+            "default_value": {
+                "variable": ["lat","lon"]
+            }
+        },
+        "symbol": {
+            "unique": true,
+            "default_value": "",
+            "type": "symbol"
+        },
+        "has_xtitle": {
+            "default_value": true
+        },
+        "geography": {
+            "unique": true,
+            "type": "geography",
+            "default_value": ""
+        },
+        "_attributes": {
+            "default_value": ["continents","coastlines"]
+        }
+	}
+}

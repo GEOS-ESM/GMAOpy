@@ -1,0 +1,12 @@
+{
+	"directive": "odscolorbarplot",
+    "inherit_from": "odsplot",
+	"keywords" : {
+        "colormap": {
+            "unique": true,
+            "type": "colormap",
+            "default_value": {
+            }
+        }
+	}
+}

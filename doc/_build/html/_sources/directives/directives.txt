@@ -1,0 +1,62 @@
+:mod:`directives` --- Application directives
+============================================
+
+.. module:: directives
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents
+********
+
+.. toctree::
+   :maxdepth: 1
+
+   
+   axis
+   bar
+   boundary
+   boxedline
+   channelplot
+   coastlines
+   colormap
+   commentexpver
+   commentline
+   commenttext
+   continents
+   countries
+   coverageplot
+   curve
+   dbdump
+   diffplot
+   document
+   fieldplot
+   geodata
+   geography
+   graphics
+   levelplot
+   meanplot
+   meridians
+   obsdata
+   observation
+   obsstat
+   obsuncertaintyplot
+   odscounter
+   odsdata
+   odslevelplot
+   odssummaryplot
+   parallels
+   plotfont
+   plotlegend
+   proddata
+   proddata
+   prodstat
+   rivers
+   scatterplot
+   scoredata
+   significance
+   states
+   summaryplot
+   symbol
+   textloader
+   timeseriesplot
+   verticalxsection

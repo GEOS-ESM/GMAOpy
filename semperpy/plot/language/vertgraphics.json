@@ -1,0 +1,9 @@
+{
+    "directive": "vertgraphics",
+    "inherit_from": "graphics",
+    "keywords": {
+        "horizontal": {
+            "default_value": false
+        }
+    }
+}

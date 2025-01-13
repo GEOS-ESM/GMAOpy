@@ -1,0 +1,129 @@
+.. _notesexperiments:
+
+Notes on customizing the 'compute' scripts
+*******************************************
+
+    When computing statistics using Sempery, whichever type of statistics is being computed, raw data need to
+    be extracted. For most systems, SemperPy is configured to locate and retrieve files containing raw data
+    using the description of the data given by the user as a list of keywords (please see :ref:`obsstattutorial`
+    for information about configuring the data retriever).
+
+    When running SemperPy with research experiments, it may well be that your files containing raw data are not
+    in a standard location and you will need to tell SemperPy how to find them.
+
+        - your files are in a particular location and you want SemperPy to find them and do its job as a one off operation,
+        - your files are named consistently and are perhaps stored in a known directory hierarchy.
+
+    SemperPy can cope with both situations, it seems useful to group that information under this title.
+
+Using files in a one off location
+----------------------------------
+
+    Computing directives whichever the type of data, are in the form::
+
+        compute(
+            exvper =
+            date = 
+            type = 
+            ...
+        )
+
+    If you have files to be used by a **compute** statement, you can force the **compute** directive to find the
+    file by specifying different keywords::
+
+        obsstat(
+            exvper =
+            date = 
+            type = 
+            ...
+            root_tmpl = 
+            tree_tmpl =
+            file_tmpl = 
+            archive_type =
+            )
+
+    Those three keyword enable you to define:
+
+        - root_tmpl is the template for the root directory of the data structure
+        - tree_tmpl is the directory structure under the root
+        - file_tmpl is the template to generate the file name.
+        - archive_type defines the type of data storage. The existing types of storage are currently **dmf** for the dmf archive, in that case it also manages to handle dmget to stage the data first and **filesystem** indicates the file is available directly. Other types could be created such as **ftp** or **scp**.
+
+
+    Let's go through a few examples::
+
+        # in /home/cgibert/obs you can find *diag*.ods (standard naming) files which you would like to use for computing statistics,
+        # you will need to specify:
+
+        root_tmpl = '/home/cgibert/obs',
+        tree_tmpl = '',
+        file_tmpl = '<expver>.diag_<collection>.date(@Y@m@d_@Hz).ods'
+        archive_type = 'filesystem' # (otherwise SemperPy will try to stage the data)
+
+        # in /home/cgibert/obs you can find directories:
+        # Y2012/M02/D01/H00
+        # observation files
+
+        root_tmpl = '/home/cgibert/obs',
+        tree_tmpl = Ydate(@Y)/Mdate(@m)/Ddate(@d)/Hdate(@H)
+        file_tmpl = '<expver>.diag_<collection>.date(@Y@m@d_@Hz).ods'
+        archive_type = 'filesystem' # (otherwise SemperPy will try to stage the data)
+
+        # in /home/cgibert/obs you can find directories:
+        # Y2012/M02/D10/H00
+        # impact files
+
+        # operational files (configured like so by default):
+
+        root_tmpl = '/home/cgibert/obs',
+        tree_tmpl = 'Ydate(@Y)/Mdate(@m)/Ddate(@d)/Hdate(@H)'
+        file_tmpl = '<expver>.imp3_txe_<collection>.obs.date-9(@Y@m@d_@Hz)+date+24(@Y@m@d_@Hz)-date(@Y@m@d_@Hz).ods'
+        archive_type = 'filesystem' # (otherwise SemperPy will try to stage the data)
+
+        # in a research experiment:
+
+        root_tmpl = '/home/cgibert/obs',
+        tree_tmpl = 'Ydate-9(@Y)/Mdate-9(@m)/Ddate-9(@d)/Hdate-9(@H)',
+        file_tmpl = '<expver>.imp3_txe_<collection>.obs.date-9(@Y@m@d_@Hz)+date+24(@Y@m@d_@Hz)-date(@Y@m@d_@Hz).ods'
+        archive_type = 'filesystem' # (otherwise SemperPy will try to stage the data)
+
+    As you can see, files can be described using templates for the root directory, subdirectories and a filename name,
+    these can be customized. This method describes how to instruct SemperPy about the location of data files for one
+    particular **compute** directive. This can be done in a more permanent way.
+
+Configuring SemperPy for your experiments
+-----------------------------------------
+
+    If all your research experiments are stored following the same storage scheme
+    (which seems to be the case generally), then your file names are the same
+    and the directory structure depends mostly on the experiment id (expver in SemperPy). In that case, you can 
+    write a configuration file to describe the location of the file, which will then be used by SemperPy for all your
+    research experiments.
+
+    You can customize the configuration of SemperPy (:ref:`configuration`), and particularly the data Retriever
+    (please see :ref:`configurefiles`).
+
+Choosing a database
+-------------------
+
+    Whenever you compute statistics to store them in a database, you need to choose a database which will
+    store the data, or you could even create your own database to hold your results (:ref:`createdb`). You
+    can read :ref:`databases` for more general information. For research experiments, there are currently
+    three pre-defined databases:
+
+        - im_exp for observation impact statistics
+        - ob_exp for observation statistics
+        - fc_exp for forecast skill scores
+
+Alternative storage
+-------------------
+
+    You can decide to run statistic calculations without storing the results in a database. The keyword
+    **storage** can be used for that. There are currently three different storers built in SemperPy:
+
+        - dbstorer (storage in a relational database),
+        - filestorer (data is saved in a text file which can then be loaded into a database), when filestorer is used, the keyword **output_file** aliased to **database** is used to hold the file name,
+        - nullstorer (data is not stored), this is useful to test a computing script and make sure everything is ok.
+
+    It is possible and relatively easy to write new storers for other needs (e.g. netcdf files, sending data
+    over a network connection, etc...)

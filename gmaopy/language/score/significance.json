@@ -1,0 +1,32 @@
+{
+	"directive": "significance",
+    "doc": true,
+	"keywords" : {
+        "type": {
+            "unique": true,
+            "default_value": "bar",
+            "validate": ["ValidateChoice","box","bar","none"],
+            "help": "none: no significance displayed, bar: error bars are used, box: boxes on the reference curve are displayed"
+        },
+        "rescale": {
+            "unique": true,
+            "default_value": false,
+            "help": "the plot is scaled using the values of the curves. If set to True, the values of the significance are also used to scale the Y axis, ensuring that the significance boxes or bars are visible"
+        },
+        "box_linewidth": {
+            "unique": true,
+            "default_value": 0.5,
+            "help": "line width for boxes"
+        },
+        "bar_linewidth": {
+            "unique": true,
+            "default_value": null,
+            "help": "line width for bars, if null the width of the curve line width is used"
+        },
+        "color": {
+            "unique": true,
+            "optional": true,
+            "help": "color of the bar or box. If not set, the color of the curve color is used"
+        }
+	}
+}

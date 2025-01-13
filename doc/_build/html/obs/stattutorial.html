@@ -1,0 +1,555 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Observation statistic - computing &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../tutorials.html" />
+    <link rel="next" title="Observation statistic - plotting" href="../plotting/tutorial.html" />
+    <link rel="prev" title="Plotting features" href="../plotting/plotting.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../plotting/tutorial.html" title="Observation statistic - plotting"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../plotting/plotting.html" title="Plotting features"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="observation-statistic-computing">
+<span id="obsstattutorial"></span><h1>Observation statistic - computing<a class="headerlink" href="#observation-statistic-computing" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>Statistics can be computed in two different contexts:</p>
+<blockquote>
+<div><ul class="simple">
+<li>when feeding the database, data is read from ODS files and temporary (or possibly final) results are computed from variable coming from the files</li>
+<li>when extracting data from the database to compute final statistics to plot, this is merely an aggregation of temporary results.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="the-obsstat-directive">
+<h2>The <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> directive<a class="headerlink" href="#the-obsstat-directive" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> directive instructs the system to compute statistics from ODS files, using
+a set of keywords to specify what is requested. The results of the computations are sent to
+a storage handler, which by default is an SQL database, but other handlers are available such
+as text files. The users can write and specificy their own handlers.</p>
+<p>Here is a basic example (<a class="reference download internal" href="../_downloads/example1.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">1</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># imports the needed modules to compute statistics</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsstat</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">obsstat</span><span class="p">(</span>
+    <span class="c"># ODS file description</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span><span class="p">,</span>                                           <span class="c"># default</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;ob&#39;</span><span class="p">,</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02&#39;</span><span class="p">,</span>
+    <span class="n">ignore_missing_files</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>                              <span class="c"># default</span>
+    <span class="c"># statistic description</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011020100</span><span class="p">,</span><span class="mi">2011020118</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">,</span><span class="s">&#39;s.hem&#39;</span><span class="p">],</span>
+    <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">],</span>
+    <span class="n">observation</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">observation</span><span class="p">(</span>
+            <span class="n">usage</span> <span class="o">=</span> <span class="s">&#39;used&#39;</span><span class="p">,</span>                                    <span class="c"># default</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;oma&#39;</span><span class="p">,</span><span class="s">&#39;omf&#39;</span><span class="p">,</span><span class="s">&#39;xvec&#39;</span><span class="p">],</span>
+            <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">,</span><span class="s">&#39;mean&#39;</span><span class="p">,</span><span class="s">&#39;rms&#39;</span><span class="p">,</span><span class="s">&#39;esigo&#39;</span><span class="p">,</span><span class="s">&#39;esigb&#39;</span><span class="p">,</span><span class="s">&#39;normcost&#39;</span><span class="p">],</span>
+            <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+            <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+        <span class="p">),</span>
+        <span class="n">observation</span><span class="p">(</span>
+            <span class="n">usage</span> <span class="o">=</span> <span class="s">&#39;unused&#39;</span><span class="p">,</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;oma&#39;</span><span class="p">,</span>
+            <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+            <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+        <span class="p">),</span>
+        <span class="n">observation</span><span class="p">(</span>
+            <span class="n">usage</span> <span class="o">=</span> <span class="s">&#39;passive&#39;</span><span class="p">,</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;oma&#39;</span><span class="p">,</span>
+            <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+            <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="c"># data storage description (database, text file)</span>
+    <span class="n">storage</span> <span class="o">=</span> <span class="s">&#39;dbstorer&#39;</span><span class="p">,</span>                                     <span class="c"># default</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;ob_ops&#39;</span><span class="p">,</span>
+    <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>                                        <span class="c"># default</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The lines marked &#8220;# default&#8221; can be omitted since we specify the default value, they were
+inserted to be introduced. The meaning of the different keywords can be found in the
+documentation for the <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a>. However, let us clarify their importance and meaning:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the keywords <strong>source</strong>, <strong>type</strong>, <strong>expver</strong> and <strong>date</strong> are indispensable to locate the ODS files to read. The keyword <strong>ignore_missing_files</strong> indicates to ignore if an ODS file is not found and keep computing. By default <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> fails if a file is missing.</li>
+<li>the keywords <strong>storage</strong>, <strong>database</strong> (aliased to <strong>output_file</strong>) and <strong>overwrite</strong> affect where the results go, either an SQL database, or a text file. By default <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> fails if either the statistics computed already exist the specified database or if a text file exists. You can set <strong>overwrite</strong> to True to overwrite the data. It is advised to keep this flag to False and only set it to True if you are sure about what is happening. The command <em>spy_doc databases</em> provides you with a list of system defined and user defined databases.</li>
+<li>the keywords <strong>date</strong>, <strong>domain</strong>, <strong>variable</strong>, <strong>level</strong> (aliased to <strong>channel</strong> for satellite instruments), <strong>kx</strong> and <strong>kt</strong> determine how to extract and filter data from the ODS file to compute statistics on.</li>
+<li>the keyword <strong>statistic</strong> defines a list of statistics to be computed and stored.</li>
+</ul>
+</div></blockquote>
+<p>Please note that in this example, the keyword <strong>statistics</strong> appears at two different levels:</p>
+<blockquote>
+<div><ul class="simple">
+<li>in the body of <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a></li>
+<li>in the body of <a class="reference internal" href="../directives/observation.html#observation"><em>observation</em></a></li>
+</ul>
+</div></blockquote>
+<p>This is because it is required at both levels and it is convenient to use it this way as the
+only statistic we request for passive and unused data is <em>count</em>. The statistic is inherited
+by the observations directives.</p>
+<p>The directive <a class="reference internal" href="../directives/observation.html#observation"><em>observation</em></a> needs to be repeated three times for the three type of
+data requested: <em>used</em>, <em>passive</em> and <em>unused</em>. The keywords <strong>kx</strong> and <strong>kt</strong> cannot be
+specified in the body of <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> so they need to be repeated. We can see that it
+can become cumbersome to define a complex observation statistic computation. In order to help
+with this, a file can be specified, like in this computation of scores for observation impacts
+(<a class="reference download internal" href="../_downloads/example2.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">2</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># imports the needed modules to compute statistics</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsstat</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">obsstat</span><span class="p">(</span>
+    <span class="c"># ODS file  description</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span><span class="p">,</span>                                   <span class="c"># default</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+    <span class="n">ignore_missing_files</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="c"># statistic description</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011030200</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">,</span><span class="s">&#39;s.hem&#39;</span><span class="p">,</span><span class="s">&#39;tropics&#39;</span><span class="p">],</span>
+    <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="s">&#39;beneficial&#39;</span><span class="p">],</span>
+    <span class="c"># data storage description (database, text file)</span>
+    <span class="n">storage</span> <span class="o">=</span>  <span class="s">&#39;dbstorer&#39;</span><span class="p">,</span>                             <span class="c"># default</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+    <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>                                 <span class="c"># default</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">observation</span><span class="p">(</span>
+            <span class="c"># this file describes all the kx, kt combinations we want to use</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;summary.def&#39;</span><span class="p">],</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In this case, the file <em>summary.def</em> we use looks like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">aircraft</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">130</span><span class="p">,</span><span class="mi">131</span><span class="p">,</span><span class="mi">132</span><span class="p">,</span><span class="mi">133</span><span class="p">,</span><span class="mi">134</span><span class="p">,</span><span class="mi">135</span><span class="p">,</span><span class="mi">230</span><span class="p">,</span><span class="mi">231</span><span class="p">,</span><span class="mi">232</span><span class="p">,</span><span class="mi">233</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mi">235</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">aqua_airs</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">49</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">amsre</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">547</span><span class="p">,</span><span class="mi">548</span><span class="p">,</span><span class="mi">549</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">amsua</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">315</span><span class="p">,</span><span class="mi">316</span><span class="p">,</span><span class="mi">317</span><span class="p">,</span><span class="mi">318</span><span class="p">,</span><span class="mi">319</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">325</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">amsub</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">415</span><span class="p">,</span><span class="mi">416</span><span class="p">,</span><span class="mi">417</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">ascat_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">290</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">dropsondes</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">132</span><span class="p">,</span><span class="mi">232</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">goes</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">57</span><span class="p">,</span><span class="mi">58</span><span class="p">,</span><span class="mi">59</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">61</span><span class="p">,</span><span class="mi">62</span><span class="p">,</span><span class="mi">63</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">gpsro</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">722</span><span class="p">,</span><span class="mi">723</span><span class="p">,</span><span class="mi">740</span><span class="p">,</span><span class="mi">741</span><span class="p">,</span><span class="mi">742</span><span class="p">,</span><span class="mi">743</span><span class="p">,</span><span class="mi">744</span><span class="p">,</span><span class="mi">745</span><span class="p">,</span><span class="mi">786</span><span class="p">,</span><span class="mi">820</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">88</span>
+
+<span class="p">[</span><span class="n">hirs</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">25</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">iasi</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">875</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">land_sfc</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">181</span><span class="p">,</span><span class="mi">187</span><span class="p">,</span><span class="mi">281</span><span class="p">,</span><span class="mi">287</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">marine_sfc</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">180</span><span class="p">,</span><span class="mi">182</span><span class="p">,</span><span class="mi">183</span><span class="p">,</span><span class="mi">280</span><span class="p">,</span><span class="mi">282</span><span class="p">,</span><span class="mi">284</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">mhs</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">818</span><span class="p">,</span><span class="mi">819</span><span class="p">,</span><span class="mi">825</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">modis_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">257</span><span class="p">,</span><span class="mi">258</span><span class="p">,</span><span class="mi">259</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">msu</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">205</span><span class="p">,</span><span class="mi">206</span><span class="p">,</span><span class="mi">207</span><span class="p">,</span><span class="mi">208</span><span class="p">,</span><span class="mi">209</span><span class="p">,</span><span class="mi">210</span><span class="p">,</span><span class="mi">211</span><span class="p">,</span><span class="mi">212</span><span class="p">,</span><span class="mi">214</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">nexrad_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">224</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">pibal</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">221</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">profiler_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">223</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="p">[</span><span class="n">radiosondes</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">120</span><span class="p">,</span><span class="mi">220</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">44</span>
+
+<span class="p">[</span><span class="n">satellite_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">241</span><span class="p">,</span><span class="mi">242</span><span class="p">,</span><span class="mi">243</span><span class="p">,</span><span class="mi">245</span><span class="p">,</span><span class="mi">246</span><span class="p">,</span><span class="mi">247</span><span class="p">,</span><span class="mi">248</span><span class="p">,</span><span class="mi">249</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">251</span><span class="p">,</span><span class="mi">252</span><span class="p">,</span><span class="mi">253</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">256</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+
+<span class="c">#[sbuv_ozone]</span>
+<span class="c">#kx = 457,458,459,460,461,462,464,465,466,467,468,469</span>
+<span class="c">#kt = 21,22</span>
+
+<span class="p">[</span><span class="n">ssmi_rad</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">708</span><span class="p">,</span><span class="mi">710</span><span class="p">,</span><span class="mi">711</span><span class="p">,</span><span class="mi">713</span><span class="p">,</span><span class="mi">714</span><span class="p">,</span><span class="mi">715</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">ssu</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">305</span><span class="p">,</span><span class="mi">306</span><span class="p">,</span><span class="mi">307</span><span class="p">,</span><span class="mi">308</span><span class="p">,</span><span class="mi">309</span><span class="p">,</span><span class="mi">310</span><span class="p">,</span><span class="mi">311</span><span class="p">,</span><span class="mi">312</span><span class="p">,</span><span class="mi">314</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">40</span>
+
+<span class="p">[</span><span class="n">tmi_rain_rate</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">211</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">17</span>
+
+<span class="p">[</span><span class="n">windsat_wind</span><span class="p">]</span>
+<span class="n">kx</span> <span class="o">=</span> <span class="mi">289</span>
+<span class="n">kt</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>This file is identical to the kind of file used for plotting statistics (<a class="reference internal" href="../plotting/tutorial.html#plottingtutorial"><em>Observation statistic - plotting</em></a>).
+In the file, for each group, the keyword <strong>level</strong> can be used if you want to restrict
+the computation to less levels for some particular data types.</p>
+<p>The <strong>obsstat</strong> directive has a few problems to solve in order to carry out the instruction:</p>
+<blockquote>
+<div><ul class="simple">
+<li>find the required ODS files</li>
+<li>read and filter variables</li>
+<li>do the maths</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="find-ods-files">
+<span id="configurefiles"></span><h3>Find ODS files<a class="headerlink" href="#find-ods-files" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Many different cases can be encountered regarding the location of ODS files:</p>
+<blockquote>
+<div><ul class="simple">
+<li><ol class="first loweralpha">
+<li>they are in a standard location parameterized in the system, for example in the operational system they are normally in <strong>/home/dao_ops/exvper/run/.../archive/obs</strong>. This is where the system looks for them by default. This is conditioned by specifying <strong>source=&#8217;oper</strong>&#8216;.</li>
+</ol>
+</li>
+<li><ol class="first loweralpha" start="2">
+<li>they are not in a standard location known by the system but they are stored in a consistent way.</li>
+</ol>
+</li>
+<li><ol class="first loweralpha" start="3">
+<li>they are just anywhere.</li>
+</ol>
+</li>
+</ul>
+</div></blockquote>
+<p>The default locations for each different <strong>source</strong> of data can be modified by the
+SemperPy administrator, but each user can define his/her own rules and locations.
+Please refer to <a class="reference internal" href="../config/configure.html#configuration"><em>Configuring SemperPy</em></a> for more information about configuration files.
+To configure the ODS file location, from a configuration directory, you need to create
+a file called: &lt;config&gt;/retrieve/source.def where source is the source of data (e.g. oper, exp, aer, odas).
+Here is an example of the standard configuration for source <strong>oper</strong>:</p>
+<div class="highlight-python"><pre>[fc]
+root_tmpl=/home/dao_ops/&lt;expver&gt;/run/.../archive/forecast
+tree_tmpl=Ydate(@Y)/Mdate(@m)/Ddate(@d)/Hdate(@H)
+file_tmpl=&lt;expver&gt;.&lt;collection&gt;.date(@Y@m@d_@Hz)+valid(@Y@m@d_@H@Mz).nc4
+archive_type=dmf
+
+[an]
+root_tmpl=/home/dao_ops/&lt;expver&gt;/run/.../archive/diag
+tree_tmpl=Ydate(@Y)/Mdate(@m)
+file_tmpl=&lt;expver&gt;.&lt;collection&gt;.date(@Y@m@d_@H@Mz).nc4
+archive_type=dmf
+
+[ob]
+root_tmpl=/home/dao_ops/&lt;expver&gt;/run/.../archive/obs
+tree_tmpl=Ydate(@Y)/Mdate(@m)/Ddate(@d)/Hdate(@H)
+file_tmpl=&lt;expver&gt;.diag_&lt;collection&gt;.date(@Y@m@d_@Hz).ods
+archive_type=dmf
+
+[im]
+root_tmpl=/archive/dao_ops/GEOS-5_pre_ops/GEOSadas-&lt;d1&gt;_&lt;d2&gt;_&lt;d3&gt;/&lt;expver&gt;/obs
+tree_tmpl=Ydate(@Y)/Mdate(@m)/Ddate(@d)/Hdate(@H)
+file_tmpl=&lt;expver&gt;.imp3_txe_&lt;collection&gt;.obs.date-9(@Y@m@d_@Hz)+date+24(@Y@m@d_@Hz)-date(@Y@m@d_@Hz).ods
+archive_type=dmf
+</pre>
+</div>
+<p>Each section (between square brackets) is the name of a data type, each section may contain
+four entries:</p>
+<blockquote>
+<div><ul class="simple">
+<li>root_tmpl is the template for the root directory of the data structure</li>
+<li>tree_tmpl is the directory structure under the root</li>
+<li>file_tmpl is the template to generate the file name.</li>
+<li>archive_type defines the type of data storage. The existing types of storage are currently <strong>dmf</strong> for the dmf archive, in that case it also manages to handle dmget to stage the data first and <strong>filesystem</strong> indicates the file is available directly. Other types could be created such as <strong>ftp</strong> or <strong>scp</strong>.</li>
+</ul>
+</div></blockquote>
+<p>Within the templates, name between <strong>&lt;&gt;</strong> are keyword names you can recognise from the
+<a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> directive. There are two special keywords:</p>
+<blockquote>
+<div><ul class="simple">
+<li>date: the date as given to the <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> directive</li>
+<li>valid: in the case of forecasts, the valid date (date + timestep).</li>
+</ul>
+</div></blockquote>
+<p>The date formatting (e.g. &#64;Y&#64;m&#64;d_&#64;H&#64;Mz) is a standard unix (and Python) date formatting
+which can be found on internet or by issuing the command <strong>man strftime</strong> in the command
+line. The formatting normally expects % (e.g. %Y%m%d_%H%Mz), but the % sign is interpreted
+in a special way by Python in that kind of file, so instead of having to go through some
+heaving character escaping, you can use the character &#64; instead. Please note that the
+keywords date and valid accept arithemtic calculations:</p>
+<div class="highlight-python"><pre>date-9(@Y@m@d_@Hz)  # date expressed in hours so date - 9 hours
+date+24(@Y@m@d_@Hz) # date expressed in hours so date + 24 hours</pre>
+</div>
+<p>For a research experiment, the definition in a file called
+/home/me/semperpy_config/retrieve/exp.def for observation impact ODS files could be:</p>
+<div class="highlight-python"><pre>[im]
+root_tmpl = /discover/nobackup/dmerkova/ObsImpact/data/&lt;expver&gt;/obs/
+tree_tmpl = Ydate-9(@Y)/Mdate-9(@m)/Ddate-9(@d)/Hdate-9(@H)
+file_tmpl = &lt;expver&gt;.imp3_txe_&lt;collection&gt;.obs.date-9(@Y@m@d_@Hz)+date+24(@Y@m@d_@Hz)-date(@Y@m@d_@Hz).ods
+archive_type = filesystem</pre>
+</div>
+<p>You will note that the naming convention of impact files in research is different from the
+convention used in operations.</p>
+<p>The path to the configuration structure need to be set:</p>
+<div class="highlight-python"><pre>setenv SEMPERPY_CONFIG /home/me/semperpy_config:${SEMPERPY_CONFIG}
+or
+export SEMPERPY_CONFIG=/home/me/semperpy_config:${SEMPERPY_CONFIG}</pre>
+</div>
+<p>This covers points (a) and (b). For point (c), the easiest way to tell <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> is to
+include the information in the body of the directive,
+(<a class="reference download internal" href="../_downloads/example3.py"><tt class="xref download docutils literal"><span class="pre">example</span> <span class="pre">3</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># imports the needed modules to compute statistics</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsstat</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">obsstat</span><span class="p">(</span>
+    <span class="c"># ODS file  description</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span><span class="p">,</span>                                   <span class="c"># default</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+    <span class="n">ignore_missing_files</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">root_tmpl</span> <span class="o">=</span> <span class="s">&#39;./&#39;</span><span class="p">,</span>
+    <span class="n">tree_tmpl</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">archive_type</span> <span class="o">=</span> <span class="s">&#39;filesystem&#39;</span><span class="p">,</span>
+    <span class="c"># statistic description</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011030200</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">,</span><span class="s">&#39;n.hem&#39;</span><span class="p">,</span><span class="s">&#39;s.hem&#39;</span><span class="p">,</span><span class="s">&#39;tropics&#39;</span><span class="p">],</span>
+    <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="s">&#39;beneficial&#39;</span><span class="p">],</span>
+    <span class="c"># data storage description (database, text file)</span>
+    <span class="n">storage</span> <span class="o">=</span>  <span class="s">&#39;dbstorer&#39;</span><span class="p">,</span>                             <span class="c"># default</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;im_ops&#39;</span><span class="p">,</span>
+    <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>                                 <span class="c"># default</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">observation</span><span class="p">(</span>
+            <span class="c"># this file describes all the kx, kt combinations we want to use</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;summary.def&#39;</span><span class="p">],</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This means that all the ODS files are in the current directory. Specifying <strong>root_tmpl = &#8216;&#8217;</strong>
+means that there is no directory tree, not specifying file_tmpl means that the files
+have their original names. Both when specifying these keywords in the body of the <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a>
+directive or a configuration file, if a keyword is not specified, it is inherited from the
+SemperPy system configuration file.</p>
+</div></blockquote>
+</div>
+<div class="section" id="read-and-filter-variables">
+<h3>Read and filter variables<a class="headerlink" href="#read-and-filter-variables" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>As mentioned above, the keywords <strong>date</strong>, <strong>domain</strong>, <strong>variable</strong>,
+<strong>level</strong>, <strong>kx</strong> and <strong>kt</strong> specify the actual observations the user
+wants to select to compute statistics. If <strong>level</strong> is not specified,
+it is understood as <em>all available levels for each type of data*</em>.</p>
+<p>The <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> directive splits the data into usable chunks to be able
+to save results which can later be aggregated for plotting. The only dimension
+which is fixed at compute time is <strong>domain</strong>. Once statistics are computed for
+a specific domain, not geographical aggregation can be done. If the user needs
+to plot statistics for a new geographical domain, he / she will have to go back
+to <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> to populate the database with results for that new domain.
+All other dimensions are slit to the smalled chunk, each statistic is store
+for one particular:</p>
+<blockquote>
+<div><ul class="simple">
+<li>date,</li>
+<li>domain,</li>
+<li>variable,</li>
+<li>level,</li>
+<li>kt,</li>
+<li>kx,</li>
+<li>usage</li>
+</ul>
+</div></blockquote>
+<p>All these dimensions can be aggregated at plotting time. Please note that for
+each statistic, the following keywords are also used:</p>
+<blockquote>
+<div><ul class="simple">
+<li>source,</li>
+<li>type,</li>
+<li>expver</li>
+</ul>
+</div></blockquote>
+<p>That way different data from different experiments / source / type can be stored
+in the database without any risk of overwriting. If the <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> directive
+fails because it&#8217;s going to overwrite existing data in the database, take the
+time to think about whether it is normal that the data is already present in the
+database or whether some keywords need changing.</p>
+<p>Please note that some statistics require specific variables from the ODS file. For
+example the Normalized cost requires either <strong>oma</strong> or <strong>omf</strong>
+(specified by the user) and <strong>xvec</strong>. Even if the user does not
+specify <strong>xvec</strong> in the list of variables, if will be extracted anyway
+because <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a> knows that is is required for <strong>normcost</strong>.</p>
+</div></blockquote>
+</div>
+<div class="section" id="do-the-maths">
+<h3>Do the maths<a class="headerlink" href="#do-the-maths" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Once all the chunks of data have been extracted from the ODS files, the <a class="reference internal" href="../directives/obsstat.html#obsstat"><em>obsstat</em></a>
+presents each chunk of data to the statistics system following each statistic
+requirement (needed variables). Each statistic object is is provided with the data
+and a storer (either text file, SQL database or others or all of them).</p>
+<p>Please refer to <a class="reference internal" href="../stats/yourown.html#makeyourownstat"><em>Add your own statistic</em></a> for more information.</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Observation statistic - computing</a><ul>
+<li><a class="reference internal" href="#the-obsstat-directive">The <tt class="docutils literal"><span class="pre">obsstat</span></tt> directive</a><ul>
+<li><a class="reference internal" href="#find-ods-files">Find ODS files</a></li>
+<li><a class="reference internal" href="#read-and-filter-variables">Read and filter variables</a></li>
+<li><a class="reference internal" href="#do-the-maths">Do the maths</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../plotting/plotting.html"
+                        title="previous chapter">Plotting features</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../plotting/tutorial.html"
+                        title="next chapter">Observation statistic - plotting</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/obs/stattutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../plotting/tutorial.html" title="Observation statistic - plotting"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../plotting/plotting.html" title="Plotting features"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

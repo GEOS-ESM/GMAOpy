@@ -1,0 +1,115 @@
+#!/bin/ksh
+
+set -eau
+
+#-------------------------------------------------------------------------------
+# Installs the following libraries, binaries and includes:
+#    - hdf4
+#    - hdf5
+#    - netcdf4
+#    - netCDF4 python module using the libraries above
+# netcdf4 is installed with hdf5, hdf4 and opendap enabled
+# 
+# Prerequisites
+#    Environment:
+#       - LOCAL_LIBS: path to where all the libraries, include and binaries
+#         will be installed
+#       - TMP: a working directory where packages will be downloaded to,
+#         unpacked and compiled
+#    Libraries:
+#       - libcurl for opendap enables in netcdf4
+#       - libjpeg for hdf4
+#       - libsz
+#
+# If changes needed, please edit this script.
+#-------------------------------------------------------------------------------
+
+libs=${LOCAL_LIBS:-Users/claudegibert/unix/local/lib}
+mkdir -p $TMP/install || true
+cd $TMP/install
+
+make_hdf4="yes"
+make_hdf5="yes"
+make_netcdf4="yes"
+make_netcdf_python="yes"
+delete_builds="yes"
+
+hdf4=hdf-4.2.7-patch1
+if [[ ${make_hdf4} = yes ]]; then
+   cd $TMP/install
+   rm -fr ${hdf4}
+   if [[ ! -f ${hdf4}.tar.gz ]]; then
+      wget http://www.hdfgroup.org/ftp/HDF/HDF_Current/src/${hdf4}.tar.gz
+      http://www.hdfgroup.org/ftp/HDF/HDF_Current/src/${hdf4}.tar.gz
+   fi
+   tar zxvf ${hdf4}.tar.gz
+   cd ${hdf4}
+   ./configure --prefix=${libs}/${hdf4} --disable-netcdf --disable-fortran --enable-shared --with-szlib=/usr/local/lib --with-jpeg=/usr/local
+   rm -fr ${libs}/${hdf4}
+   rm -f ${libs}/hdf4
+   make install
+   cd ${libs}
+   ln -s ${hdf4} hdf4
+   cd 
+fi
+
+hdf5=hdf5-1.8.9
+if [[ ${make_hdf5} = yes ]]; then
+   cd $TMP/install
+   rm -fr ${hdf5}
+   if [[ ! -f ${hdf5}.tar.gz ]]; then
+      wget http://www.hdfgroup.org/ftp/HDF5/current/src/${hdf5}.tar.gz
+   fi
+   tar zxvf ${hdf5}.tar.gz
+   cd ${hdf5}
+   ./configure --prefix=${libs}/${hdf5} --with-szlib=/usr/local --enable-hl --enable-shared
+   rm -fr ${libs}/${hdf5}
+   rm -f ${libs}/hdf5
+   make install
+   cd ${libs}
+   ln -s ${hdf5} hdf5
+fi
+
+netcdf4=netcdf-4.2
+if [[ ${make_netcdf4} = yes ]]; then
+   cd $TMP/install
+   if [[ ! -f ${netcdf4}.tar.gz ]]; then
+      wget http://www.unidata.ucar.edu/downloads/netcdf/netcdf-4_2/ftp/${netcdf4}.tar.gz
+      http://www.unidata.ucar.edu/downloads/netcdf/ftp/${netcdf4}.tar.gz
+   fi
+   tar zxvf ${netcdf4}.tar.gz
+   cd ${netcdf4}
+   ./configure --prefix=${libs}/${netcdf4} --enable-shared --enable-netcdf-4 --enable-hdf4 --enable-dap --with-hdf5=${libs}/hdf5 --with-szlib=/usr/local --with-hdf4=${libs}/hdf4 --disable-fortran
+   rm -fr ${libs}/${netcdf4}
+   rm -f ${libs}/netcdf4
+   make install
+   cd ${libs}
+   ln -s ${netcdf4} netcdf4
+fi
+
+netcdf_python=netCDF4-0.9.3
+if [[ ${make_netcdf_python} = yes ]]; then
+   cd $TMP/install
+   if [[ ! -f ${netcdf_python}.tar.gz ]]; then
+      wget http://netcdf4-python.googlecode.com/files/${netcdf_python}.tar.gz
+   fi
+   tar zxvf ${netcdf_python}.tar.gz
+   cd ${netcdf_python}
+   export HDF5_DIR=${libs}/hdf5
+   export NETCDF4_DIR=${libs}/netcdf4
+   export SZIP_DIR=/usr/local
+   python setup.py build
+   echo "-----------------------------------------------------"
+   echo " WARNING: sudo is going to be executed, the admin    "
+   echo "          password needs to be entered               "
+   echo "-----------------------------------------------------"
+   sudo -E python setup.py install
+fi
+
+if [[ ${delete_builds} = "yes" ]]; then
+   cd $TMP/install
+   rm -fr ${hdf4}
+   rm -fr ${hdf5}
+   rm -fr ${netcdf4}
+   rm -fr ${netcdf_python}
+fi

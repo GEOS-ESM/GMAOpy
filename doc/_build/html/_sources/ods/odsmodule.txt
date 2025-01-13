@@ -1,0 +1,17 @@
+:mod:`ods` --- Reading ODS files
+=================================
+
+.. module:: ods
+   :synopsis: Utilities for reading and filtering ODS files.
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents
+********
+
+.. toctree::
+   :maxdepth: 1
+
+   ods
+   odsgroup
+   odsvariable

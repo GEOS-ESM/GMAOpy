@@ -1,0 +1,21 @@
+:mod:`slicing` --- Slicing multi-dimensional arrays
+====================================================
+
+.. module:: slicing
+   :synopsis: Slicing of multi-dimensional arrays along an arbitrary numbers of dimensions.
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents:
+*********
+
+.. toctree::
+   :maxdepth: 2
+
+   introduction
+   slicer
+   arraygenerator
+   slice2array
+   slice2list
+   dimensions/dimensionmodule
+   cf10/cf10module

@@ -1,0 +1,68 @@
+#!/bin/ksh
+
+set -eau
+
+#-------------------------------------------------------------------------------
+# Installs the following libraries, binaries and includes:
+#    - grads binary
+#    - pygrads
+# 
+# Prerequisites
+#    Environment:
+#       - LOCAL_LIBS: path to where all the libraries, include and binaries
+#         will be installed
+#       - TMP: a working directory where packages will be downloaded to,
+#         unpacked and compiled
+#
+# Please note that you will need to add to your PATH variable the path to
+# the grads executable.
+#
+# If changes needed, please edit this script.
+#-------------------------------------------------------------------------------
+
+libs=${LOCAL_LIBS:-Users/claudegibert/unix/local/lib}
+mkdir -p $TMP/install || true
+cd $TMP/install
+
+make_grads="yes"
+make_pygrads="yes"
+delete_builds="yes"
+
+grads=grads-2.0.a9.oga.1
+if [[ ${make_grads} = yes ]]; then
+   cd $TMP/install
+   rm -fr ${grads}
+   filename=${grads}-bundle-i386-apple-darwin9.8.0.tar.gz
+   if [[ ! -f ${filename} ]]; then
+      wget http://downloads.sourceforge.net/project/opengrads/grads2/2.0.a9.oga.1/grads-2.0.a9.oga.1-bundle-i386-apple-darwin9.8.0.tar.gz
+   fi
+   tar zxvf ${filename}
+   cd ${grads}
+   rm -fr ${libs}/opengrads
+   mkdir -p ${libs}/opengrads
+   cp -r Contents/* ${libs}/opengrads
+fi
+
+pygrads=pygrads-1.1.4
+if [[ ${make_pygrads} = yes ]]; then
+   cd $TMP/install
+   rm -fr ${pygrads}
+   filename=${pygrads}.tar.gz
+   if [[ ! -f ${filename} ]]; then
+      wget http://sourceforge.net/projects/opengrads/files/python-grads/1.1.4/${filename}
+   fi
+   tar zxvf ${filename}
+   cd ${pygrads}
+   python setup.py build
+   echo "-----------------------------------------------------"
+   echo " WARNING: sudo is going to be executed, the admin    "
+   echo "          password needs to be entered               "
+   echo "-----------------------------------------------------"
+   sudo -E python setup.py install
+fi
+
+if [[ ${delete_builds} = "yes" ]]; then
+   cd $TMP/install
+   rm -fr ${grads}
+   rm -fr ${pygrads}
+fi

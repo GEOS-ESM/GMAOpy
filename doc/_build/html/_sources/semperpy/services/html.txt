@@ -1,0 +1,84 @@
+:mod:`The HTML class` 
+=====================
+
+.. module:: services.html
+
+.. class:: HTML(object)
+
+    A very lightweight class to help with HTML page rendering. It relies on an environment
+    variable called **SEMPERPY_WEB** which is expected to have two subdirectories:
+        
+        * css containing cascading style sheet files (css)
+        * templates containing .tmpl files as described further
+
+    Some sample files are part of the distribution in the *web* directory.
+
+Public methods
+--------------
+
+    .. staticmethod:: list(items):
+
+        :param items: list of elements to render in an HTML list
+
+        Returns an HMTL string using <ul> and <li> tags. List elements are the elements
+        of the list *items*. The elements are expected to be strings or lists, if these 
+        are lists, this method works recursively.
+
+    .. classmethod:: webPath()
+
+        Returns the contents of the **SEMPERPY_WEB** environmement variable always 
+        ending with '/'. The server install a static page handler in that location, so
+        any file (script, css, html etc...) will be served from there.
+
+    .. classmethod:: substituteVariables(template_name,**kargs)
+
+        :param template_name: name of the template to be used (**SEMPERPY_WEB**/templates/name.tmpl)
+        :type template_name: string
+
+        Substitutes keywords in the template files which are part of \*\*kargs and part of the 
+        contents of the templare with their value, if *templates/body.tmpl* contains::
+
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+            <html>
+            <head>
+            <title>__title__</title>
+            <link rel="StyleSheet" href="css/style.css" type="text/css" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            </head>
+
+            <body>
+            <h1>__welcome__</h1>
+            __content__
+            </body>
+
+        The code::
+
+            from semperpy.services.hmtl import HMTL
+
+            print HTML.substituteVariables('body',welcome="Welcome to HTML",content="This is an example",title="example")
+
+        produces:
+
+            .. image:: template.tiff
+
+    .. classmethod:: keywords(text)
+
+        :param text: any text, more likeky the contents of a template file.
+        :type text: string
+        
+        returns the list of keywords used in the strings (keywords are prefixed and suffixed with '__')::
+
+            from semperpy.services.html import HTML
+
+            print HTML.keywords("The __weather__ is nice __today__")
+            ['weather','nice']
+
+Private methods
+---------------
+
+    .. classmethod:: template(name)
+
+        :param name: the name of the template file (without .tmpl)
+        :type name: string
+
+        Reads and returns the contents of a template file.

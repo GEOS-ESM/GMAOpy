@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>texttemplate — Handling text templates to generate titles &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="core — Core classes" href="coremodule.html" />
+    <link rel="next" title="truthparser — Parsing Boolean expressions" href="truthparser.html" />
+    <link rel="prev" title="json — Conversion to and from json" href="json.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="truthparser.html" title="truthparser — Parsing Boolean expressions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="json.html" title="json — Conversion to and from json"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-core.texttemplate">
+<span id="texttemplate-handling-text-templates-to-generate-titles"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">texttemplate</span></tt> &#8212; Handling text templates to generate titles<a class="headerlink" href="#module-core.texttemplate" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="the-texttemplate-class">
+<h2>The TextTemplate class<a class="headerlink" href="#the-texttemplate-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="core.texttemplate.TextTemplate">
+<em class="property">class </em><tt class="descclassname">core.texttemplate.</tt><tt class="descname">TextTemplate</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#core.texttemplate.TextTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class <strong>TextTemplate</strong> provides basic mechanisms to substitute text in
+text templates from data supplied in dictionaries. It is also meant to be
+derived to treat special cases.</p>
+<p>The text template can contain any text, any text between &lt; and &gt; will be
+interpreted as the name of a variable. If you need to use the characters &lt; or &gt;
+in the template, you need to backslash them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;If &lt;value2&gt; \&lt; &lt;value1&gt; then something went wrong&#39;</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="core.texttemplate.TextTemplate.processText">
+<tt class="descname">processText</tt><big>(</big><em>template</em>, <em>directive</em>, <em>**kargs</em><big>)</big><a class="headerlink" href="#core.texttemplate.TextTemplate.processText" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>template</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; the text to use as a template</li>
+<li><strong>directive</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; a dictionary where entries with names of variables found in the template can be found</li>
+<li><strong>kargs</strong> (<em>named parameters</em>) &#8211; key / value pair to add to or replace in directive</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method matches all variable in the text <strong>template</strong> and replaces each
+occurence with:</p>
+<blockquote>
+<div><ul class="simple">
+<li>if a method with the name of a variable exists in the class, the result of the call to that method: method(key,directive)</li>
+<li>otherwise if a key in the directive exists, the value for that key</li>
+<li>an empty string.</li>
+</ul>
+</div></blockquote>
+<p>Example:</p>
+<div class="highlight-python"><pre>from semperpy.core.texttemplate import TextTemplate
+
+class MyTemplate(TextTemplate):
+
+    def value2(self,key,directive):
+        return directive['value1'] * 2
+
+t = MyTemplate()
+dir = { 'value1': 12 }
+print t.processText('If &lt;value2&gt; \&lt; &lt;value1&gt; then something went wrong',dir)
+--&gt; If 24 &lt; 12 then something went wrong</pre>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.texttemplate.TextTemplate.despatchVariables">
+<tt class="descname">despatchVariables</tt><big>(</big><em>a</em>, <em>b</em>, <em>directive</em><big>)</big><a class="headerlink" href="#core.texttemplate.TextTemplate.despatchVariables" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; text template</li>
+<li><strong>b</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; text template</li>
+<li><strong>directive</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; a name / value association</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This methods finds all variables in text templates a and b and for the variables
+which are found in both templates applies the following algorithm:</p>
+<blockquote>
+<div><ul class="simple">
+<li>if the variable is not in the directive, the variable stays in b and is removed from a</li>
+<li>if the variable is in the directive and the entry has only one element, the variable stays in a and is removed from b</li>
+<li>if the variable is in the directive and the entry has more than one element, the variable stays in b and is removed from b.</li>
+</ul>
+</div></blockquote>
+<p>This method is intended to work with titles and legends on plots. If a variable
+is unique for the whole plot, it is displayed in the plot title, if it is not
+unique (different values for different curves), it is displayed as part of
+the legend. There might be more applications of this.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>from semperpy.core.texttemplate import TextTemplate
+
+class MyTemplate(TextTemplate):
+
+    def value2(self,key,directive):
+        return directive['value1'] * 2
+
+t = MyTemplate()
+dir = dict(
+    expver = 'ct12',
+    level = [500,1000],
+)
+a = '&lt;expver&gt; &lt;domain_name&gt; &lt;level&gt;'
+b = '&lt;expver&gt; &lt;domain_name&gt; &lt;level&gt;'
+a,b = t.despatchVariables(a,b,dir)
+print a
+print b
+--&gt; &lt;expver&gt;
+--&gt; &lt;domain_name&gt; &lt;level&gt;</pre>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Note :</th><td class="field-body">despatchVariables is aliased to dispatchVariables</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">texttemplate</span></tt> &#8212; Handling text templates to generate titles</a><ul>
+<li><a class="reference internal" href="#the-texttemplate-class">The TextTemplate class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="json.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">json</span></tt> &#8212; Conversion to and from json</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="truthparser.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">truthparser</span></tt> &#8212; Parsing Boolean expressions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/core/texttemplate.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="truthparser.html" title="truthparser — Parsing Boolean expressions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="json.html" title="json — Conversion to and from json"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

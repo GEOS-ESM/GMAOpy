@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Add your own statistic &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../tutorials.html" />
+    <link rel="next" title="Notes on customizing the ‘compute’ scripts" href="../exp/notes.html" />
+    <link rel="prev" title="Observation statistic - plotting" href="../plotting/tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../exp/notes.html" title="Notes on customizing the ‘compute’ scripts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../plotting/tutorial.html" title="Observation statistic - plotting"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="add-your-own-statistic">
+<span id="makeyourownstat"></span><h1>Add your own statistic<a class="headerlink" href="#add-your-own-statistic" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Whether you are a seasoned Python programmer or not, it may well be that if you
+would like to experiment with statistics and try to compute your own
+quantities, you will find that it is not very difficult to implement your own
+statistic in SemperPy within the context of the framework in standard cases. The
+good news is that when you write your own statistic even in a Python file in your home
+directory, it becomes completely part of the system:</p>
+<blockquote>
+<div><ul class="simple">
+<li>its name is known to the user</li>
+<li>it is stored in the database just like other statistics</li>
+<li>it is plotted automatically (unless it requires a very special plotting technique).</li>
+</ul>
+</div></blockquote>
+<p>Statistics objects need to provide two main methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li>compute_raw: compute intermediate results (if possible) using one or more variables from a source file (e.g. ODS, gridded data)</li>
+<li>compute_db: aggregate data for a final statistic using data which was just retrieved from the database.</li>
+</ul>
+</div></blockquote>
+<p>In both cases, your statistic object will need to express requirements to the system:</p>
+<blockquote>
+<div><ul class="simple">
+<li>when computing from source files, which variables are required to compute the statistic</li>
+<li>when computing from the database, which intermediate results need to be retrieved for the final statistic to be formed.</li>
+</ul>
+</div></blockquote>
+<p>Finally, within your statistic object, there are methods which are provided to help you sort out the data and generate the right output. It might be necessary for you to get familiar with the <strong>numpy</strong> package (<a class="reference external" href="http://www.numpy.org">http://www.numpy.org</a>) to be able to &#8220;express&#8221; computations.</p>
+</div></blockquote>
+</div>
+<div class="section" id="fraction-of-beneficial-observations">
+<h2>Fraction of beneficial observations<a class="headerlink" href="#fraction-of-beneficial-observations" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>This tutorial will attempt to help you step by step to implement you own statistic class and
+integrate it into the system, but first, let&#8217;s take a look at an existing statistic:
+<strong>fraction of beneficial observation</strong> for <strong>beneficial</strong>. This statistic is quite simple,
+it is the ratio of observations which are beneficial to the system (the observation impact
+is less than or equal to 0) over the total number of observation. To compute this statistic
+we need a two step process:</p>
+<blockquote>
+<div><ul class="simple">
+<li>for each piece of data (one kt, one kx, one level, one date etc...) we need to count the number of observations and the number of values less than or equal to 0. We store these two quantities in the database.</li>
+<li>for each data retrieval from the database (SemperPy aggregates data according to user&#8217;s specification), we compute the total number of observations, the total number of observations with an impact less than or equal to 0 and finally return the ratio which is a percentage.</li>
+</ul>
+</div></blockquote>
+<p>It can prove useful to keep an eye on the documentation of
+<a class="reference internal" href="statistics.html#gmaopy.stats.statistics.Statistics" title="gmaopy.stats.statistics.Statistics"><tt class="xref py py-class docutils literal"><span class="pre">gmaopy.stats.statistics.Statistics</span></tt></a> while reading this tutorial.</p>
+<p>The source file for this statistic:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.stats.statistics</span> <span class="kn">import</span> <span class="n">Statistics</span>
+
+<span class="k">class</span> <span class="nc">Beneficial</span><span class="p">(</span><span class="n">Statistics</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Computes the number of values which are less than zero</span>
+<span class="sd">        from ODS files. From the database it then divides the</span>
+<span class="sd">        sum of the values by the total number of values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;beneficial&#39;</span>
+
+    <span class="k">def</span> <span class="nf">unit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;%&#39;</span>
+
+    <span class="k">def</span> <span class="nf">moreIsBetter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">compute_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">variables</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">storer</span><span class="p">,</span><span class="n">record</span><span class="p">):</span>
+        <span class="c"># mask_greater rejects anything which is greater than the value,</span>
+        <span class="c"># this keeps values below 0.0</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="n">variables</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_greater</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">compressed</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">storer</span><span class="p">,</span><span class="n">record</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">count</span><span class="o">=</span><span class="n">variable</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">compute_db</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">columns</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;value&#39;</span><span class="p">])</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">missing_value</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">/</span> <span class="n">count</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">Statistics</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;obsstat&#39;</span><span class="p">,</span><span class="s">&#39;beneficial&#39;</span><span class="p">,</span><span class="n">Beneficial</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Explanation:</p>
+<blockquote>
+<div><ul class="simple">
+<li>line 11: the official name of the statistic</li>
+<li>line 14: we override the standard unit associated with the data (J/kg) with percents, since it is a ratio</li>
+<li>line 17: the higher the statistic the better, so we need to tell the system so that plots, colorbars etc... will be oriented the right way</li>
+<li>line 22: variable is a numpy masked array containing all the values of impact for variable name (here the user specifies &#8216;xvec&#8217;)</li>
+<li>line 23: we count the number of impacts less than or equal to 0</li>
+<li>line 24: we remove masked (missing) values</li>
+<li>line 25 we call the storer with the values we computed (count is the total number of observations, value is the number of beneficial observations). variable.shape[0] is the size of the array passed to us, it is the total number of observations, a.shape[0] is the size of the array containing beneficial observations.</li>
+<li>lines 28 and 29: we use a utility method from the Statistic class to build numpy arrays, one for the number of beneficial observations, one for the total number of observations</li>
+<li>lines 30 and 31: it is possible that the arrays are empty, if the user specified a missing day or experiment, etc... In that case, we need to return an array of one value: the missing value.</li>
+<li>lines 32 to 34: we compute the ratio and return the result (it is a numpy array of one value).</li>
+<li>line 36: we register our statistic so that SemperPy integrates it into the system. Please note that our python file will need to be imported by the application, otherwise this registration wouldn&#8217;t happen.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">we didn&#8217;t need to define the method <strong>requirements_db</strong> because by default it returns the name of the statistic we are implementing which is what we want.</td>
+</tr>
+</tbody>
+</table>
+<p>We just saw a relatively easy example of a statistic computing two components of the final result, one
+from the raw data, and one from the database.</p>
+</div></blockquote>
+</div>
+<div class="section" id="variance">
+<h2>Variance<a class="headerlink" href="#variance" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Let&#8217;s implement a new statistic in the system, computing the variance. This is a good example
+because in the context of SemperPy it is a little more complicated than statistics like <em>root
+mean square</em> or <em>mean</em> because it requires two different sets of intermediate results to
+produce the final result.</p>
+<p>Step one involves defining the statistic in the system and its characteristics
+(<a class="reference download internal" href="../_downloads/variance1.py"><tt class="xref download docutils literal"><span class="pre">variance.py</span></tt></a>):</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.stats.statistics</span> <span class="kn">import</span> <span class="n">Statistics</span>
+
+<span class="k">class</span> <span class="nc">Variance</span><span class="p">(</span><span class="n">Statistics</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;variance&#39;</span>
+
+    <span class="k">def</span> <span class="nf">requirements_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="s">&#39;sumsquare&#39;</span><span class="p">]</span>
+
+<span class="n">Statistics</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;obsstat&#39;</span><span class="p">,</span><span class="s">&#39;variance&#39;</span><span class="p">,</span><span class="n">Variance</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>What we have done so far is:</p>
+<blockquote>
+<div><ul class="simple">
+<li>line 6: define the official name of the statistic: <em>variance</em></li>
+<li>line 9: tell the system that to compute the variance from the intermediate results in the database, we need two different statistics: the sum and the sum of squares, both statistics exists</li>
+<li>line 11: we register the statistic in the system</li>
+</ul>
+</div></blockquote>
+<p>Let&#8217;s check that what we have so far is working:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">variance1</span> <span class="kn">import</span> <span class="n">Variance</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsstat</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">obsstat</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;unknown&#39;</span><span class="p">],</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;test_obsstat_exp&#39;</span><span class="p">,</span>
+    <span class="n">ignore_missing_files</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span><span class="p">,</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">observation</span><span class="p">(</span>
+            <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+            <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;xvec&#39;</span><span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Please note:</p>
+<blockquote>
+<div><ul class="simple">
+<li>line 1: we import variance1 so that the statistic can register into SemperPy</li>
+<li>line 7: we use an unknown statistic name on purpose</li>
+</ul>
+</div></blockquote>
+<p>The output:</p>
+<div class="highlight-python"><pre>... skiping stack dump ...
+IndexError: Unknown statistic "unknown" in category "obsstat", known:
+    count, rms, beneficial, sum, impact_per_anl,
+    count_per_anl, rate, impact_per_ob, sumsquare,
+    esigb, variance, esigo, fractional_impact,
+    normcost, concat, mean</pre>
+</div>
+<p>This is a good sign, the system lists all the known statistics for that category, and <strong>variance</strong>
+is part of the list, so our statistic registered properly. Let&#8217;s now fix this and replace the
+unknown statistic with our <strong>variance</strong> and run it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">variance1</span> <span class="kn">import</span> <span class="n">Variance</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsstat</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">obsstat</span><span class="p">(</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;global&#39;</span><span class="p">],</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;variance&#39;</span><span class="p">],</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+    <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;test_obsstat_exp&#39;</span><span class="p">,</span>
+    <span class="n">ignore_missing_files</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">overwrite</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;oper&#39;</span><span class="p">,</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">observation</span><span class="p">(</span>
+            <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+            <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;xvec&#39;</span><span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The output shows (this is run on a laptop so the paths displayed are different from the paths
+on NCCS):</p>
+<div class="highlight-python"><pre>no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D01/H00/e562p5_fp.imp3_txe_conv.obs.20110228_15z+20110302_00z-20110301_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D02/H00/e562p5_fp.imp3_txe_conv.obs.20110301_15z+20110303_00z-20110302_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D03/H00/e562p5_fp.imp3_txe_conv.obs.20110302_15z+20110304_00z-20110303_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D04/H00/e562p5_fp.imp3_txe_conv.obs.20110303_15z+20110305_00z-20110304_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D05/H00/e562p5_fp.imp3_txe_conv.obs.20110304_15z+20110306_00z-20110305_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D06/H00/e562p5_fp.imp3_txe_conv.obs.20110305_15z+20110307_00z-20110306_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D07/H00/e562p5_fp.imp3_txe_conv.obs.20110306_15z+20110308_00z-20110307_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D08/H00/e562p5_fp.imp3_txe_conv.obs.20110307_15z+20110309_00z-20110308_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D09/H00/e562p5_fp.imp3_txe_conv.obs.20110308_15z+20110310_00z-20110309_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D10/H00/e562p5_fp.imp3_txe_conv.obs.20110309_15z+20110311_00z-20110310_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D11/H00/e562p5_fp.imp3_txe_conv.obs.20110310_15z+20110312_00z-20110311_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D12/H00/e562p5_fp.imp3_txe_conv.obs.20110311_15z+20110313_00z-20110312_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D13/H00/e562p5_fp.imp3_txe_conv.obs.20110312_15z+20110314_00z-20110313_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D14/H00/e562p5_fp.imp3_txe_conv.obs.20110313_15z+20110315_00z-20110314_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D15/H00/e562p5_fp.imp3_txe_conv.obs.20110314_15z+20110316_00z-20110315_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D16/H00/e562p5_fp.imp3_txe_conv.obs.20110315_15z+20110317_00z-20110316_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D17/H00/e562p5_fp.imp3_txe_conv.obs.20110316_15z+20110318_00z-20110317_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D18/H00/e562p5_fp.imp3_txe_conv.obs.20110317_15z+20110319_00z-20110318_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D19/H00/e562p5_fp.imp3_txe_conv.obs.20110318_15z+20110320_00z-20110319_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D20/H00/e562p5_fp.imp3_txe_conv.obs.20110319_15z+20110321_00z-20110320_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D21/H00/e562p5_fp.imp3_txe_conv.obs.20110320_15z+20110322_00z-20110321_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D22/H00/e562p5_fp.imp3_txe_conv.obs.20110321_15z+20110323_00z-20110322_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D23/H00/e562p5_fp.imp3_txe_conv.obs.20110322_15z+20110324_00z-20110323_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D24/H00/e562p5_fp.imp3_txe_conv.obs.20110323_15z+20110325_00z-20110324_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D25/H00/e562p5_fp.imp3_txe_conv.obs.20110324_15z+20110326_00z-20110325_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D26/H00/e562p5_fp.imp3_txe_conv.obs.20110325_15z+20110327_00z-20110326_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D27/H00/e562p5_fp.imp3_txe_conv.obs.20110326_15z+20110328_00z-20110327_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D28/H00/e562p5_fp.imp3_txe_conv.obs.20110327_15z+20110329_00z-20110328_00z.ods',)
+flushed 2000 in database "test_obsstat_exp" overwrite mode
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D29/H00/e562p5_fp.imp3_txe_conv.obs.20110328_15z+20110330_00z-20110329_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D30/H00/e562p5_fp.imp3_txe_conv.obs.20110329_15z+20110331_00z-20110330_00z.ods',)
+no staging necessary
+('/Users/claudegibert/Desktop/obs/impact/Y2011/M03/D31/H00/e562p5_fp.imp3_txe_conv.obs.20110330_15z+20110401_00z-20110331_00z.ods',)
+flushed 232 in database "test_obsstat_exp" overwrite mode</pre>
+</div>
+<p>What happened here? we didn&#8217;t even finish implementing the calculation of our statistic and
+the obsstat program runs and completes quite happily, having written <em>results</em> in the database.
+This is because the <strong>variance</strong> stated in line 12 that it relied on two different statistics which
+are computed on raw data: sum and sum of squares. So the <strong>variance</strong> is only invoked during
+plotting. If we check the database:</p>
+<div class="highlight-python"><pre>spy_sql test_obsstat_exp
+
+semper=#select distinct statistic from test_obsstat_exp.v_view where expver='e562p5_fp';
+ statistic
+ -----------
+  sum
+  sumsquare
+  (2 rows)</pre>
+</div>
+<p>Let&#8217;s prepare a plotting script (copied from example1 in <a class="reference internal" href="../plotting/tutorial.html#plottingtutorial"><em>Observation statistic - plotting</em></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">variance</span>
+<span class="kn">from</span> <span class="nn">gmaopy.modules.obsplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;im&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;xvec&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;global&#39;</span><span class="p">,</span>
+        <span class="n">expver</span> <span class="o">=</span> <span class="s">&#39;e562p5_fp&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="s">&#39;variance&#39;</span><span class="p">,</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011030100</span><span class="p">,</span><span class="mi">2011033100</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;test_obsstat_exp&#39;</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">line</span><span class="p">(</span>
+            <span class="n">plotdata</span> <span class="o">=</span> <span class="n">obsdata</span><span class="p">(</span>
+                <span class="n">kx</span> <span class="o">=</span> <span class="mi">220</span><span class="p">,</span>
+                <span class="n">kt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;plotvariance.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>If we run it, the expected result is obtained (the method compute_db used to calculate final
+statistics from the database has not been implemented, yet):</p>
+<div class="highlight-python"><pre>python plotvariance.py
+
+... skip stack dump ...
+semperpy.core.exceptions.AbstractMethod: Method &lt;function compute_db at 0x1071b3c80&gt; is abstract, the subclass should implement it</pre>
+</div>
+<p>We get this informative message, because in <a class="reference internal" href="statistics.html#gmaopy.stats.statistics.Statistics" title="gmaopy.stats.statistics.Statistics"><tt class="xref py py-class docutils literal"><span class="pre">gmaopy.stats.statistics.Statistics</span></tt></a>,
+the method <strong>compute_db</strong> is declared as an abstractMethod. So it is now time to implement
+the actual calculation of the statistic please see the comments in the code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">compute_db</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">columns</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
+    <span class="c"># separate sums from sumsquares</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">variable</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;statistic&#39;</span><span class="p">])</span>
+    <span class="c"># we expect two entries, sum and sumsquare, let&#39;s be careful</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="ow">not</span> <span class="s">&#39;sum&#39;</span> <span class="ow">in</span> <span class="n">values</span> <span class="ow">or</span> <span class="ow">not</span> <span class="s">&#39;sumsquare&#39;</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;could not find the statistics needed to compute the variance&#39;</span><span class="p">)</span>
+    <span class="c"># get all the values of sum and their number</span>
+    <span class="n">sums</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;value&#39;</span><span class="p">])</span>
+    <span class="n">sum_counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">])</span>
+    <span class="c"># get all the values of squares of sum and their number</span>
+    <span class="n">sumsquares</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;sumsquare&#39;</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;value&#39;</span><span class="p">])</span>
+    <span class="n">sumsquare_counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;sumsquare&#39;</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">])</span>
+    <span class="c"># compute the total counts</span>
+    <span class="n">sum_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum_counts</span><span class="p">)</span>
+    <span class="n">sumsquare_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sumsquare_counts</span><span class="p">)</span>
+    <span class="c"># paranoia helps writing robust code, if we don&#39;t have the same number of sum and sumsquares</span>
+    <span class="c"># something went wrong, probably when populating the database, this result would be unreliable</span>
+    <span class="k">if</span> <span class="n">sum_count</span> <span class="o">!=</span> <span class="n">sumsquare_count</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Found a different number of sums and sum squares </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sum_count</span><span class="p">,</span><span class="n">sumsquare_count</span><span class="p">))</span>
+    <span class="c"># from now on we only need sum_count since we know it is equal to sumsquare_count</span>
+    <span class="c"># it is possible that no data was found, result should be reported  missing</span>
+    <span class="k">if</span> <span class="n">sum_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">missing_value</span><span class="p">)</span>
+    <span class="c"># just compute the result</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sums</span><span class="p">)</span> <span class="o">/</span> <span class="n">sum_count</span>
+    <span class="c"># we return an array of one element</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">sumsquare</span> <span class="o">-</span> <span class="p">(</span><span class="n">mean</span> <span class="o">*</span> <span class="n">mean</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">sumcount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Finally, the whole statistic in short without all the explanations and less step by step
+operations (<a class="reference download internal" href="../_downloads/variance.py"><tt class="xref download docutils literal"><span class="pre">variance.py</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">gmaopy.stats.statistics</span> <span class="kn">import</span> <span class="n">Statistics</span>
+
+<span class="k">class</span> <span class="nc">Variance</span><span class="p">(</span><span class="n">Statistics</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">requirements_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">,</span><span class="s">&#39;sumsquare&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;variance&#39;</span>
+
+    <span class="k">def</span> <span class="nf">compute_db</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">columns</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">variable</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;statistic&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="ow">not</span> <span class="s">&#39;sum&#39;</span> <span class="ow">in</span> <span class="n">values</span> <span class="ow">or</span> <span class="ow">not</span> <span class="s">&#39;sumsquare&#39;</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;could not find the statistics needed to compute the variance&#39;</span><span class="p">)</span>
+        <span class="nb">sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;value&#39;</span><span class="p">]))</span>
+        <span class="n">sum_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;sum&#39;</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">]))</span>
+        <span class="n">sumsquare</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;sumsquare&#39;</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;value&#39;</span><span class="p">]))</span>
+        <span class="n">sumsquare_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data2np</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;sumsquare&#39;</span><span class="p">],</span><span class="n">columns</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">sum_count</span> <span class="o">!=</span> <span class="n">sumsquare_count</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Found a different number of sums and sum squares </span><span class="si">%d</span><span class="s"> </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sum_count</span><span class="p">,</span><span class="n">sumsquare_count</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">sum_count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>   
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">missing_value</span><span class="p">)</span>
+        <span class="n">mean</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">/</span> <span class="n">sum_count</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">sumsquare</span> <span class="o">-</span> <span class="p">(</span><span class="n">mean</span> <span class="o">*</span> <span class="n">mean</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">sumcount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">Statistics</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;obsstat&#39;</span><span class="p">,</span><span class="s">&#39;variance&#39;</span><span class="p">,</span><span class="n">Variance</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is probably not too bad considering that it implements a new statistic in the system
+which is stored in the database and recognized by plotting scripts. If we replace the line:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">variance1</span>
+</pre></div>
+</div>
+<p>with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">variance</span>
+</pre></div>
+</div>
+<p>and run it we obtain:</p>
+<a class="reference internal image-reference" href="../_images/plotvariance.png"><img alt="../_images/plotvariance.png" class="align-center" src="../_images/plotvariance.png" style="width: 560.0px; height: 420.0px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="standard-deviation">
+<h2>Standard Deviation<a class="headerlink" href="#standard-deviation" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Once we have the variance, we might also want to compute the standard deviation, but how
+can this be done without rewriting the calculations for the radiance? Object inheritance
+is probably the best approach in that case</p>
+<blockquote>
+<div><div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">variance</span> <span class="kn">import</span> <span class="n">Variance</span>
+
+<span class="k">class</span> <span class="nc">StandardDeviation</span><span class="p">(</span><span class="n">Variance</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;stddev&#39;</span>
+
+    <span class="k">def</span> <span class="nf">compute_db</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">columns</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">StandardDeviation</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">compute_db</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="n">variable</span><span class="p">)</span>
+        <span class="c"># we don&#39;t want to return the square root of missing value, it would mess things up</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">missing_value</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="n">Variance</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;obsstat&#39;</span><span class="p">,</span><span class="s">&#39;stddev&#39;</span><span class="p">,</span><span class="n">StandardDeviation</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Explanation:</p>
+<blockquote>
+<div><ul class="simple">
+<li>line 4: states that the StandardDeviation inherits from Variance (and therefore all its methods)</li>
+<li>line 7: we redefine the method name() to return the correct name</li>
+<li>line 10: we call the method <strong>compute_db</strong> from the Variance class and therefore obtain the variance.</li>
+<li>line 13: we finally apply the square root and return the result.</li>
+<li>line 17: Variance is a subclass of Statistics, therefore calling <strong>Statistics.register</strong> or <strong>Variance.register</strong> is equivalent.</li>
+</ul>
+</div></blockquote>
+<p>If we run the script (<a class="reference download internal" href="../_downloads/plotstddev.py"><tt class="xref download docutils literal"><span class="pre">plotstddev.py</span></tt></a>):</p>
+<a class="reference internal image-reference" href="../_images/plotstddev.png"><img alt="../_images/plotstddev.png" class="align-center" src="../_images/plotstddev.png" style="width: 560.0px; height: 420.0px;" /></a>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="reusing-statistics">
+<h2>Reusing statistics<a class="headerlink" href="#reusing-statistics" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>If we examine the code calculating the variance, there is nothing in there which is specific
+to observations. The method compute_db receives data from the database, whether those
+partial statistics were computed from a numpy array containing observations or a numpy
+array containing gridded data from a netcdf file, the code is the same for computing the
+variance. In that case, the same class can be used for computing the variance for different
+types of data. In order to make this work, you need to register the same Variance class
+under different groups:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Statistics</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;obsstat&#39;</span><span class="p">,</span><span class="s">&#39;variance&#39;</span><span class="p">,</span><span class="n">Variance</span><span class="p">)</span>
+<span class="n">Statistics</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;product&#39;</span><span class="p">,</span><span class="s">&#39;variance&#39;</span><span class="p">,</span><span class="n">Variance</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same applies for the Standard Deviation.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Add your own statistic</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#fraction-of-beneficial-observations">Fraction of beneficial observations</a></li>
+<li><a class="reference internal" href="#variance">Variance</a></li>
+<li><a class="reference internal" href="#standard-deviation">Standard Deviation</a></li>
+<li><a class="reference internal" href="#reusing-statistics">Reusing statistics</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../plotting/tutorial.html"
+                        title="previous chapter">Observation statistic - plotting</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../exp/notes.html"
+                        title="next chapter">Notes on customizing the &#8216;compute&#8217; scripts</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/stats/yourown.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../exp/notes.html" title="Notes on customizing the ‘compute’ scripts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../plotting/tutorial.html" title="Observation statistic - plotting"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{
+	"directive": "rivers",
+    "doc": true,
+	"keywords" : {
+        "linewidth": {
+            "unique": true,
+            "default_value": 0.5
+        },
+        "color": {
+            "unique": true,
+            "default_value": "b"
+        },
+        "antialiased": {
+            "unique": true,
+            "default_value": true
+        },
+        "zorder": {
+            "unique": true,
+            "default_value": null
+        }
+	}
+}

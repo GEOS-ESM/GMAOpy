@@ -1,0 +1,5 @@
+[ob]
+root_tmpl=/home/dao_ops/<expver>/run/.../archive/obs
+tree_tmpl=Ydate(@Y)/Mdate(@m)
+file_tmpl=<expver>.aod.obs.date(@Y@m@d_@H00z).ods
+archive_type=dmf

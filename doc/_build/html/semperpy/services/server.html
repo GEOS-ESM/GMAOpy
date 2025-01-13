@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Server class &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="The Services module — Client-Server tools" href="services.html" />
+    <link rel="next" title="The Response class" href="response.html" />
+    <link rel="prev" title="The Services module — Client-Server tools" href="services.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="The Response class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="services.html" title="The Services module — Client-Server tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="servicesmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">services</span></tt> &#8212; Client-Server utilities</a> &raquo;</li>
+          <li><a href="services.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Services</span> <span class="pre">module</span></tt> &#8212; Client-Server tools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-services.server">
+<span id="the-server-class"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">Server</span> <span class="pre">class</span></tt><a class="headerlink" href="#module-services.server" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="services.server.Server">
+<em class="property">class </em><tt class="descclassname">services.server.</tt><tt class="descname">Server</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#services.server.Server" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>Server</strong> class is the main public class to be instanciated and use directly
+by the user.</p>
+</dd></dl>
+
+<div class="section" id="public-methods">
+<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descclassname">services.server.</tt><tt class="descname">Server</tt><big>(</big><em>response=ImmediateAndNonBlocking()</em><big>)</big></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>response</strong> (a subclass of <tt class="xref py py-class docutils literal"><span class="pre">Services.Response.Response</span></tt>.) &#8211; an instance of a class which can handle a response for POST request</td>
+</tr>
+</tbody>
+</table>
+<p>When creating an instance, a response should be specified by the user. See <tt class="xref py py-mod docutils literal"><span class="pre">Services.Responses</span></tt> for more information. By default, the server will not block and handle services in a different thread immediately.
+The server installs a handler to serve static pages at the location specified
+by the environment variable <strong>SEMPERPY_WEB</strong>, so any file from that location down
+can be served as static pages (see <tt class="xref py py-class docutils literal"><span class="pre">Services.HTML.HTML</span></tt> for more information).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="services.server.run">
+<tt class="descclassname">services.server.</tt><tt class="descname">run</tt><big>(</big><em>port=8080</em><big>)</big><a class="headerlink" href="#services.server.run" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>port</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the port number on which the server should listen for connections</td>
+</tr>
+</tbody>
+</table>
+<p>Starts the server on the specified port.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="services.server.registerService">
+<em class="property">classmethod </em><tt class="descclassname">services.server.</tt><tt class="descname">registerService</tt><big>(</big><em>service</em>, <em>callable</em><big>)</big><a class="headerlink" href="#services.server.registerService" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>service</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; name of the service, or list describing a hierarchy of names of services</li>
+<li><strong>callable</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#callable" title="(in Python v2.7)"><em>callable</em></a>) &#8211; a function, an callable object or a bound method, to be called when the specified service in invoked.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Registers a service using the name of hierarchy of names on the POST http request. What the
+callable receives depends on what the client sends. The client is expected to send a dictionary d,
+the service callable receives **d. See the <a class="reference internal" href="tutorial.html#services-calculator"><em>Calculator</em></a> example for more
+information. The callable should then look like:</p>
+<div class="highlight-python"><pre>def callable(**kargs):
+        return &lt;arbitrary python structure&gt;</pre>
+</div>
+<p>The python structure returned by the callable is encoded into json and sent back to the client.
+If anything goes wrong during the processing of a request, a <tt class="xref py py-class docutils literal"><span class="pre">Services.Errors.ServiceError</span></tt> or any subclass
+should be raised.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="services.server.registerPage">
+<em class="property">classmethod </em><tt class="descclassname">services.server.</tt><tt class="descname">registerPage</tt><big>(</big><em>page</em>, <em>callable</em><big>)</big><a class="headerlink" href="#services.server.registerPage" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; name of the page, or list describing a hierarchy of names of pages</li>
+<li><strong>callable</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#callable" title="(in Python v2.7)"><em>callable</em></a>) &#8211; a function, an callable object or a bound method, to be called when the specified page in invoked.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Registers a page using the name of hierarchy of names on the GET http request. The callable receives
+a twisted request as the sole parameter:</p>
+<div class="highlight-python"><pre>def callable(request):
+        return string containing HTML</pre>
+</div>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="private-methods">
+<h2>Private methods<a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt id="services.server.render_GET">
+<tt class="descclassname">services.server.</tt><tt class="descname">render_GET</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#services.server.render_GET" title="Permalink to this definition">¶</a></dt>
+<dd><p>implements the twisted required method to answer a GET request. By default, it displays
+the hierarchy of registered services and pages on this server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="services.server.nested">
+<tt class="descclassname">services.server.</tt><tt class="descname">nested</tt><big>(</big><em>request</em>, <em>all</em>, <em>prefix</em><big>)</big><a class="headerlink" href="#services.server.nested" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively generated the list of services and pages for display purposes, not documented.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="services.server.register">
+<em class="property">classmethod </em><tt class="descclassname">services.server.</tt><tt class="descname">register</tt><big>(</big><em>where</em>, <em>service</em>, <em>object</em><big>)</big><a class="headerlink" href="#services.server.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by registerService and registerPage to actually make the registration.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Server</span> <span class="pre">class</span></tt></a><ul>
+<li><a class="reference internal" href="#public-methods">Public methods</a></li>
+<li><a class="reference internal" href="#private-methods">Private methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="services.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Services</span> <span class="pre">module</span></tt> &#8212; Client-Server tools</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="response.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Response</span> <span class="pre">class</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/services/server.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="The Response class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="services.html" title="The Services module — Client-Server tools"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="servicesmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">services</span></tt> &#8212; Client-Server utilities</a> &raquo;</li>
+          <li><a href="services.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Services</span> <span class="pre">module</span></tt> &#8212; Client-Server tools</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

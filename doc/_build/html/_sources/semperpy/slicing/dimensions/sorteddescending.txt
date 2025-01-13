@@ -1,0 +1,20 @@
+:mod:`The SortedDescendingDimension class` 
+==========================================
+
+.. module:: slicer.dimensions
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: SortedDescendingDimension(Dimension)
+
+Summary
+-------
+
+    The SortedDescendingDimension class implements a special dimension which has his data
+    sorted in a descending  manner, upper levels.
+
+    A binary search algorithm is used to find the nearest value. There are two different cases:
+
+        - intervals: {a:b} the slice returned include all the values <= a and >= b
+        - discrete values: [a,b,c,d] return a list of four slices. If the actual values are not in the dimension, the nearest value is found.

@@ -1,0 +1,9 @@
+{
+	"directive": "analysis",
+	"inherit_from": "geofield",
+	"keywords" : {
+		"type": {
+			"default_value": "an"
+		}
+	}	
+}

@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Programming techniques &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="About Python" href="python.html" />
+    <link rel="next" title="Language - validating data" href="../language/tutorial.html" />
+    <link rel="prev" title="Modules and packages" href="modules.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../language/tutorial.html" title="Language - validating data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Modules and packages"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" >Tutorials for the end user</a> &raquo;</li>
+          <li><a href="python.html" accesskey="U">About Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="programming-techniques">
+<h1>Programming techniques<a class="headerlink" href="#programming-techniques" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>Some of these programming techniques are idiomatic of Python some are just more
+general, but they prove useful and are used in the development of SemperPy.</div></blockquote>
+<div class="section" id="function-and-method-arguments">
+<h2>Function and method arguments<a class="headerlink" href="#function-and-method-arguments" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Arguments to functions and methods can be handled in different ways:</p>
+<div class="highlight-python"><pre>def myFunction(a,b):
+    print "a =",a,"b =",b
+
+myFunction(1,2)
+  --&gt; a = 1 b = 2
+myFunction(1, b = 2)
+  --&gt; a = 1 b = 2
+myFunction(a = 1, b = 2)
+  --&gt; a = 1 b = 2
+myFunction(b = 2, a = 1)
+  --&gt; a = 1 b = 2</pre>
+</div>
+<p>Arguments can be named when calling the function, this makes the call more
+understandable and avoids bugs linked to arguments passed in the wrong order.
+When arguments are passed by order, they are received as a tuple, when they are named,
+they are received as a dictionary:</p>
+<div class="highlight-python"><pre>def myFunction(*args,**kargs): # yes, this is how it's written
+    print args,kargs
+
+myFunction()
+  --&gt; () {}
+myFunction(2)
+  --&gt; (2,) {}
+myFunction(a = 2)
+  --&gt; () {'a': 2}
+myFunction(2,b = 3)
+  --&gt; (2,) {'b': 3}</pre>
+</div>
+<p>This can be extremely useful when writing tools. Using the tuple enables the
+function to receive a variable number of parameters, using the dictionary enables
+to use named variables and to receive a dictionary. Some examples:</p>
+<div class="highlight-python"><pre>def uppercase(*args):
+    result = []
+    for w in args:
+        result.append(w.upper())
+    return result
+
+print uppercase('hello','world')
+  --&gt; ['HELLO', 'WORLD']
+print uppercase('hello','crazy','world')
+  --&gt; ['HELLO', 'CRAZY', 'WORLD']</pre>
+</div>
+<p>Making dictionaries:</p>
+<div class="highlight-python"><pre>def myFunction(**kargs):
+    print kargs
+
+d = {
+    "a" : 1,
+    "b" : 2,
+}
+myFunction(**d)
+  --&gt; {'a': 1, 'b': 2}
+myFunction(a = 1, b =2)
+  --&gt; {'a': 1, 'b': 2}</pre>
+</div>
+<p>Using generic arguments is very useful when inheriting from other classes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># inherit from Python&#39;s dictionary</span>
+<span class="k">class</span> <span class="nc">myDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="c"># no need to know about the arguments</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyDic</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
+        <span class="c"># do whatever else you wanted to do.</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>It is also extremely useful to &#8220;forward&#8221; arguments to other methods, objects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">readFields</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">Bundle</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="nb">file</span><span class="p">:</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>This function sends to each Field instance the unknown parameters sent to itself.
+As we saw in the section on object orientation, arguments can be given default values:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">addTax</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="n">tax</span> <span class="o">=</span> <span class="mf">17.5</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">price</span> <span class="o">+</span> <span class="n">price</span> <span class="o">*</span> <span class="n">tax</span> <span class="o">/</span> <span class="mi">100</span>
+
+<span class="k">print</span> <span class="n">addTax</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">addTax</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mf">20.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="callable-objects">
+<h2>Callable objects<a class="headerlink" href="#callable-objects" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Another special method in Python is the method __call__. When a class defines
+that method, the object is said to be callable and it can be called in a
+standard way without needing to specify a method name:</p>
+<div class="highlight-python"><pre>def myFunc(a,b):
+    print a,b
+
+class myCallable(object):
+    def __call__(self,a,b):
+        print a,b
+
+a = myFunc
+a('hello','world')
+  --&gt; hello world
+a = myCallable()
+a('hello','world')
+  --&gt; hello world</pre>
+</div>
+<p>Can you see the similarity? In Python everything is an object, functions are
+just callable objects. Why would you want to make an object callable? There could
+be a few reasons, some being more justified than others:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a tool you use requires that you pass a function or a callable as a parameter. This technique is used often and is known as the &#8220;callback&#8221; technique. The advantage of using a callable object instead of a function is that it can hold attributes and know about its environment.</li>
+<li>you a running out of names, so out of lazyness you make your object callable. This happens much more often than you may think.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="recursivity">
+<h2>Recursivity<a class="headerlink" href="#recursivity" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>It is also called <em>recursion</em>. Recursivity is a very powerful mean of
+programming, but it can be sometimes difficult to achieve. A function
+is recursive if it calls itself. This is perfectly valid in Python. Why
+on earth would we want to do that? Let&#8217;s examine this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">reverse</span><span class="p">(</span><span class="n">string</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="c"># remainder of the list</span>
+        <span class="k">print</span> <span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">reverse</span><span class="p">(</span><span class="s">&quot;Hello World&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d</span>
+<span class="n">l</span>
+<span class="n">r</span>
+<span class="n">o</span>
+<span class="n">W</span>
+
+<span class="n">o</span>
+<span class="n">l</span>
+<span class="n">l</span>
+<span class="n">e</span>
+<span class="n">H</span>
+</pre></div>
+</div>
+<p>So what happened here? First of all, to write a recursive function (or method)
+you need to have this function call itself, but you need a condition for the
+end of recursion, or your function will go into an <strong>infinite recursion</strong>.
+The Python interpreter now detects infinite resursions and eventually stops it
+with an error message. This function calls itself with the string except its
+first character. When the condition of end of recursion is reached (the string
+is empty), the function returns straight away without doing anythig. The next
+intruction of the previous call is executed, print the last character of the
+string, the function returns and executes the next instruction of the previous
+call when the string contained the last 2 characters and etc... The string is
+printed reversed.</p>
+<p>All local variables to the function, this include its arguments, are saved in
+the context of each function call. This is what make rescursion a powerful
+tool. This example is pretty useless, but there are things which can only be
+achieved using recursivity.</p>
+<p>The binary tree is a standard structure which can be used to store strings
+and sort them alphabetically. This can be useful to store a dictionary, since
+searching words (looking one up) is fast in a binary tree. The technique is
+simple, we insert a string in the tree on the left of the current node is the
+string is less in alphabetical order and on the right if it is greater. That way,
+when we search a string, if it is less than the current node, we search left,
+if it is greater, we search right (<a class="reference download internal" href="../../_downloads/bintree.py"><tt class="xref download docutils literal"><span class="pre">download</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">TreeNode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">string</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">string_</span> <span class="o">=</span> <span class="n">string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">left</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_</span> <span class="o">=</span> <span class="n">left</span>
+
+    <span class="k">def</span> <span class="nf">right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">right</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_</span> <span class="o">=</span> <span class="n">right</span>
+
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">string</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">string</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">left_</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">left_</span> <span class="o">=</span> <span class="n">TreeNode</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">string</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">right_</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">right_</span> <span class="o">=</span> <span class="n">TreeNode</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">str</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">indent</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s">&#39; &#39;</span> <span class="o">*</span> <span class="n">indent</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_</span><span class="o">.</span><span class="n">str</span><span class="p">(</span><span class="n">indent</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">string</span><span class="p">):</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">string_</span> <span class="o">==</span> <span class="n">string</span><span class="p">:</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_</span><span class="p">:</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_</span><span class="p">:</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">found</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">TreeNode</span><span class="p">(</span><span class="s">&#39;if&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;it&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;is&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;no&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;for&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;me&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;try&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;not&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;cry&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;much&#39;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&#39;see&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">tree</span>
+<span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;for&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;hello&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;no&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;world&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>if
+   for
+      cry
+   it
+      is
+      no
+         me
+            much
+         one
+            not
+            try
+               see
+
+True
+False
+True
+False</pre>
+</div>
+<p>I used this example because it is quite simple, but there are better ways
+of handling collections of words. However, the only way to handle trees of
+any kind is using recursivity. Just to demonstrate one more programming
+pattern and show the use of callable object, we can generalise the search
+method of the TreeNode class:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">visitor</span><span class="p">):</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">visitor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string_</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">stop</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_</span><span class="p">:</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">visitor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">stop</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_</span><span class="p">:</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">visitor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">stop</span>
+
+<span class="k">class</span> <span class="nc">Search</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pattern</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">pattern</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span>
+
+<span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">Search</span><span class="p">(</span><span class="s">&#39;for&#39;</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">Search</span><span class="p">(</span><span class="s">&#39;hello&#39;</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">Search</span><span class="p">(</span><span class="s">&#39;no&#39;</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">Search</span><span class="p">(</span><span class="s">&#39;world&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">True</span>
+<span class="bp">False</span>
+<span class="bp">True</span>
+<span class="bp">False</span>
+</pre></div>
+</div>
+<p>The advantage of the visitor is that we can used it for searching or doing anything requiring
+to go through the tree. We could for example count the words starting with a particular letter:</p>
+<div class="highlight-python"><pre>class Count(object):
+
+    def __init__(self,letter):
+        self.letter = letter
+        self.count = 0
+
+    def __call__(self,value):
+        if value[0] == letter:
+            self.count += 1
+        return False  # we don't stop until it's all done
+
+    def get(self):
+        return self.count
+
+The output shows::
+
+    3</pre>
+</div>
+<p>Another clearly identified case when we need to use recursivity is when we
+want to program nested loops, but we don&#8217;t know in advance how many loops will
+be needed and we may want to change the order in which the loops are nested. Let
+say we would like to generate all combinations of values of different keyword
+(<a class="reference download internal" href="../../_downloads/combinations.py"><tt class="xref download docutils literal"><span class="pre">download</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">combinations</span><span class="p">(</span><span class="n">keywords</span><span class="p">,</span><span class="n">values</span><span class="p">,</span><span class="n">result</span><span class="p">,</span><span class="n">current</span> <span class="o">=</span> <span class="p">[]):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">keyword</span> <span class="o">=</span> <span class="n">keywords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[</span><span class="n">keyword</span><span class="p">]:</span>
+            <span class="n">combinations</span><span class="p">(</span><span class="n">keywords</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span><span class="n">values</span><span class="p">,</span><span class="n">result</span><span class="p">,</span><span class="n">current</span> <span class="o">+</span> <span class="p">[</span><span class="n">value</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+            
+<span class="n">values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">steps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">24</span><span class="p">],</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">,</span><span class="s">&#39;v&#39;</span><span class="p">],</span>
+    <span class="n">dates</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20110101</span><span class="p">,</span><span class="mi">20110102</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">a</span>  <span class="o">=</span> <span class="p">[]</span>
+<span class="n">combinations</span><span class="p">([</span><span class="s">&#39;dates&#39;</span><span class="p">,</span><span class="s">&#39;parameters&#39;</span><span class="p">,</span><span class="s">&#39;steps&#39;</span><span class="p">],</span><span class="n">values</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">v</span>
+<span class="k">print</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">combinations</span><span class="p">([</span><span class="s">&#39;parameters&#39;</span><span class="p">,</span><span class="s">&#39;dates&#39;</span><span class="p">,</span><span class="s">&#39;steps&#39;</span><span class="p">],</span><span class="n">values</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">v</span>
+<span class="k">print</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">combinations</span><span class="p">([</span><span class="s">&#39;steps&#39;</span><span class="p">,</span><span class="s">&#39;parameters&#39;</span><span class="p">,</span><span class="s">&#39;dates&#39;</span><span class="p">],</span><span class="n">values</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">v</span>
+<span class="k">print</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mi">20110101</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">20110101</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">20110101</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">20110101</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">20110102</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">20110102</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">20110102</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">20110102</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+
+<span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">20110101</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">20110101</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">20110102</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">20110102</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">20110101</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">20110101</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">20110102</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">20110102</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+
+<span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">20110101</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">20110102</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">20110101</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">20110102</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">20110101</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">20110102</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">20110101</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="mi">20110102</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This function could work for combining thousands of lists.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Programming techniques</a><ul>
+<li><a class="reference internal" href="#function-and-method-arguments">Function and method arguments</a></li>
+<li><a class="reference internal" href="#callable-objects">Callable objects</a></li>
+<li><a class="reference internal" href="#recursivity">Recursivity</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="previous chapter">Modules and packages</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../language/tutorial.html"
+                        title="next chapter">Language - validating data</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/python/techniques.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../language/tutorial.html" title="Language - validating data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Modules and packages"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" >Tutorials for the end user</a> &raquo;</li>
+          <li><a href="python.html" >About Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

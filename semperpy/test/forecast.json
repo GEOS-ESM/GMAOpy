@@ -1,0 +1,19 @@
+{
+	"directive": "forecast",
+	"keywords" : {
+		"date": {
+			"alias": ["dates","time"],
+			"type": "int",
+            "unique": true
+		},
+		"step": {
+			"alias": ["steps","timestep","validtime","timesteps"],
+			"type": "int",
+			"default_value": 0
+		},
+        "type": {
+            "default_value": "fc",
+            "unique": true
+        }
+    }
+}

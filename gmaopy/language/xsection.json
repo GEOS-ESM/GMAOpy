@@ -1,0 +1,27 @@
+{
+	"directive": "xsection",
+	"keywords" : {
+		"fields": {
+            "alias": ["f"],
+            "unique": true
+		},
+		"contour": {
+            "optional": true
+		},
+        "layout": {
+            "default_value": [1,1],
+            "optional": true
+        },
+        "interactive": {
+            "optional": true,
+            "default_value": true,
+            "type": "bool",
+            "unique": true
+        },
+        "output_file": {
+            "optional": true,
+            "default_value": "<parameter>_<date>_<level>.png",
+            "unique": true
+        }
+	}
+}

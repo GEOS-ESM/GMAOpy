@@ -1,0 +1,67 @@
+{
+	"directive": "fielddata",
+    "inherit_from": "identifier",
+	"keywords" : {
+        "source": {
+            "default_value": "oper"
+        },
+		"date": {
+			"alias": ["dates","time"],
+			"optional": true
+		},
+		"step": {
+			"alias": ["steps","timestep","validtime","timesteps"],
+			"type": "int",
+			"default_value": 0
+		},
+		"expver": {
+            "default_value": "e572_fp",
+            "lowercase": false
+		},
+		"type": {
+			"validate": ["ValidateChoice","fc","an","cl","ob"],
+            "help": " fc: forecast\n an: analysis\n cl: climatology\n ob: gridded observation\n"
+		},
+        "collection": {
+            "default_value": "<freq><F>_<dims>_<group>_<H><V>"
+        },
+        "freq": {
+            "default_value": "inst",
+            "unique": true,
+			"validate": ["ValidateChoice","inst","tavg"],
+            "help": " inst: instantaneous\n tavg: time-average\n"
+        },
+        "F": {
+            "default_value": 3,
+            "unique": true,
+            "type": "int",
+			"validate": ["ValidateChoice",1,3,6]
+        },
+        "dims": {
+            "default_value": "3d",
+            "unique": true,
+			"validate": ["ValidateChoice","2d","3d"],
+            "help": " 2d: only 2-dimensional fields\n 3d: mix of 2- and 3-dimensional fields\n"
+        },
+        "group": {
+            "default_value": "asm",
+            "unique": true,
+			"validate": ["ValidateChoice","asm","tdt","udt","qdt","odt","lnd","flx","mst","cld","rad","trb","slv","int","chm","aer"],
+            "help": " asm: assimilated state variables\n tdt: tendencies of temperature\n udt: tendencies of eastward and northward wind components\n qdt: tendencies of specific humidity\n odt: tendencies of ozone\n lnd: land surface variables\n flx: surface turbulent fluxes and related quantities\n mst: moist processes\n cld: cloud related quantities\n rad: radiation\n trb: turbulence\n slv: single level\n int: vertical integrals\n chm: chemistry forcing\n aer: aerosol diagnostics\n"
+        },
+        "H": {
+            "default_value": "N",
+            "unique": true,
+            "lowercase": false,
+			"validate": ["ValidateChoice","N","C"]
+        },
+        "V": {
+            "default_value": "p",
+            "unique": true,
+			"validate": ["ValidateChoice","x","p","v","e"],
+            "help": " x: horizontal-only data->dims=2d\n p: pressure-level data->dims=3d\n v: model layer centers->dims=3d\n e: model layer edges->dims=3d\n"
+        },
+        "_combinable": {
+        }
+	}	
+}

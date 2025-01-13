@@ -1,0 +1,4 @@
+#!/bin/bash
+
+where=$(dirname $0)
+python $where/txt2db.py $@

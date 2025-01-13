@@ -1,0 +1,161 @@
+{
+	"directive": "geography",
+    "doc": true,
+    "help": ["The geography directive describes the projection required and aggregates different attributes. The keywords in geography match mostly the definition of the method <basemap> in matplotlib. Other attributes match different function of the basemap module:","coastlines, ","continents, ","boundary, ","countries, ","states, ","rivers, ","parallels, ","meridians. ","","","http://matplotlib.github.com/basemap/api/basemap_api.html?highlight=continents#mpl_toolkits.basemap.Basemap"],
+	"keywords" : {
+        "west": {
+            "optional": true,
+            "unique": true,
+            "type": "float",
+            "help": "The coordinates of the geography are normally inherited from the domain name specified, unless overwritten here by the user"
+        },
+        "east": {
+            "optional": true,
+            "unique": true,
+            "type": "float",
+            "help": "The coordinates of the geography are normally inherited from the domain name specified, unless overwritten here by the user"
+        },
+        "south": {
+            "optional": true,
+            "unique": true,
+            "type": "float",
+            "help": "The coordinates of the geography are normally inherited from the domain name specified, unless overwritten here by the user"
+        },
+        "north": {
+            "optional": true,
+            "unique": true,
+            "type": "float",
+            "help": "The coordinates of the geography are normally inherited from the domain name specified, unless overwritten here by the user"
+        },
+        "plot_below": {
+            "default_value": ["continents"],
+            "validate": ["ValidateChoice","coastlines","continents","boundary","countries","states","rivers","parallels","meridians"],
+            "help": "list here the attributes you want to have plotted below the data, if an attribute is not listed, it is not plotted"
+        },
+        "plot_over": {
+            "default_value": ["coastlines"],
+            "validate": ["ValidateChoice","coastlines","continents","boundary","countries","states","rivers","parallels","meridians"],
+            "help": "list here the attribute you want to have plotted over the data, if an attribute is not listed, it is not plotted"
+        },
+        "hemisphere": {
+            "unique": true,
+            "optional": true,
+            "validate": ["ValidateChoice","north","south"],
+            "help": "for some projections such as stereograhic or orthographic, you can specify a hemisphere"
+        },
+        "resolution": {
+            "unique": true,
+            "default_value": "c",
+            "validate": ["ValidateChoice","c","l","i","h","f"],
+            "help": "The resolution of the boundary database to use: c for crude, l for low, i for intermediate, h for high, f for full."
+        },
+        "projection": {
+            "unique": true,
+            "default_value": "cyl",
+            "validate": ["ValidateChoice","aeqd","poly","gnom","moll","tmerc","nplaea","gall","mill","merc","stere","npstere","hammer","geos","nsper","vandg","laea","mbtfpq","sinu","spstere","lcc","npaeqd","eqdc","cyl","omerc","aea","spaeqd","ortho","cass","splaea","robin"]
+        },
+        "zorder": {
+            "unique": true,
+            "default_value": 1000
+        },
+        "lat_0": {
+            "unique": true,
+            "optional": true
+        },
+        "lat_1": {
+            "unique": true,
+            "optional": true
+        },
+        "lat_2": {
+            "unique": true,
+            "optional": true
+        },
+        "lat_ts": {
+            "unique": true,
+            "optional": true
+        },
+        "lon_0": {
+            "unique": true,
+            "optional": true
+        },
+        "lon_1": {
+            "unique": true,
+            "optional": true
+        },
+        "lon_2": {
+            "unique": true,
+            "optional": true
+        },
+        "no_rot": {
+            "unique": true,
+            "default_value": "false"
+        },
+        "suppress_ticks": {
+            "unique": true,
+            "default_value": "true"
+        },
+        "satellite_height": {
+            "unique": true,
+            "default_value": 35785831.0
+        },
+        "boundinglat": {
+            "unique": true,
+            "default_value": null
+        },
+        "fix_aspect": {
+            "unique": true,
+            "optional": true
+        },
+        "anchor": {
+            "unique": true,
+            "optional": true
+        },
+        "rsphere": {
+            "unique": true,
+            "default_value": [6378137.00,6356752.3142]
+        },
+        "coastlines": {
+            "unique": true,
+            "type": "coastlines",
+            "default_value": ""
+        },
+        "continents": {
+            "unique": true,
+            "type": "continents",
+            "default_value": ""
+        },
+        "boundary": {
+            "unique": true,
+            "type": "boundary",
+            "default_value": ""
+        },
+        "countries": {
+            "unique": true,
+            "type": "countries",
+            "default_value": ""
+        },
+        "states": {
+            "unique": true,
+            "type": "states",
+            "default_value": ""
+        },
+        "rivers": {
+            "unique": true,
+            "type": "rivers",
+            "default_value": ""
+        },
+        "parallels": {
+            "unique": true,
+            "type": "parallels",
+            "default_value": ""
+        },
+        "meridians": {
+            "unique": true,
+            "type": "meridians",
+            "default_value": ""
+        },
+        "_non_keywords": {
+            "default_value": ["_non_keywords","coastlines","continents","boundary","countries","states","rivers","parallels","meridians","plot_below","plot_over","hemisphere","zorder","west","east","north","south"]
+        }
+	}
+}

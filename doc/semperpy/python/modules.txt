@@ -1,0 +1,101 @@
+Modules and packages
+********************
+
+    Python enables us to make our beautiful code available to other people to use
+    by providing mechanisms for implementing modules and packages.
+
+Modules
+-------
+
+    A module is a file (with extension .py) which may contain class definitions, 
+    functions and executable code.
+
+    Let's save the following code into a file called greetings.py::
+
+        def sayHi():
+            print "hello world"
+
+        sayHi()
+
+    From the python interpreter::
+        
+        import greetings
+          --> hello world
+
+    The code in the **module** *greeting* is executed the first time that module is imported. 
+    Modules are very useful for storing class definitions and sometimes to run some 
+    initialization code at import time. Modules can themselves import other modules. There
+    are different methods to import modules, whichever method you use is a matter of preference.
+    Please see `idioms and anti-idioms <http://docs.python.org/howto/doanddont.html>`_. Certain
+    methods can be better than others. Try to avoid from module import * as this will fill you
+    namespace with function and class names and you don't know how many::
+
+        # good
+        import sys
+        print sys.argv
+
+        # not as good
+        from sys import *
+        print argv
+
+Packages
+--------
+
+    If you create a directory, copy some modules into that directory and create an (even empty)
+    __init__.py file, the contents of that directory is called a **package**::
+
+        mkdir polite
+        cp greetings.py polite
+        touch polite/__init__.py
+
+        # in your python program
+        import polite.greetings
+        polite.greetings.sayHi()
+
+        import polite.greetings as p
+        p.sayHi()
+
+        from polite.greetings import sayHi
+        sayHi()
+
+    SemperPy is build by a collection of packages and a lot of attention is given to trying
+    to use the right hierarchy and naming, but once again this is a matter of preference. To 
+    read netcdf (or hdf) files which contain gridded data, the class File is in 
+    sempery.netcdf.file::
+
+        from semperpy.netcdf.file import File
+        f = File()
+
+        # many classes could be called File and there could be a name conflict. It
+        # could be a better idea to use:
+        import semperpy.netcdf.file as griddedData
+        f = griddedData.File()
+
+    Now, the __init__.py file is useful to determine what is loaded when importing * from
+    a package. If we put in __init__.py::
+
+        __all__ = ['file']
+
+    This enables::
+
+        from semperpy.netcdf import * # the module file is imported
+        f = file.File()
+
+    If we put in __init__.py::
+
+        from file import File
+
+    We have::
+
+        from semperpy.netcdf import *
+        f = File()
+    
+    For more information you can consult the page on modules in the `Python documentation <http://docs.python.org/tutorial/modules.html>`_.
+
+    Some typical imports from semperpy::
+
+        from sempery.core.Date import Date, Dates
+        from sempery.core.tools import is_dict, is_list, to_list
+        from gmaopy.ods.ods import ODS
+        import gmaopy.netcdf
+        from sempery.core.configfile import ConfigFile

@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>date — Date manipulation &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="core — Core classes" href="coremodule.html" />
+    <link rel="next" title="dategroup — Date grouping tools" href="dategroup.html" />
+    <link rel="prev" title="configure — Configuration tools" href="configure.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dategroup.html" title="dategroup — Date grouping tools"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="configure.html" title="configure — Configuration tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-semperpy.core.date">
+<span id="date-date-manipulation"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">date</span></tt> &#8212; Date manipulation<a class="headerlink" href="#module-semperpy.core.date" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="the-date-class">
+<h2>The Date class<a class="headerlink" href="#the-date-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="semperpy.core.date.Date">
+<em class="property">class </em><tt class="descclassname">semperpy.core.date.</tt><tt class="descname">Date</tt><big>(</big><em>oject</em><big>)</big><a class="headerlink" href="#semperpy.core.date.Date" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>Date</strong> class encapsulates the standard Python datetime object but offers some
+easier way to manipulate dates. A date is created with an implicit &#8220;accuracy&#8221;, e.g.
+its smaller representation: <strong>Date</strong> handles year, month, day, hour, minute and
+seconds, and basic operations:</p>
+<div class="highlight-python"><pre>from semperpy.core.date import *
+
+d = Date(2010)
+print d.datetime()
+2010-01-01 00:00:00
+print d + 1, d - 1
+2011, 2009
+
+d = Date(201004)
+print d.datetime()
+2010-04-01 00:00:00
+print d + 1, d - 1
+2010-05, 2010-03
+
+d = Date(20100401)
+print d.datetime()
+2010-04-01 00:00:00
+print d + 1, d - 1
+2010-04-02 2010-03-31
+
+d = Date(2010040112)
+print d.datetime()
+2010-04-01 12:00:00
+print d + 1, d - 1
+2010-04-01 13 2010-04-01 11
+
+d = Date(201004011200)
+print d.datetime()
+2010-04-01 12:00:00
+print d + 1, d - 1
+2010-04-01 12:01 2010-04-01 11:59
+
+d = Date(20100401120030)
+print d.datetime()
+2010-04-01 12:00:30
+print d + 1, d - 1
+2010-04-01 12:00:31 2010-04-01 12:00:29</pre>
+</div>
+<p>Standard operations on Dates are supported, including the difference,
+expressed in the unit of the left hand side <strong>Date</strong> in the operation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.date</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">20090425</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">20090418</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+<span class="mi">7</span>
+<span class="k">print</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+<span class="o">-</span><span class="mi">7</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">2009042512</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">2009041800</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+<span class="mi">180</span>
+<span class="k">print</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+<span class="o">-</span><span class="mi">180</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">20090425</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">2009041812</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span> <span class="c"># days</span>
+<span class="mi">7</span>
+<span class="k">print</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+<span class="o">-</span><span class="mi">156</span> <span class="c"># hours</span>
+<span class="k">print</span> <span class="n">Day</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="n">a</span>
+<span class="o">-</span><span class="mi">7</span> <span class="c"># days</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">2010030112</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">20090401</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">Month</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="n">Month</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="mi">11</span> <span class="c"># months</span>
+<span class="k">print</span> <span class="n">Year</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="n">Year</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="mi">1</span> <span class="c"># year</span>
+</pre></div>
+</div>
+<p><strong>Date</strong> objects are:</p>
+<ul>
+<li><p class="first">hashable</p>
+</li>
+<li><p class="first">comparable: &lt;, &gt;, ==, &lt;=, &gt;=, !=</p>
+</li>
+<li><p class="first">support basic arithmetics:</p>
+<blockquote>
+<div><ul class="simple">
+<li>+ (int | <a class="reference internal" href="#semperpy.core.date.DateIncrement" title="semperpy.core.date.DateIncrement"><tt class="xref py py-class docutils literal"><span class="pre">DateIncrement</span></tt></a>)</li>
+<li>- (int | Date | <a class="reference internal" href="#semperpy.core.date.DateIncrement" title="semperpy.core.date.DateIncrement"><tt class="xref py py-class docutils literal"><span class="pre">DateIncrement</span></tt></a>)</li>
+<li>+= (int | <a class="reference internal" href="#semperpy.core.date.DateIncrement" title="semperpy.core.date.DateIncrement"><tt class="xref py py-class docutils literal"><span class="pre">DateIncrement</span></tt></a>)</li>
+<li>-= (int | <a class="reference internal" href="#semperpy.core.date.DateIncrement" title="semperpy.core.date.DateIncrement"><tt class="xref py py-class docutils literal"><span class="pre">DateIncrement</span></tt></a>).</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<dl class="method">
+<dt id="semperpy.core.date.Date.Date">
+<tt class="descname">Date</tt><big>(</big><em>date</em><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.Date" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>date</strong> &#8211; another Date, a datetime or an integer (yyyy, yyyymm, yyyymmdd, yyyymmddhh etc..)</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>Date</strong> class is a generic entry point into the Core.Date module,
+it returns an object allocated from another class, Year, Month, Day,
+Hour, Minute, Second.</p>
+<p>Depending on the &#8220;accuracy&#8221; of the date, the right class will be allocated,
+either Year, Month, Day, Hour, Minute or Second. If a datetime is given,
+the class Second is used. You can specify which type you would like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">semperpy.core.date</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2009</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">59</span><span class="p">)</span>
+<span class="n">myDateInDays</span> <span class="o">=</span> <span class="n">Day</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">d</span>
+<span class="mi">2009</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">25</span>
+
+<span class="c"># these two statements are equivalent</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">20090101</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Day</span><span class="p">(</span><span class="mi">20090101</span><span class="p">)</span>
+
+<span class="c"># these two statements are equivalent</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">200901011230</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">Minute</span><span class="p">(</span><span class="mi">200901011230</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.date.Date.datetime">
+<tt class="descname">datetime</tt><big>(</big><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the Python datetime encapsulated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.date.Date.year">
+<tt class="descname">year</tt><big>(</big><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.year" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the year.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.date.Date.month">
+<tt class="descname">month</tt><big>(</big><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.month" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the month.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.date.Date.day">
+<tt class="descname">day</tt><big>(</big><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.day" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the day.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.date.Date.hour">
+<tt class="descname">hour</tt><big>(</big><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.hour" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the hour.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.date.Date.minute">
+<tt class="descname">minute</tt><big>(</big><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.minute" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the minute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.date.Date.second">
+<tt class="descname">second</tt><big>(</big><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.second" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the second.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.date.Date.intvalue">
+<tt class="descname">intvalue</tt><big>(</big><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.intvalue" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the date as an integer or long integer in the form yyyy[mm[dd[hh[MM[ss]]]]].</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="semperpy.core.date.Date.format">
+<tt class="descname">format</tt><big>(</big><em>format = None</em><big>)</big><a class="headerlink" href="#semperpy.core.date.Date.format" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>format</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; a datetime.strftime date format</td>
+</tr>
+</tbody>
+</table>
+<p>returns a string formatted by datetime.strftime. The statement &#8220;<em>print d.format()</em>&#8221; is equivalent
+to <em>&#8220;print d&#8221;</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="the-dateincrement-class">
+<h2>The DateIncrement class<a class="headerlink" href="#the-dateincrement-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="semperpy.core.date.DateIncrement">
+<em class="property">class </em><tt class="descclassname">semperpy.core.date.</tt><tt class="descname">DateIncrement</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#semperpy.core.date.DateIncrement" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>DateIncrement</strong> is designed to give flexibility for various needs in
+date manipulation in different fields. <strong>DateIncrement</strong> makes it possible to
+increment a date by N months or N years or a combination of both. It is
+particularly useful for incrementing months:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d</span> <span class="o">=</span> <span class="n">Date</span><span class="p">(</span><span class="mi">20050115</span><span class="p">)</span>
+<span class="n">inc</span> <span class="o">=</span> <span class="n">DateIncrement</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">+=</span> <span class="n">inc</span>
+<span class="k">print</span> <span class="n">d</span>
+<span class="mi">2005</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">15</span>
+</pre></div>
+</div>
+<p>DateIncrement is printable, can be negated and tested for equality against
+another DateIncrement.</p>
+<dl class="method">
+<dt id="semperpy.core.date.DateIncrement.DateIncrement">
+<tt class="descname">DateIncrement</tt><big>(</big><em>years=0</em>, <em>months=0</em>, <em>days=0</em>, <em>hours=0</em>, <em>minutes=0</em>, <em>seconds=0</em><big>)</big><a class="headerlink" href="#semperpy.core.date.DateIncrement.DateIncrement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a <strong>DateIncrement</strong>. All parameters are integers, these can either be
+positive of negative.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#datesequence"><em>Dates</em></a> for examples.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="semperpy.core.date.Year">
+<em class="property">class </em><tt class="descclassname">semperpy.core.date.</tt><tt class="descname">Year</tt><a class="headerlink" href="#semperpy.core.date.Year" title="Permalink to this definition">¶</a></dt>
+<dd><p>see Date.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="semperpy.core.date.Month">
+<em class="property">class </em><tt class="descclassname">semperpy.core.date.</tt><tt class="descname">Month</tt><a class="headerlink" href="#semperpy.core.date.Month" title="Permalink to this definition">¶</a></dt>
+<dd><p>see Date.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="semperpy.core.date.Day">
+<em class="property">class </em><tt class="descclassname">semperpy.core.date.</tt><tt class="descname">Day</tt><a class="headerlink" href="#semperpy.core.date.Day" title="Permalink to this definition">¶</a></dt>
+<dd><p>see Date.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="semperpy.core.date.Hour">
+<em class="property">class </em><tt class="descclassname">semperpy.core.date.</tt><tt class="descname">Hour</tt><a class="headerlink" href="#semperpy.core.date.Hour" title="Permalink to this definition">¶</a></dt>
+<dd><p>see Date.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="semperpy.core.date.Minute">
+<em class="property">class </em><tt class="descclassname">semperpy.core.date.</tt><tt class="descname">Minute</tt><a class="headerlink" href="#semperpy.core.date.Minute" title="Permalink to this definition">¶</a></dt>
+<dd><p>see Date.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="semperpy.core.date.Second">
+<em class="property">class </em><tt class="descclassname">semperpy.core.date.</tt><tt class="descname">Second</tt><a class="headerlink" href="#semperpy.core.date.Second" title="Permalink to this definition">¶</a></dt>
+<dd><p>see Date.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="the-dates-function">
+<h2>The Dates function<a class="headerlink" href="#the-dates-function" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="datesequence"></span><dl class="function">
+<dt id="semperpy.core.date.Dates">
+<tt class="descclassname">semperpy.core.date.</tt><tt class="descname">Dates</tt><big>(</big><em>start1</em>, <em>end1</em>, <em>incr1</em>, <em>start2</em>, <em>end2</em>, <em>incr2</em>, <em>...</em>, <em>startN</em>, <em>endN</em>, <em>incrN</em>, <em>format = None</em><big>)</big><a class="headerlink" href="#semperpy.core.date.Dates" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>Dates</strong> function (a sysnonym is <strong>DateSequence</strong>) generates a list
+of dates as integers from start1 to end1 with an increment of incr1 etc...
+if the parameter <em>format</em> is specified (as an strftime format), a list
+of string in that format is returned:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.date</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">print</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">20090115</span><span class="p">,</span><span class="mi">20090415</span><span class="p">,</span><span class="n">DateIncrement</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">20090115</span><span class="p">,</span> <span class="mi">20090215</span><span class="p">,</span> <span class="mi">20090315</span><span class="p">,</span> <span class="mi">20090415</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">20090115</span><span class="p">,</span><span class="mi">20090415</span><span class="p">,</span><span class="n">DateIncrement</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="n">format</span><span class="o">=</span><span class="s">&quot;%Y-%m&quot;</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;2009-01&#39;</span><span class="p">,</span> <span class="s">&#39;2009-02&#39;</span><span class="p">,</span> <span class="s">&#39;2009-03&#39;</span><span class="p">,</span> <span class="s">&#39;2009-04&#39;</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">20090115</span><span class="p">,</span><span class="mi">20090415</span><span class="p">,</span><span class="n">DateIncrement</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="mi">20080115</span><span class="p">,</span><span class="mi">20080415</span><span class="p">,</span><span class="n">DateIncrement</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">20090115</span><span class="p">,</span> <span class="mi">20090215</span><span class="p">,</span> <span class="mi">20090315</span><span class="p">,</span> <span class="mi">20090415</span><span class="p">,</span> <span class="mi">20080115</span><span class="p">,</span> <span class="mi">20080315</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">20090115</span><span class="p">,</span><span class="mi">20090430</span><span class="p">,</span><span class="n">DateIncrement</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">20090115</span><span class="p">,</span> <span class="mi">20090216</span><span class="p">,</span> <span class="mi">20090317</span><span class="p">,</span> <span class="mi">20090418</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2009011500</span><span class="p">,</span><span class="mi">2009011612</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2009011500</span><span class="p">,</span> <span class="mi">2009011512</span><span class="p">,</span> <span class="mi">2009011600</span><span class="p">,</span> <span class="mi">2009011612</span><span class="p">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Synonym :</th><td class="field-body">DateSequence</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">date</span></tt> &#8212; Date manipulation</a><ul>
+<li><a class="reference internal" href="#the-date-class">The Date class</a></li>
+<li><a class="reference internal" href="#the-dateincrement-class">The DateIncrement class</a></li>
+<li><a class="reference internal" href="#the-dates-function">The Dates function</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="configure.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">configure</span></tt> &#8212; Configuration tools</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dategroup.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">dategroup</span></tt> &#8212; Date grouping tools</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/core/date.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dategroup.html" title="dategroup — Date grouping tools"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="configure.html" title="configure — Configuration tools"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="coremodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">core</span></tt> &#8212; Core classes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

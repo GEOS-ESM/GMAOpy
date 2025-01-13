@@ -1,0 +1,50 @@
+:mod:`DMF implementation of Archive`
+====================================
+
+.. module:: archive.dmf
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: DMF(Archive)
+
+The **DMF** implement the abstract methods of the class :class:`archive.archive.Archive`
+to handle a DMF file system. Whenever **dm...** commands are called for multiple files,
+a pipe is open between the current process and the dmget command to pass the list of 
+files. This is more efficient. It is much safer not to pass any files which are not handled
+by DMF as some invalid results can sometimes be encountered (e.g. NASA).
+
+    .. method:: do_stage(filelist):
+
+        :param filelist: list of files to stage
+        :type filelist: sequence
+
+        Calls the command **dmget** for each of the file specified. 
+
+    .. method:: offline(filelist):
+
+        :param filelist: a list of files in the archive
+        :type filelist: sequence
+
+        Calls the command **dmattr -a state** for each of the files and if the 
+        result is OFL, the file is kept in the list of files to stage. Returns
+        the list of files found offline.
+
+    .. method:: filesize(filelist):
+
+        :param filelist: a list of files in the archive
+        :type filelist: sequence
+
+        Calls the command **dmattr -a size** for each of the files and returns a list
+        of sizes in bytes.
+
+    .. method:: do_copy(filelist,destination):
+
+        :param filelist: a list of files in the archive
+        :type filelist: sequence
+        :param destination: path to the destination directory
+        :type destination: string
+
+        Does nothing, files once put online are accessible from the DMF virtual file system.
+
+

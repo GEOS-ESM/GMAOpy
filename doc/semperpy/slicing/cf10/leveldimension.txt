@@ -1,0 +1,18 @@
+:mod:`The LevelDimension class`
+===============================
+
+.. module:: slicer.cf10
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: LevelDimension(Dimension)
+
+Summary
+-------
+
+    This module actually implements three classes, **LevelDimension** is a convenience
+    class which tests in which order the dimension is sorted and becomes (specializes into) 
+    either an instance of the **LevelDimensionDescending** class or 
+    the **LevelDimensionAscending** class which inherit respectively 
+    from the **SortedDescendingDimension** and **SortedAscendingDimension** classes.

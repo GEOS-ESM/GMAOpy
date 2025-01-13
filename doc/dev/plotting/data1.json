@@ -1,0 +1,28 @@
+{
+	"directive": "data",
+	"keywords" : {
+        "kt": {
+            "alias": ["obstype"],
+            "type": "int"
+        },
+        "kx": {
+            "alias": ["obssource"],
+            "type": "int"
+        },
+        "level": {
+            "alias": "channel",
+            "type": "float"
+        },
+        "date": {
+            "type": "int"
+        },
+        "domain_name": {
+            "validate": ["ValidateChoice","global","n.hem","s.hem"],
+            "unique": true
+        },
+        "variable": {
+            "default_value": "obs",
+            "unique": true
+        }
+    }
+}

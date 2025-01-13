@@ -1,0 +1,19 @@
+{
+	"directive": "xreference",
+    "inherit_from": "identifier",
+	"keywords" : {
+        "mask": {
+            "unique": true
+        },
+        "date": {
+            "type":"int"
+        },
+        "type": {
+			"validate": ["ValidateChoice","ob","im"],
+            "default_value": "ob"
+        },
+        "collection": {
+			"remove": true
+        }
+	}
+}

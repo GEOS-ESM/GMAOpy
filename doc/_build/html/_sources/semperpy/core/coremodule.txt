@@ -1,0 +1,37 @@
+:mod:`core` --- Core classes
+============================
+
+.. module:: core
+   :synopsis: Core classes and utilities.
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Introduction
+************
+    All the different features in SemperPy are developped as independently as possible
+    to make sure that sub-parts of the framework can be used without the need for the
+    whole framework to be installed and particularly to be known by the user.
+
+    The Core module of SemperPy is an exception as most other modules will probably
+    depend on this one. However, it is meant to be lightweight and define very
+    general tools. It is strongly recommended to make use of the tools supplied
+    in core to make the maintenance of the framework easier through changes in Python
+    and other main modules.
+
+Contents:
+*********
+
+.. toctree::
+   :maxdepth: 2
+
+   configfile
+   configure
+   date
+   dategroup
+   factory
+   index
+   innerpython
+   json
+   texttemplate
+   truthparser
+   tools

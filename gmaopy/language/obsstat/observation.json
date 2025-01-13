@@ -1,0 +1,31 @@
+{
+	"directive": "observation",
+    "inherit_from": "obsdata",
+    "doc": true,
+	"keywords" : {
+        "staging_rate": {
+            "unique": true,
+            "optional": true,
+            "lowercase": false
+        },
+        "root_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "tree_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "file_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "archive_type": {
+            "optional": true,
+            "unique": true
+        }
+	}
+}

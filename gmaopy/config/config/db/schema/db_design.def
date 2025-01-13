@@ -1,0 +1,43 @@
+[domain]
+name_=domain
+keys_=id,north,west,south,east,domain_name
+id=<auto_increment> primary key
+north=float
+west=float
+south=float
+east=float
+domain_name=varchar(25)
+
+[stat]
+name_=stat
+keys_= id,source,expver,dataset,type,parameter,level,vstream,stat_name
+dependencies_=domain
+foreign_keys_=domain_id
+no_lower_case_=vstream
+index_=type,domain_id,vstream,expver,dataset
+composite_index_ = parameter,level,type,domain_id,expver,vstream
+id=<auto_increment> primary key
+source=varchar(10)
+expver=varchar(20)
+dataset=varchar(80)
+type=varchar(10)
+parameter=varchar(15)
+level=float
+stat_name=varchar(15)
+vstream=varchar(20) not null
+id=<auto_increment> primary key
+domain_id=int not null references <schema>.domain(id)
+
+[value]
+name_=value
+keys_=value,date,step,obscount
+delete_=date,step,stat_id
+dependencies_=stat
+foreign_keys_=stat_id
+value=float
+obscount=float
+date=int not null
+step=int not null
+stat_id=int not null references <schema>.stat (id)
+index_=step,date,stat_id
+composite_primary_=date,step,stat_id

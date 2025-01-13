@@ -1,0 +1,27 @@
+About Python
+************
+
+    This tutorial assumes that the reader is familiar with the Python language
+    and does not address Python's basic syntax. The following tutorials have good
+    reputation:
+        
+        - http://diveintopython.org/
+        - http://www.greenteapress.com/thinkpython/html/index.html
+        - http://learnpythonthehardway.org/index
+        - http://www.swaroopch.com/notes/Python
+
+    and of course, the tutorial from Guido van Rossum, the creator of Python:
+
+        - http://docs.python.org/tutorial/
+    
+
+Contents:
+---------
+
+.. toctree::
+    :maxdepth: 2
+
+    concepts
+    objects
+    modules
+    techniques

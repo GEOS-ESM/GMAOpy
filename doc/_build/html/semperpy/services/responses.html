@@ -1,0 +1,164 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Some Response implementations &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="The Services module — Client-Server tools" href="services.html" />
+    <link rel="next" title="The HTML class" href="html.html" />
+    <link rel="prev" title="The Response class" href="response.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="html.html" title="The HTML class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="The Response class"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="servicesmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">services</span></tt> &#8212; Client-Server utilities</a> &raquo;</li>
+          <li><a href="services.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Services</span> <span class="pre">module</span></tt> &#8212; Client-Server tools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-services.responses">
+<span id="some-response-implementations"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">Some</span> <span class="pre">Response</span> <span class="pre">implementations</span></tt><a class="headerlink" href="#module-services.responses" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="immediate-and-blocking">
+<h2>Immediate and blocking<a class="headerlink" href="#immediate-and-blocking" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="services.responses.ImmediateAndBlocking">
+<em class="property">class </em><tt class="descclassname">services.responses.</tt><tt class="descname">ImmediateAndBlocking</tt><big>(</big><em>Response</em><big>)</big><a class="headerlink" href="#services.responses.ImmediateAndBlocking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements an immediate call to the service handler, the handler is executed in the
+main thread of the program. This is blocking in the sense that while the service is
+executing, the server cannot accept requests. This can be used when service handlers
+carry out some very simple and quick tasks.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="immediate-and-non-blocking">
+<h2>Immediate and non blocking<a class="headerlink" href="#immediate-and-non-blocking" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="services.responses.ImmediateAndNonBlocking">
+<em class="property">class </em><tt class="descclassname">services.responses.</tt><tt class="descname">ImmediateAndNonBlocking</tt><big>(</big><em>Response</em><big>)</big><a class="headerlink" href="#services.responses.ImmediateAndNonBlocking" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the default mode used by the <tt class="xref py py-class docutils literal"><span class="pre">Services.Server.Server</span></tt>.</p>
+<p>Implements an immediate call to the service handler, however the handler is executed
+in a different thread of the program. This is not blocking, because the server can
+accept new requests in the main thread of the program while the service handler executes
+in a different one. This can be used to optimise server availability and when service
+handlers do not take too long. While the service handler is running, the client is
+blocked with an open connection, awaiting a response.</p>
+</dd></dl>
+
+<p>More will need to be implemented, e.g. Queued and non blocking and queued and call back.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">Some</span> <span class="pre">Response</span> <span class="pre">implementations</span></tt></a><ul>
+<li><a class="reference internal" href="#immediate-and-blocking">Immediate and blocking</a></li>
+<li><a class="reference internal" href="#immediate-and-non-blocking">Immediate and non blocking</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="response.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Response</span> <span class="pre">class</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="html.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">The</span> <span class="pre">HTML</span> <span class="pre">class</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/services/responses.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="html.html" title="The HTML class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="The Response class"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="servicesmodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">services</span></tt> &#8212; Client-Server utilities</a> &raquo;</li>
+          <li><a href="services.html" ><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Services</span> <span class="pre">module</span></tt> &#8212; Client-Server tools</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

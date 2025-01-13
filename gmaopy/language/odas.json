@@ -1,0 +1,18 @@
+{
+	"directive": "odas",
+	"keywords" : {
+		"dimension": {
+			"alias": ["field_dimension"],
+			"validate": ["ValidateChoice","2D","3D"],
+			"unique": true,
+            "default_value": "3D",
+            "lowercase": false
+		},
+		"type": {
+			"validate": ["ValidateChoice","fc","an"],
+			"unique": true,
+			"optional": true,
+            "default_value": "an"
+		}
+	}	
+}

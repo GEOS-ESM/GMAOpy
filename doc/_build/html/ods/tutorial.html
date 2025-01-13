@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ODS - reading and filtering ODS files &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../tutorials.html" />
+    <link rel="next" title="Plotting features" href="../plotting/plotting.html" />
+    <link rel="prev" title="Tutorials for the end user" href="../tutorials.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../plotting/plotting.html" title="Plotting features"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../tutorials.html" title="Tutorials for the end user"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ods-reading-and-filtering-ods-files">
+<span id="odstutorial"></span><h1>ODS - reading and filtering ODS files<a class="headerlink" href="#ods-reading-and-filtering-ods-files" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>The following examples show how to read an ODS file using SemperPy. The ODS file used for the
+examples is e561_tst_02.diag_conv.20110201_00z.ods.</div></blockquote>
+<div class="section" id="example-1">
+<h2>Example 1<a class="headerlink" href="#example-1" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The first example shows how easily you can select metar zonal wind (this is for one file,
+and therefore one synoptic time):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.ods.ods</span> <span class="kn">import</span> <span class="n">ODS</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">ODS</span><span class="p">(</span><span class="s">&#39;e561_tst_02.diag_conv.20110201_00z.ods&#39;</span><span class="p">)</span>
+<span class="nb">filter</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(kt == 4) &amp; (kx == 289)&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">filter</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="c"># read the whole variable</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">obs</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c"># extract and filters from the file</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="nb">filter</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">obs</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>(1001875,)
+(1001875,) 111.753709794
+(6294,) -0.0947882085897</pre>
+</div>
+<p><a class="reference download internal" href="../_downloads/ods1.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">1</span></tt></a></p>
+<p>The filter is an array of the size of the variable arrays in the file,
+containing True boolean values for each observation to keep.</p>
+<p>Please note that by default, the <strong>compile</strong> method only extracts observation values
+which were used in the assimilation (qcexcl == 0). This is some sort of built in safety.
+If you would like to obtain all observations or filter on the qcexcl variable:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.ods.ods</span> <span class="kn">import</span> <span class="n">ODS</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">ODS</span><span class="p">(</span><span class="s">&#39;e561_tst_02.diag_conv.20110201_00z.ods&#39;</span><span class="p">)</span>
+<span class="nb">filter</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(kt == 4) &amp; (kx == 289)&#39;</span><span class="p">,</span> <span class="n">used_observations</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">filter</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="c"># extract and filters from the file</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="nb">filter</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">obs</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c"># extract and filters from the file</span>
+<span class="nb">filter</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(kt == 4) &amp; (kx == 289) &amp; (qcexcl == 1)&#39;</span><span class="p">,</span> <span class="n">used_observations</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="nb">filter</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">obs</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The output shows that no observations were passive, but note that more observations
+than in example 1 were returned:</p>
+<div class="highlight-python"><pre>(1001875,)
+(6401,) -0.0890327671732
+(0,) --</pre>
+</div>
+<p><a class="reference download internal" href="../_downloads/ods1_1.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">1.1</span></tt></a></p>
+</div></blockquote>
+</div>
+<div class="section" id="example-2">
+<h2>Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The same selection is made but only for extra-tropical latitudes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.ods.ods</span> <span class="kn">import</span> <span class="n">ODS</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">ODS</span><span class="p">(</span><span class="s">&#39;e561_tst_02.diag_conv.20110201_00z.ods&#39;</span><span class="p">)</span>
+<span class="nb">filter</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(kt == 4) &amp; (kx == 289) &amp; ((lat &lt; -20) | (lat &gt; 20))&#39;</span><span class="p">)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="nb">filter</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">3922</span><span class="p">,)</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../_downloads/ods2.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">2</span></tt></a></p>
+</div></blockquote>
+</div>
+<div class="section" id="example-3">
+<h2>Example 3<a class="headerlink" href="#example-3" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>This example shows how to combine filters in order to optimise computing, thanks to
+the operators implemented in <tt class="xref py py-class docutils literal"><span class="pre">ods.odsvariable.ODSVariable</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.ods.ods</span> <span class="kn">import</span> <span class="n">ODS</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">ODS</span><span class="p">(</span><span class="s">&#39;e561_tst_02.diag_conv.20110201_00z.ods&#39;</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(kx == 181) &amp; (kt == 33)&#39;</span><span class="p">)</span>
+<span class="n">europe</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(lat &gt; 35) &amp; (lat &lt; 75) &amp; (lon &gt; -12.5) &amp; (lon &lt; 42.5)&#39;</span><span class="p">)</span>
+<span class="n">namer</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(lat &gt; 20) &amp; (lat &lt; 60) &amp; (lon &gt; -140) &amp; (lon &lt; -60)&#39;</span><span class="p">)</span>
+
+<span class="c"># Station pressure in Europe (a)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="n">europe</span> <span class="o">&amp;</span> <span class="n">pressure</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="c"># Station pressure in North America (b)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="n">namer</span> <span class="o">&amp;</span> <span class="n">pressure</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="c"># Station pressure in North America or Europe (c)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,(</span><span class="n">europe</span> <span class="o">|</span> <span class="n">namer</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">pressure</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="c"># Station pressure global (d)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="n">pressure</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="c"># Station pressure global except Europe (e)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="n">pressure</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">europe</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">obs</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">6756</span><span class="p">,)</span>     <span class="o">&lt;-</span> <span class="n">a</span>
+<span class="p">(</span><span class="mi">641</span><span class="p">,)</span>      <span class="o">&lt;-</span> <span class="n">b</span>
+<span class="p">(</span><span class="mi">7397</span><span class="p">,)</span>     <span class="o">&lt;-</span> <span class="n">c</span>
+<span class="p">(</span><span class="mi">14507</span><span class="p">,)</span>    <span class="o">&lt;-</span> <span class="n">d</span>
+<span class="p">(</span><span class="mi">7751</span><span class="p">,)</span>     <span class="o">&lt;-</span> <span class="n">e</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>The two geographical areas chosen don&#8217;t overlap so it is reassuring to find that:</dt>
+<dd><ul class="first last simple">
+<li>c = a + b</li>
+<li>e = d - a</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">warning:</th><td class="field-body">The method <strong>compile</strong> produces filters which are only valid within one ODS file, if we looked at another file, the filter <em>temp</em> would need to be recompiled for that file. Avoid combining filters generated using data from different files. The ODS class offers a method <strong>validateFilter</strong>, to make sure that the filter you have was compiled for that file.</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference download internal" href="../_downloads/ods3.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">3</span></tt></a></p>
+</div></blockquote>
+</div>
+<div class="section" id="example-4">
+<h2>Example 4<a class="headerlink" href="#example-4" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>All operators can be used in the expressions, for example, select zonal wind when the forecast predicted that the wind would blow from the east, or from the west:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.ods.ods</span> <span class="kn">import</span> <span class="n">ODS</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">ODS</span><span class="p">(</span><span class="s">&#39;e561_tst_02.diag_conv.20110201_00z.ods&#39;</span><span class="p">)</span>
+<span class="nb">filter</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(kx == 289) &amp; (kt == 4) &amp; ((obs-omf) &lt; 0)&#39;</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="nb">filter</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">o</span><span class="o">.</span><span class="n">shape</span>
+<span class="nb">filter</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(kx == 289) &amp; (kt == 4) &amp; ((obs-omf) &gt;= 0)&#39;</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="nb">filter</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">o</span><span class="o">.</span><span class="n">shape</span>
+<span class="nb">filter</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;(kx == 289) &amp; (kt == 4)&#39;</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">,</span><span class="nb">filter</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">o</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="mi">3473</span><span class="p">,)</span>     <span class="o">&lt;-</span> <span class="n">a</span>
+<span class="p">(</span><span class="mi">2821</span><span class="p">,)</span>     <span class="o">&lt;-</span> <span class="n">b</span>
+<span class="p">(</span><span class="mi">6294</span><span class="p">,)</span>     <span class="o">&lt;-</span> <span class="n">c</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>We find:</dt>
+<dd><ul class="first last simple">
+<li>c = a + b</li>
+</ul>
+</dd>
+</dl>
+<p><a class="reference download internal" href="../_downloads/ods4.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">4</span></tt></a></p>
+</div></blockquote>
+</div>
+<div class="section" id="example-5">
+<h2>Example 5<a class="headerlink" href="#example-5" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Finally, here is an example of how to match upper air observations to standard
+levels. This program counts all radiosonde wind vectors u and v which were used
+in the assimilation for a selection of standard levels.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">gmaopy.ods.ods</span> <span class="kn">import</span> <span class="n">ODS</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">ODS</span><span class="p">(</span><span class="s">&#39;e561_tst_02.diag_conv.20110201_00z.ods&#39;</span><span class="p">)</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">400</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">700</span><span class="p">,</span><span class="mi">850</span><span class="p">,</span><span class="mi">925</span><span class="p">,</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">mean_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">),</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+<span class="nb">filter</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;((kt == 4) | (kt == 5)) &amp; (kx == 220) &amp; (qcexcl == 0)&#39;</span><span class="p">)</span>
+<span class="n">obs_levels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">sampleLevels</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">levels</span><span class="p">)</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;obs&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">)):</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">obs</span><span class="p">(</span><span class="nb">filter</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">obs_levels</span> <span class="o">==</span> <span class="n">levels</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">mean_counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">)):</span>
+    <span class="k">print</span> <span class="n">mean_counts</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The output shows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">2200.0</span>
+<span class="mf">2850.0</span>
+<span class="mf">4086.0</span>
+<span class="mf">5444.0</span>
+<span class="mf">4422.0</span>
+<span class="mf">3576.0</span>
+<span class="mf">3490.0</span>
+<span class="mf">3118.0</span>
+<span class="mf">3426.0</span>
+<span class="mf">3948.0</span>
+<span class="mf">4696.0</span>
+<span class="mf">4448.0</span>
+<span class="mf">5152.0</span>
+<span class="mf">4512.0</span>
+<span class="mf">3720.0</span>
+<span class="mf">2006.0</span>
+<span class="mf">334.0</span>
+<span class="mf">64.0</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../_downloads/ods5.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">5</span></tt></a></p>
+</div></blockquote>
+<div class="section" id="example-6">
+<h3>Example 6<a class="headerlink" href="#example-6" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>This example illustrates how much work is required using semperpy to
+compute some observation statistics for a month of data for the variable oma
+for both wind components u and v from radiosondes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="kn">as</span> <span class="nn">ma</span>
+<span class="kn">from</span> <span class="nn">semperpy.core.date</span> <span class="kn">import</span> <span class="n">Date</span><span class="p">,</span> <span class="n">Dates</span>
+<span class="kn">from</span> <span class="nn">semperpy.core.tools</span> <span class="kn">import</span> <span class="n">substitute_unix_dates</span>
+<span class="kn">from</span> <span class="nn">semperpy.observations.observation</span> <span class="kn">import</span> <span class="n">Observation</span>
+<span class="kn">from</span> <span class="nn">gmaopy.ods.ods</span> <span class="kn">import</span> <span class="n">ODS</span>
+
+<span class="c"># date formats documented in &quot;man strftime&quot;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;e561_tst_02.diag_conv.date(%Y%m</span><span class="si">%d</span><span class="s">_%H)z.ods&#39;</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">250</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">400</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">700</span><span class="p">,</span><span class="mi">850</span><span class="p">,</span><span class="mi">925</span><span class="p">,</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">mean_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">),</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">rms_oma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">),</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">mean_oma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">),</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2011020100</span><span class="p">,</span><span class="mi">2011022818</span><span class="p">,</span><span class="mi">6</span><span class="p">):</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="n">substitute_unix_dates</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s">&#39;date&#39;</span><span class="p">,</span><span class="n">Date</span><span class="p">(</span><span class="n">date</span><span class="p">))</span>
+    <span class="k">print</span> <span class="nb">file</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">ODS</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+    <span class="nb">filter</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&#39;((kt == 4) | (kt == 5)) &amp; (kx == 220)&#39;</span><span class="p">)</span>
+    <span class="n">obs_levels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">sampleLevels</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">levels</span><span class="p">)</span>
+    <span class="n">oma</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;oma&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">)):</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="n">oma</span><span class="p">(</span><span class="nb">filter</span> <span class="o">&amp;</span> <span class="n">obs_levels</span> <span class="o">==</span> <span class="n">levels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">compressed</span><span class="p">()</span>
+        <span class="n">mean_counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mean_oma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">*=</span> <span class="n">result</span>
+        <span class="n">rms_oma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">)):</span>
+    <span class="n">rms_oma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">mean_counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">rms_oma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rms_oma</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">mean_oma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">mean_counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../_downloads/ods6.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">6</span></tt></a></p>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ODS - reading and filtering ODS files</a><ul>
+<li><a class="reference internal" href="#example-1">Example 1</a></li>
+<li><a class="reference internal" href="#example-2">Example 2</a></li>
+<li><a class="reference internal" href="#example-3">Example 3</a></li>
+<li><a class="reference internal" href="#example-4">Example 4</a></li>
+<li><a class="reference internal" href="#example-5">Example 5</a><ul>
+<li><a class="reference internal" href="#example-6">Example 6</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../tutorials.html"
+                        title="previous chapter">Tutorials for the end user</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../plotting/plotting.html"
+                        title="next chapter">Plotting features</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/ods/tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../plotting/plotting.html" title="Plotting features"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../tutorials.html" title="Tutorials for the end user"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

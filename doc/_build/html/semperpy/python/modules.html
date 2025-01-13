@@ -1,0 +1,231 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modules and packages &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="About Python" href="python.html" />
+    <link rel="next" title="Programming techniques" href="techniques.html" />
+    <link rel="prev" title="Object Orientation" href="objects.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="techniques.html" title="Programming techniques"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="objects.html" title="Object Orientation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" >Tutorials for the end user</a> &raquo;</li>
+          <li><a href="python.html" accesskey="U">About Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="modules-and-packages">
+<h1>Modules and packages<a class="headerlink" href="#modules-and-packages" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>Python enables us to make our beautiful code available to other people to use
+by providing mechanisms for implementing modules and packages.</div></blockquote>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>A module is a file (with extension .py) which may contain class definitions,
+functions and executable code.</p>
+<p>Let&#8217;s save the following code into a file called greetings.py:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">sayHi</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;hello world&quot;</span>
+
+<span class="n">sayHi</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>From the python interpreter:</p>
+<div class="highlight-python"><pre>import greetings
+  --&gt; hello world</pre>
+</div>
+<p>The code in the <strong>module</strong> <em>greeting</em> is executed the first time that module is imported.
+Modules are very useful for storing class definitions and sometimes to run some
+initialization code at import time. Modules can themselves import other modules. There
+are different methods to import modules, whichever method you use is a matter of preference.
+Please see <a class="reference external" href="http://docs.python.org/howto/doanddont.html">idioms and anti-idioms</a>. Certain
+methods can be better than others. Try to avoid from module import * as this will fill you
+namespace with function and class names and you don&#8217;t know how many:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># good</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+
+<span class="c"># not as good</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">print</span> <span class="n">argv</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="packages">
+<h2>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>If you create a directory, copy some modules into that directory and create an (even empty)
+__init__.py file, the contents of that directory is called a <strong>package</strong>:</p>
+<div class="highlight-python"><pre>mkdir polite
+cp greetings.py polite
+touch polite/__init__.py
+
+# in your python program
+import polite.greetings
+polite.greetings.sayHi()
+
+import polite.greetings as p
+p.sayHi()
+
+from polite.greetings import sayHi
+sayHi()</pre>
+</div>
+<p>SemperPy is build by a collection of packages and a lot of attention is given to trying
+to use the right hierarchy and naming, but once again this is a matter of preference. To
+read netcdf (or hdf) files which contain gridded data, the class File is in
+sempery.netcdf.file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">File</span><span class="p">()</span>
+
+<span class="c"># many classes could be called File and there could be a name conflict. It</span>
+<span class="c"># could be a better idea to use:</span>
+<span class="kn">import</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">as</span> <span class="nn">griddedData</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">griddedData</span><span class="o">.</span><span class="n">File</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now, the __init__.py file is useful to determine what is loaded when importing * from
+a package. If we put in __init__.py:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;file&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This enables:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.netcdf</span> <span class="kn">import</span> <span class="o">*</span> <span class="c"># the module file is imported</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">File</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If we put in __init__.py:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">file</span> <span class="kn">import</span> <span class="n">File</span>
+</pre></div>
+</div>
+<p>We have:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.netcdf</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">File</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For more information you can consult the page on modules in the <a class="reference external" href="http://docs.python.org/tutorial/modules.html">Python documentation</a>.</p>
+<p>Some typical imports from semperpy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sempery.core.Date</span> <span class="kn">import</span> <span class="n">Date</span><span class="p">,</span> <span class="n">Dates</span>
+<span class="kn">from</span> <span class="nn">sempery.core.tools</span> <span class="kn">import</span> <span class="n">is_dict</span><span class="p">,</span> <span class="n">is_list</span><span class="p">,</span> <span class="n">to_list</span>
+<span class="kn">from</span> <span class="nn">gmaopy.ods.ods</span> <span class="kn">import</span> <span class="n">ODS</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span>
+<span class="kn">from</span> <span class="nn">sempery.core.configfile</span> <span class="kn">import</span> <span class="n">ConfigFile</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Modules and packages</a><ul>
+<li><a class="reference internal" href="#modules">Modules</a></li>
+<li><a class="reference internal" href="#packages">Packages</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="objects.html"
+                        title="previous chapter">Object Orientation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="techniques.html"
+                        title="next chapter">Programming techniques</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/python/modules.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="techniques.html" title="Programming techniques"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="objects.html" title="Object Orientation"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" >Tutorials for the end user</a> &raquo;</li>
+          <li><a href="python.html" >About Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

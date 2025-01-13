@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reading netCDF files / HDF files / opendap servers &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../../tutorials.html" />
+    <link rel="next" title="SemperPy - Core libraries" href="../../semperpy.html" />
+    <link rel="prev" title="Services - client-server communication" href="../services/tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../semperpy.html" title="SemperPy - Core libraries"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../services/tutorial.html" title="Services - client-server communication"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reading-netcdf-files-hdf-files-opendap-servers">
+<h1>Reading netCDF files / HDF files / opendap servers<a class="headerlink" href="#reading-netcdf-files-hdf-files-opendap-servers" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>SemperPy provides tools to read netCDF 3.x and 4.x files, hdf 4.x and 5.x files
+and access opendap servers transparently thanks to the netcdf4 library which
+handles all these formats. Thanks to <a class="reference internal" href="../slicing/slicingmodule.html#module-slicing" title="slicing: Slicing of multi-dimensional arrays along an arbitrary numbers of dimensions."><tt class="xref py py-mod docutils literal"><span class="pre">slicing</span></tt></a> and the support given
+by <a class="reference internal" href="../slicing/dimensions/dimensionmodule.html#module-slicing.dimensions" title="slicing.dimensions: Implementing the actual slicing along one single dimension"><tt class="xref py py-mod docutils literal"><span class="pre">slicing.dimensions</span></tt></a> and <a class="reference internal" href="../slicing/cf10/cf10module.html#module-slicing.cf10" title="slicing.cf10: Implementing dimension classes which work on CF 1.0 files."><tt class="xref py py-mod docutils literal"><span class="pre">slicing.cf10</span></tt></a>, it becomes easy to slice
+variables read from those files:</div></blockquote>
+<div class="section" id="reading-into-multi-dimensional-numpy-arrays">
+<h2>Reading into multi-dimensional numpy arrays<a class="headerlink" href="#reading-into-multi-dimensional-numpy-arrays" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>This method matches the way data is sliced and returned in grads (pygrads), this
+is more useful in interactive mode.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span> <span class="c"># register dimensions specific to our files</span>
+
+<span class="n">datapath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;SEMPERPY_TESTDATA&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">datapath</span> <span class="o">+</span> <span class="s">&#39;/an.hdf&#39;</span><span class="p">)</span>
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2010071000</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readArray</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="s">&quot;shape: </span><span class="si">%s</span><span class="s">, mean: </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/read1.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">1</span></tt></a></p>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>shape: (1, 1, 361, 540), mean: 255.139215</pre>
+</div>
+<p>No latitudes or longitudes are specified, therefore the global field is returned (361,340).
+Subareas can be specified:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span> <span class="c"># register dimensions specific to our files</span>
+
+<span class="n">datapath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;SEMPERPY_TESTDATA&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">datapath</span> <span class="o">+</span> <span class="s">&#39;/an.hdf&#39;</span><span class="p">)</span>
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2010071000</span><span class="p">,</span>
+    <span class="n">latitude</span> <span class="o">=</span> <span class="p">{</span><span class="mi">20</span><span class="p">:</span><span class="mi">90</span><span class="p">},</span>
+    <span class="n">longitude</span> <span class="o">=</span> <span class="p">{</span><span class="mi">120</span><span class="p">:</span><span class="mi">250</span><span class="p">},</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readArray</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;shape: </span><span class="si">%s</span><span class="s">, mean: </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/read2.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">2</span></tt></a></p>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>(1, 1, 141, 196), mean: 259.202858</pre>
+</div>
+<p>No latitudes or longitudes are specified, therefore the global field is returned (361,340).
+Only one level is specified, more than level can be specified:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span> <span class="c"># register dimensions specific to our files</span>
+
+<span class="n">datapath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;SEMPERPY_TESTDATA&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">datapath</span> <span class="o">+</span> <span class="s">&#39;/an.hdf&#39;</span><span class="p">)</span>
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2010071000</span><span class="p">,</span>
+    <span class="n">latitude</span> <span class="o">=</span> <span class="p">{</span><span class="mi">20</span><span class="p">:</span><span class="mi">90</span><span class="p">},</span>
+    <span class="n">longitude</span> <span class="o">=</span> <span class="p">{</span><span class="mi">120</span><span class="p">:</span><span class="mi">250</span><span class="p">},</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">500</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readArray</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;shape: </span><span class="si">%s</span><span class="s">, mean: </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/read3.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">3</span></tt></a></p>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>shape: (1, 2, 141, 196), mean: 269.782462</pre>
+</div>
+<p>Two levels have now been returned. It can sometimes be useful to request &#8220;all available levels&#8221; between two values. A list describes discrete values [a,b,c,d], [~a,~b,~c,~d] is returned where <strong>~</strong> means <strong>closest value</strong>. A dictionary describes an interval {a:b}, [&gt;=a,...,&lt;=b] is returned including all values between a and b:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span> <span class="c"># register dimensions specific to our files</span>
+
+<span class="n">datapath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;SEMPERPY_TESTDATA&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">datapath</span> <span class="o">+</span> <span class="s">&#39;/an.hdf&#39;</span><span class="p">)</span>
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2010071000</span><span class="p">,</span>
+    <span class="n">latitude</span> <span class="o">=</span> <span class="p">{</span><span class="mi">20</span><span class="p">:</span><span class="mi">90</span><span class="p">},</span>
+    <span class="n">longitude</span> <span class="o">=</span> <span class="p">{</span><span class="mi">120</span><span class="p">:</span><span class="mi">250</span><span class="p">},</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1000</span><span class="p">:</span><span class="mi">500</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readArray</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;shape: </span><span class="si">%s</span><span class="s">, mean: </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/read4.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">4</span></tt></a></p>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>shape: (1, 15, 141, 196), mean: 276.723312</pre>
+</div>
+<p>There are 15 levels available in the file: 1000, 975, 950, 925, 900, 875, 850, 825, 800, 750, 700, 650, 600, 550, 500.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span> <span class="c"># register dimensions specific to our files</span>
+
+<span class="n">datapath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;SEMPERPY_TESTDATA&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">datapath</span> <span class="o">+</span> <span class="s">&#39;/an.hdf&#39;</span><span class="p">)</span>
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2010071000</span><span class="p">,</span>
+    <span class="n">latitude</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1000</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c"># all levels, could omit this line</span>
+<span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readArray</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;shape: </span><span class="si">%s</span><span class="s">, mean: </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/read5.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">5</span></tt></a></p>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>shape: (1, 36, 1, 540), mean: 254.547819</pre>
+</div>
+<p>This is a vertical slice along the equator.</p>
+</div></blockquote>
+</div>
+<div class="section" id="reading-into-a-collection-of-fields">
+<h2>Reading into a collection of fields<a class="headerlink" href="#reading-into-a-collection-of-fields" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>For some applications it can be more practical to read data into a collection of objects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span> <span class="c"># register dimensions specific to our files</span>
+
+<span class="n">datapath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;SEMPERPY_TESTDATA&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">datapath</span> <span class="o">+</span> <span class="s">&#39;/an.hdf&#39;</span><span class="p">)</span>
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2010071000</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1000</span><span class="p">:</span><span class="mi">500</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readBundle</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">w</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;level&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;date&#39;</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/f1.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">1</span></tt></a></p>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>1
+
+(15, 361, 540)
+[1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+2010-07-10 00</pre>
+</div>
+<p>The bundle (fieldset) contains a 3D field. Once again, if levels are specified as discrete values:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span> <span class="c"># register dimensions specific to our files</span>
+
+<span class="n">datapath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;SEMPERPY_TESTDATA&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">datapath</span> <span class="o">+</span> <span class="s">&#39;/an.hdf&#39;</span><span class="p">)</span>
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2010071000</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">500</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readBundle</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">w</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;level&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;date&#39;</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/f2.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">2</span></tt></a></p>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>2
+
+(361, 540)
+1000.0
+2010-07-10 00
+
+(361, 540)
+500.0
+2010-07-10 00</pre>
+</div>
+<p>We now obtain a two 2D field bundle. However, a bundle could very well contain fields
+which are vertical slices:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span> <span class="c"># register dimensions specific to our files</span>
+
+<span class="n">datapath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">&#39;SEMPERPY_TESTDATA&#39;</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">datapath</span> <span class="o">+</span> <span class="s">&#39;/an.hdf&#39;</span><span class="p">)</span>
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="mi">2010071000</span><span class="p">,</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1000</span><span class="p">:</span><span class="mi">500</span><span class="p">},</span>
+    <span class="n">latitude</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">50</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readBundle</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">w</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot;level </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;level&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;latitude </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;latitude&#39;</span><span class="p">)</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/f3.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">3</span></tt></a></p>
+<p>The output shows:</p>
+<div class="highlight-python"><pre>6
+
+(15, 540)
+level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+latitude 0.000000
+
+(15, 540)
+level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+latitude 10.000000
+
+(15, 540)
+level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+latitude 20.000000
+
+(15, 540)
+level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+latitude 30.000000
+
+(15, 540)
+level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+latitude 40.000000
+
+(15, 540)
+level [1000.0, 975.0, 950.0, 925.0, 900.0, 875.0, 850.0, 825.0, 800.0, 750.0, 700.0, 650.0, 600.0, 550.0, 500.0]
+latitude 50.000000</pre>
+</div>
+<p>Just the same way, we can access MERRA data through the opendap server:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.core.date</span> <span class="kn">import</span> <span class="n">Dates</span>
+<span class="kn">from</span> <span class="nn">semperpy.netcdf.file</span> <span class="kn">import</span> <span class="n">File</span>
+<span class="kn">import</span> <span class="nn">gmaopy.netcdf</span> <span class="c"># register dimensions specific to our files</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="s">&#39;http://goldsmr3.sci.gsfc.nasa.gov:80/dods/MAI3CPASM&#39;</span><span class="p">)</span>
+<span class="n">directive</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;u&#39;</span><span class="p">,</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2001010100</span><span class="p">,</span><span class="mi">2001013118</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="mi">850</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">readBundle</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+<span class="k">print</span>
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference download internal" href="../../_downloads/f4.py"><tt class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">example</span> <span class="pre">4</span></tt></a></p>
+<p>The output shows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">124</span>
+</pre></div>
+</div>
+<p>The advantage in reading bundle is that fields are created without loading their data.
+This makes the reading faster and enables to read a large number of fields without
+using any memory. Memory is used as soon as field.values() is called, but when
+you are done with a field you can call field.unload().</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Reading netCDF files / HDF files / opendap servers</a><ul>
+<li><a class="reference internal" href="#reading-into-multi-dimensional-numpy-arrays">Reading into multi-dimensional numpy arrays</a></li>
+<li><a class="reference internal" href="#reading-into-a-collection-of-fields">Reading into a collection of fields</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../services/tutorial.html"
+                        title="previous chapter">Services - client-server communication</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../semperpy.html"
+                        title="next chapter">SemperPy - Core libraries</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/netcdf/tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../semperpy.html" title="SemperPy - Core libraries"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../services/tutorial.html" title="Services - client-server communication"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

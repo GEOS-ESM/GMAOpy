@@ -1,0 +1,95 @@
+[1]
+start = 2007010100
+end = 2007073100
+expver = d501_apr06_fp
+
+[2]
+start = 2007080100
+end = 2007083100
+expver = d5_tc4_01
+
+[3]
+start = 2007090100
+end = 2008033100
+expver = d510_fp
+
+[4]
+start = 2008040100
+end = 2008043000
+expver = d5_arctas_02
+
+[5]
+start = 2008050100
+end = 2008083100
+expver = d510_fp
+
+[6]
+start = 2008090100
+end = 2008113000
+expver = d520_fp
+
+[7]
+start = 2008120100
+end = 2008123100
+expver = d520_ms
+
+[8]
+start = 2009010100
+end = 2010013100
+expver = d520_fp
+
+[9]
+start = 2010020100
+end = 2010073100
+expver = e540_fp
+
+[10]
+start = 2010080100
+end = 2010081500
+expver = e561_tst_02
+
+[11]
+start = 2010081600
+end = 2010103100
+expver = e562p3_fp
+
+[12]
+start = 2010110100
+end = 2010123100
+expver = e562p4_fp
+
+[13]
+start = 2011010100
+end = 2011033100
+expver = e562p5_fp
+
+[14]
+start = 2011040100
+end = 2011043000
+expver = e571_fp
+
+[15]
+start = 2011050100
+end = 2011062200
+expver = e571p1_fp
+
+[16]
+start = 2011063000
+end = 2011073100
+expver = e572_fp
+
+[17]
+start = 2011080100
+end = 2011083100
+expver = e572p1_fp
+
+[18]
+start = 2011090100
+end = 2012040200
+expver = e572p2_fp
+
+[19]
+start = 2012040300
+end = 2012083100
+expver = e572p5_fp
+

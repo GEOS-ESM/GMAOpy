@@ -1,0 +1,77 @@
+:mod:`The Server class` 
+=======================
+
+.. module:: services.server
+
+.. class:: Server(object)
+
+    The **Server** class is the main public class to be instanciated and use directly 
+    by the user.
+
+Public methods
+--------------
+
+    .. method:: Server(response=ImmediateAndNonBlocking())
+
+    	:param response: an instance of a class which can handle a response for POST request
+    	:type response: a subclass of :class:`Services.Response.Response`.
+
+    	When creating an instance, a response should be specified by the user. See :mod:`Services.Responses` for more information. By default, the server will not block and handle services in a different thread immediately.
+    	The server installs a handler to serve static pages at the location specified
+    	by the environment variable **SEMPERPY_WEB**, so any file from that location down
+    	can be served as static pages (see :class:`Services.HTML.HTML` for more information).
+
+    .. method:: run(port=8080)
+
+    	:param port: the port number on which the server should listen for connections
+    	:type port: int
+
+    	Starts the server on the specified port.
+
+    .. classmethod:: registerService(service,callable)
+
+    	:param service: name of the service, or list describing a hierarchy of names of services
+    	:type service: list
+    	:param callable: a function, an callable object or a bound method, to be called when the specified service in invoked.
+    	:type callable: callable
+
+    	Registers a service using the name of hierarchy of names on the POST http request. What the
+    	callable receives depends on what the client sends. The client is expected to send a dictionary d,
+    	the service callable receives \*\*d. See the :ref:`Calculator<services_calculator>` example for more
+    	information. The callable should then look like::
+
+    		def callable(**kargs):
+    			return <arbitrary python structure>
+
+    	The python structure returned by the callable is encoded into json and sent back to the client.
+    	If anything goes wrong during the processing of a request, a :class:`Services.Errors.ServiceError` or any subclass
+    	should be raised.
+
+    .. classmethod:: registerPage(page,callable)
+
+    	:param page: name of the page, or list describing a hierarchy of names of pages
+    	:type page: list
+    	:param callable: a function, an callable object or a bound method, to be called when the specified page in invoked.
+    	:type callable: callable
+
+    	Registers a page using the name of hierarchy of names on the GET http request. The callable receives
+    	a twisted request as the sole parameter::
+
+    		def callable(request):
+    			return string containing HTML
+
+Private methods
+---------------
+
+    .. method:: render_GET(request)
+
+    	implements the twisted required method to answer a GET request. By default, it displays
+    	the hierarchy of registered services and pages on this server.
+    	
+    .. method:: nested(request,all,prefix)
+
+    	Recursively generated the list of services and pages for display purposes, not documented.
+
+    .. classmethod:: register(where,service,object)
+
+    	Called by registerService and registerPage to actually make the registration.

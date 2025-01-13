@@ -1,0 +1,20 @@
+#!/bin/ksh
+
+cd $TMP
+
+cat > dirdoc.py << EOF
+import sys
+from semperpy.directive.help import Help
+from semperpy.directive.asciiformatter import ASCIIFormatter
+from gmaopy.modules.help import *
+
+name = None
+if len(sys.argv) > 1:
+    name = sys.argv[1]
+h = Help()
+print h(name)
+EOF
+
+sp dirdoc.py $@ | less
+
+rm -f dirdoc.py

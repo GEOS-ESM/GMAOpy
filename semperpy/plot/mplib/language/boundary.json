@@ -1,0 +1,22 @@
+{
+	"directive": "boundary",
+    "doc": true,
+	"keywords" : {
+        "linewidth": {
+            "unique": true,
+            "default_value": 1.0
+        },
+        "color": {
+            "unique": true,
+            "default_value": "k"
+        },
+        "fill_color": {
+            "unique": true,
+            "default_value": null
+        },
+        "zorder": {
+            "unique": true,
+            "default_value": 0
+        }
+	}
+}

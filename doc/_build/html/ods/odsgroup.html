@@ -1,0 +1,165 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ODSGroup class &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="ods — Reading ODS files" href="odsmodule.html" />
+    <link rel="next" title="The ODSVariable class" href="odsvariable.html" />
+    <link rel="prev" title="The ODS class" href="ods.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="odsvariable.html" title="The ODSVariable class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ods.html" title="The ODS class"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="odsmodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal"><span class="pre">ods</span></tt> &#8212; Reading ODS files</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-odsgroup-class">
+<h1>The ODSGroup class<a class="headerlink" href="#the-odsgroup-class" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ODSGroup">
+<em class="property">class </em><tt class="descname">ODSGroup</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#ODSGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <strong>ODSGroup</strong> is a wrapper around the <strong>ODS</strong> class, enabling to read from multiple ODS files at
+a time by calling ODS methods and concatenating filters and variables which are returned.</p>
+<dl class="method">
+<dt>
+<tt class="descname">ODSGroup(files):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>files</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of ods files to read</td>
+</tr>
+</tbody>
+</table>
+<p>Opens the specified files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">compile(expression, used_observations = True):</tt></dt>
+<dd><p>Same as ODS.compile but compiles the expression over all the open files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">extract(name,filter = None):</tt></dt>
+<dd><p>Same as ODS.extract but extracts the variable over all the open files. If filter is provided,
+it is applied to the concatenated variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Synonym :</th><td class="field-body">read</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ods.html"
+                        title="previous chapter">The ODS class</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="odsvariable.html"
+                        title="next chapter">The ODSVariable class</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/ods/odsgroup.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="odsvariable.html" title="The ODSVariable class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ods.html" title="The ODS class"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="odsmodule.html" ><tt class="docutils literal docutils literal docutils literal"><span class="pre">ods</span></tt> &#8212; Reading ODS files</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

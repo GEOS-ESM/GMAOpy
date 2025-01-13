@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Directive class — Handling users’ requests &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="directive — A class enhancing python dictionaries" href="directivemodule.html" />
+    <link rel="next" title="The JSonFile class — Reading json encoded dictionaries" href="jsonfile.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="jsonfile.html" title="The JSonFile class — Reading json encoded dictionaries"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="directivemodule.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">directive</span></tt> &#8212; A class enhancing python dictionaries</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-directive.directive">
+<span id="the-directive-class-handling-users-requests"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">Directive</span> <span class="pre">class</span></tt> &#8212; Handling users&#8217; requests<a class="headerlink" href="#module-directive.directive" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="directive.directive.Directive">
+<em class="property">class </em><tt class="descclassname">directive.directive.</tt><tt class="descname">Directive</tt><big>(</big><em>semperpy.core.tools.dictionary</em><big>)</big><a class="headerlink" href="#directive.directive.Directive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="public-methods">
+<h2>Public methods<a class="headerlink" href="#public-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">Directive(*args,**kargs):</tt></dt>
+<dd><p>Constructor for a Directive instance, just calls its parents (dict)
+constructor with the paramters.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="private-methods">
+<h2>Private methods<a class="headerlink" href="#private-methods" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="classmethod">
+<dt>
+<tt class="descname">validate_language(directive_name,directive_reader):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>directive_name</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; name of the language definition (probably the name of the directive)</li>
+<li><strong>directive_reader</strong> (<em>any callable object which returns the language definition from a single string parameter</em>) &#8211; an object able to return a dictionary compliant with what is defined in class:: <cite>LanguageDefinition</cite>. It receives the string <em>directive_name</em>. This means that the language definition can be stored in any format, or even be a python module.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method gets the language definition for a directive through the directive_reader,
+deals recursively with inherited language definitions if specified. It checks the validity
+of the language definitions and builds a final language definition from inherited
+definitions.</p>
+<p>Returns: the final language definition, the definition of how the language should
+describe the directive and the definition of how the keywords should be defined.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">inherit_from(parent,child):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<em>dictionary</em>) &#8211; the dictionary to inherit from</li>
+<li><strong>child</strong> (<em>dictionary</em>) &#8211; the dictionary to inherit into</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Inserts into child any entry of parent which is not in child. From entries which are
+in child and in parent, inherit all the entries in the entry from parent into
+the child.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">specialize_from(parent,child):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<em>dictionary</em>) &#8211; the dictionary to override values from</li>
+<li><strong>child</strong> (<em>dictionary</em>) &#8211; the dictionary to ovveride into</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Inserts into child any entry of parent which is not in child. Replaces in
+child any entry which is both in the parent and the child.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">validate_language_part(semantic,language):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>semantic</strong> (<em>dictionary</em>) &#8211; the definition of how the language should be defined</li>
+<li><strong>language</strong> (<em>dictionary</em>) &#8211; the language to check</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Checks that the language definition contains all the required keywords and
+ensures that the different entries are of the correct type.</p>
+<p>Returns the language after modification.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">resolveSpecialKeywords(definition,directive,language):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>definition</strong> (<em>dictionary</em>) &#8211; A dictionary written in the language definition under the keyword <strong>specialize_from</strong>.</li>
+<li><strong>directive</strong> (<em>dictionary</em>) &#8211; the directive given by the user.</li>
+<li><strong>language</strong> (<em>dictionary</em>) &#8211; the language being used to verify the directive</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This method tries to extract keywords from the different expressions in
+<strong>definition</strong> which are defined in the language. It then applies the
+language definition to those keywords in order to make sure that, before
+evaluating the expressions, the keywords exist (possible default
+values) and are of the expected type.</p>
+<p>In order to apply the language to a reduced set of keyword, this method
+creates a reduced directive and builds in memory a reduced language
+definition.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<tt class="descname">find_specials(definition,directive):</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>definition</strong> (<em>dictionary</em>) &#8211; A dictionary written in the language definition under the keyword <strong>specialize_from</strong>.</li>
+<li><strong>directive</strong> (<em>dictionary</em>) &#8211; the directive given by the user.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This methods evaluates expressions defined under the <strong>specialize_from</strong> in the
+language definition. The syntax is as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="n">specialize_from</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;value1 == &#39;hello&#39; and value2 == &#39;world&#39;&quot;</span><span class="p">:</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span>
+    <span class="s">&quot;value3 &lt; 12&quot;</span><span class="p">:</span> <span class="s">&quot;not_twelve&quot;</span>
+<span class="p">}</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Where the keys are boolean expressions which can name any key in the user&#8217;s
+directive and the values are the name of directive definitions. The contents
+of the directive definition is loaded and its keys replace the current
+keys if they exist or they are added. If the evaluation of the expression
+if False, nothing is done.</p>
+<p>This is useful to define the semantics of directive depending on values of
+some of its values.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">Directive</span> <span class="pre">class</span></tt> &#8212; Handling users&#8217; requests</a><ul>
+<li><a class="reference internal" href="#public-methods">Public methods</a></li>
+<li><a class="reference internal" href="#private-methods">Private methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="jsonfile.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">JSonFile</span> <span class="pre">class</span></tt> &#8212; Reading json encoded dictionaries</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/directive/directive.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="jsonfile.html" title="The JSonFile class — Reading json encoded dictionaries"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="directivemodule.html" ><tt class="docutils literal docutils literal"><span class="pre">directive</span></tt> &#8212; A class enhancing python dictionaries</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1975 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>geography &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="directives — Application directives" href="directives.html" />
+    <link rel="next" title="graphics" href="graphics.html" />
+    <link rel="prev" title="geodata" href="geodata.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="graphics.html" title="graphics"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="geodata.html" title="geodata"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="directives.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">directives</span></tt> &#8212; Application directives</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="geography">
+<span id="id1"></span><h1>geography<a class="headerlink" href="#geography" title="Permalink to this headline">¶</a></h1>
+<p>The geography directive describes the projection required and aggregates different attributes. The keywords in geography match mostly the definition of the method <strong>basemap</strong> in matplotlib. Other attributes match different function of the basemap module: coastlines,  continents,  boundary,  countries,  states,  rivers,  parallels,  meridians.    <a class="reference external" href="http://matplotlib.github.com/basemap/api/basemap_api.html?highlight=continents#mpl_toolkits.basemap.Basemap">http://matplotlib.github.com/basemap/api/basemap_api.html?highlight=continents#mpl_toolkits.basemap.Basemap</a></p>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">keyword</th>
+<th class="head">default</th>
+<th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>anchor</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>boundary</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>boundary</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>boundinglat</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>coastlines</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>coastlines</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>continents</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>continents</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>countries</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>countries</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>east</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>float</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>fix_aspect</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>hemisphere</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>validate</em></td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>north</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>south</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>lat_0</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>lat_1</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>lat_2</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>lat_ts</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>lon_0</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>lon_1</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>lon_2</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>meridians</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>meridians</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>no_rot</strong></td>
+<td>false</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>north</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>float</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>parallels</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>parallels</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>plot_below</strong></td>
+<td>[&#8216;continents&#8217;]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>validate</em></td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>coastlines</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>continents</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>boundary</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>countries</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>states</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>rivers</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>parallels</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>meridians</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>plot_over</strong></td>
+<td>[&#8216;coastlines&#8217;]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>validate</em></td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>coastlines</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>continents</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>boundary</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>countries</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>states</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>rivers</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>parallels</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>meridians</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>projection</strong></td>
+<td>cyl</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>validate</em></td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>aeqd</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>poly</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>gnom</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>moll</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>tmerc</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>nplaea</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>gall</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>mill</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>merc</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>stere</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>npstere</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>hammer</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>geos</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>nsper</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>vandg</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>laea</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>mbtfpq</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>sinu</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>spstere</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>lcc</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>npaeqd</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>eqdc</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>cyl</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>omerc</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>aea</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>spaeqd</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>ortho</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>cass</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>splaea</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>robin</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>resolution</strong></td>
+<td>c</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>validate</em></td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>c</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>l</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>i</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>h</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>f</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>rivers</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>rivers</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>rsphere</strong></td>
+<td>[6378137.0, 6356752.3142]</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>satellite_height</strong></td>
+<td>35785831.0</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>south</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>float</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>states</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>states</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>suppress_ticks</strong></td>
+<td>true</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>west</strong></td>
+<td>None</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>optional</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>type</em></td>
+<td>float</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>zorder</strong></td>
+<td>1000</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><em>unique</em></td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="keywords">
+<h2>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="anchor">
+<h3>anchor<a class="headerlink" href="#anchor" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="boundary">
+<h3>boundary<a class="headerlink" href="#boundary" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>boundary</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="boundinglat">
+<h3>boundinglat<a class="headerlink" href="#boundinglat" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="coastlines">
+<h3>coastlines<a class="headerlink" href="#coastlines" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>coastlines</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="continents">
+<h3>continents<a class="headerlink" href="#continents" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>continents</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="countries">
+<h3>countries<a class="headerlink" href="#countries" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>countries</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="east">
+<h3>east<a class="headerlink" href="#east" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>The coordinates of the geography are normally inherited from the domain name specified, unless overwritten here by the user</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>type</td>
+<td>float</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fix-aspect">
+<h3>fix_aspect<a class="headerlink" href="#fix-aspect" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="hemisphere">
+<h3>hemisphere<a class="headerlink" href="#hemisphere" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>for some projections such as stereograhic or orthographic, you can specify a hemisphere</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>validate</td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>north</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>south</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="lat-0">
+<h3>lat_0<a class="headerlink" href="#lat-0" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="lat-1">
+<h3>lat_1<a class="headerlink" href="#lat-1" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="lat-2">
+<h3>lat_2<a class="headerlink" href="#lat-2" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="lat-ts">
+<h3>lat_ts<a class="headerlink" href="#lat-ts" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="lon-0">
+<h3>lon_0<a class="headerlink" href="#lon-0" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="lon-1">
+<h3>lon_1<a class="headerlink" href="#lon-1" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="lon-2">
+<h3>lon_2<a class="headerlink" href="#lon-2" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="meridians">
+<h3>meridians<a class="headerlink" href="#meridians" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>meridians</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="no-rot">
+<h3>no_rot<a class="headerlink" href="#no-rot" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>false</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="north">
+<h3>north<a class="headerlink" href="#north" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>The coordinates of the geography are normally inherited from the domain name specified, unless overwritten here by the user</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>type</td>
+<td>float</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parallels">
+<h3>parallels<a class="headerlink" href="#parallels" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>parallels</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="plot-below">
+<h3>plot_below<a class="headerlink" href="#plot-below" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>continents</strong></p>
+<p>list here the attributes you want to have plotted below the data, if an attribute is not listed, it is not plotted</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>validate</td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>coastlines</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>continents</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>boundary</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>countries</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>states</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>rivers</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>parallels</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>meridians</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="plot-over">
+<h3>plot_over<a class="headerlink" href="#plot-over" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>coastlines</strong></p>
+<p>list here the attribute you want to have plotted over the data, if an attribute is not listed, it is not plotted</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>validate</td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>coastlines</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>continents</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>boundary</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>countries</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>states</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>rivers</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>parallels</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>meridians</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="projection">
+<h3>projection<a class="headerlink" href="#projection" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>cyl</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>validate</td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>aeqd</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>poly</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>gnom</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>moll</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>tmerc</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>nplaea</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>gall</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>mill</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>merc</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>stere</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>npstere</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>hammer</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>geos</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>nsper</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>vandg</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>laea</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>mbtfpq</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>sinu</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>spstere</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>lcc</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>npaeqd</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>eqdc</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>cyl</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>omerc</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>aea</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>spaeqd</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>ortho</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>cass</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>splaea</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>robin</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="resolution">
+<h3>resolution<a class="headerlink" href="#resolution" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>c</strong></p>
+<p>The resolution of the boundary database to use: c for crude, l for low, i for intermediate, h for high, f for full.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>validate</td>
+<td>ValidateChoice</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>c</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>l</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>i</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>h</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>f</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rivers">
+<h3>rivers<a class="headerlink" href="#rivers" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>rivers</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rsphere">
+<h3>rsphere<a class="headerlink" href="#rsphere" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>6378137.0, 6356752.3142</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="satellite-height">
+<h3>satellite_height<a class="headerlink" href="#satellite-height" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>35785831.0</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="south">
+<h3>south<a class="headerlink" href="#south" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>The coordinates of the geography are normally inherited from the domain name specified, unless overwritten here by the user</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>type</td>
+<td>float</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="states">
+<h3>states<a class="headerlink" href="#states" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>&#8220;&#8221;</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>type</td>
+<td>states</td>
+</tr>
+<tr class="row-odd"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="suppress-ticks">
+<h3>suppress_ticks<a class="headerlink" href="#suppress-ticks" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>true</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="west">
+<h3>west<a class="headerlink" href="#west" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>None</strong></p>
+<p>The coordinates of the geography are normally inherited from the domain name specified, unless overwritten here by the user</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>optional</td>
+<td>True</td>
+</tr>
+<tr class="row-odd"><td>type</td>
+<td>float</td>
+</tr>
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="zorder">
+<h3>zorder<a class="headerlink" href="#zorder" title="Permalink to this headline">¶</a></h3>
+<p>default: <strong>1000</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">attribute</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>unique</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<p>generated on 2012-11-04 20:07:44</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">geography</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#keywords">Keywords</a><ul>
+<li><a class="reference internal" href="#anchor">anchor</a></li>
+<li><a class="reference internal" href="#boundary">boundary</a></li>
+<li><a class="reference internal" href="#boundinglat">boundinglat</a></li>
+<li><a class="reference internal" href="#coastlines">coastlines</a></li>
+<li><a class="reference internal" href="#continents">continents</a></li>
+<li><a class="reference internal" href="#countries">countries</a></li>
+<li><a class="reference internal" href="#east">east</a></li>
+<li><a class="reference internal" href="#fix-aspect">fix_aspect</a></li>
+<li><a class="reference internal" href="#hemisphere">hemisphere</a></li>
+<li><a class="reference internal" href="#lat-0">lat_0</a></li>
+<li><a class="reference internal" href="#lat-1">lat_1</a></li>
+<li><a class="reference internal" href="#lat-2">lat_2</a></li>
+<li><a class="reference internal" href="#lat-ts">lat_ts</a></li>
+<li><a class="reference internal" href="#lon-0">lon_0</a></li>
+<li><a class="reference internal" href="#lon-1">lon_1</a></li>
+<li><a class="reference internal" href="#lon-2">lon_2</a></li>
+<li><a class="reference internal" href="#meridians">meridians</a></li>
+<li><a class="reference internal" href="#no-rot">no_rot</a></li>
+<li><a class="reference internal" href="#north">north</a></li>
+<li><a class="reference internal" href="#parallels">parallels</a></li>
+<li><a class="reference internal" href="#plot-below">plot_below</a></li>
+<li><a class="reference internal" href="#plot-over">plot_over</a></li>
+<li><a class="reference internal" href="#projection">projection</a></li>
+<li><a class="reference internal" href="#resolution">resolution</a></li>
+<li><a class="reference internal" href="#rivers">rivers</a></li>
+<li><a class="reference internal" href="#rsphere">rsphere</a></li>
+<li><a class="reference internal" href="#satellite-height">satellite_height</a></li>
+<li><a class="reference internal" href="#south">south</a></li>
+<li><a class="reference internal" href="#states">states</a></li>
+<li><a class="reference internal" href="#suppress-ticks">suppress_ticks</a></li>
+<li><a class="reference internal" href="#west">west</a></li>
+<li><a class="reference internal" href="#zorder">zorder</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="geodata.html"
+                        title="previous chapter">geodata</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="graphics.html"
+                        title="next chapter">graphics</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/directives/geography.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="graphics.html" title="graphics"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="geodata.html" title="geodata"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="directives.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">directives</span></tt> &#8212; Application directives</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

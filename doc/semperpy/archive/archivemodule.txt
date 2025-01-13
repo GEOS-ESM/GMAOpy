@@ -1,0 +1,16 @@
+:mod:`archive` --- Dealing with mass storage systems
+=====================================================
+
+.. module:: archive
+   :synopsis: A base module defining the behaviour of archive specific classes.
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents:
+*********
+
+.. toctree::
+   :maxdepth: 2
+
+   archive
+   dmf/dmf

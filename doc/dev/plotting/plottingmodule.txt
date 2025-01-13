@@ -1,0 +1,12 @@
+:mod:`plotting` --- Plotting observation statistics
+====================================================
+
+.. module:: plotting
+   :synopsis: Plotting of observation statistics framework
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. toctree::
+   :maxdepth: 2
+
+   plotting

@@ -1,0 +1,16 @@
+:mod:`observations` --- Handling observations
+=============================================
+
+.. module:: observations
+   :synopsis: Observatons
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents:
+*********
+
+.. toctree::
+   :maxdepth: 2
+
+   observation
+   obsfilter

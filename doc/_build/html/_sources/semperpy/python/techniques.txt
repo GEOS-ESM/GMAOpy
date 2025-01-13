@@ -1,0 +1,306 @@
+Programming techniques
+**********************
+
+    Some of these programming techniques are idiomatic of Python some are just more
+    general, but they prove useful and are used in the development of SemperPy.
+
+Function and method arguments
+------------------------------
+
+    Arguments to functions and methods can be handled in different ways::
+        
+        def myFunction(a,b):
+            print "a =",a,"b =",b
+
+        myFunction(1,2)
+          --> a = 1 b = 2
+        myFunction(1, b = 2)
+          --> a = 1 b = 2
+        myFunction(a = 1, b = 2)
+          --> a = 1 b = 2
+        myFunction(b = 2, a = 1)
+          --> a = 1 b = 2
+
+    Arguments can be named when calling the function, this makes the call more 
+    understandable and avoids bugs linked to arguments passed in the wrong order.
+    When arguments are passed by order, they are received as a tuple, when they are named,
+    they are received as a dictionary::
+
+        def myFunction(*args,**kargs): # yes, this is how it's written
+            print args,kargs
+
+        myFunction()
+          --> () {}
+        myFunction(2)
+          --> (2,) {}
+        myFunction(a = 2)
+          --> () {'a': 2}
+        myFunction(2,b = 3)
+          --> (2,) {'b': 3}
+
+    This can be extremely useful when writing tools. Using the tuple enables the 
+    function to receive a variable number of parameters, using the dictionary enables
+    to use named variables and to receive a dictionary. Some examples::
+
+        def uppercase(*args):
+            result = []
+            for w in args:
+                result.append(w.upper())
+            return result
+
+        print uppercase('hello','world')
+          --> ['HELLO', 'WORLD']
+        print uppercase('hello','crazy','world')
+          --> ['HELLO', 'CRAZY', 'WORLD']
+
+    Making dictionaries::
+
+        def myFunction(**kargs):
+            print kargs
+            
+        d = {
+            "a" : 1,
+            "b" : 2,
+        }
+        myFunction(**d)
+          --> {'a': 1, 'b': 2}
+        myFunction(a = 1, b =2)
+          --> {'a': 1, 'b': 2}
+
+    Using generic arguments is very useful when inheriting from other classes::
+
+        # inherit from Python's dictionary
+        class myDict(dict):
+            
+            def __init__(self,*args,**kargs):
+                # no need to know about the arguments
+                super(MyDic,self).__init__(*args,**kargs)
+                # do whatever else you wanted to do.
+                ...
+
+    It is also extremely useful to "forward" arguments to other methods, objects::
+
+        def readFields(file,**kargs):
+            b = Bundle()
+            for field in file:
+                b.append(Field(field,**kargs))
+            return b
+
+    This function sends to each Field instance the unknown parameters sent to itself.
+    As we saw in the section on object orientation, arguments can be given default values::
+
+        def addTax(price, tax = 17.5):
+            return price + price * tax / 100
+
+        print addTax(10)
+        print addTax(10,20.0)
+
+
+Callable objects
+----------------
+
+    Another special method in Python is the method __call__. When a class defines
+    that method, the object is said to be callable and it can be called in a
+    standard way without needing to specify a method name::
+
+        def myFunc(a,b):
+            print a,b
+
+        class myCallable(object):
+            def __call__(self,a,b):
+                print a,b
+
+        a = myFunc
+        a('hello','world')
+          --> hello world
+        a = myCallable()
+        a('hello','world')
+          --> hello world
+
+    Can you see the similarity? In Python everything is an object, functions are
+    just callable objects. Why would you want to make an object callable? There could
+    be a few reasons, some being more justified than others:
+
+        - a tool you use requires that you pass a function or a callable as a parameter. This technique is used often and is known as the "callback" technique. The advantage of using a callable object instead of a function is that it can hold attributes and know about its environment.
+        - you a running out of names, so out of lazyness you make your object callable. This happens much more often than you may think.
+
+
+Recursivity
+-----------
+
+    It is also called *recursion*. Recursivity is a very powerful mean of 
+    programming, but it can be sometimes difficult to achieve. A function
+    is recursive if it calls itself. This is perfectly valid in Python. Why
+    on earth would we want to do that? Let's examine this::
+
+        def reverse(string):
+            if len(string) > 0:
+                reverse(string[1:]) # remainder of the list
+                print string[0]
+
+        reverse("Hello World")
+
+    The output shows::
+
+        d
+        l
+        r
+        o
+        W
+         
+        o
+        l
+        l
+        e
+        H
+
+    So what happened here? First of all, to write a recursive function (or method)
+    you need to have this function call itself, but you need a condition for the 
+    end of recursion, or your function will go into an **infinite recursion**.
+    The Python interpreter now detects infinite resursions and eventually stops it
+    with an error message. This function calls itself with the string except its
+    first character. When the condition of end of recursion is reached (the string
+    is empty), the function returns straight away without doing anythig. The next 
+    intruction of the previous call is executed, print the last character of the
+    string, the function returns and executes the next instruction of the previous
+    call when the string contained the last 2 characters and etc... The string is
+    printed reversed.
+
+    All local variables to the function, this include its arguments, are saved in
+    the context of each function call. This is what make rescursion a powerful
+    tool. This example is pretty useless, but there are things which can only be
+    achieved using recursivity.
+
+    The binary tree is a standard structure which can be used to store strings
+    and sort them alphabetically. This can be useful to store a dictionary, since
+    searching words (looking one up) is fast in a binary tree. The technique is
+    simple, we insert a string in the tree on the left of the current node is the 
+    string is less in alphabetical order and on the right if it is greater. That way,
+    when we search a string, if it is less than the current node, we search left,
+    if it is greater, we search right (:download:`download <bintree.py>`):
+
+    .. literalinclude:: bintree.py
+        :language: python
+
+    The output shows::
+
+        if
+           for
+              cry
+           it
+              is
+              no
+                 me
+                    much
+                 one
+                    not
+                    try
+                       see
+
+        True
+        False
+        True
+        False
+
+
+    I used this example because it is quite simple, but there are better ways
+    of handling collections of words. However, the only way to handle trees of
+    any kind is using recursivity. Just to demonstrate one more programming
+    pattern and show the use of callable object, we can generalise the search
+    method of the TreeNode class::
+
+        def visit(self,visitor):
+            stop = visitor(self.string_)
+            if not stop:
+                if self.left_:
+                    stop = self.left_.visit(visitor)
+                if not stop and self.right_:
+                    stop = self.right_.visit(visitor)
+            return stop
+
+        class Search(object):
+
+            def __init__(self,pattern):
+                self.pattern = pattern            
+
+            def __call__(self,value):
+                return value == self.pattern
+
+        print tree.visit(Search('for'))
+        print tree.visit(Search('hello'))
+        print tree.visit(Search('no'))
+        print tree.visit(Search('world'))
+
+    The output shows::
+
+        True
+        False
+        True
+        False
+
+    The advantage of the visitor is that we can used it for searching or doing anything requiring
+    to go through the tree. We could for example count the words starting with a particular letter::
+
+        class Count(object):
+
+            def __init__(self,letter):
+                self.letter = letter
+                self.count = 0
+
+            def __call__(self,value):
+                if value[0] == letter:
+                    self.count += 1
+                return False  # we don't stop until it's all done
+
+            def get(self):
+                return self.count
+
+        The output shows::
+
+            3
+                
+
+
+
+
+    Another clearly identified case when we need to use recursivity is when we
+    want to program nested loops, but we don't know in advance how many loops will
+    be needed and we may want to change the order in which the loops are nested. Let
+    say we would like to generate all combinations of values of different keyword
+    (:download:`download <combinations.py>`):
+
+
+    .. literalinclude:: combinations.py
+        :language: python
+
+    The output shows::        
+
+        [20110101, 'u', 12]
+        [20110101, 'u', 24]
+        [20110101, 'v', 12]
+        [20110101, 'v', 24]
+        [20110102, 'u', 12]
+        [20110102, 'u', 24]
+        [20110102, 'v', 12]
+        [20110102, 'v', 24]
+
+        ['u', 20110101, 12]
+        ['u', 20110101, 24]
+        ['u', 20110102, 12]
+        ['u', 20110102, 24]
+        ['v', 20110101, 12]
+        ['v', 20110101, 24]
+        ['v', 20110102, 12]
+        ['v', 20110102, 24]
+
+        [12, 'u', 20110101]
+        [12, 'u', 20110102]
+        [12, 'v', 20110101]
+        [12, 'v', 20110102]
+        [24, 'u', 20110101]
+        [24, 'u', 20110102]
+        [24, 'v', 20110101]
+        [24, 'v', 20110102]
+
+    This function could work for combining thousands of lists.
+

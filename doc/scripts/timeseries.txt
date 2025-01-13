@@ -1,0 +1,142 @@
+:mod:`observation impact timeseries` --- Computing observation impact timeseries from the archive
+=================================================================================================
+
+.. module:: impacttimeseries
+   :synopsis: Computing scores from different experiments in the archive
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The *timeseries* scripts are designed to compute statistics for observation impact files. They optimise staging from the archive and computing. They are based on a producer / consumer model where:
+
+    * one job stages files and copies them locally, it is the producer
+    * one or more jobs behave like sweepers and process any directory available, the consumers.
+
+The producer script is called **stage_impact.ksh** the consumer script is called **compute_impact.ksh**.
+
+How it works
+------------
+
+The **stager** (stage_impact.ksh) stages files and copied them locally in the directory specified as an argument. When *max_ready* days are online, the scripts just waits and checks how many date.expver.done directories are present in the directory. When a number greater than *max_done* is reached, older directories are deleted. So this script just waits when it has:
+
+    * staged and copied *max_ready* days
+    * deleted .done directories to match *max_done*
+
+The **sweeper** (compute_impact.ksh) consumes date.expver.ready directories. Whenever one is available, it renames the directory to date.expver.run and invokes the python script *compute.py* to calculate statistics for that particular day. When the computation is completed, the directory is renamed to date.expver.done for the **stager** to eventually dispose of. Many instances of the sweeper can be run concurrently. If there are no directories to process, the sweeper waits nicely until one become available by issuing a system sleep.
+
+At the moment, the sweeper writes directly into a postGreSQL database, but it would be easy to change this to writing into an text file and then load the file into the database from a node allowing it.
+
+The different stages for a directory containing data (e.g. 2010123000.e562p4_fp) are as follows:
+
+    * **.stage** when created and while staging data
+    * **.copy** when ODS files are being copied into that directory
+    * **.ready** when the ODS files are ready to be used
+    * **.run** when a computing job computes the statsitics
+    * **.done** when computing has completed and nothing else needs to be done
+
+Here is an example of execution of the scripts::
+
+    pwd
+    /home/cgibert/scratch/stage
+    -rwxr-xr-x 1 cgibert g0620     685 2011-08-13 08:41 compute_impact.ksh
+    -rw-r--r-- 1 cgibert g0620    1163 2011-08-12 17:06 compute.py
+    -rw-r--r-- 1 cgibert g0620    1351 2011-08-11 18:28 impact.def
+    -rwxr-xr-x 1 cgibert g0620     377 2011-08-12 20:57 stage_impact.ksh
+    -rw-r--r-- 1 cgibert g0620    3017 2011-08-13 05:24 stage.py
+    -rw-r--r-- 1 cgibert g0620     807 2011-08-11 18:28 streams.def
+
+    nohup ./stage_impact.ksh /home/cgibert/scratch/stage /home/cgibert/scratch/stage/streams.def &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+
+    later on....
+
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:24 2010123000.e562p4_fp.done
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:26 2010123100.e562p4_fp.done
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:27 2011010100.e562p4_fp.done
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:29 2011010200.e562p5_fp.done
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:32 2011010300.e562p5_fp.done
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:34 2011010400.e562p5_fp.run
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:36 2011010500.e562p5_fp.run
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:38 2011010600.e562p5_fp.run
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:39 2011010700.e562p5_fp.run
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:42 2011010800.e562p5_fp.run
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:44 2011010900.e562p5_fp.ready
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:46 2011011000.e562p5_fp.ready
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:47 2011011100.e562p5_fp.ready
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:49 2011011200.e562p5_fp.ready
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:50 2011011300.e562p5_fp.ready
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:52 2011011400.e562p5_fp.ready
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:54 2011011500.e562p5_fp.ready
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:56 2011011600.e562p5_fp.ready
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 07:57 2011011700.e562p5_fp.copy
+    drwxr-xr-x 2 cgibert g0620   32768 2011-08-13 08:44 2011011800.e562p5_fp.stage
+    -rwxr-xr-x 1 cgibert g0620     685 2011-08-13 08:41 compute_impact.ksh
+    -rw-r--r-- 1 cgibert g0620    1163 2011-08-12 17:06 compute.py
+    -rw-r--r-- 1 cgibert g0620    1351 2011-08-11 18:28 impact.def
+    -rw------- 1 cgibert g0620 8815224 2011-08-13 07:47 nohup.out
+    -rw-r--r-- 1 cgibert g0620      21 2011-08-13 08:44 progress_streams.def
+    -rwxr-xr-x 1 cgibert g0620     377 2011-08-12 20:57 stage_impact.ksh
+    -rw-r--r-- 1 cgibert g0620    3017 2011-08-13 05:24 stage.py
+    -rw-r--r-- 1 cgibert g0620     807 2011-08-11 18:28 streams.def
+
+Is this case there is one instance of stage_impact.ksh and 5 instances of compute_impact.ksh running. The configuration file *streams.def* looks like this::
+
+    [a]
+    expver = e562p3_fp
+    start = 20100816
+    end = 20101101
+    archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p3/e562p3_fp/obs
+
+    [b]
+    expver = e562p4_fp
+    start = 20101102
+    end = 20110101
+    archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p4/e562p4_fp/obs
+
+You can run staging jobs in parallel as well. For example, if we split the previous file streams.def into two files::
+
+    streams1.def
+    [a]
+    expver = e562p3_fp
+    start = 20100816
+    end = 20101101
+    archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p3/e562p3_fp/obs
+
+    streams2.def
+    [a]
+    expver = e562p4_fp
+    start = 20101102
+    end = 20110101
+    archive_location = /archive/dao_ops/GEOS-5_pre_ops/GEOSadas-5_6_2_p4/e562p4_fp/obs
+
+We can now start the processing::
+
+    nohup ./stage_impact.ksh /home/cgibert/scratch/stage /home/cgibert/scratch/stage/streams1.def &
+    nohup ./stage_impact.ksh /home/cgibert/scratch/stage /home/cgibert/scratch/stage/streams2.def &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+    nohup ./compute_impact.ksh /home/cgibert/scratch/stage &
+
+How many staging processing can be run in parallel depends on how much data can be kept online. It is advisable to run parallel staging jobs
+for dates which are far apart to increase the chance that the same tapes are not required by the different staging jobs.
+
+:note: A file is created by the job stage_impact.ksh to keep track of which date was last handled so that if all jobs were killed, restarting them would resume the computation at the same point. The file is named: progress_<root_of_file>.def where <root_of_file> is the root name of the file containing the date definitions. In the previous case two files would be created:
+
+    * progress_streams1.def
+    * progress_streams2.def
+
+
+Contents
+********
+
+    .. toctree::
+        :maxdepth: 1
+        
+        stage_impact
+        compute_impact

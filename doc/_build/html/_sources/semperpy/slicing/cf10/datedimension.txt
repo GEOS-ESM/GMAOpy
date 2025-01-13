@@ -1,0 +1,22 @@
+:mod:`The DateDimension class`
+==============================
+
+.. module:: slicer.cf10
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: DateDimension(IndexedDimension)
+
+Summary
+-------
+
+    The DateDimension class makes the assumption that the dates in a netCDF (or opendap)
+    space are always regularly spaced and inherits from IndexedDimension. Besides some
+    specific initialisations, the DateDimension class implements the two methods:
+
+        - codeToValue
+        - valueToCode
+
+    to convert dates to an offset from a reference date found in the *units* attribute
+    of the time variable in the netCDF file and from offset to :class:`core.date.Date`.

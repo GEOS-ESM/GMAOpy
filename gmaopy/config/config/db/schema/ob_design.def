@@ -1,0 +1,45 @@
+[domain]
+name_=domain
+keys_=id,north,west,south,east,domain_name
+id=<auto_increment> primary key
+north=float
+west=float
+south=float
+east=float
+domain_name=varchar(25)
+unique = north,west,south,east,domain_name
+
+[stats]
+name_=stats
+keys_= id,level,levtype,expver,source,variable,statistic,type,kx,kt,usage
+dependencies_=domain
+foreign_keys_=domain_id
+index_=type,expver,variable,statistic,kx,kt,usage,level,usage
+composite_index_ = variable,level,type,domain_id,expver,kx,kt,usage
+id=<auto_increment> primary key
+source=varchar(10)
+expver=varchar(20)
+type=varchar(10)
+variable=varchar(15)
+levtype=varchar(5)
+level=float
+statistic=varchar(15)
+kx=int
+kt=int
+usage=varchar(10)
+id=<auto_increment> primary key
+domain_id=int not null references <schema>.domain(id)
+unique = level,expver,source,variable,statistic,type,kx,kt,usage,domain_id
+
+[value]
+name_=value
+keys_=date,value,count
+delete_=date,stats_id
+dependencies_=stats
+foreign_keys_=stats_id
+value=float
+count=float
+date=int not null
+stats_id=int not null references <schema>.stats (id)
+index_=date,stats_id
+composite_primary_=date,stats_id

@@ -1,0 +1,22 @@
+{
+	"directive": "coastlines",
+    "doc": true,
+	"keywords" : {
+        "linewidth": {
+            "unique": true,
+            "default_value": 1.0
+        },
+        "color": {
+            "unique": true,
+            "default_value": "k"
+        },
+        "antialiased": {
+            "unique": true,
+            "default_value": true
+        },
+        "zorder": {
+            "unique": true,
+            "default_value": 0
+        }
+	}
+}

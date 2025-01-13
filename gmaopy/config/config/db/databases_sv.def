@@ -1,0 +1,229 @@
+[ops]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+comment = operational database
+
+[im_ops]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+
+[im_tmp1]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+
+[im_tmp2]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+
+[im_exp]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = yes
+comment = operational database for observation impact statistics
+
+[ob_ops]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = no
+comment = operational database for observation statistics
+
+[ob_exp]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = no
+comment = operational database for observation statistics
+
+[fc_ops]
+host = localhost
+database = gmao_stats
+schema = schema/sc_schema.def
+recordtype = score
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = no
+comment = operational database for observation statistics
+
+[fc_tmp]
+host = localhost
+database = gmao_stats
+schema = schema/sc_schema.def
+recordtype = score
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = no
+comment = operational database for observation statistics
+
+[fc_exp]
+host = localhost
+database = gmao_stats
+schema = schema/sc_schema.def
+recordtype = score
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = yes
+comment = operational database for observation statistics
+
+[fc_exp1]
+host = localhost
+database = gmao_stats
+schema = schema/sc_schema.def
+recordtype = score
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = no
+comment = operational database for observation statistics
+
+[pr_ops]
+host = localhost
+database = gmao_stats
+schema = schema/pr_schema.def
+recordtype = product
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = yes
+comment = operational database for observation statistics
+
+[ocean]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+comment = database for ocean data statistics
+
+[test_obsstat_ops]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = no
+comment = operational database for observation impact statistics
+
+[test_obsstat_exp]
+host = localhost
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = yes
+comment = operational database for observation impact statistics
+
+[test_score_ops]
+host = localhost
+database = gmao_stats
+schema = schema/sc_schema.def
+recordtype = score
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = yes
+comment = operational database for observation statistics
+
+[test_product_ops]
+host = localhost
+database = gmao_stats
+schema = schema/pr_schema.def
+recordtype = product
+userw = cgibert
+userr = guest
+password=guest
+grantr = guest,cgibert
+engine = psql
+buffer = 2000
+protected = yes
+comment = operational database for observation statistics

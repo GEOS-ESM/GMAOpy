@@ -1,0 +1,68 @@
+.. _language_definitions:
+
+Language definition
+*******************
+
+    Defining a language consists in defining rules about how to validate and interpret
+    what the user submits to a program in the form of a dictionary. The rules apply to 
+    two different levels:
+
+    	* the directive itself, its name and characteristics
+    	* the keywords defining the directive
+
+    The top dictionary defines the characteristics of the directive as a whole, 
+    while the special entry 'keywords' describe the keywords allowed in the 
+    directive
+
+Directive
+---------
+
+    The keywords allowed in the directive are:
+
+    	* **directive** (*string*) - specifies the name of the directive
+    	* **inherit_from** (*string or list of strings*) - names the directives this directive inherits the language definition from. The directive inherits from all the definitions given in the list from left to right. Language definitions on the left have precedence over definitions on the right if they share common definitions.
+        * **specialize_from** (name of a directive). The keyword is an expression to be evaluated, the value if the name of a directive to specialize from. Specialization occurs if the expression evaluates to True.
+    	* **keywords** (*dictionary*) - the keywords, please see the next section.
+        * **post_validate** (*list*, default: *no default*) - The list is as follows: [*function, arg1, arg2, ..., argN*]. This defines a function or method to be called after the validation of the directive succeeded. This can be useful to copy or derive keywords or to check the validity of a collection of keywords. The function is called as follows:
+
+            .. function:: post_validate(directive,*args):
+
+                :param directive: the directive which was just validated
+                :type directive: dict or derived
+                :param args: the arguments as defined by the user (arg1,...,argN)
+                :type args: list
+
+                Should return the directive.
+
+Keywords
+--------
+    
+    The **keyword** entry in the top level dictionary is a dictionary, each key defines
+    the name of a keyword. For each key, the following properties are processed:
+
+    * **optional** (*bool*, default: *False*) - do not fail if this keyword is missing. Optional keywords often haven an associated **default_value**
+    * **default_value** (*any type*: default: *no default*) - if this keyword is not defined, assign this default value. If a keyword has a default value, it is automatically set to be optional.
+    * **unique** (*bool*, default: *False*) - if the keyword is unique, it can only take one values, otherwise it is a list of values
+    * **lowercase** (*bool*, default: *True*) - by default keyword values provided in a directive by the user are converted to lower case (even if they are part of a list or a dictionary). Set this to False if you want the strings to be untouched
+    * **remove** (*bool*, default: *False*) - this basically means that this keyword is not defined. This is useful when inheriting other language definitions and removing some of the keywords
+    * **discretional** (*bool*, default: *False*) - a keyword is discretional when it is optional, but should be removed if it has its default value. This is useful for programs testing the absence of keywords which are defined optional.
+    * **alias** (*string or list of strings*: default: *no default*) - define other names for that keywords. If an alias is used in a directive, it is renamed to the original keyword name (the dictionary key here).
+    * **type** (*string or type-class*, default: *no default*) - specify a type of a string to be constructed. That class or type is initialised with the keyword value provided by the user. If the type is specified with a string, the type of class (it can also be a callable object) is retrieved at runtime using Python's self inspection.
+    * **ignore_type_errors** (*bool*, default *False*) - when a type is specified and a parameter with the wrong type is entered, a TypeError exception is sent. It can be useful sometime to ignore those errors, for example if the type speficied is *float*, but we need to the user use *None* as well, we do not want the error to stop the program.
+    * **distribute_type** (*bool*, default: *True*) - when a type is specified and the value is a complex type (e.g. a list), there are two possibilities, either the type if for each element of the list (list of int) and each element is converted to that type, or the specified type should be initialised with the whole keyword value (when **distribute_type** is False)
+    * **validate** (*list*, default: *no default*) - provide mechanisms for validating a value or a list of values. The list is as follows: [*validator, arg1, arg2, ..., argN*]. The validator can be a string naming a function or any callable object or the callable object itself. The callable object is called to validate the values as follows:
+    	
+    	.. function:: validator(directive,keyword,values,*args)
+
+    		:param directive: the whole directive already cleanup up, but being validated. It is provided to enable validation using other keyword values in the directive
+    		:type directive: dictionary or someting behaving like one
+    		:param keyword: the name of the keyword being validated
+    		:type keyword: string
+    		:param values: the value(s) supplied for this keyword by the user, this is what needs validating. It is always a list, if the keywork only has one value, it is a list of one element.
+    		:type values: list
+    		:param args: the list of values define in the language (arg1, arg2, ..., argN)
+    		:type args: list
+
+    		The callable should either raise an exception if there is a validation problem or return a list of values either identical or modified.
+
+    	A validator can be used to check that a value is in a numerical range, but also to calculate someone's age from the birthday.

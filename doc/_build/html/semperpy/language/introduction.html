@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="language — Language definition and analysis utilities" href="languagemodule.html" />
+    <link rel="next" title="Language definition" href="definitions.html" />
+    <link rel="prev" title="language — Language definition and analysis utilities" href="languagemodule.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="definitions.html" title="Language definition"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="languagemodule.html" title="language — Language definition and analysis utilities"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="languagemodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">language</span></tt> &#8212; Language definition and analysis utilities</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<span id="language-introduction"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>In most applications there is a need to send arguments to a program in order
+to specify parameterised features which are required by the user. There are
+different ways of doing so, program arguments, environment variables and other
+means. The Language module implements utilities to specify program behaviour
+through <strong>directives</strong>. Directives are basically Python dictionaries, or can
+be turned into more advanced objects which are specified by a user either
+manually, through a user interface either GUI or web, or through process
+communication. A directive also includes a verb or an action to be taken.</p>
+<p>If you think of a data retrieval system from an archive, you can specify
+data to be retrieved through a &#8216;retrieve&#8217; directive:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">retrieve</span><span class="p">(</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2010010100</span><span class="p">,</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">72</span><span class="p">],</span>
+        <span class="n">parameter</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">500</span><span class="p">],</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;oper&quot;</span><span class="p">,</span>
+        <span class="n">etc</span><span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The same data could be used to request the archive to first stage the data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">stage</span><span class="p">(</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="mi">2010010100</span><span class="p">,</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">72</span><span class="p">],</span>
+        <span class="n">parameter</span> <span class="o">=</span> <span class="s">&quot;geopotential&quot;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">500</span><span class="p">],</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;oper&quot;</span><span class="p">,</span>
+        <span class="n">etc</span><span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The Language utilities check that the keywords used are valid, that if some keywords
+are compulsary, they are provided, sets some default values, convert data to the right
+type or class etc... That way we can make sure that the data provided to objects and
+functions are valid and clean, no more tests are required.</p>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="languagemodule.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">language</span></tt> &#8212; Language definition and analysis utilities</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="definitions.html"
+                        title="next chapter">Language definition</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/language/introduction.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="definitions.html" title="Language definition"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="languagemodule.html" title="language — Language definition and analysis utilities"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="languagemodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">language</span></tt> &#8212; Language definition and analysis utilities</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

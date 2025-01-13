@@ -1,0 +1,32 @@
+{
+	"directive": "plotfields",
+	"keywords" : {
+		"fields": {
+            "alias": ["f"],
+            "unique": true
+		},
+		"contour": {
+			"unique": true,
+            "optional": true
+		},
+        "geography": {
+            "unique": true,
+            "optional": true
+        },
+        "layout": {
+            "default_value": [1,1],
+            "optional": true
+        },
+        "interactive": {
+            "optional": true,
+            "default_value": true,
+            "type": "bool",
+            "unique": true
+        },
+        "output_file": {
+            "optional": true,
+            "default_value": "<parameter>_<date>_<step>_<level>.png",
+            "unique": true
+        }
+	}
+}

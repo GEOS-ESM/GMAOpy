@@ -1,0 +1,190 @@
+:mod:`dategroup` --- Date grouping tools
+========================================
+
+.. module:: semperpy.core.dategroup
+   :synopsis: Grouping dates according to different criteria
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The DateGroup class
+--------------------
+
+.. class:: DateGroup(object)
+
+    The **DateGroup** class is an interface to different actors which are able
+    to group dates accoring to different criteria. Actors are also implemented in 
+    this module::
+
+        from semperpy.core.date import Dates
+        from semperpy.core.dategroup import DateGroup
+
+        def displayData(groups):
+            for group in groups.iterator():
+                r = []
+                for date,value in group:
+                    r.append(str(date) + ' ' + str(value))
+                print ', '.join(r)
+
+        d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+        g = DateGroup.createGroup('hour',d)
+        displayData(g)
+
+        2011010100 None, 2011010200 None
+        2011010101 None, 2011010201 None
+        2011010102 None, 2011010202 None
+        2011010103 None, 2011010203 None
+        2011010104 None, 2011010204 None
+        2011010105 None, 2011010205 None
+        2011010106 None, 2011010206 None
+        2011010107 None, 2011010207 None
+        2011010108 None, 2011010208 None
+        2011010109 None, 2011010209 None
+        2011010110 None, 2011010210 None
+        2011010111 None, 2011010211 None
+        2011010112 None, 2011010212 None
+
+    Please ignore *None* for now. The grouping **hour** groups together all dates having the same hour independently of the
+    the day, month or year. This is different from::
+
+        d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+        g = DateGroup.createGroup('hourly',d)
+        displayData(g)
+
+        2011010100 None
+        2011010101 None
+        2011010102 None
+        2011010103 None
+        2011010104 None
+        2011010105 None
+        2011010106 None
+        2011010107 None
+        2011010108 None
+        2011010109 None
+        2011010110 None
+        2011010111 None
+        2011010112 None
+        2011010200 None
+        2011010201 None
+        2011010202 None
+        2011010203 None
+        2011010204 None
+        2011010205 None
+        2011010206 None
+        2011010207 None
+        2011010208 None
+        2011010209 None
+        2011010210 None
+        2011010211 None
+        2011010212 None
+
+    In this case, the grouping doesn't create any groups because **hourly** means having the same hour
+    but also the same day, month year. A parameter can be added, the number of units of grouping
+    (the number of hours here)::
+
+        d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+        g = DateGroup.createGroup('hourly',d,3)
+        displayData(g)
+
+        2011010100 None, 2011010101 None, 2011010102 None
+        2011010103 None, 2011010104 None, 2011010105 None
+        2011010106 None, 2011010107 None, 2011010108 None
+        2011010109 None, 2011010110 None, 2011010111 None
+        2011010112 None
+        2011010200 None, 2011010201 None, 2011010202 None
+        2011010203 None, 2011010204 None, 2011010205 None
+        2011010206 None, 2011010207 None, 2011010208 None
+        2011010209 None, 2011010210 None, 2011010211 None
+        2011010212 None
+
+    The data is now grouped by chunks of 3 hours. The data can be grouped:
+
+        * per hour (hour)
+        * hourly (hourly,N)
+        * per day (day)
+        * daily (daily,N)
+        * per month (month)
+        * monthly (monthly,N)
+        * per year (year)
+        * yearly (yearly,N)
+
+    This grouping is designed to help with iterating over dates when some meaningful organisation
+    is needed::
+
+        data = {}
+        d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+        for i in range(len(d)):
+            data[d[i]] = i + 1
+        g = DateGroup.createGroup('hourly',data,3)
+        displayData(g)
+        print
+        g.add(2011010213,99)
+        displayData(g)
+
+        2011010100 1, 2011010101 2, 2011010102 3
+        2011010103 4, 2011010104 5, 2011010105 6
+        2011010106 7, 2011010107 8, 2011010108 9
+        2011010109 10, 2011010110 11, 2011010111 12
+        2011010112 13
+        2011010200 14, 2011010201 15, 2011010202 16
+        2011010203 17, 2011010204 18, 2011010205 19
+        2011010206 20, 2011010207 21, 2011010208 22
+        2011010209 23, 2011010210 24, 2011010211 25
+        2011010212 26
+
+        2011010100 1, 2011010101 2, 2011010102 3
+        2011010103 4, 2011010104 5, 2011010105 6
+        2011010106 7, 2011010107 8, 2011010108 9
+        2011010109 10, 2011010110 11, 2011010111 12
+        2011010112 13
+        2011010200 14, 2011010201 15, 2011010202 16
+        2011010203 17, 2011010204 18, 2011010205 19
+        2011010206 20, 2011010207 21, 2011010208 22
+        2011010209 23, 2011010210 24, 2011010211 25
+        2011010212 26, 2011010213 99
+
+    An example of application of this is when staging data from an archive. Files are stored in an
+    archive, each file corresponds to data for a particular date-time. You suspect that all files
+    from the same day are probably on the same tape and you know that it is safe to stage a whole
+    day. You organise all the files involved in a dictionary which keys are the date and the value
+    is the filename. You group the dictionary daily and write the loop::
+
+        for group in groups.iterator():
+            files = group.values()
+            stage(files)
+            for date,filename in group:
+                # do whatever 
+
+    This way if you find that grouping the data 6 hourly or even 12 hourly, there is no need to
+    change anything in the algorithm.
+
+    .. classmethod:: createGroup(name,container = None, count = 1)
+
+        :param name: name of the grouping method
+        :type name: string
+        :param container: a list of dates or a { date: data }
+        :type container: list of dict
+        :param count: the number of basic group units
+        :type count: int
+
+        This method returns a DateGroup instance. The container can either be a list of date or a 
+        dictionary which keys are dates and values can be or any arbitrary type.
+
+    .. method:: iterator()
+
+        Returns an iterators on the groups which attempts to iterate chronologically. For each
+        iteration, an iterator is returned. That iterator returns tuples (date,value) for each 
+        couple present in a group by chronological order::
+
+            d = Dates(2011010100,2011010112) + Dates(2011010200,2011010212)
+            g = DateGroup.createGroup('hourlyGroup',d,6)
+            for group in g.iterator():
+                for date, value in group:
+                    # do something
+                # do something you want to do for each group of 6 hours.
+
+        The iterator returned for each group has also two methods which are dictionary-like:
+
+            * keys(): returns a sorted list all keys
+            * values(): returns a list of all values in the order of sorted keys.
+

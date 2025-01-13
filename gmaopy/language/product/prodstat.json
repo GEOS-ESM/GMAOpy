@@ -1,0 +1,56 @@
+{
+	"directive": "prodstat",
+    "inherit_from": "identifier",
+    "doc": true,
+	"keywords" : {
+        "field": {
+            "alias":["fields"],
+            "type": "prodstatdata"
+        },
+        "storage": {
+            "alias": "store",
+            "default_value": "dbstorer",
+            "help": ["the name of a storage class to store the statistics, by default the","statistics are saved in an SQL database, to store the statistics","in a file, specify: storage = 'filestorer' with output_file = 'filename'"]
+        },
+        "database": {
+            "alias": "output_file",
+            "unique": true,
+            "help": ["this is the name of the database to store the data into. This is not an arbitrary","name, it should be given to you by the administrator of gmaopy who will","have setup that database and given you the necessary credentials"]
+        },
+        "overwrite": {
+            "unique": true,
+            "default_value": false,
+            "help": ["if the statistics being computed are already present in the database,","when setting this keyword to False, the application will fail and preserve","what is in the database. When True, any data already present","will be overwritten. Be careful when using that option."]
+        },
+        "staging_rate": {
+            "unique": true,
+            "default_value": "daily",
+            "lowercase": false
+        },
+        "root_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "tree_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "file_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "archive_type": {
+            "optional": true,
+            "unique": true
+        },
+        "source": {
+            "default_value": "oper"
+        },
+        "_combinable": {
+            "default_value": ["date"]
+        }
+	}
+}

@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Notes on customizing the ‘compute’ scripts &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../tutorials.html" />
+    <link rel="next" title="Standard observation statistics" href="observations.html" />
+    <link rel="prev" title="Add your own statistic" href="../stats/yourown.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="observations.html" title="Standard observation statistics"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../stats/yourown.html" title="Add your own statistic"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="notes-on-customizing-the-compute-scripts">
+<span id="notesexperiments"></span><h1>Notes on customizing the &#8216;compute&#8217; scripts<a class="headerlink" href="#notes-on-customizing-the-compute-scripts" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>When computing statistics using Sempery, whichever type of statistics is being computed, raw data need to
+be extracted. For most systems, SemperPy is configured to locate and retrieve files containing raw data
+using the description of the data given by the user as a list of keywords (please see <a class="reference internal" href="../obs/stattutorial.html#obsstattutorial"><em>Observation statistic - computing</em></a>
+for information about configuring the data retriever).</p>
+<p>When running SemperPy with research experiments, it may well be that your files containing raw data are not
+in a standard location and you will need to tell SemperPy how to find them.</p>
+<blockquote>
+<div><ul class="simple">
+<li>your files are in a particular location and you want SemperPy to find them and do its job as a one off operation,</li>
+<li>your files are named consistently and are perhaps stored in a known directory hierarchy.</li>
+</ul>
+</div></blockquote>
+<p>SemperPy can cope with both situations, it seems useful to group that information under this title.</p>
+</div></blockquote>
+<div class="section" id="using-files-in-a-one-off-location">
+<h2>Using files in a one off location<a class="headerlink" href="#using-files-in-a-one-off-location" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Computing directives whichever the type of data, are in the form:</p>
+<div class="highlight-python"><pre>compute(
+    exvper =
+    date =
+    type =
+    ...
+)</pre>
+</div>
+<p>If you have files to be used by a <strong>compute</strong> statement, you can force the <strong>compute</strong> directive to find the
+file by specifying different keywords:</p>
+<div class="highlight-python"><pre>obsstat(
+    exvper =
+    date =
+    type =
+    ...
+    root_tmpl =
+    tree_tmpl =
+    file_tmpl =
+    archive_type =
+    )</pre>
+</div>
+<p>Those three keyword enable you to define:</p>
+<blockquote>
+<div><ul class="simple">
+<li>root_tmpl is the template for the root directory of the data structure</li>
+<li>tree_tmpl is the directory structure under the root</li>
+<li>file_tmpl is the template to generate the file name.</li>
+<li>archive_type defines the type of data storage. The existing types of storage are currently <strong>dmf</strong> for the dmf archive, in that case it also manages to handle dmget to stage the data first and <strong>filesystem</strong> indicates the file is available directly. Other types could be created such as <strong>ftp</strong> or <strong>scp</strong>.</li>
+</ul>
+</div></blockquote>
+<p>Let&#8217;s go through a few examples:</p>
+<div class="highlight-python"><pre># in /home/cgibert/obs you can find *diag*.ods (standard naming) files which you would like to use for computing statistics,
+# you will need to specify:
+
+root_tmpl = '/home/cgibert/obs',
+tree_tmpl = '',
+file_tmpl = '&lt;expver&gt;.diag_&lt;collection&gt;.date(@Y@m@d_@Hz).ods'
+archive_type = 'filesystem' # (otherwise SemperPy will try to stage the data)
+
+# in /home/cgibert/obs you can find directories:
+# Y2012/M02/D01/H00
+# observation files
+
+root_tmpl = '/home/cgibert/obs',
+tree_tmpl = Ydate(@Y)/Mdate(@m)/Ddate(@d)/Hdate(@H)
+file_tmpl = '&lt;expver&gt;.diag_&lt;collection&gt;.date(@Y@m@d_@Hz).ods'
+archive_type = 'filesystem' # (otherwise SemperPy will try to stage the data)
+
+# in /home/cgibert/obs you can find directories:
+# Y2012/M02/D10/H00
+# impact files
+
+# operational files (configured like so by default):
+
+root_tmpl = '/home/cgibert/obs',
+tree_tmpl = 'Ydate(@Y)/Mdate(@m)/Ddate(@d)/Hdate(@H)'
+file_tmpl = '&lt;expver&gt;.imp3_txe_&lt;collection&gt;.obs.date-9(@Y@m@d_@Hz)+date+24(@Y@m@d_@Hz)-date(@Y@m@d_@Hz).ods'
+archive_type = 'filesystem' # (otherwise SemperPy will try to stage the data)
+
+# in a research experiment:
+
+root_tmpl = '/home/cgibert/obs',
+tree_tmpl = 'Ydate-9(@Y)/Mdate-9(@m)/Ddate-9(@d)/Hdate-9(@H)',
+file_tmpl = '&lt;expver&gt;.imp3_txe_&lt;collection&gt;.obs.date-9(@Y@m@d_@Hz)+date+24(@Y@m@d_@Hz)-date(@Y@m@d_@Hz).ods'
+archive_type = 'filesystem' # (otherwise SemperPy will try to stage the data)</pre>
+</div>
+<p>As you can see, files can be described using templates for the root directory, subdirectories and a filename name,
+these can be customized. This method describes how to instruct SemperPy about the location of data files for one
+particular <strong>compute</strong> directive. This can be done in a more permanent way.</p>
+</div></blockquote>
+</div>
+<div class="section" id="configuring-semperpy-for-your-experiments">
+<h2>Configuring SemperPy for your experiments<a class="headerlink" href="#configuring-semperpy-for-your-experiments" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>If all your research experiments are stored following the same storage scheme
+(which seems to be the case generally), then your file names are the same
+and the directory structure depends mostly on the experiment id (expver in SemperPy). In that case, you can
+write a configuration file to describe the location of the file, which will then be used by SemperPy for all your
+research experiments.</p>
+<p>You can customize the configuration of SemperPy (<a class="reference internal" href="../config/configure.html#configuration"><em>Configuring SemperPy</em></a>), and particularly the data Retriever
+(please see <a class="reference internal" href="../obs/stattutorial.html#configurefiles"><em>Find ODS files</em></a>).</p>
+</div></blockquote>
+</div>
+<div class="section" id="choosing-a-database">
+<h2>Choosing a database<a class="headerlink" href="#choosing-a-database" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Whenever you compute statistics to store them in a database, you need to choose a database which will
+store the data, or you could even create your own database to hold your results (<a class="reference internal" href="../databases/databases.html#createdb"><em>Creating a database</em></a>). You
+can read <a class="reference internal" href="../databases/databases.html#databases"><em>Databases</em></a> for more general information. For research experiments, there are currently
+three pre-defined databases:</p>
+<blockquote>
+<div><ul class="simple">
+<li>im_exp for observation impact statistics</li>
+<li>ob_exp for observation statistics</li>
+<li>fc_exp for forecast skill scores</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="alternative-storage">
+<h2>Alternative storage<a class="headerlink" href="#alternative-storage" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>You can decide to run statistic calculations without storing the results in a database. The keyword
+<strong>storage</strong> can be used for that. There are currently three different storers built in SemperPy:</p>
+<blockquote>
+<div><ul class="simple">
+<li>dbstorer (storage in a relational database),</li>
+<li>filestorer (data is saved in a text file which can then be loaded into a database), when filestorer is used, the keyword <strong>output_file</strong> aliased to <strong>database</strong> is used to hold the file name,</li>
+<li>nullstorer (data is not stored), this is useful to test a computing script and make sure everything is ok.</li>
+</ul>
+</div></blockquote>
+<p>It is possible and relatively easy to write new storers for other needs (e.g. netcdf files, sending data
+over a network connection, etc...)</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Notes on customizing the &#8216;compute&#8217; scripts</a><ul>
+<li><a class="reference internal" href="#using-files-in-a-one-off-location">Using files in a one off location</a></li>
+<li><a class="reference internal" href="#configuring-semperpy-for-your-experiments">Configuring SemperPy for your experiments</a></li>
+<li><a class="reference internal" href="#choosing-a-database">Choosing a database</a></li>
+<li><a class="reference internal" href="#alternative-storage">Alternative storage</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../stats/yourown.html"
+                        title="previous chapter">Add your own statistic</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="observations.html"
+                        title="next chapter">Standard observation statistics</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/exp/notes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="observations.html" title="Standard observation statistics"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../stats/yourown.html" title="Add your own statistic"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

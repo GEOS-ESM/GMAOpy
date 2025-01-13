@@ -1,0 +1,12 @@
+#----------------------------------------------------------------------------
+# SemperPy Copyright GMAO 2009-2010
+#
+# Claude Gibert, May 2010, dev@synopticview.com
+#-------------------------------------------------------------------
+
+class Protocol(object):
+
+    @classmethod
+    def keywords(self):
+        return ['data','code']
+    

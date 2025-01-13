@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Services - client-server communication &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../../tutorials.html" />
+    <link rel="next" title="Reading netCDF files / HDF files / opendap servers" href="../netcdf/tutorial.html" />
+    <link rel="prev" title="Language - validating data" href="../language/tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../netcdf/tutorial.html" title="Reading netCDF files / HDF files / opendap servers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../language/tutorial.html" title="Language - validating data"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="services-client-server-communication">
+<h1>Services - client-server communication<a class="headerlink" href="#services-client-server-communication" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>We are going to see a simple example of how to implement a server and a client talking to each other. We
+will then move on a more elaborated application. Since these examples are more elaborated, we will try and
+make use of more and more tools available in SemperPy, we will also show how the :mod:&#8217;Language&#8217; module
+which is useful in that case.</div></blockquote>
+<div class="section" id="a-calculator-service">
+<h2>A calculator service<a class="headerlink" href="#a-calculator-service" title="Permalink to this headline">¶</a></h2>
+<blockquote id="services-calculator">
+<div><p>We implement a server which offer a calculator service: it is able to compute +,- and to return
+the result. The request is expected in the following format:</p>
+<div class="highlight-python"><pre>{
+        operator = '+',
+        arguments = [2,3,4]
+}</pre>
+</div>
+<p>For the sum any number of arguments is handled, for the substraction, only two parameters are accepted.
+The result is returned to the client as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">9</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="server">
+<h3>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>This operation is very fast, we can implement a server which computes the result and returns it straight away.
+The server side of the application looks like this (<a class="reference download internal" href="../../_downloads/server1.py"><tt class="xref download docutils literal"><span class="pre">Server</span> <span class="pre">1</span></tt></a>)</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.services.server</span> <span class="kn">import</span> <span class="n">Server</span>
+<span class="kn">from</span> <span class="nn">semperpy.services.errors</span> <span class="kn">import</span> <span class="n">ServiceError</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ServiceError</span><span class="p">(</span><span class="s">&#39;only two arguments are accepted for the difference&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span><span class="n">arguments</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s">&#39;+&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">diff</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ServiceError</span><span class="p">(</span><span class="s">&quot;Unknow operator &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="n">operator</span><span class="p">)</span>
+
+<span class="n">Server</span><span class="o">.</span><span class="n">registerService</span><span class="p">(</span><span class="s">&quot;calculate&quot;</span><span class="p">,</span><span class="n">calculate</span><span class="p">)</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">()</span>
+<span class="n">server</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">8880</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Let&#8217;s take a look at the code:</p>
+<ul class="simple">
+<li><strong>line 20</strong>: we register a service called <em>calculate</em> instructing the server to execute the function <em>calculate</em> whenever a request is sent.</li>
+<li><strong>line 21</strong>: we instantiate a server</li>
+<li><strong>line 22</strong>: we run the server on port 8880, let&#8217;s assume the host is called <em>localhost</em>. This means that clients can access the service through http as follows: <a class="reference external" href="http://localhost:8880/calculate">http://localhost:8880/calculate</a>.</li>
+</ul>
+<p>If you use a web browser and try the url: <a class="reference external" href="http://localhost:8880/calculate">http://localhost:8880/calculate</a>, a default message is displayed:</p>
+<img alt="../../_images/default_get.tiff" src="../../_images/default_get.tiff" />
+<p>If you take a look a the url: <a class="reference external" href="http://localhost:8880/">http://localhost:8880/</a>:</p>
+<img alt="../../_images/server_get.tiff" src="../../_images/server_get.tiff" />
+<p>Basic information is provided through the http protocol and the GET request to enable minimum momitoring
+from a web browser. However, this is kept to a minimum to avoid decreasing the performance of the server.
+As we will see later, more information can be provided and this can easily be defined by the user
+of the <tt class="xref py py-mod docutils literal"><span class="pre">Services</span></tt> module. The tools are not at all intended to replace proper web application frameworks
+such as django (<a class="reference external" href="http://www.djangoproject.com/">http://www.djangoproject.com/</a>) which are designed for developing fully featured web applications.</p>
+</div></blockquote>
+</div>
+<div class="section" id="client">
+<h3>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The client is very trivial to write, at least in a first instance (<a class="reference download internal" href="../../_downloads/client1.py"><tt class="xref download docutils literal"><span class="pre">Client</span> <span class="pre">1</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.services.client</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://localhost:8880/calculate&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">({</span><span class="s">&#39;operator&#39;</span><span class="p">:</span> <span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;arguments&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">]})</span>
+</pre></div>
+</div>
+<p>When we execute the client program we get:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">23</span>
+</pre></div>
+</div>
+<p>this seems about right.</p>
+<p>The Client class encodes the request (or <em>directive</em>) into json (<a class="reference external" href="http://www.json.org/">http://www.json.org/</a>) and uses
+an http POST request to submit the data to the server. A POST request is always used to submit
+requests to services.</p>
+</div></blockquote>
+</div>
+<div class="section" id="discussion">
+<h3>Discussion<a class="headerlink" href="#discussion" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Exceptions raised by the server stop the execution of the service being ran and the
+error message is sent back to the client. The Client class raises a <tt class="xref py py-class docutils literal"><span class="pre">Services.Client.ServerError</span></tt> exception with the message received from the server. If we try (substraction with 3 parameters):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.services.client</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://localhost:8880/calculate&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">({</span><span class="s">&#39;operator&#39;</span><span class="p">:</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;arguments&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">]})</span>
+</pre></div>
+</div>
+<p>we obtain:</p>
+<div class="highlight-python"><pre>Traceback (most recent call last):
+  File "client11.py", line 4, in &lt;module&gt;
+        print client.execute({'operator': '-', 'arguments': [12,8,3]})
+  File "/Users/claudegibert/unix/dev/p4/semperpy/Services/Client.py", line 28, in execute
+        raise ServerError(value['data'])
+Services.Client.ServerError: [Failure instance: Traceback: &lt;class 'Services.Errors.ServiceError'&gt;: only two arguments are accepted for the difference
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/Twisted-10.0.0-py2.6-macosx-10.3-fat.egg/twisted/python/threadpool.py:210:_worker
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/Twisted-10.0.0-py2.6-macosx-10.3-fat.egg/twisted/python/context.py:59:callWithContext
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/Twisted-10.0.0-py2.6-macosx-10.3-fat.egg/twisted/python/context.py:37:callWithContext
+/Users/claudegibert/unix/dev/p4/semperpy/Services/Responses.py:39:execute
+--- &lt;exception caught here&gt; ---
+/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/Twisted-10.0.0-py2.6-macosx-10.3-fat.egg/twisted/internet/defer.py:117:maybeDeferred
+server1.py:16:calculate
+server1.py:9:diff</pre>
+</div>
+<p>This is a bit more output than we would like, but it is inserted by <em>twisted</em>.</p>
+<p>By default, the server we creates uses a mode in which it does not block but executes the code
+for the service in a different thread. The client is kept waiting for a response with the
+connection opened for as long as it takes. The server goes back to accepting connections
+immediately.</p>
+<p>It is quite trivial to write a client-server interaction using these tools. The difficulty
+lies in fact in making sure that the data which is communicated between the client and
+the server is correct. Instead of checking on the server side that everything which is
+received is correct, it would be better to check all this at client level:</p>
+<ul class="simple">
+<li>so that no invalid requests are sent through the network, wasting bandwith and resources</li>
+<li>so that the server does not fail after a long processing of data because of it is invalid,</li>
+<li>so that the server which is supposed to do complicated things can be simplified by relying on validated data</li>
+</ul>
+<p>The <tt class="xref py py-mod docutils literal"><span class="pre">Language</span></tt> module should enable us to do this in a parameterised way.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="validation-on-the-client-side">
+<h2>Validation on the client-side<a class="headerlink" href="#validation-on-the-client-side" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The first thing to do is to define a language which will validate the request the
+client sends to the server. This is quite simple, the language should look
+like this (<a class="reference download internal" href="../../_downloads/calculate.json"><tt class="xref download docutils literal"><span class="pre">calculate</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;directive&quot;</span> <span class="p">:</span> <span class="s">&quot;calculate&quot;</span><span class="p">,</span>
+    <span class="s">&quot;keywords&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;operator&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;validate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;Choice&quot;</span><span class="p">,</span><span class="s">&quot;+&quot;</span><span class="p">,</span><span class="s">&quot;-&quot;</span><span class="p">],</span>
+            <span class="s">&quot;unique&quot;</span><span class="p">:</span> <span class="n">true</span>
+        <span class="p">},</span>
+        <span class="s">&quot;arguments&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&quot;int&quot;</span><span class="p">,</span>
+            <span class="s">&quot;validate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;DiffValidate&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The client becomes (<a class="reference download internal" href="../../_downloads/client2.py"><tt class="xref download docutils literal"><span class="pre">Client</span> <span class="pre">2</span></tt></a>):</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.services.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">semperpy.language.language</span> <span class="kn">import</span> <span class="n">Language</span>
+<span class="kn">from</span> <span class="nn">semperpy.core.spjson</span> <span class="kn">import</span> <span class="n">JSon</span>
+
+<span class="k">def</span> <span class="nf">reader</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;.json&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">JSon</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="k">def</span> <span class="nf">Choice</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span><span class="n">keyword</span><span class="p">,</span><span class="n">values</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Only values </span><span class="si">%s</span><span class="s"> are valid for the </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="n">keyword</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">values</span>
+
+<span class="k">def</span> <span class="nf">DiffValidate</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span><span class="n">keyword</span><span class="p">,</span><span class="n">values</span><span class="p">,</span><span class="n">count</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">directive</span><span class="p">[</span><span class="s">&#39;operator&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="n">count</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Wrong number of values for </span><span class="si">%s</span><span class="s">, </span><span class="si">%d</span><span class="s"> expected&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">keyword</span><span class="p">,</span><span class="n">count</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">values</span>
+
+<span class="n">directive</span> <span class="o">=</span> <span class="n">Language</span><span class="o">.</span><span class="n">resolveDirective</span><span class="p">({</span><span class="s">&#39;operator&#39;</span><span class="p">:</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;arguments&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">]},</span><span class="s">&quot;calculate&quot;</span><span class="p">,</span><span class="n">reader</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;http://localhost:8880/calculate&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">directive</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">lines 5 to 14 should not be part of the client, but rather part of utilities for the language. These are shown here for completeness.</td>
+</tr>
+</tbody>
+</table>
+<p>The server can be simplified to (<a class="reference download internal" href="../../_downloads/server2.py"><tt class="xref download docutils literal"><span class="pre">Server</span> <span class="pre">2</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.services.server</span> <span class="kn">import</span> <span class="n">Server</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">diff</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span><span class="n">arguments</span><span class="p">):</span>
+    <span class="n">operators</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;+&#39;</span><span class="p">:</span> <span class="n">add</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">:</span> <span class="n">diff</span> <span class="p">}</span>
+    <span class="k">return</span> <span class="n">operators</span><span class="p">[</span><span class="n">operator</span><span class="p">](</span><span class="n">arguments</span><span class="p">)</span>
+
+<span class="n">Server</span><span class="o">.</span><span class="n">registerService</span><span class="p">(</span><span class="s">&quot;calculate&quot;</span><span class="p">,</span><span class="n">calculate</span><span class="p">)</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">()</span>
+<span class="n">server</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">8880</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The server now has the guarantee that only the operators &#8216;+&#8217; and &#8216;-&#8216; will
+be sent and that if &#8216;-&#8216; is used, 2 and only 2 arguments will be sent.
+No checking is required in that respect, this, obviously, does not
+prevent the server from checking other possible problems.</p>
+</div></blockquote>
+</div>
+<div class="section" id="serving-services-and-pages">
+<h2>Serving services and pages<a class="headerlink" href="#serving-services-and-pages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="services">
+<h3>Services<a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>You can register as many services as you wish, the limit being how much memory is required
+and how much the hardware can take. Services can be installed in a hierarchy, this can
+sometimes be useful to present meaningful urls to the user:</p>
+<blockquote>
+<div>Server.registerService(&#8220;retrieve&#8221;,retrieve_func)
+Server.registerService([&#8220;retrieve&#8221;,&#8221;help&#8221;],help_func)
+Server.registerService([&#8220;retrieve&#8221;,&#8221;status&#8221;],status_func)</div></blockquote>
+<p>The family of services are grouped under the main name <em>retrieve</em> and can be accessed as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>host:port:/retrieve</li>
+<li>host:post:/retrieve/help</li>
+<li>host:post/retrieve/status</li>
+</ul>
+</div></blockquote>
+<p>This grouping is offered just to offer a family of urls to the user if it makes the services easier to
+understand, otherwise the different services can be regsitered separately.
+is currently</p>
+</div></blockquote>
+</div>
+<div class="section" id="pages">
+<h3>Pages<a class="headerlink" href="#pages" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p><strong>HTML</strong> pages can be served for different urls related to services. As we saw at the beginning of this
+tutorial, default pages are provided for a server or a service just to help with debugging and
+monitoring the system. The user can however register handlers at particular urls to provide information
+about the system. Once again, this is provided for <em>debugging</em> and <em>monitoring</em> purposes,
+this is not intended to be used for web applications. Let&#8217;s see an example (::download`Pages 1&lt;page1.py&gt;`):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">semperpy.services.server</span> <span class="kn">import</span> <span class="n">Server</span>
+
+<span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+	<span class="k">return</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">	&lt;head&gt;</span>
+<span class="s">	&lt;title&gt;</span>
+<span class="s">		&quot;Calculator, help&quot;</span>
+<span class="s">	&lt;/title&gt;</span>
+<span class="s">	&lt;/head&gt;</span>
+<span class="s">	&lt;body&gt;</span>
+<span class="s">		&lt;h1&gt;Help for the service calculate&lt;/h1&gt;</span>
+<span class="s">		&lt;p&gt;In order to use the calculator....&lt;/p&gt;</span>
+<span class="s">	&lt;/body&gt;</span>
+<span class="s">	&quot;&quot;&quot;</span>
+
+<span class="n">Server</span><span class="o">.</span><span class="n">registerPage</span><span class="p">(</span><span class="s">&quot;calculate&quot;</span><span class="p">,</span><span class="n">help</span><span class="p">)</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">()</span>
+<span class="n">server</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="mi">8880</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The web browser at url <a class="reference external" href="http://localhost:8880/calculate">http://localhost:8880/calculate</a> displays:</p>
+<img alt="../../_images/page1.tiff" src="../../_images/page1.tiff" />
+<p>A few utilities are available to help with displaying pages, including a very basic templating
+system. Please see the <tt class="xref py py-mod docutils literal"><span class="pre">Services</span></tt> module for more information.</p>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Services - client-server communication</a><ul>
+<li><a class="reference internal" href="#a-calculator-service">A calculator service</a><ul>
+<li><a class="reference internal" href="#server">Server</a></li>
+<li><a class="reference internal" href="#client">Client</a></li>
+<li><a class="reference internal" href="#discussion">Discussion</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validation-on-the-client-side">Validation on the client-side</a></li>
+<li><a class="reference internal" href="#serving-services-and-pages">Serving services and pages</a><ul>
+<li><a class="reference internal" href="#services">Services</a></li>
+<li><a class="reference internal" href="#pages">Pages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../language/tutorial.html"
+                        title="previous chapter">Language - validating data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../netcdf/tutorial.html"
+                        title="next chapter">Reading netCDF files / HDF files / opendap servers</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/services/tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../netcdf/tutorial.html" title="Reading netCDF files / HDF files / opendap servers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../language/tutorial.html" title="Language - validating data"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

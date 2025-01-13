@@ -1,0 +1,196 @@
+.. _obsstattutorial:
+
+Observation statistic - computing
+*********************************
+
+    Statistics can be computed in two different contexts:
+
+        * when feeding the database, data is read from ODS files and temporary (or possibly final) results are computed from variable coming from the files
+        * when extracting data from the database to compute final statistics to plot, this is merely an aggregation of temporary results.
+    
+The :ref:`obsstat` directive
+----------------------------
+
+    The :ref:`obsstat` directive instructs the system to compute statistics from ODS files, using
+    a set of keywords to specify what is requested. The results of the computations are sent to
+    a storage handler, which by default is an SQL database, but other handlers are available such
+    as text files. The users can write and specificy their own handlers.
+
+    Here is a basic example (:download:`example 1<example1.py>`):
+
+    .. literalinclude:: example1.py
+        :language: python
+
+    The lines marked "# default" can be omitted since we specify the default value, they were
+    inserted to be introduced. The meaning of the different keywords can be found in the 
+    documentation for the :ref:`obsstat`. However, let us clarify their importance and meaning:
+
+        - the keywords **source**, **type**, **expver** and **date** are indispensable to locate the ODS files to read. The keyword **ignore_missing_files** indicates to ignore if an ODS file is not found and keep computing. By default :ref:`obsstat` fails if a file is missing.
+        - the keywords **storage**, **database** (aliased to **output_file**) and **overwrite** affect where the results go, either an SQL database, or a text file. By default :ref:`obsstat` fails if either the statistics computed already exist the specified database or if a text file exists. You can set **overwrite** to True to overwrite the data. It is advised to keep this flag to False and only set it to True if you are sure about what is happening. The command *spy_doc databases* provides you with a list of system defined and user defined databases.
+        - the keywords **date**, **domain**, **variable**, **level** (aliased to **channel** for satellite instruments), **kx** and **kt** determine how to extract and filter data from the ODS file to compute statistics on.
+        - the keyword **statistic** defines a list of statistics to be computed and stored.
+
+    Please note that in this example, the keyword **statistics** appears at two different levels:
+
+        - in the body of :ref:`obsstat`
+        - in the body of :ref:`observation`
+
+    This is because it is required at both levels and it is convenient to use it this way as the
+    only statistic we request for passive and unused data is *count*. The statistic is inherited
+    by the observations directives.
+
+    The directive :ref:`observation` needs to be repeated three times for the three type of 
+    data requested: *used*, *passive* and *unused*. The keywords **kx** and **kt** cannot be 
+    specified in the body of :ref:`obsstat` so they need to be repeated. We can see that it 
+    can become cumbersome to define a complex observation statistic computation. In order to help
+    with this, a file can be specified, like in this computation of scores for observation impacts
+    (:download:`example 2<example2.py>`):
+
+    .. literalinclude:: example2.py
+        :language: python
+
+    In this case, the file *summary.def* we use looks like so:
+
+    .. literalinclude:: summary.def
+        :language: python
+
+    This file is identical to the kind of file used for plotting statistics (:ref:`plottingtutorial`).
+    In the file, for each group, the keyword **level** can be used if you want to restrict 
+    the computation to less levels for some particular data types.
+
+    The **obsstat** directive has a few problems to solve in order to carry out the instruction:
+
+        - find the required ODS files
+        - read and filter variables
+        - do the maths
+
+.. _configurefiles:
+
+Find ODS files
+==============
+
+    Many different cases can be encountered regarding the location of ODS files:
+        
+        - (a) they are in a standard location parameterized in the system, for example in the operational system they are normally in **/home/dao_ops/exvper/run/.../archive/obs**. This is where the system looks for them by default. This is conditioned by specifying **source='oper**'.
+        - (b) they are not in a standard location known by the system but they are stored in a consistent way.
+        - (c) they are just anywhere.
+
+    The default locations for each different **source** of data can be modified by the 
+    SemperPy administrator, but each user can define his/her own rules and locations.
+    Please refer to :ref:`configuration` for more information about configuration files.
+    To configure the ODS file location, from a configuration directory, you need to create
+    a file called: <config>/retrieve/source.def where source is the source of data (e.g. oper, exp, aer, odas).
+    Here is an example of the standard configuration for source **oper**:
+
+    .. literalinclude:: oper.def
+        :language: python
+
+    Each section (between square brackets) is the name of a data type, each section may contain
+    four entries:
+
+        - root_tmpl is the template for the root directory of the data structure
+        - tree_tmpl is the directory structure under the root
+        - file_tmpl is the template to generate the file name.
+        - archive_type defines the type of data storage. The existing types of storage are currently **dmf** for the dmf archive, in that case it also manages to handle dmget to stage the data first and **filesystem** indicates the file is available directly. Other types could be created such as **ftp** or **scp**.
+
+    Within the templates, name between **<>** are keyword names you can recognise from the 
+    :ref:`obsstat` directive. There are two special keywords:
+
+        - date: the date as given to the :ref:`obsstat` directive
+        - valid: in the case of forecasts, the valid date (date + timestep).
+
+    The date formatting (e.g. @Y@m@d_@H@Mz) is a standard unix (and Python) date formatting
+    which can be found on internet or by issuing the command **man strftime** in the command
+    line. The formatting normally expects % (e.g. %Y%m%d_%H%Mz), but the % sign is interpreted
+    in a special way by Python in that kind of file, so instead of having to go through some
+    heaving character escaping, you can use the character @ instead. Please note that the 
+    keywords date and valid accept arithemtic calculations::
+
+        date-9(@Y@m@d_@Hz)  # date expressed in hours so date - 9 hours
+        date+24(@Y@m@d_@Hz) # date expressed in hours so date + 24 hours
+
+    For a research experiment, the definition in a file called 
+    /home/me/semperpy_config/retrieve/exp.def for observation impact ODS files could be::
+
+       [im]
+       root_tmpl = /discover/nobackup/dmerkova/ObsImpact/data/<expver>/obs/
+       tree_tmpl = Ydate-9(@Y)/Mdate-9(@m)/Ddate-9(@d)/Hdate-9(@H)
+       file_tmpl = <expver>.imp3_txe_<collection>.obs.date-9(@Y@m@d_@Hz)+date+24(@Y@m@d_@Hz)-date(@Y@m@d_@Hz).ods
+       archive_type = filesystem
+
+    You will note that the naming convention of impact files in research is different from the
+    convention used in operations.
+
+    The path to the configuration structure need to be set::
+
+        setenv SEMPERPY_CONFIG /home/me/semperpy_config:${SEMPERPY_CONFIG}
+        or
+        export SEMPERPY_CONFIG=/home/me/semperpy_config:${SEMPERPY_CONFIG}
+
+    This covers points (a) and (b). For point (c), the easiest way to tell :ref:`obsstat` is to 
+    include the information in the body of the directive, 
+    (:download:`example 3<example3.py>`):
+
+    .. literalinclude:: example3.py
+        :language: python
+
+    This means that all the ODS files are in the current directory. Specifying **root_tmpl = ''**
+    means that there is no directory tree, not specifying file_tmpl means that the files
+    have their original names. Both when specifying these keywords in the body of the :ref:`obsstat`
+    directive or a configuration file, if a keyword is not specified, it is inherited from the 
+    SemperPy system configuration file.
+
+
+Read and filter variables
+=========================
+
+    As mentioned above, the keywords **date**, **domain**, **variable**, 
+    **level**, **kx** and **kt** specify the actual observations the user 
+    wants to select to compute statistics. If **level** is not specified,
+    it is understood as *all available levels for each type of data**. 
+
+    The :ref:`obsstat` directive splits the data into usable chunks to be able
+    to save results which can later be aggregated for plotting. The only dimension
+    which is fixed at compute time is **domain**. Once statistics are computed for 
+    a specific domain, not geographical aggregation can be done. If the user needs
+    to plot statistics for a new geographical domain, he / she will have to go back
+    to :ref:`obsstat` to populate the database with results for that new domain.
+    All other dimensions are slit to the smalled chunk, each statistic is store
+    for one particular:
+        
+        - date,
+        - domain,
+        - variable,
+        - level,
+        - kt,
+        - kx,
+        - usage
+
+    All these dimensions can be aggregated at plotting time. Please note that for
+    each statistic, the following keywords are also used:
+
+        - source,
+        - type,
+        - expver
+
+    That way different data from different experiments / source / type can be stored
+    in the database without any risk of overwriting. If the :ref:`obsstat` directive
+    fails because it's going to overwrite existing data in the database, take the
+    time to think about whether it is normal that the data is already present in the
+    database or whether some keywords need changing.
+
+    Please note that some statistics require specific variables from the ODS file. For 
+    example the Normalized cost requires either **oma** or **omf** 
+    (specified by the user) and **xvec**. Even if the user does not 
+    specify **xvec** in the list of variables, if will be extracted anyway 
+    because :ref:`obsstat` knows that is is required for **normcost**. 
+
+Do the maths
+============
+
+    Once all the chunks of data have been extracted from the ODS files, the :ref:`obsstat`
+    presents each chunk of data to the statistics system following each statistic
+    requirement (needed variables). Each statistic object is is provided with the data
+    and a storer (either text file, SQL database or others or all of them). 
+
+    Please refer to :ref:`makeyourownstat` for more information.

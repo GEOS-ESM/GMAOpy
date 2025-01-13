@@ -1,0 +1,7 @@
+{
+	"directive": "odscounter",
+    "inherit_from": "plotobserver",
+    "doc": true,
+	"keywords" : {
+    }
+}

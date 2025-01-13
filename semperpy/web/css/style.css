@@ -1,0 +1,45 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	text-align: left;
+	font: 12px Verdana, Arial, Helvetica, sans-serif;
+	background-color: #FFFFFF;
+	color: #404040;
+}
+
+#server {
+	margin-left: 5px;
+}
+
+a {
+	color: #0111af;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+ul {
+	font-size: 16px;
+	line-height: 18px;
+}
+
+h1 {
+	font-size: 24px;
+	line-height: 26px;
+	font-weight:normal;
+	margin-left: 5px;
+}
+
+h2 {
+	font-size: 18px;
+	font-weight:normal;
+	color: black;
+	line-height: 18px;
+	margin-left: 5px;
+	padding-bottom: 0;
+}

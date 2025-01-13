@@ -1,0 +1,207 @@
+[im_ops]
+host = edb1
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = operational database for observation impact statistics
+
+[ob_ops]
+host = edb1
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = operational database for observation statistics
+
+[ob_temp]
+host = edb1
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = operational database for observation statistics
+
+[ob_prev]
+host = edb1
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = operational database for observation statistics
+
+[fc_ops]
+host = edb1
+database = gmao_stats
+schema = schema/sc_schema.def
+recordtype = score
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = operational database for forecast scores
+
+[pr_ops]
+host = edb1
+database = gmao_stats
+schema = schema/pr_schema.def
+recordtype = product
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = test database for statistics on field products
+
+[im_exp]
+host = edb1
+database = semper
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_rd
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = experiment database for observation impact statistics
+
+[ob_exp]
+host = edb1
+database = semper
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_rd
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = experiment database for observation statistics
+
+[fc_exp]
+host = edb1
+database = semper
+schema = schema/sc_schema.def
+recordtype = score
+userw = gmao_rd
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = experiment database for forecast scores
+
+[pr_exp]
+host = edb1
+database = semper
+schema = schema/pr_schema.def
+recordtype = product
+userw = gmao_exp
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = test database for statistics on field products
+
+[test_obbstat_ops]
+host = edb1
+database = gmao_stats
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = test database for operations, can be deleted at anytime
+
+[test_score_ops]
+host = edb1
+database = gmao_stats
+schema = schema/sc_schema.def
+recordtype = score
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = test database for operations, can be deleted at anytime
+
+[test_obbstat_exp]
+host = edb1
+database = semper
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_rd
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = test database for experiments, can be deleted at anytime
+
+[test_score_exp]
+host = edb1
+database = semper
+schema = schema/sc_schema.def
+recordtype = score
+userw = gmao_rd
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = test database for operations, can be deleted at anytime
+
+[ocean]
+host = edb1
+database = semper
+schema = schema/ob_schema.def
+recordtype = obsstat
+userw = gmao_rd
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = database for observation statistics for the ocean
+
+[product]
+host = edb1
+database = gmao_stats
+schema = schema/pr_schema.def
+recordtype = product
+userw = gmao_ops
+userr = gmao_user
+password=hemperUI9#
+grantr = gmao_user
+engine = psql
+buffer = 2000
+comment = test database for statistics on field products

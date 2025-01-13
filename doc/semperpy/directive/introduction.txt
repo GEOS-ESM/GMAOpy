@@ -1,0 +1,10 @@
+.. _directive_introduction:
+
+Introduction
+************
+
+    Please refer to :ref:`language_introduction` of the :mod:`language` module
+    for more information about the definition of directives and keywords.
+    The **directive** module defines a concrete Directive class which inherits from
+    a python dictionary and presents some utilities to find language definition
+    files, handle keywords default values and combine directives.

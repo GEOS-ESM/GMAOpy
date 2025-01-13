@@ -1,0 +1,56 @@
+{
+	"directive": "colormap",
+    "doc": true,
+	"keywords" : {
+        "min": {
+            "unique": true,
+            "default_value": null
+        },
+        "max": {
+            "unique": true,
+            "default_value": null
+        },
+        "step": {
+            "unique": true,
+            "default_value": null
+        },
+        "scale": {
+            "unique": true,
+            "default_value": "linear",
+            "validate": ["ValidateChoice","linear","log"]
+        },
+        "format": {
+            "unique": true,
+            "default_value": null
+        },
+        "rect": {
+            "default_value": [0.92, 0.10, 0.02, 0],
+            "type": "float"
+        },
+        "orientation": {
+            "unique": true,
+            "default_value": "vertical"
+        },
+        "cmap": {
+            "unique": true,
+            "default_value": "summer",
+            "lowercase": false
+        },
+        "tick_label_size": {
+            "unique": true,
+            "default_value": "small"
+        },
+        "title_size": {
+            "unique": true,
+            "default_value": "small"
+        },
+        "display": {
+            "unique": true,
+            "default_value": true
+        },
+        "roundint": {
+            "unique": true,
+            "default_value": false
+        }
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"directive": "diffplot",
+    "inherit_from": "meanplot",
+    "doc": true,
+	"keywords" : {
+        "significance": {
+            "unique": true,
+            "default_value": "",
+            "type": "significance"
+        }
+	}
+}

@@ -1,0 +1,15 @@
+#!/bin/ksh
+
+set +u
+
+source /usr/share/modules/init/ksh
+module load other/comp/gcc-4.5
+module load other/SIVO-PyD/spd_1.1.2
+
+root=/discover/nobackup/projects/gmao/share/gmao_ops/lib/python/gmaopy
+export PYTHONPATH=$root:$PYTHONPATH
+export LD_LIBRARY_PATH=/usr/local/other/libpq/lib:$LD_LIBRARY_PATH
+
+export GMAOPY_LANGUAGE=$root/gmaopy/language:$root/gmaopy/config/db/schema:$root/semperpy/plot/matplotlib/language
+export SEMPERPY_LANGUAGE=$GMAOPY_LANGUAGE
+GMAOPY_CONFIG=$root/gmaopy/config

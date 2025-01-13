@@ -1,0 +1,264 @@
+
+Class - Language association
+****************************
+
+    Please refer to :ref:`languagegtutorial`, :ref:`language_introduction` and :mod:`language.language` for more information.
+    In a nutshell:
+
+        * we use dictionaries to deal with user's requests, these are called directives. A directive can contain other directives etc... 
+        * the Language enables the developer to define semantics for the different directives, including flexibility of namming of keys, default values, converting values to defined types etc... 
+        * once the Language has checked the validity of a directive, the developer has the assurance that the dictionary which is received by the application complies with rules expressed at development time by the programmer.
+
+    In GMAOPy, the following coding rules have been established:
+    
+        * the directives are described in JSon files located in the GMAOPy installation in gmaopy/config/language. JSon has a syntax very similar to Python and is fast and easy to parse, hence the choice.
+        * the directives inherit from semperpy.directive.directive.Directive. This class set the file format to JSon, reads the file location from the environment variable GMAOPy_LANGUAGE, parses the file and by using the Language, validates the directive. It also offers utilities to merge directives, inherit from a directive etc...
+        * a JSon file is associated to a class MyDirective (subclass of Directive), by calling the file mydirective.json.
+
+    Using directives together enables the creation of very flexibles descriptions 
+    of what the user needs, but it requires significant finger-work from the programmer. 
+    Let's use an example to illustrate the concept, we start with the language 
+    (:download:`data1<data1.json>`)
+
+    .. literalinclude:: data1.json
+        :language: python
+
+    This language file states that the keywords of our directive Data1 are:
+
+        * kt, is a list containing int values, it can also be called *obstype*, it is a required keyword
+        * kx, is a list containing int values, it can also be called *obssource*, it is a required keyword
+        * level, is a list containing float values, it can also be called *channel*, it is a required keyword
+        * date, is a list containing int values, it is a required keyword
+        * domain_name is a single value which can only be "global", "n.hem", "s.hem". "ValidateChoice" is a data validator part of SemperPy, you can write you own validators.
+        * variable is a single value, it is not required from the user as it has a default value
+
+    Since the file data1.json is in the current directory, you should type in the shell either:
+
+        * export GMAOPY_LANGUAGE=.
+        * setenv GMAOPY_LANGUAGE .
+
+    The python program (:download:`data1<data1.py>`)
+
+    .. literalinclude:: data1.py
+        :language: python
+
+    The output shows::
+
+        data1:
+            variable = obs
+            kx = [314,315,316,317,318,319,300,325],
+            level = [1.0, 2.0, 3.0, 4.0, 5.0]
+            date = [2011010100]
+            kt = [40]
+            domain_name = global
+
+    We can check that:
+        * although we entered a single value for **kt**, it came out as a list. This is because the language specifies that this is a list. That way we have the assurance that this is a list when we access it.
+        * the list of channels was converted to float and the keyword was changed to its official name **level**. This just enables to call the same entry different names.
+        * **date** was converted to int.
+        * although we entered **domain_name** as a list, it is now a string.
+        
+    If we enter **domain_name = 'glob'** the output shows::
+
+        Validation error for keyword domain_name. The value: 'glob' is not in the set: global, n.hem, s.hem
+
+    We can now associate an attribute to a piece of data by creating another directive
+    (:download:`attributes.json<attributes.json>`):
+
+    .. literalinclude:: attributes.json
+        :language: python
+
+    We now associate it to the data (:download:`data2.json<data2.json>`):
+
+    .. literalinclude:: data2.json
+        :language: python
+
+    Data has a unique attribute of class **Attributes**. The Python program becomes
+    (:download:`data2.py<data2.py>`):
+
+    .. literalinclude:: data2.py
+        :language: python
+
+    The output shows::
+
+       data2:
+            variable = ['obs']
+            kx = [220]
+            level = [1.0, 2.0, 3.0, 4.0, 5.0]
+            date = [2011010100]
+            attributes = 
+            attributes:
+                qc = used
+                type = pl
+            kt = [4]
+            domain_name = global     
+
+    In this case we didn't specify attributes, they are created automatically.
+
+    :note: Unlike the Data2 class, the Attribute class does not redefine the constructor to call the method **checkLanguage**. This is not necessary, the **checkLanguage** method is called recursively on all directives contained in directives.
+
+    Directives once processed by the language, contain all the data specified by the user plus 
+    possible default data. The Directive class keeps track of which keywords were set by default
+    and which ones were assigned by the user. A directive can **inherit from** or **overwrite from** 
+    another directive:
+        
+        * when directive A inherits from directive B, it is assigned all the keywords in B which are part of the language of A which are not in A or for which A has a default value
+          and B has a value assigned by the user.
+        * when directive A overwrites from directive B, it is assigned all the keywords in B which are part of the language of A which are not in A or are a default value of A, independently of the history of that keyword in B.
+          
+    Those relations are important when propagating values between directives.
+
+Generating the request(s)
+*************************
+
+    From this point, classes we refer to are located in gmaopy/obs and language files in
+    gmaopy/config/language, unless otherwise specified.
+    First of all we need to retrieve data to feed the statistic objects with 
+    obtain final statistics. This is the part where the doc-plot-curve relation is
+    important.
+
+    Taking a top-down approach, we need to examine the ObsDocument class first. Its language
+    definition file (obsdocument.json) inherits from obsidentifier (obsidentifier.json) which
+    itself inherits from identifier (identifier.json). As a summary, the ObsDocument directive
+    takes the following keywords:
+
+        * source: enables to retrieve the data. source can be **oper** for runs produced by ops, **merra** for the re-analysis, **odas** for ocean analysis, etc...
+        * expver: the experiment id.
+        * type: type of the data. For observation we have **obs** for diag files and **im** for observation impact files.
+        * user: the user id of the owner of a research experiment. By default it is set to "dao_ops"
+        * statistic name of the statistic (list)
+        * date (list)
+        * domain_name (list)
+        * usage takes three values: used, pasive, all (list)
+        * variable, the name of the ODS variable (list)
+        * level: pressure level or channel (list)
+        * filename: a file containing description of kx, kt (see :ref:`plottingtutorial`)
+        * obsgroup: in the file specified by filename, each entry is a section with a name between square brackets. A list of section names can be provided if not all the sections in the file should be processed.
+        * database: logical name of the database to read the data from. This will change.
+        * layout: a two-element list specifying the number of plots per column and per row in a single page.
+        * interactive: display the plots interactively (default) or create a graphical file
+        * output: when creating a file, the file name (default: plot.png)
+        * plot: **a list of plot directives**
+
+    :note: It seems a little messy and confusing to have all (or most) attributes in one single directive (e.g. attributes relating to identifying data mixed with graphical properties and information about how to retrieve data). Separating physically all these categories makes the code extremely complicated for little benefit.
+
+    The plot directives specified in the **plot** keyword, are directives which inherit from the 
+    class ObsPlot. It has the following keywords:
+
+        * source: enables to retrieve the data. source can be **oper** for runs produced by ops, **merra** for the re-analysis, **odas** for ocean analysis, etc...
+        * expver: the experiment id.
+        * type: type of the data. For observation we have **obs** for diag files and **im** for observation impact files.
+        * user: the user id of the owner of a research experiment. By default it is set to "dao_ops"
+        * statistic name of the statistic (list)
+        * date (list)
+        * domain_name (list)
+        * usage takes three values: used, pasive, all (list)
+        * variable, the name of the ODS variable (list)
+        * level: pressure level or channel (list)
+        * filename: a file containing description of kx, kt (see :ref:`plottingtutorial`)
+        * obsgroup: in the file specified by filename, each entry is a section with a name between square brackets. A list of section names can be provided if not all the sections in the file should be processed.
+        * database: logical name of the database to read the data from. This will change.
+        * title: unused at the moment
+        * xaxis and yaxis: directives of type **axis** which enable to customize properties of the axis such as limits, scale, ticks etc...
+        * graphics: a directive containing graphical properties such as colors and styles to use, orientation of the plot etc...
+        * curve: **a list of curve directives**
+
+    :note: you will find keywords in the json files which are not mentioned here and which name starts with an underscore. This are used as "local variables" for that directive and are not printed in the output, they are used to configure the system, we will explain these in details later.
+
+    The curve directives specified in the **curve** keyword, are directive which inherit from the
+    class ObsCurve. It has the same keywords as ObsDocument except for:
+
+        * source: enables to retrieve the data. source can be **oper** for runs produced by ops, **merra** for the re-analysis, **odas** for ocean analysis, etc...
+        * expver: the experiment id.
+        * type: type of the data. For observation we have **obs** for diag files and **im** for observation impact files.
+        * statistic name of the statistic (unique)
+        * date (list)
+        * domain_name (list)
+        * usage takes three values: used, pasive, all (unique)
+        * variable, the name of the ODS variable (unique)
+        * level: pressure level or channel (list)
+        * graphics: a directive containing graphical properties such as colors and styles to use, orientation of the plot etc...
+        * database: logical name of the database to read the data from. This will change.
+        * name: represents the name of the group of observations defined by kt and kx, it is optional, normally extracted from files,
+        * kt and kt to describe observations (list)
+
+    As a summary, ObsDocument and ObsPlot share the same keywords except for:
+        
+        * **ObsDocument** also has layout, interactive, output and plot
+        * **ObsPlot** also has xaxis, yaxis, graphics and curve
+
+    ObsPlot and ObsCurve share the same keywords except for:
+
+        * **ObsPlot** also has xaxis, yaxis, filename, obsgroup and curve
+        * **ObsCurve** also has kt and kx, does not have filename or obsgroup
+
+    The algorithm for distributing and propagating the data from the document to the curve, retrieving the data and plotting is in theory quite simple.
+
+The document (ObsDocument)
+==========================
+    
+    * The document calls **checkLanguage** which is applied recursively to all directives in the hierarchy including plot, curve, graphics, xaxis, yaxis etc...
+    * If the **filename** keyword is present, the file is read creating a list of observations (class gmaopy.obs.Observation) including kt, kx, level and name using the class ObsExpander.
+    * Using the keyword _combinable defined in the language as the list of keywords which generate different plots, the document call the function semperpy.core.tools.nestedLoops to generate all the combinations of all list of combinable keywords. The result of this is N copies of the initial ObsDocument directive, each of them containing a unique combination of the different keywords. If a file was read, the observations are also distributed manually because they constitue a special case and are not part of the language, yes it never ends being as simple as it sounds.
+    * For each copy of the document, the keywords are passed on all the plots contained in that document calling the **overwrite_from** on each plot_instance. That way, any keyword non specified in the plot is inherited from the document. If a filename was specified, the list of observations is also inherited. Please remember that the way the inheritance is carried out, values specified in the plot have precedence over the values in the document, they are only inherited is they are missing or default.
+    * Each plot is then required to distribute its data to the curve by calling its **distribute** method, please see the next paragraph.
+    * The **finalize** method is then called on each plot to give them a change to carry out some task at the end of the process.
+    * All the keywords which were inherited by the plot are then removed from each copy of the document, this is only cosmetic, when printing out the final directive it is more readable in the output.
+    * The **draw** method is then called on each copy of the document.
+
+The plot (ObsPlot)
+==================
+
+    * The plot does not need to do anything at initialisation time, because it is necessary to wait for data propagation from the document. In the **distribute** method, at this stage, keywords from the document have been inherited, the plot checks if it has a filename and expands it if it is the case, once again it has precedence over a filename given to the document.
+    * Then, there are two possible scenarios:
+        - The plot does not have an observation list: this is the easiest case. The plot loops over all its curves, has them inherit from its keywords and generates all combinations, just like the document, using its _combinable keyword. It them calls the **finalize** method on each combination of curve. In that case, kt and kx combinations were specified manually by the user in the directive.
+        - The plot has an observation list: the plot inherits an observation list from the document, it gets each Observation object in the list to inherit from its own keywords to make sure all keywords are propagated. If the observation list is read from a file by the plot, all keywords are also inherited. For each observation (gathered from the file), the plot loops over all its curves (which are used here like templates), duplicates each curve and gets it to inherit from the observation. The **finalize** method is then called. At the end of the process there are *N observations* multiplied by *M curves* curves in the list.
+    * All the keywords which were inherited by the curve are then removed from the plot, this is only cosmetic, when printing out the final directive it is more readable in the output.
+
+Retrieving data
+***************
+
+    The way the data propagation is carried out is designed with two goals in mind:
+
+        * to enable the flexible creation of plots using combinations to group plots on a page, curves on a plot etc...
+        * to create curves which contain the definition of an atom of data: all the data needed to compute the final statistic.
+
+    When retrieving data to show the fraction of beneficial observations for amsu-a, we want to include all channels for a particular period of time, a particular domain etc... The object which compute statistics are fed with all that data mixed. If we want to show it for just one channel then the curve should only contain data for one channel.
+
+    Because the curve contains the final description of the data to retrieve, it seems natural to give it the responsilibility to retrieve the data. However, how the data needs to be retrieved depend on the type of plot we are creating and only the plot knows how the data should be organized. This is why plots have two other hidden keywords in their language:
+
+        * _columns determine which columns of the database should be retrieved. The minimun the system needs is 'statistic', 'date', 'value', 'count' where *value* is the pre-computed statistics (could be a sum, a sum squared etc...) and *count* is the number of observations involved in computing *value*.
+        * _index_columns determines how the data should be indexed. It basically describes which keyword will be used for the other axis. For timeseries, _index_columns is 'date', for a vertical cross-section it is 'level', for the *observingsystems* plot, none is required.
+
+    The plot does not need to do much to retrieve data, ObsPlot.retrieve is shown here, please
+    note that if the original text is modified, this one may not be so always refer to 
+    the source code::
+
+        def retrieve(self):
+            columns = self.columns()
+            data_columns = {}
+            for index in range(len(columns)):
+                data_columns[columns[index]] = index 
+            for curve in self['curve']:
+                curve.retrieve(self.index_columns(),columns,data_columns)
+
+    Most of the work is carried out in the *retrieve* method of the ObsCurve. In a
+    nutshell, the algorithm is as follows:
+
+        * get a handler to retrieve the data. At the moment it gets a handler of the database, in the future we may want to cater for more media.
+        * create an object dedicated to compute the statistics contained in the curve (there is always only one)
+        * retrieve the data which is returned as an array of lists of n columns. Each list represents the columns sent by the plot, the number of elements in the array is the number of atomic pieces of data (kx, kt, level, statistic, domain_name).
+        * using _index_columns sent by the plot, submit the data to the statistic object to comoute the the final statistic (please see the next section).
+        * the algorithm as it is implemented now can deal with any number of index columns, if it is empty an array of 1 element (0 dimensional) is returned, if it contains one element a one - dimensional array is returned, if more than one index column are used (e.g. N) a N dimensional array is returned, its dimensions are the index columns in the order they are received. This will be useful in the future for contours and possibly 3D plots.
+        * at that stage the result is stored in the curve and can be accessed through the *value* method.
+
+Computing statistics
+********************
+
+    Statistics can be computed in two different contexts:
+
+        * when feeding the database, data is read from ODS files and temporary (or possibly final) results are computed from variable coming from the files
+        * when extracting data from the database to compute final statistic to display, plot or generally use.
+
+Plotting data
+*************

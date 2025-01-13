@@ -1,0 +1,58 @@
+#%Module1.0###################################################################
+##
+
+proc ModulesHelp { } {
+    global name version prefix man_path
+
+    puts stderr "\t[module-info name] - loads the $name environment"
+    puts stderr "\tThe following env variables are modified:"
+    puts stderr "\t$prefix/bin to \$PATH"
+    puts stderr "\t$man_path to \$MANPATH"
+    puts stderr "\tThe following env variables are added:"
+    puts stderr "\t$prefix to \$MPIDIR"
+    puts stderr "\n\tVersion $version\n"
+}
+
+set modname     [module-info name]
+set modmode     [module-info mode]
+# the location of logger changes with sles 9 to /bin"
+set logr        "/bin"
+
+if { $modmode == "switch1" } {
+        set modmode "switchfrom"
+}
+if { $modmode == "switch2" } {
+        set modmode "switchto"
+}
+if { $modmode != "switch3" } {
+        system  "$logr/logger -p local2.info envmodule $modmode $modname"
+}
+
+conflict semperpy
+
+# for Tcl script use only
+set     name            semperpy
+set     version         1.6
+set     root            /discover/nobackup/projects/gmao/share/dasilva/lib/python/gmaopy
+set     prefix          $root/$version
+
+if {![file exists $prefix]} {
+    puts stderr "\t[module-info name] Load Error: $prefix does not exist"
+    break
+    exit 1
+}
+
+module-whatis   "loads the $name environment"
+
+# prerequisites, let's just load them
+module load other/comp/gcc-4.5
+module load other/SIVO-PyD/spd_1.1.2
+
+set semperpy_language $prefix/gmaopy/language:$prefix/gmaopy/config/db/schema:$prefix/semperpy/plot/language:$prefix/semperpy/plot/mplib/language
+
+prepend-path    PATH $prefix/scripts/bin
+prepend-path    LD_LIBRARY_PATH /usr/local/other/libpq/lib
+prepend-path    PYTHONPATH $prefix
+append-path     SEMPERPY_LANGUAGE $semperpy_language
+append-path     SEMPERPY_CONFIG $prefix/gmaopy/prefix
+setenv          SEMPERPY_VERSION 1.6

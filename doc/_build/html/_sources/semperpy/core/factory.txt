@@ -1,0 +1,95 @@
+:mod:`factory` --- Factory class
+================================
+
+.. module:: core.factory
+   :synopsis: Factory utility with a couple of goodies.
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The Factory class
+-----------------
+
+.. class:: Factory(dict)
+
+    The **Factory** class registers functions and classes with an associated identifier
+    either a string or anything hashable.
+
+    .. method:: Factory(noduplicates = True, hasdefault = True)
+
+    	:param noduplicates: if True, a IndexError is raised if the user attempts to register the same identifier twice. Otherwise the second register overrides the first one.
+    	:param hasdefault: if True, when an identifier is not found by the default functions, the special string '__default__' is searched.  If it has been registered, then any unknown identifier will trigger the creation of what was registered under the '__default__' keyword.
+
+    .. method:: register(name,what)
+
+    	:param name: the identifier used to later instanciate an object
+    	:type name: a hashable object
+    	:param what: a class or a callable object
+
+    	Registers a callable object under the name *name*. Any hashable object
+    	can be used for *name*. *What* is a callable object.
+
+    .. method:: create(what, \*args, \*\*kargs)
+
+    	Finds the entry under the name *what* and calls the object stored there with
+    	the arguments \*args, \*\*kargs. Whatever is returned by the callable object is
+    	returned by this function. If there is no default, and what is not found,
+    	an IndexError is raised.
+
+    .. method:: get(what):
+
+    	This is identical to :func:`create` except that it does not instanciate
+        classes or call functions, it just returns the callable which was registered
+        in the factory.
+
+.. class:: SingletonFactory(Factory)
+
+    Inherits the behaviour from Factory. The difference is that when create is
+    called for an identifier, the result is cached. Whenever it is called again 
+    with the same identifier, the cache is returned. This results in creating
+    singletons if a class is registered.
+
+An example::
+
+    from semperpy.core.factory import Factory, SingletonFactory
+
+    class IntWrapper(object):
+
+    	def __init__(self,value):
+    		self.value = value
+
+    	def __str__(self):
+    		return str(self.value)
+
+    	def increment(self):
+    		self.value += 1
+
+    def no(*args,**kargs):
+    	raise IndexError('This is the default function')
+
+
+    f = Factory()
+    f.register('int',IntWrapper)
+    f.register('__default__',no)
+
+    i = f.create('int',2)
+    print i
+    2
+
+    s = SingletonFactory()
+    s.register('int',IntWrapper)
+    i = s.create('int',2)
+    print i
+    2
+    i.increment()
+    print i
+    3
+    j = s.create('int',2)
+    print j
+    3
+
+    f.create('unknown')
+    Traceback (most recent call last):
+    IndexError: Factory does not know how to create "unknown"
+
+

@@ -1,0 +1,100 @@
+The ODS class
+--------------
+
+Please check the :ref:`odstutorial` tutorial for examples of how to use ODS and how to write filtering expressions.
+
+:note: In order to use Python's expression parsing capabilities, the ODS and the ODSVariable classes make use of operator overloading. However, since the operators *and*, *or* and *not* cannot be redefined, the bitwise operators **&**, **|** and **~** are used. This is not semantically wrong since we handle arrays of booleans. **a & b** where a and b are arrays of booleans with the same shape, returns an array of booleans with the same shape.
+
+:warning: the operator precedence in Python is such that bitwise operators have higher precedence than comparison operators. The expression **a < 2 & c > 3** is parsed executing **2 & c** first. You should therefore be careful to uses brackets (parenthesis) to modify the precedence: **(a < 2) & (c > 3)**. This is slightly inconvenient, but it is at least never ambiguous.
+
+.. currentmodule:: gmaopy.ods.ods
+
+.. autoclass:: ODS
+
+    The **ODS** class provides support reading ODS files and selecting observations
+    according to different criteria.
+
+    .. automethod:: __init__
+
+        :param filename: ods file to be read
+        :type filename: string
+        :param masking: a callable which is given a chance to carry out extra data masking
+        :type masking: callable
+
+        Opens the specified file.
+
+    .. automethod:: compile
+
+        :param expression: a truth expression containing floating point literals and making reference to variable names in the netcdf file (ods file).
+        :type expression: string
+        :param used_observations: by default set to True, only observations used in the analysis are processed. If set to False, all observations are processed, in that case the variable qcexcl can be part of the expression.
+        :type used_observations: bool
+
+        Compiles a text based expression by parsing it and executing it. The value returned is
+        an object instance of class ODSVariable containing a numpy array of boolean. 
+        It has the same shape as the variables which are part of the expression
+        and can be used to extract data using the mask.
+
+    .. automethod:: extract
+
+        :param name: the name of the variable to extract.
+        :type name: string
+        :param filter: a filter (or mask) as returned by the method compile.
+        :type filter: numpy array of booleans or a :class: `ODSVariable`
+
+        Returns a numpy array for the specified variable. If not filter is provided, the whole
+        variable is returned, otherwise an array of the size corresponding to the number of
+        True values in the filter is returned with values taken from the specified variable.
+
+        :synonym: read
+
+    .. automethod:: sampleLevels
+
+        :param variableName: name of the variable in the ODS file (by default it is 'lev')
+        :type variableName: string
+        :param levels: list of levels to consider, all if not specified
+        :type levels: float or list of floats
+        :param bins: list of bins to use for binning
+        :type bins: float or list of floats
+
+        This method loads the variable containing all the observations levels
+        (in variableName) and matches them to the list of observations provided in 
+        argument levelList. The closest match is stored in an array to allow further
+        selection of observations. The method returns an instance of class LevelFilter.
+        The filter returned by this method is valid for one single ODS file, one filter if
+        specified and a list of levels. If any of these 3 criteria changes, the method
+        sampleLevels should be called again (see method validateLevelFilter).
+
+        :warning: matches are found by choosing the closest level specified in levelList to the level contained in the 'lev' variable independently of their "distance". If levelList contains only a few levels, some matches may not make sense.
+
+    .. automethod:: sampleLinearLevels
+
+        :param variableName: name of the variable in the ODS file (by default it is 'lev')
+        :type variableName: string
+        :param levels: list of levels to consider, all if not specified
+        :type levels: float or list of floats
+        :param bins: list of bins to use for binning
+        :type bins: float or list of floats
+
+        This method is identical to :func:`sampleLevels` except that unlike pressure levels, the levels
+        are linear, this is useful for instrument channels and ocean depth.
+
+    .. automethod:: validateObsFilter
+        
+        :param filter: a filter returned by the method **compile**
+        :type filter: ObsFilter
+
+        This method checks that the filter provided was computed by that ODS instance. A
+        ValueError exception is raised if it is not the case.
+
+    .. automethod:: validateLevelFilter
+
+        :param levels: levels which should have been matched
+        :type levels: float or list of floats
+        :param levelfilter: instance returned by the method sampleLevels
+        :type levelfilter: LevelFilter
+
+        This method makes sure that the filter *levelfilter* was computed for the same file
+        and the same list of levels. If there is a mismatch, a ValueError exception is raised.
+        You can use this method for debugging purposes to make sure that you are associating the
+        right filters with the right data.

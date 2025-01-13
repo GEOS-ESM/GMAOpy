@@ -1,0 +1,576 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Forecast statistics &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials for the end user" href="../tutorials.html" />
+    <link rel="next" title="About Python" href="../semperpy/python/python.html" />
+    <link rel="prev" title="Observation impact statistics" href="impact.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../semperpy/python/python.html" title="About Python"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="impact.html" title="Observation impact statistics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" accesskey="U">Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="forecast-statistics">
+<span id="scoreexperiment"></span><h1>Forecast statistics<a class="headerlink" href="#forecast-statistics" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>Forecast statistics are computed in operations and research experiments and loaded
+into a SemperPy database.</div></blockquote>
+<div class="section" id="computing-statistics">
+<h2>Computing statistics<a class="headerlink" href="#computing-statistics" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>SemperPy does not compute forecast skill scores because there is an existing application
+which computes statitics on forecast fields. To actions were taken:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the statistic computation application was modified (Ricardo Todling) to generate a text file which can be read by SemperPy to populate the database. Every new forecast generated will have an associated text file, both in operations and for research experiments. This works for the present and future.</li>
+<li>a grad script (Autin Conaty) read the forecast statistic binary files and generates text files which can be read by SemperPy. This is the mode to use for statistics generated in the past.</li>
+</ul>
+</div></blockquote>
+<p>In both cases a file (e.g. score.txt) SemperPy can understand is generated:</p>
+<div class="highlight-python"><pre>count|date|domain_name|east|expver|forecast|level|levtype|north|source|south|statistic|step|type|value|variable|verify|west
+0.0|2012040100|global|180.0|e572p2_fp|gmao|500.0|pl|90.0|gmao|-90.0|rms_dsp|0|fc|0.0|u|gmao|-180.0
+0.0|2012040100|global|180.0|e572p2_fp|gmao|1000.0|pl|90.0|gmao|-90.0|cor|0|fc|1.0|v|gmao|-180.0
+0.0|2012040100|global|180.0|e572p2_fp|gmao|700.0|pl|90.0|gmao|-90.0|rms_ran|0|fc|0.0|v|gmao|-180.0</pre>
+</div>
+<p>To upload that file in a database called fc_example:</p>
+<div class="highlight-python"><pre>spy_txt2db --no_check_domains fc_example score.txt</pre>
+</div>
+<p>The option &#8211;no_check_domains tell SemperPy not to compare domain boundaries defined in the
+file with domain boundaries defined in SemperPy because in the case of forecast statistics,
+they are different.</p>
+</div></blockquote>
+</div>
+<div class="section" id="plotting-statistics">
+<h2>Plotting statistics<a class="headerlink" href="#plotting-statistics" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Two specific plots have been implemented to visualize forecast scores, adding to the standard timeseries
+plot:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="../directives/timeseriesplot.html#timeseriesplot"><em>timeseriesplot</em></a></li>
+<li><a class="reference internal" href="../directives/meanplot.html#meanplot"><em>meanplot</em></a></li>
+<li><a class="reference internal" href="../directives/diffplot.html#diffplot"><em>diffplot</em></a></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="timeseriesplot">
+<h3>Timeseriesplot<a class="headerlink" href="#timeseriesplot" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>A typical timeseries plot: <a class="reference download internal" href="../_downloads/score_timeseries.py"><tt class="xref download docutils literal"><span class="pre">score_timeseries.py</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.scoreplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;fc&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;global&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;u&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+        <span class="n">levtype</span> <span class="o">=</span> <span class="s">&#39;pl&#39;</span><span class="p">,</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;fc_ops&#39;</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cor&#39;</span><span class="p">,</span><span class="s">&#39;rms&#39;</span><span class="p">],</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012040100</span><span class="p">,</span><span class="mi">2012043000</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+        <span class="n">datefile</span> <span class="o">=</span> <span class="s">&#39;scoredates.def&#39;</span>
+    <span class="p">),</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">timeseriesplot</span><span class="p">(</span>
+        <span class="p">{</span> <span class="s">&#39;graphics.marker&#39;</span> <span class="p">:</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.markersize&#39;</span><span class="p">:</span> <span class="mi">5</span> <span class="p">},</span>
+        <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">72</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">120</span><span class="p">],</span>
+        <span class="p">),</span>
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">plotlegend</span><span class="p">(</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">ncol</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="s">&#39;outside top&#39;</span><span class="p">,</span>
+            <span class="n">vertical_offset</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">plotfont</span><span class="p">(</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="s">&#39;x-small&#39;</span>
+            <span class="p">),</span>
+            <span class="n">columnspacing</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+            <span class="n">handletextpad</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;score_timeseries_&lt;statistic&gt;.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>produces:</p>
+<a class="reference internal image-reference" href="../_images/score_timeseries_cor.png"><img alt="../_images/score_timeseries_cor.png" class="align-center" src="../_images/score_timeseries_cor.png" style="width: 560.0px; height: 420.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/score_timeseries_rms.png"><img alt="../_images/score_timeseries_rms.png" class="align-center" src="../_images/score_timeseries_rms.png" style="width: 560.0px; height: 420.0px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="meanplot">
+<h3>Meanplot<a class="headerlink" href="#meanplot" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The mean plot compute means of forecast scores over time periods and displays the result against
+the valid time of the forecast. These are also known as &#8220;die off curves&#8221;
+<a class="reference download internal" href="../_downloads/score_mean.py"><tt class="xref download docutils literal"><span class="pre">score_mean.py</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.scoreplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;fc&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;global&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+        <span class="n">levtype</span> <span class="o">=</span> <span class="s">&#39;pl&#39;</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;rms&#39;</span><span class="p">,</span><span class="s">&#39;cor&#39;</span><span class="p">],</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;fc_ops&#39;</span><span class="p">,</span> 
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012040100</span><span class="p">,</span><span class="mi">2012043000</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;&lt;level&gt; &lt;variable&gt; &lt;domain_name&gt;&#39;</span><span class="p">],</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span> 
+      <span class="n">meanplot</span><span class="p">(</span>
+        <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">72</span><span class="p">,</span><span class="mi">78</span><span class="p">,</span><span class="mi">84</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">102</span><span class="p">,</span><span class="mi">108</span><span class="p">,</span><span class="mi">114</span><span class="p">,</span><span class="mi">120</span><span class="p">],</span>
+        <span class="p">),</span>
+        <span class="n">display_last_curve_value</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">plotlegend</span><span class="p">(</span>
+            <span class="n">ncols</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="s">&#39;outside top&#39;</span><span class="p">,</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">plotfont</span><span class="p">(</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="s">&#39;x-small&#39;</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">datefile</span><span class="o">=</span><span class="s">&#39;scoredates.def&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;e572p5_fp (&lt;population&gt;)&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;darkturquoise&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;ECMWF (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;blue&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;NCEP (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;green&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;g5ecmwf (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;red&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;g5ncep (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">has_xtitle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;Forecast Day (&lt;month&gt;)&#39;</span><span class="p">,</span>
+      <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;mean_&lt;statistic&gt;.png&#39;</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>produces:</p>
+<a class="reference internal image-reference" href="../_images/mean_rms-cor.png"><img alt="../_images/mean_rms-cor.png" class="align-center" src="../_images/mean_rms-cor.png" style="width: 490.0px; height: 490.0px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="diffplot">
+<h3>Diffplot<a class="headerlink" href="#diffplot" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The diffplot reproduces a plot produced originally by Larry Takacs and Stepthen Bloom where the refence is
+a straight line on the 0 coordinate and other curves represent the difference of the mean of the values for
+each curve and the mean of the values of the reference. Significance boxes can also be displayed.</p>
+<p>For anomaly correlations, all the calculations all the computation are done after applying a Z-transform, the
+result is then transformed back.</p>
+<p>An example <a class="reference download internal" href="../_downloads/score_diff.py"><tt class="xref download docutils literal"><span class="pre">score_diff.py</span></tt></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.scoreplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;fc&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;global&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+        <span class="n">levtype</span> <span class="o">=</span> <span class="s">&#39;pl&#39;</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;rms&#39;</span><span class="p">,</span><span class="s">&#39;cor&#39;</span><span class="p">],</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;fc_ops&#39;</span><span class="p">,</span> 
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012040100</span><span class="p">,</span><span class="mi">2012043000</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;&lt;level&gt; &lt;variable&gt; &lt;domain_name&gt;&#39;</span><span class="p">],</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span> 
+      <span class="n">diffplot</span><span class="p">(</span>
+        <span class="p">{</span> <span class="s">&#39;graphics.marker&#39;</span> <span class="p">:</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.markersize&#39;</span><span class="p">:</span> <span class="mi">5</span> <span class="p">},</span>
+        <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">72</span><span class="p">,</span><span class="mi">78</span><span class="p">,</span><span class="mi">84</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">102</span><span class="p">,</span><span class="mi">108</span><span class="p">,</span><span class="mi">114</span><span class="p">,</span><span class="mi">120</span><span class="p">],</span>
+        <span class="p">),</span>
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">plotlegend</span><span class="p">(</span>
+            <span class="n">ncols</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="s">&#39;outside top&#39;</span><span class="p">,</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">plotfont</span><span class="p">(</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="s">&#39;x-small&#39;</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">,</span><span class="n">marker</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;e572p5_fp (&lt;population&gt;)&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;darkturquoise&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;ECMWF (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;blue&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;NCEP (&lt;population&gt;)&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;green&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;g5ecmwf (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;red&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;g5ncep (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">has_xtitle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;Forecast Day (&lt;month&gt;)&#39;</span><span class="p">,</span>
+        <span class="n">has_ytitle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">ytitle</span> <span class="o">=</span> <span class="s">&#39;Difference (ref=GEOS-5)&#39;</span><span class="p">,</span>
+      <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;diff_&lt;statistic&gt;.png&#39;</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>produces:</p>
+<a class="reference internal image-reference" href="../_images/diff_rms-cor.png"><img alt="../_images/diff_rms-cor.png" class="align-center" src="../_images/diff_rms-cor.png" style="width: 630.0px; height: 490.0px;" /></a>
+<p>There are a few options regarding the representation of significance. By default error bars are used to
+show the significance interval. Two other options exist:</p>
+<blockquote>
+<div><ul class="simple">
+<li>do not display significance intervals</li>
+<li>display significance boxes following the representation used previously</li>
+</ul>
+</div></blockquote>
+<p>In the diffplot, the keyword <a class="reference internal" href="../directives/significance.html#significance"><em>significance</em></a> can be specified to change the mode of display
+of the significance intervals and other graphical parameters. To display boxes on the reference
+curve <a class="reference download internal" href="../_downloads/score_diff_boxes.py"><tt class="xref download docutils literal"><span class="pre">score_diff_boxes.py</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.scoreplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;fc&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;global&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+        <span class="n">levtype</span> <span class="o">=</span> <span class="s">&#39;pl&#39;</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;rms&#39;</span><span class="p">,</span><span class="s">&#39;cor&#39;</span><span class="p">],</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;fc_ops&#39;</span><span class="p">,</span> 
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012040100</span><span class="p">,</span><span class="mi">2012043000</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;&lt;level&gt; &lt;variable&gt; &lt;domain_name&gt;&#39;</span><span class="p">],</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span> 
+      <span class="n">diffplot</span><span class="p">(</span>
+        <span class="p">{</span> <span class="s">&#39;graphics.marker&#39;</span> <span class="p">:</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.markersize&#39;</span><span class="p">:</span> <span class="mi">5</span> <span class="p">},</span>
+        <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">72</span><span class="p">,</span><span class="mi">78</span><span class="p">,</span><span class="mi">84</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">102</span><span class="p">,</span><span class="mi">108</span><span class="p">,</span><span class="mi">114</span><span class="p">,</span><span class="mi">120</span><span class="p">],</span>
+        <span class="p">),</span>
+        <span class="n">significance</span> <span class="o">=</span> <span class="n">significance</span><span class="p">(</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;box&#39;</span>
+        <span class="p">),</span>
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">plotlegend</span><span class="p">(</span>
+            <span class="n">ncols</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="s">&#39;outside top&#39;</span><span class="p">,</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">plotfont</span><span class="p">(</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="s">&#39;x-small&#39;</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">,</span><span class="n">marker</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;e572p5_fp (&lt;population&gt;)&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;darkturquoise&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;ECMWF (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;blue&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;NCEP (&lt;population&gt;)&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;green&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;g5ecmwf (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;red&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;g5ncep (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">has_xtitle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;Forecast Day (&lt;month&gt;)&#39;</span><span class="p">,</span>
+        <span class="n">has_ytitle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">ytitle</span> <span class="o">=</span> <span class="s">&#39;Difference (ref=GEOS-5)&#39;</span><span class="p">,</span>
+      <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;diff_boxes_&lt;statistic&gt;.png&#39;</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>produces:</p>
+<a class="reference internal image-reference" href="../_images/diff_boxes_rms-cor.png"><img alt="../_images/diff_boxes_rms-cor.png" class="align-center" src="../_images/diff_boxes_rms-cor.png" style="width: 630.0px; height: 490.0px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="combined-plot">
+<h3>Combined plot<a class="headerlink" href="#combined-plot" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>Using meanplot and diffplot, the familiar combination plot can be generated
+<a class="reference download internal" href="../_downloads/score_combined.py"><tt class="xref download docutils literal"><span class="pre">score_combined.py</span></tt></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gmaopy.modules.scoreplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">document</span><span class="p">(</span>
+    <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+        <span class="nb">type</span> <span class="o">=</span> <span class="s">&#39;fc&#39;</span><span class="p">,</span>
+        <span class="n">domain</span> <span class="o">=</span> <span class="s">&#39;global&#39;</span><span class="p">,</span>
+        <span class="n">variable</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span><span class="p">,</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+        <span class="n">levtype</span> <span class="o">=</span> <span class="s">&#39;pl&#39;</span><span class="p">,</span>
+        <span class="n">statistic</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;rms&#39;</span><span class="p">,</span><span class="s">&#39;cor&#39;</span><span class="p">],</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="s">&#39;fc_ops&#39;</span><span class="p">,</span> 
+        <span class="n">date</span> <span class="o">=</span> <span class="n">Dates</span><span class="p">(</span><span class="mi">2012040100</span><span class="p">,</span><span class="mi">2012043000</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;&lt;level&gt; &lt;variable&gt; &lt;domain_name&gt;&#39;</span><span class="p">],</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="p">[</span> 
+      <span class="n">meanplot</span><span class="p">(</span>
+        <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">72</span><span class="p">,</span><span class="mi">78</span><span class="p">,</span><span class="mi">84</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">102</span><span class="p">,</span><span class="mi">108</span><span class="p">,</span><span class="mi">114</span><span class="p">,</span><span class="mi">120</span><span class="p">],</span>
+        <span class="p">),</span>
+        <span class="n">display_last_curve_value</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="c"># &lt;---- note this keyword in meanplot</span>
+        <span class="n">legend</span> <span class="o">=</span> <span class="n">plotlegend</span><span class="p">(</span>
+            <span class="n">ncols</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="s">&#39;outside top&#39;</span><span class="p">,</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">plotfont</span><span class="p">(</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="s">&#39;x-small&#39;</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">datefile</span><span class="o">=</span><span class="s">&#39;scoredates.def&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;e572p5_fp (&lt;population&gt;)&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;darkturquoise&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;ECMWF (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;blue&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;NCEP (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;green&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;g5ecmwf (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;red&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+                <span class="n">legend</span> <span class="o">=</span> <span class="s">&#39;g5ncep (&lt;population&gt;)&#39;</span>
+            <span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">has_legend</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+      <span class="p">),</span>
+      <span class="n">diffplot</span><span class="p">(</span>
+        <span class="p">{</span> <span class="s">&#39;graphics.marker&#39;</span> <span class="p">:</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;graphics.markersize&#39;</span><span class="p">:</span> <span class="mi">5</span> <span class="p">},</span>
+        <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">72</span><span class="p">,</span><span class="mi">78</span><span class="p">,</span><span class="mi">84</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">102</span><span class="p">,</span><span class="mi">108</span><span class="p">,</span><span class="mi">114</span><span class="p">,</span><span class="mi">120</span><span class="p">],</span>
+        <span class="p">),</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;black&#39;</span><span class="p">,</span><span class="n">marker</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;darkturquoise&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;blue&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;green&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ecmwf&#39;</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">line</span><span class="p">(</span>
+                <span class="n">graphics</span> <span class="o">=</span> <span class="n">graphics</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;red&#39;</span><span class="p">),</span>
+                <span class="n">plotdata</span> <span class="o">=</span> <span class="n">scoredata</span><span class="p">(</span><span class="n">forecast</span> <span class="o">=</span> <span class="s">&#39;gmao&#39;</span><span class="p">,</span><span class="n">verify</span> <span class="o">=</span> <span class="s">&#39;ncep&#39;</span><span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">has_xtitle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">xtitle</span> <span class="o">=</span> <span class="s">&#39;Forecast Day (&lt;month&gt;)&#39;</span><span class="p">,</span>
+        <span class="n">has_ytitle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">ytitle</span> <span class="o">=</span> <span class="s">&#39;Difference (ref=GEOS-5)&#39;</span><span class="p">,</span>
+      <span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">interactive</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;combined_&lt;statistic&gt;.png&#39;</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+    <span class="n">has_title</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>produces:</p>
+<a class="reference internal image-reference" href="../_images/combined_cor.png"><img alt="../_images/combined_cor.png" class="align-center" src="../_images/combined_cor.png" style="width: 630.0px; height: 490.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/combined_rms.png"><img alt="../_images/combined_rms.png" class="align-center" src="../_images/combined_rms.png" style="width: 630.0px; height: 490.0px;" /></a>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Forecast statistics</a><ul>
+<li><a class="reference internal" href="#computing-statistics">Computing statistics</a></li>
+<li><a class="reference internal" href="#plotting-statistics">Plotting statistics</a><ul>
+<li><a class="reference internal" href="#timeseriesplot">Timeseriesplot</a></li>
+<li><a class="reference internal" href="#meanplot">Meanplot</a></li>
+<li><a class="reference internal" href="#diffplot">Diffplot</a></li>
+<li><a class="reference internal" href="#combined-plot">Combined plot</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="impact.html"
+                        title="previous chapter">Observation impact statistics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../semperpy/python/python.html"
+                        title="next chapter">About Python</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/exp/scores.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../semperpy/python/python.html" title="About Python"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="impact.html" title="Observation impact statistics"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../tutorials.html" >Tutorials for the end user</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

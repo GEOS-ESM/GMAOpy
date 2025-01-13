@@ -1,0 +1,111 @@
+:mod:`configfile` --- Configuration file tools
+==============================================
+
+.. module:: core.configfile
+   :synopsis: ConfigFile class and configuration file management based on Python's ConfigParser
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The ConfigFile class
+--------------------
+
+.. class:: ConfigFile(nocasedict)
+
+    The **ConfigFile** class uses the Python's **ConfigParser** class to read configuration files.
+    A **ConfigFile** object is a dictionary with entries of different types, including other
+    dictionaries. A few goodies have been added:
+
+    * the keys of the dictionaries are case insensitive, e.g. FileName = filename
+    * items between commas on the right hand side in the configuration file are
+      converted to list, unless the object is created with the option **process_coma=False**
+    * if an item on the right hand side is written [name], then the section [name]
+      if nested at that level.
+    * a special section called [__types__] can define the type of the right hand side values.
+    * a **ConfigFile** object can be printed in a neat way.
+
+    If you consider the following configuration file (config.def)::
+    	
+    	[servers]
+    	main = [dartagnan]
+    	backup = [aramis]
+
+    	[dartagnan]
+    	hostname = zx56
+    	port = 3244
+    	credentials = read, write
+    	since = 20091225
+
+    	[aramis]
+    	hostname = zxu167
+    	port = 3256
+    	credentials = read
+    	since = 20081114
+
+    	[__types__]
+    	since = Date
+    	port = int
+
+    and the following code::
+
+    	from semperpy.core.date import Date
+    	from semperpy.core.configfile import ConfigFile
+
+    	f = ConfigFile('config.def')
+    	print f
+    	servers:
+    		main:
+    			credentials:
+    				read
+    				 write
+    			hostname:
+    				zx56
+    			port:
+    				3244
+    			since:
+    				2009-12-25
+    		backup:
+    			credentials:
+    				read
+    			hostname:
+    				zxu167
+    			port:
+    				3256
+    			since:
+    				2008-11-14
+    	aramis:
+    		credentials:
+    			read
+    		hostname:
+    			zxu167
+    		port:
+    			3256
+    		since:
+    			2008-11-14
+    	dartagnan:
+    		credentials:
+    			read
+    			 write
+    		hostname:
+    			zx56
+    		port:
+    			3244
+    		since:
+    			2009-12-25
+
+    	print type(f['servers']['Main']['port'])
+    	<type 'int'>
+
+    Please note that nested sections are inserted as sub-dictionaries. The dates have been allocated from 
+    the class **Date** as the output is formatted. The type of the *port* entry is int as required,
+    and keys are case insensitive.
+
+    .. method:: ConfigFile(filename,process_coma = False, overwrite = True)
+    	
+    	:param filename: full path to the configuration file.
+    	:type filename: string or list of strings
+    	:param process_coma: controls the interpretation of comas on the right-hand side. By default it is True, a list is created.
+    	:type process_coma: bool
+        :param overwrite: if a list of files is provided, files are read backwards from the list, if overwrite is True, common sections are overwritten so that the first file has precedence.
+        :type overwrite: bool
+

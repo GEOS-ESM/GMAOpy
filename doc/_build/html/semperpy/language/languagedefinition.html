@@ -1,0 +1,213 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The LanguageDefinition class — Validating the language definition &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../../index.html" />
+    <link rel="up" title="language — Language definition and analysis utilities" href="languagemodule.html" />
+    <link rel="next" title="netcdf — Reading and slicing netCDF files" href="../netcdf/netcdfmodule.html" />
+    <link rel="prev" title="The Language class — Language validation" href="language.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../netcdf/netcdfmodule.html" title="netcdf — Reading and slicing netCDF files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="language.html" title="The Language class — Language validation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="languagemodule.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">language</span></tt> &#8212; Language definition and analysis utilities</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-language.languagedefinition">
+<span id="the-languagedefinition-class-validating-the-language-definition"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">The</span> <span class="pre">LanguageDefinition</span> <span class="pre">class</span></tt> &#8212; Validating the language definition<a class="headerlink" href="#module-language.languagedefinition" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.1.</span></p>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<dl class="class">
+<dt id="language.languagedefinition.LanguageDefinition">
+<em class="property">class </em><tt class="descclassname">language.languagedefinition.</tt><tt class="descname">LanguageDefinition</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#language.languagedefinition.LanguageDefinition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="private-definition">
+<h2>Private definition<a class="headerlink" href="#private-definition" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>The <tt class="xref py py-class docutils literal"><span class="pre">Language.LanguageDefinition.LanguageDefinition</span></tt> defines the keywords to be used when defining a
+language, which keyword are expected to be defined, default values for non-supplied
+keywords in the language definition and types of the keywords.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#----------------------------------------------------------------------------</span>
+<span class="c"># SemperPy Copyright GMAO 2009-2011</span>
+<span class="c">#</span>
+<span class="c"># Author: Claude Gibert, May 2010, claude.gibert@synopticview.com</span>
+<span class="c">#-------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">semperpy.core.tools</span> <span class="kn">import</span> <span class="n">to_list</span>
+
+<span class="k">def</span> <span class="nf">untouched</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+<span class="k">class</span> <span class="nc">LanguageDefinition</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">directive</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s">&quot;directive&quot;</span><span class="p">,</span>
+                <span class="s">&quot;keywords&quot;</span>
+            <span class="p">],</span>
+            <span class="s">&quot;valid&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;directive&quot;</span>         <span class="p">:</span>    <span class="nb">str</span><span class="p">,</span>
+                <span class="s">&quot;keywords&quot;</span>          <span class="p">:</span>    <span class="n">untouched</span><span class="p">,</span>
+                <span class="s">&quot;inherit_from&quot;</span>      <span class="p">:</span>    <span class="n">to_list</span><span class="p">,</span>
+                <span class="s">&quot;specialize_from&quot;</span>   <span class="p">:</span>    <span class="n">untouched</span><span class="p">,</span>
+                <span class="s">&quot;post_validate&quot;</span>     <span class="p">:</span>    <span class="n">to_list</span><span class="p">,</span>
+                <span class="s">&quot;help&quot;</span>              <span class="p">:</span>    <span class="n">to_list</span><span class="p">,</span>
+                <span class="s">&quot;doc&quot;</span>               <span class="p">:</span>    <span class="nb">bool</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">keywords</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">],</span>
+            <span class="s">&quot;defaults&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;optional&quot;</span><span class="p">:</span>             <span class="bp">False</span><span class="p">,</span>
+                <span class="s">&quot;unique&quot;</span><span class="p">:</span>               <span class="bp">False</span><span class="p">,</span>
+                <span class="s">&quot;remove&quot;</span><span class="p">:</span>               <span class="bp">False</span><span class="p">,</span>
+                <span class="s">&quot;lowercase&quot;</span><span class="p">:</span>            <span class="bp">True</span><span class="p">,</span>
+                <span class="s">&quot;type&quot;</span><span class="p">:</span>                 <span class="s">&quot;&quot;</span><span class="p">,</span>
+                <span class="s">&quot;ignore_type_errors&quot;</span><span class="p">:</span>   <span class="bp">False</span><span class="p">,</span>
+                <span class="s">&quot;distribute_type&quot;</span><span class="p">:</span>      <span class="bp">True</span><span class="p">,</span>
+                <span class="s">&quot;validate&quot;</span><span class="p">:</span>             <span class="p">[]</span>
+            <span class="p">},</span>
+            <span class="s">&quot;valid&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;optional&quot;</span><span class="p">:</span>             <span class="nb">bool</span><span class="p">,</span>
+                <span class="s">&quot;unique&quot;</span><span class="p">:</span>               <span class="nb">bool</span><span class="p">,</span>
+                <span class="s">&quot;remove&quot;</span><span class="p">:</span>               <span class="nb">bool</span><span class="p">,</span>
+                <span class="s">&quot;type&quot;</span><span class="p">:</span>                 <span class="n">untouched</span><span class="p">,</span>
+                <span class="s">&quot;ignore_type_errors&quot;</span><span class="p">:</span>   <span class="nb">bool</span><span class="p">,</span>
+                <span class="s">&quot;distribute_type&quot;</span><span class="p">:</span>      <span class="nb">bool</span><span class="p">,</span>
+                <span class="s">&quot;default_value&quot;</span><span class="p">:</span>        <span class="n">untouched</span><span class="p">,</span>
+                <span class="s">&quot;alias&quot;</span><span class="p">:</span>                <span class="n">to_list</span><span class="p">,</span>
+                <span class="s">&quot;validate&quot;</span><span class="p">:</span>             <span class="n">to_list</span><span class="p">,</span>
+                <span class="s">&quot;lowercase&quot;</span><span class="p">:</span>            <span class="nb">bool</span><span class="p">,</span>
+                <span class="s">&quot;help&quot;</span><span class="p">:</span>                 <span class="n">to_list</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+<p>Modifying either the <a class="reference internal" href="../directive/directivemodule.html#module-directive" title="directive: The Directive is a python dictionary which is checked and setup by using the language module."><tt class="xref py py-meth docutils literal"><span class="pre">directive()</span></tt></a> or the <tt class="xref py py-meth docutils literal"><span class="pre">keywords()</span></tt> methods would imply adding
+new features to the language definition capabilities and would therefore require the
+modification of the <a class="reference internal" href="language.html#language.language.Language" title="language.language.Language"><tt class="xref py py-class docutils literal"><span class="pre">language.language.Language</span></tt></a> class.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">The</span> <span class="pre">LanguageDefinition</span> <span class="pre">class</span></tt> &#8212; Validating the language definition</a><ul>
+<li><a class="reference internal" href="#private-definition">Private definition</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="language.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">The</span> <span class="pre">Language</span> <span class="pre">class</span></tt> &#8212; Language validation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../netcdf/netcdfmodule.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">netcdf</span></tt> &#8212; Reading and slicing netCDF files</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/semperpy/language/languagedefinition.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../netcdf/netcdfmodule.html" title="netcdf — Reading and slicing netCDF files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="language.html" title="The Language class — Language validation"
+             >previous</a> |</li>
+        <li><a href="../../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li>
+          <li><a href="languagemodule.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">language</span></tt> &#8212; Language definition and analysis utilities</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

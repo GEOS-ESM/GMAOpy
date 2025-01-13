@@ -1,0 +1,25 @@
+:mod:`The ObsFilter class` --- Filtering observations
+=====================================================
+
+.. module:: observations
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: ObsFilter(Observation)
+
+    ObsFilter inherits from the observations.observation.Observation class and disables all 
+    the numerical operators as these do not make sense on arrays of Booleans.
+
+Public methods
+--------------
+
+    .. method:: __call__(value = None):
+        
+        :param value: The ObsFilter will select observations from the array value where its contents have True values.
+        :type value: Observation or an array
+        
+        returns a one-dimensional array containing all values taken 
+        from **value** matching the True values in the ObsFilter.
+        If **value** is not given, returns the array of observations, just like the
+        **values** method.

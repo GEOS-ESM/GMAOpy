@@ -1,0 +1,130 @@
+:mod:`The Dimension class` --- Base class for handling dimensions
+=================================================================
+
+.. module:: slicer.dimensions
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: Dimension(object)
+
+Public methods
+--------------
+
+    .. method:: Dimension(name,officialName,variable,metadata_handler = None):
+
+    	:param name: name of the dimension. Typically the name of the variable in a netCDF file
+    	:type name: string
+    	:param officialName: name used by the system to identify this variable, for example **latitude** can be used officially but the name of the variable in a netCDF file could be **lat**.
+    	:type officialName: string
+        :param variable: the array describing the dimension.
+        :type variable: array
+        :param metadata_handler: a function or callable object which receives the dimension object and a string naming the metadata and returns the value (e.g. :class:`slicer.cf10.cf10metadata.CF10Metadata`)
+
+        Build the Dimension object.
+
+    .. method:: name(newname = None):
+        
+        return the name of the dimension. If newname is specified, replaces the name
+        with newname and returns it.
+
+    .. method:: officialName(newname = None):
+        
+        return the official name of the dimension. If newname is specified, replaces the official name with newname and returns it.
+
+    .. method:: metadata(name):
+        
+        Calls the metadata handler passed at creation time with the parameter *name* 
+        and returns the result.
+
+    .. method:: slice(aSlice):
+
+        :param aSlice: a slice to extract from the dimension.
+        :type aSlice: slice
+
+        The slice method returns a slice of the data of the dimension, for example, if the
+        dimension is a latitude, returns the list of the latitudes in that slice. This is
+        used by the :class:`slicer.slicer.Slicer` to build meta data::
+
+            import numpy as np
+            from semperpy.slicing.dimensions.dimension import Dimension
+
+            variable = np.array([12,13,14,15,16,17,18,19,20])
+            dim = Dimension('dimension','official',variable)
+
+            v = dim.slice(slice(1,4,1))
+            print 'slice:',v
+            -> slice: [13, 14, 15]
+
+    .. method:: findSlice(values):
+
+        :param values: values in contents space to find in the dimension
+        :type values: list or dictionary
+
+        This method returns a list of slice objects corresponding to the requested values::
+
+
+            import numpy as np
+            from semperpy.slicing.dimensions.dimension import Dimension
+
+            variable = np.array([12,13,14,15,16,17,18,19,20])
+            dim = Dimension('dimension','official',variable)
+
+            s = dim.findSlice([12,20])
+            print s
+            -> [slice(0, 1, 1), slice(8, 9, 1)]
+            s = dim.findSlice({13:17})
+            print s
+            -> [slice(1, 6, 1)]
+
+    .. method:: __str__():
+
+        Implements a neat printing of the bounds of the dimension.
+
+    .. method:: limits():
+
+        returns the first and last elements of the variable holding the values of the 
+        dimension.
+
+    .. method:: contains(value):
+        
+        :param value: a particular value
+        :type value: same type as dimension array elements
+        
+        returns whether a value is in the dimension or not.
+
+        :warning: some implementations of dimensions (e.g. indexed or sorted dimensions) assume that is a value is between its lower and higher bound it is in the dimension although the actual value may not be in there.
+
+    .. method:: find(value):
+
+        :param value: a particular value
+        :type value: same type as dimension array elements
+
+        searches the value in the dimension. As opposed to the method **contains**, this
+        method only returns True is the value is in the dimension. This is a systematic
+        search and it can therefore be costly for large dimensions.
+
+Private methods
+---------------
+
+    .. method:: __call__(values,is_interval):
+
+        :param values: values in contents space to find in the dimension
+        :type values: list
+        :param is_interval: True is values is an interval (in that case it is a list of 2 elements), False if values contains a list of discrete values
+        :type is_interval: Boolean
+
+        This method must return a list of slice objects corresponding to the requested values.
+
+        :note: although findSlice is the method to call, __call__ is the method to redefine if you create a new dimension inheriting from Dimension
+
+    .. method:: hash_slice(aSlice):
+        
+        Used internally, creates hashing values for slices (which are not hashable) to be
+        able to store them in a dictionary.
+
+    .. method:: extract_slice(aSlice):
+
+            Actually extracts a slice and return a list of the value(s). This is
+            called by the method **slice** but it can be redefined if necessary.
+

@@ -1,0 +1,41 @@
+[f]
+expver = e572_fp
+start = 2011070612
+end = 2011073121
+step = 3
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2/e572_fp/obs
+
+[g]
+expver = e572p1_fp
+start = 2011080100
+end = 2011083121
+step = 3
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p1/e572p1_fp/obs
+
+[h]
+expver = e572p2_fp
+start = 2011090100
+end = 2011120621
+step = 3
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p2/e572p2_fp/obs
+
+[i]
+expver = e572p2_fp
+start = 2011120600
+end = 2012040421
+step = 3
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p2_m1/e572p2_fp/obs
+
+[j]
+expver = e572p5_fp
+start = 2012040500
+end = 2012050921
+step = 3
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p5/e572p5_fp/obs
+
+[k]
+expver = e572p5_fp
+start = 2012051000
+end = 2012083121
+step = 3
+archive_location = /archive/dao_ops/GEOS-5.7.2/GEOSadas-5_7_2_p5_m1/e572p5_fp/obs

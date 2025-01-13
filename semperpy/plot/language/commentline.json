@@ -1,0 +1,16 @@
+{
+	"directive": "commentline",
+    "doc": true,
+    "inherit_from": "comment",
+	"keywords" : {
+        "position": {
+            "unique": true,
+            "type": "float"
+        },
+        "linewidth": {
+            "unique": true,
+            "type": "float",
+            "default_value": 1.8
+        }
+	}
+}

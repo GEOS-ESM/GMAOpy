@@ -1,0 +1,34 @@
+:mod:`The Slice to Array Visitor` --- Slicing into a multi-dimensional array
+============================================================================
+
+.. module:: slicer.slice2array
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: Slice2Array(object)
+
+Methods
+-------
+
+    .. method:: Slice2Array(generator = None):
+
+    	:param generator: you can either supply an ArrayGenerator created with your own parameters or any object which has the same methods and signatures as the ArrayGenerator
+    	:type generator: ArrayGenerator
+
+    .. method:: __call__(dimensions,variable,src,dst,meta,is_interval,**kargs):
+
+        The parameters are described in :class:`slicer.slicer.Slicer`. Copies slices of
+        *variable* into a newly create array.
+
+    .. method:: preProcess(dimensions,variable,shape,slices,metadata):
+
+        creates the destination array using the shape and the variable.
+
+    .. method:: postProcess(dimensions,variable,shape,slices,metadata):
+    
+        calls the postProcess method of the ArrayGenerator.
+
+    .. method:: array():
+
+        returns the newly created array.

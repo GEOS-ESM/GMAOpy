@@ -1,0 +1,37 @@
+:mod:`The ArrayGenerator class` --- Creating numpy arrays
+=========================================================
+
+.. module:: slicer.arraygenerator
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: ArrayGenerator(object)
+
+Public methods
+--------------
+
+    .. method:: ArrayGenerator(missing_value = 1.0E15, data_type = numpy.float64, masked = True):
+
+    	:param missing_value: value representing missing value
+    	:type missing_value: float
+        :param data_type: one of numpy's predefined types to create an array of.
+        :param masked: should a masked array be created
+        :type masked: Boolean
+        
+
+
+    .. method:: create(shape,source = None):
+
+        :param source: the source array. If this is a netCDF4 variable, this method check if it has a *missing_value* attribute and uses it if it exists. This argument can be omitted.
+        :param shape: shape of the array to be created
+
+        Returns either a numpy (standard) or a numpy.ma (masked) array with the right shape.
+
+    .. method:: postProcess(array,squeeze = False):
+
+        :param array: array is the array returned by the *create* method.
+        :param squeeze: if set to True, single-dimensional entries from array are removed.
+        :type squeeze: Boolean
+
+        This method will create the mask if array is a masked array and might squeeze it. It returns a modifed version of array, or array itself if nothing needs to be done.

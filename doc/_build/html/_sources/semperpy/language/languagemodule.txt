@@ -1,0 +1,19 @@
+:mod:`language` --- Language definition and analysis utilities
+==============================================================
+
+.. module:: language
+   :synopsis: Utilities to define and check the semantics of a dictionary, set
+              default values, convert to final types.
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents:
+*********
+
+.. toctree::
+   :maxdepth: 2
+
+   introduction
+   definitions
+   language
+   languagedefinition

@@ -1,0 +1,22 @@
+:mod:`The LonDimension class`
+=============================
+
+.. module:: slicer.cf10
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: LonDimension(IndexedDimension)
+
+Summary
+-------
+
+    The LonDimension class inherits from IndexedDimension and specializes the
+    method __call__ to deal with the special case for longitudes of overlapping.
+    If the values requested define an interval which overlaps the limits of the 
+    dimension and the dimension is global (360 degrees), __call__ returns two
+    slices instead of one, in order to deal with the overlapping of memory.
+
+    The private method **adjust_values** deals with different representations of
+    longitude, normalizes longitudes and detects overlapping. An interval of {340,-40}
+    is valid for this dimension.

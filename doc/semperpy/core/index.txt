@@ -1,0 +1,181 @@
+:mod:`index` --- Indexing data using flexible multiple criteria
+===============================================================
+
+.. module:: core.index
+   :synopsis: General index tree
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The Index class
+---------------
+
+.. class:: Index(Core.tools.dictionary)
+
+    The **Index** provides support for indexing data using multiple keys of any (hashable)
+    data type. The Index is a dictionary of dictionaries.
+
+    .. method:: Index(*args, unique_keys = False,sort = False, **kargs)
+
+    	:param args: provides the list of keywords used for indexing the data
+    	:type args: list of strings
+    	:param unique_keys: by default, if two values are stored under the same keys, a list of values is created and stored. So one unique combination of keys could return more than one result. If this parameter is set to True, an IndexError exception is raised if there is an attempt to store a second value under a unique set of keys.
+    	:type unique_keys: Boolean
+        :param sort: specifies if values along each key should be sorted when displaying and accessing the index
+        :type sort: Boolean
+        :param kargs: you can specify here callables associated to keywords to sort along that keyword (e.g: names = mySortNames, where the callable is a sort function receiving two parameters)
+
+    .. method:: keywords()
+
+    	Returns the list of keywords use by this index.
+
+    .. method:: insert(value,\*\*kargs)
+
+    	:param value: the data to be stored
+    	:type value: any type
+    	:param kargs: list of *key=value* pairs which consitute the index
+
+    	Builds the tree and inserts the data *value*. This method is called as many times
+    	as necessary to build the tree of data or meta-data.
+
+    .. method:: access(_nolist=False,\*\*kargs):
+
+    	Retrieves data from the index based on the list of *key=value* pairs. Not all the 
+    	keys specified in the constructor (*keywords*) need to be specified, an unspecified
+    	key means *all values*. A call to index.access() returns a list of all the values
+    	stored. If the parameter _nolist is set to True, if only one result is found, it is
+    	returned as a single value instead of a list of one value.
+
+    	:note: nolist is prefixed with underscore to avoid any possible clash with actual keywords in kargs.
+
+    .. method:: constrained_access(_nolist=True,_expect=1,\*\*kargs)
+
+    	:param _nolist: same as in method :meth:`access`
+    	:type _nolist: Boolean
+    	:param _expect: the number of values expected
+    	:type _expect: int
+    	:param kargs: list of *key=value* pairs which consitute the index
+
+    	The :meth:`constrained_access` method is the same as the :meth:`access` method, expect
+    	that it raises an expection if the number of values found is different from the
+    	number of expected values. This helps spotting problems in algorithms and datasets.
+
+    	:note: The parameter _nolist is True by default for this method as it seems to make sense.
+
+    .. method:: index_values()
+
+    	This method is a generator enabling to walk all the leaves of the index, basically
+    	it enables the user to see the whole index as a list of values. If you think of
+    	the index as a dictionary, the key is a combination of keys and the value is stored
+    	for each combination of keys.
+
+    .. method:: index_keys()
+
+    	This method is a generator returning all the keys of the index. Each keys is a
+    	combination of keys and is returned as a dictionary.
+
+    .. method:: index_items()
+
+    	Just like the dictionary.items() returns pairs of key, value, this method returns
+    	pairs of dictionary, value.
+
+
+An example
+----------
+
+    Let's imagine that we keep a record of different DVDs we own. We want to index the DVDs
+    with the movie title, genre, director and year and store for each movie its duration and
+    its location in a shelf archive (:download:`DVDs<index_example.py>`):
+
+    .. literalinclude:: index_example.py
+    	:language: python
+
+    We can now test the different features::
+
+    	python -i index_example1.py
+    	>> print index
+
+    The index can be printed in a formatted manner (inherited from :class:`Core.tools.dictionary`)::
+
+           Four Weddings and a Funeral:
+                romantic comedy:
+                    Mike Newell:
+                        1994:
+                                {'duration': 117, 'location': '17C'}
+            Man to Man:
+                drama:
+                    Regis Wargnier:
+                        2005:
+                                {'duration': 122, 'location': '45Z'}
+            Mr and Mrs Smith:
+                action:
+                    Doug Liman:
+                        2005:
+                                {'duration': 120, 'location': '3F'}
+            Notting Hill:
+                romantic comedy:
+                    Roger Michell:
+                        1999:
+                                {'duration': 124, 'location': '2A'}
+            An American Affair:
+                drama:
+                    William Olsson:
+                        2009:
+                                {'duration': 96, 'location': '12F'}
+
+    Accessing data::
+
+    	>> print index.access(genre='drama')
+    	    [{'duration': 122, 'location': '45Z'}, {'duration': 96, 'location': '12F'}]
+
+    	>> print index.access(genre='drama',year=2009)
+    	    [{'duration': 96, 'location': '12F'}]
+
+    	>> print index.access(year=2005)
+    	    [{'duration': 122, 'location': '45Z'}, {'duration': 120, 'location': '3F'}]
+
+    	>> print 'no list:\n',index.access(_nolist=True,year=1994)
+    	    no list:
+    	    {'duration': 117, 'location': '17C'}
+
+    	>> print 'making sure there are no movies from 2010\n',index.constrained_access(_expect=0,year=2010)
+    	    making sure there are no movies from 2010
+    	    []
+
+    	>> print index.constrained_access(_expect=0,year=1994)
+    	    Traceback (most recent call last):
+    		...
+    	    IndexError: Constrained access failed, expected 0 value(s), found 1 for: {'year': 1994}
+
+    	>> print index.constrained_access(_expect=3,year=2005)
+    	    Traceback (most recent call last):
+    		...
+    	    IndexError: Constrained access failed, expected 3 value(s), found 2 for: {'year': 2005}
+
+    	>> for a in index.index_values():
+    	      print a
+    	    {'duration': 117, 'location': '17C'}
+    	    {'duration': 122, 'location': '45Z'}
+    	    {'duration': 120, 'location': '3F'}
+    	    {'duration': 124, 'location': '2A'}
+    	    {'duration': 96, 'location': '12F'}
+
+    	>> print list(index.index_values())
+    	    [{'duration': 117, 'location': '17C'}, {'duration': 122, 'location': '45Z'}, {'duration': 120, 'location': '3F'}, {'duration': 124, 'location': '2A'}, {'duration': 96, 'location': '12F'}]
+
+    	>> for a in index.index_keys():
+    	      print a
+    	    {'genre': 'romantic comedy', 'director': 'Mike Newell', 'title': 'Four Weddings and a Funeral', 'year': 1994}
+    	    {'genre': 'drama', 'director': 'Regis Wargnier', 'title': 'Man to Man', 'year': 2005}
+    	    {'genre': 'action', 'director': 'Doug Liman', 'title': 'Mr and Mrs Smith', 'year': 2005}
+    	    {'genre': 'romantic comedy', 'director': 'Roger Michell', 'title': 'Notting Hill', 'year': 1999}
+    	    {'genre': 'drama', 'director': 'William Olsson', 'title': 'An American Affair', 'year': 2009}
+
+    	>> for a in index.index_items():
+    	      print a
+    	    ({'genre': 'romantic comedy', 'director': 'Mike Newell', 'title': 'Four Weddings and a Funeral', 'year': 1994}, {'duration': 117, 'location': '17C'})
+    	    ({'genre': 'drama', 'director': 'Regis Wargnier', 'title': 'Man to Man', 'year': 2005}, {'duration': 122, 'location': '45Z'})
+    	    ({'genre': 'action', 'director': 'Doug Liman', 'title': 'Mr and Mrs Smith', 'year': 2005}, {'duration': 120, 'location': '3F'})
+    	    ({'genre': 'romantic comedy', 'director': 'Roger Michell', 'title': 'Notting Hill', 'year': 1999}, {'duration': 124, 'location': '2A'})
+    	    ({'genre': 'drama', 'director': 'William Olsson', 'title': 'An American Affair', 'year': 2009}, {'duration': 96, 'location': '12F'})
+

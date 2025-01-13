@@ -1,0 +1,14 @@
+[omi_aura_ttl_ozone]
+kx = 449
+kt = 21
+rank = 000
+
+[aura_mls_level_ozone]
+kx = 330
+kt = 87
+rank = 100
+
+[ompsnm_ttl_ozone]
+kx = 427
+kt = 21
+rank = 200

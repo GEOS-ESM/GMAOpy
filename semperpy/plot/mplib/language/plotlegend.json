@@ -1,0 +1,97 @@
+{
+    "directive": "plotlegend",
+    "doc": true,
+    "help": ["The legend can be fully customized using those attributes. These attributes","are native attributes from matplotlib,","\n\nplease see http://matplotlib.sourceforge.net/api/axes_api.html?highlight=legend#matplotlib.axes.Axes.legend"],
+    "keywords": {
+        "ncol": {
+            "alias": ["ncols"],
+            "unique": true,
+            "optional": true
+        },
+        "alpha": {
+            "unique": true,
+            "default_value": 0.5
+        },
+        "loc": {
+            "alias": ["location"],
+            "default_value": ["upper left"],
+            "validate": ["ValidateChoice","best","upper right","upper left","lower left","lower right","right","center left","center right","lower center","upper center","center","outside top","outside bottom","outside topleft","outside bottomleft"],
+            "unique": true
+        },
+        "mode": {
+            "unique": true,
+            "default_value": "expand"
+        },
+        "handletextpad": {
+            "unique": true,
+            "type": "float",
+            "default_value": 0.7
+        },
+        "columnspacing": {
+            "unique": true,
+            "type": "float",
+            "default_value": 0.7
+        },
+        "borderpad": {
+            "unique": true,
+            "type": "float",
+            "default_value": 0.1
+        },
+        "borderaxespad": {
+            "unique": true,
+            "type": "float",
+            "default_value": 0.1
+        },
+        "frameon": {
+            "unique": true,
+            "default_value": false,
+            "type": "bool"
+        },
+        "fancybox": {
+            "unique": true,
+            "default_value": false,
+            "type": "bool"
+        },
+        "shadow": {
+            "unique": true,
+            "default_value": false,
+            "type": "bool"
+        },
+        "title": {
+            "unique": true,
+            "optional": true
+        },
+        "numpoints": {
+            "unique": true,
+            "type": "int",
+            "default_value": 1
+        },
+        "scatterpoints": {
+            "unique": true,
+            "type": "int",
+            "default_value": 1
+        },
+        "markerscale": {
+            "unique": true,
+            "type": "float",
+            "optional": true
+        },
+        "bbox_to_anchor": {
+            "optional": true,
+            "type": "float"
+        },
+        "prop": {
+            "alias": "font",
+            "type": "plotfont",
+            "unique": true,
+            "default_value": ""
+        },
+        "vertical_offset": {
+            "optional": true,
+            "default_value": 0.03
+        },
+        "_non_keywords": {
+            "default_value": ["vertical_offset"]
+        }
+    }
+}

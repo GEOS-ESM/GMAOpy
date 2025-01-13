@@ -1,0 +1,32 @@
+{
+	"directive": "baseplot",
+	"keywords" : {
+        "plotdata": {
+            "optional": true,
+            "unique": true,
+            "help": ["A directive specifying meta data for the type of data being plotted (obssdate, odsdata, scoredata, etc...)"]
+        },
+        "title": {
+            "optional": true,
+            "lowercase": false,
+            "help": ["This is a list of strings making the plot title. Each element of the list represents one different line. Plots have default templates for the title, if you would like to only override one line of the title and keep the other lines as the default definition, specify None for the lines which should have the default template."]
+        },
+        "colorbar_title": {
+            "optional": true,
+            "lowercase": false,
+            "unique": true,
+            "help": ["A string specifying the text template to use for the title of the colormap"]
+        },
+        "title_font": {
+            "unique": true,
+            "default_value": "",
+            "type": "plotfont",
+            "help": ["A plotfont directive defining different parameters for the font to use for the title"]
+        },
+        "has_title": {
+            "default_value": true,
+            "unique": true,
+            "help": ["Switches the display of the plot title on and off"]
+        }
+	}
+}

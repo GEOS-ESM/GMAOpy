@@ -1,0 +1,16 @@
+#-----------------------------------------------------------------------------
+# Maximum accepted sigo for different types of observations
+# for any sigo which is higher than the limit, values
+# from all variables should be discarded (taken from obs2html file gsiinfo)
+#-----------------------------------------------------------------------------
+[xvec]
+4  = 20
+5  = 20
+11 = 20
+12 = 20
+21 = 10
+22 = 10
+33 = 12
+39 = 10
+44 = 10
+40 = 20

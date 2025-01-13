@@ -1,0 +1,40 @@
+{
+	"directive": "obsidentifier",
+    "inherit_from": "identifier",
+    "help": ["<obsidentifier> is designed to be inherited from"],
+	"keywords" : {
+        "statistic": {
+            "alias": ["stat","stats","statistics"],
+            "help": ["the list of statistics to compute for the specified set of observations","current statistics: {statisticList(flat)}"]
+        },
+        "date": {
+            "type":"int",
+            "help": ["A list of dates. The convenience function in <semperpy.core.date.Dates> can ","generate lists of dates from an interval and an increment"]
+        },
+        "domain_name": {
+            "alias": ["domain"],
+            "optional": true,
+            "validate": ["ValidateDomains","semperpy"],
+            "help": ["Pre-defined geographical areas or domains: {domainList(semperpy)}"]
+        },
+        "usage": {
+            "default_value": "used",
+            "validate": ["ValidateChoice","used","all","passive","unused"]
+        },
+        "variable": {
+            "validate": ["ValidateChoice","obs","omf","oma","xvec","esigo","esigb"],
+            "optional": true
+        },
+        "level": {
+            "alias": "channel",
+            "type":"float",
+            "optional": true,
+            "ignore_type_errors": true,
+            "help": ["The pressure level for upper air observations, 0 for surface,","or the channel number for satellite data, hence the alias <channel>. If 'all' is specified, the official list of pressure levels or channels for the kx-kt observations being processed are used."]
+        },
+        "type": {
+			"validate": ["ValidateChoice","ob","im"],
+            "default_value": "ob"
+        }
+    }
+}

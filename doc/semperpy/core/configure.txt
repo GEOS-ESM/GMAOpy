@@ -1,0 +1,84 @@
+:mod:`configure` --- Configuration tools
+==========================================
+
+.. module:: core.configure
+   :synopsis: Configure class to handle configuration parameters and environement variables
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The Configure class
+--------------------
+
+.. class:: Configure(object)
+
+    When writing an application, there are many locations which need to be known, where configuration
+    files are to be found, data files, URLs etc...
+    Configure just offers an centralised set of tools to handle these. The idea is to have a set of environement
+    variables built as follows: ROOT_NAME where ROOT is the name of the application and NAME is the variable name, 
+    for example: for application verify the variable pointing to the configuration directory is named VERIFY_CONFIG.
+
+    .. method:: path(name,subpath):
+        
+        :param name: name of the variable to find the path in
+        :type name: string
+        :param subpath: subpath to be added to the main path (optional)
+        :type subpath: string
+
+        This method returns the path pointed to by an enviroment variable with an optional subpath.
+        
+        :warning: the path returned is a list of one or more locations pointed to by the variable:
+
+        Example::
+
+            export VERIFY_DB=/data/databases/verify
+            export VERIFY_CONFIG=/home/jj/config:/usr/local/apps/verify
+            
+            from semperpy.core.configure import Configure
+
+            print Configure.path('db')
+              /data/databases/verify
+            print Configure.path('config','scores')
+              ['/home/jj/config/scores', '/usr/local/apps/verify/scores']
+
+    .. method:: file(filename,name,subpath):
+        
+        :param filename: name of a file to be found in name / subpath
+        :type filename: string
+        :param name: name of the variable to find the path in
+        :type name: string
+        :param subpath: subpath to be added to the main path (optional)
+        :type subpath: string
+
+        This method call the **path** method and checks the exstence of the file 
+        **filename** for each location. It return a list of full paths to **filename**
+        whenever **filename** exists.
+
+    .. method:: resolvePath(self,path):
+
+        :param path: the path to resolve
+        :type path: string
+
+        This method is called internally, but could prove helpful. Three cases can be met:
+
+            * a path starts with "/", it is therefore an absolute path
+            * a path starts with either "." or ".." it is therefore a relative path to the current one, nothing needs resolving
+            * a path starts with "~" or "~/" (both with the same meaning) and it is expressed relatively to the home directory of the **application** define in the variable APP_CONFIG where APP is the name of the application.
+
+    .. method:: variableName(prefix,variable):
+
+        :param variable: name of a variable in the context of the current application
+        :type variable: string
+
+        This method is also used internally, for example::
+
+            export VERIFY_STORAGE=/db/verify
+
+            from semperpy.core.configure import Configure
+            import os
+
+            print Configure.variableName('verify','storage')
+              VERIFY_STORAGE
+            print os.getenv(Configure.variableName('storage'))
+              /db/verify
+

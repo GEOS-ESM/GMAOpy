@@ -1,0 +1,82 @@
+{
+	"directive": "scoredata",
+    "doc": true,
+    "inherit_from": "identifier",
+	"keywords" : {
+        "statistic": {
+            "alias": ["stat","stats","statistics"],
+            "optional": true,
+			"validate": ["ValidateChoice","cor","rms","rms_bar","rms_dis","rms_dsp","rms_ran"],
+            "help": ["the list of statistics to compute or retrieve for the specified set of forecast"]
+        },
+        "colormap_statistic": {
+            "optional": true,
+            "unique": true,
+            "help": ["the statistic to use to color the colormap associated to the bars in the plot"]
+        },
+        "date": {
+            "type":"int",
+            "optional": true,
+            "help": ["A list of dates. The convenience function in <semperpy.core.date.Dates> can ","generate lists of dates from an interval and an increment"]
+        },
+        "domain_name": {
+            "alias": ["domain"],
+            "optional": true,
+            "validate": ["ValidateDomains","semperpy"],
+            "help": ["Pre-defined geographical areas or domains: {domainList(semperpy)}"]
+        },
+        "variable": {
+            "alias": ["param"],
+            "optional": true
+        },
+        "step": {
+            "alias": ["timestep","lead"],
+            "optional": true,
+            "type": "int"
+        },
+        "origin": {
+            "unique": true,
+            "default_value":"gmao"
+        },
+        "forecast": {
+            "unique": true,
+            "default_value":"gmao"
+        },
+        "verify": {
+            "unique": true,
+            "default_value":"gmao"
+        },
+        "level": {
+            "alias": "channel",
+            "type":"float",
+            "optional": true,
+            "ignore_type_errors": true,
+            "help": ["The pressure level for upper air observations, 0 for surface,","or the channel number for satellite data, hence the alias <channel>. If 'all' is specified, the official list of pressure levels or channels for the kx-kt observations being processed are used."]
+        },
+        "levtype": {
+            "alias": "leveltype",
+            "optional": true,
+            "unique": true
+        },
+        "type": {
+			"validate": ["ValidateChoice","an","fc"],
+            "default_value": "fc",
+            "unique": true
+        },
+        "database": {
+            "default_value": "scores",
+            "unique": true
+        },
+        "datefile": {
+            "unique": true,
+            "optional": true
+        },
+        "storage": {
+            "unique": true,
+            "default_value": "dbreader"
+        },
+        "_columns": {
+            "default_value": ["level","statistic","date","step","value","count"]
+        }
+    }
+}

@@ -1,0 +1,33 @@
+[dependencies]
+target = value
+stats = domain
+value = stats
+
+[tables]
+r_domain = north,west,south,east,domain_name
+w_domain = north,west,south,east,domain_name
+r_stats = level,levtype,expver,source,forecast,verify,statistic,type,variable
+w_stats = level,levtype,expver,source,forecast,verify,statistic,type,variable,domain_id
+r_value = date,step,value,count
+w_value = date,step,value,count,stats_id
+d_value = date,step,stats_id
+
+[types]
+count = float
+date = int
+domain_name = str
+east = float
+expver = str
+forecast = str
+level = float
+levtype = str
+north = float
+variable = str
+source = str
+south = float
+statistic = str
+step = int
+type = str
+value = float
+verify = str
+west = float

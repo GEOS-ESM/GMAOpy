@@ -1,0 +1,16 @@
+:mod:`services` --- Client-Server utilities
+===========================================
+
+.. module:: services
+   :synopsis: Utilities to implement client-server applications
+
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Contents:
+*********
+
+.. toctree::
+   :maxdepth: 3
+
+   introduction
+   services

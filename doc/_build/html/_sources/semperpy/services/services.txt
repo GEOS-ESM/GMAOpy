@@ -1,0 +1,16 @@
+:mod:`The Services module` --- Client-Server tools
+==================================================
+
+.. module:: services
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. toctree::
+   :maxdepth: 2
+
+   server
+   response
+   responses
+   html
+   service

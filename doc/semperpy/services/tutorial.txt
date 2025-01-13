@@ -1,0 +1,188 @@
+Services - client-server communication
+**************************************
+
+    We are going to see a simple example of how to implement a server and a client talking to each other. We
+    will then move on a more elaborated application. Since these examples are more elaborated, we will try and
+    make use of more and more tools available in SemperPy, we will also show how the :mod:'Language' module
+    which is useful in that case.
+
+A calculator service
+---------------------
+
+.. _services_calculator:
+
+    We implement a server which offer a calculator service: it is able to compute +,- and to return 
+    the result. The request is expected in the following format::
+
+    	{
+    		operator = '+',
+    		arguments = [2,3,4]
+    	}
+
+    For the sum any number of arguments is handled, for the substraction, only two parameters are accepted. 
+    The result is returned to the client as::
+
+    	9
+
+Server
+^^^^^^
+
+    This operation is very fast, we can implement a server which computes the result and returns it straight away.
+    The server side of the application looks like this (:download:`Server 1<server1.py>`)
+
+    .. literalinclude:: server1.py
+    	:language: python
+    	:linenos:
+
+    Let's take a look at the code:
+
+    * **line 20**: we register a service called *calculate* instructing the server to execute the function *calculate* whenever a request is sent.
+    * **line 21**: we instantiate a server
+    * **line 22**: we run the server on port 8880, let's assume the host is called *localhost*. This means that clients can access the service through http as follows: http://localhost:8880/calculate.
+
+    If you use a web browser and try the url: http://localhost:8880/calculate, a default message is displayed:
+
+    .. image:: default_get.tiff
+
+    If you take a look a the url: http://localhost:8880/:
+
+    .. image:: server_get.tiff
+
+    Basic information is provided through the http protocol and the GET request to enable minimum momitoring
+    from a web browser. However, this is kept to a minimum to avoid decreasing the performance of the server.
+    As we will see later, more information can be provided and this can easily be defined by the user
+    of the :mod:`Services` module. The tools are not at all intended to replace proper web application frameworks 
+    such as django (http://www.djangoproject.com/) which are designed for developing fully featured web applications.
+
+Client
+^^^^^^
+
+    The client is very trivial to write, at least in a first instance (:download:`Client 1<client1.py>`):
+
+    .. literalinclude:: client1.py
+    	:language: python
+
+    When we execute the client program we get::
+
+    	23
+
+    this seems about right.
+
+    The Client class encodes the request (or *directive*) into json (http://www.json.org/) and uses
+    an http POST request to submit the data to the server. A POST request is always used to submit
+    requests to services.
+
+Discussion
+^^^^^^^^^^
+
+    Exceptions raised by the server stop the execution of the service being ran and the
+    error message is sent back to the client. The Client class raises a :class:`Services.Client.ServerError` exception with the message received from the server. If we try (substraction with 3 parameters):
+
+    .. literalinclude:: client11.py
+    	:language: python
+
+    we obtain::
+
+    	Traceback (most recent call last):
+    	  File "client11.py", line 4, in <module>
+    		print client.execute({'operator': '-', 'arguments': [12,8,3]})
+    	  File "/Users/claudegibert/unix/dev/p4/semperpy/Services/Client.py", line 28, in execute
+    		raise ServerError(value['data'])
+    	Services.Client.ServerError: [Failure instance: Traceback: <class 'Services.Errors.ServiceError'>: only two arguments are accepted for the difference
+    	/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/Twisted-10.0.0-py2.6-macosx-10.3-fat.egg/twisted/python/threadpool.py:210:_worker
+    	/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/Twisted-10.0.0-py2.6-macosx-10.3-fat.egg/twisted/python/context.py:59:callWithContext
+    	/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/Twisted-10.0.0-py2.6-macosx-10.3-fat.egg/twisted/python/context.py:37:callWithContext
+    	/Users/claudegibert/unix/dev/p4/semperpy/Services/Responses.py:39:execute
+    	--- <exception caught here> ---
+    	/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/Twisted-10.0.0-py2.6-macosx-10.3-fat.egg/twisted/internet/defer.py:117:maybeDeferred
+    	server1.py:16:calculate
+    	server1.py:9:diff
+
+    This is a bit more output than we would like, but it is inserted by *twisted*.
+
+    By default, the server we creates uses a mode in which it does not block but executes the code
+    for the service in a different thread. The client is kept waiting for a response with the 
+    connection opened for as long as it takes. The server goes back to accepting connections
+    immediately.
+
+    It is quite trivial to write a client-server interaction using these tools. The difficulty
+    lies in fact in making sure that the data which is communicated between the client and 
+    the server is correct. Instead of checking on the server side that everything which is
+    received is correct, it would be better to check all this at client level:
+
+    * so that no invalid requests are sent through the network, wasting bandwith and resources
+    * so that the server does not fail after a long processing of data because of it is invalid,
+    * so that the server which is supposed to do complicated things can be simplified by relying on validated data
+
+    The :mod:`Language` module should enable us to do this in a parameterised way.
+
+Validation on the client-side
+-----------------------------
+
+    The first thing to do is to define a language which will validate the request the 
+    client sends to the server. This is quite simple, the language should look
+    like this (:download:`calculate<calculate.json>`):
+
+    .. literalinclude:: calculate.json
+    	:language: python
+
+    The client becomes (:download:`Client 2<client2.py>`):
+
+    .. literalinclude:: client2.py
+    	:language: python
+    	:linenos:
+
+    :note: lines 5 to 14 should not be part of the client, but rather part of utilities for the language. These are shown here for completeness.
+
+    The server can be simplified to (:download:`Server 2<server2.py>`):
+
+    .. literalinclude:: server2.py
+    	:language: python
+
+    The server now has the guarantee that only the operators '+' and '-' will
+    be sent and that if '-' is used, 2 and only 2 arguments will be sent.
+    No checking is required in that respect, this, obviously, does not 
+    prevent the server from checking other possible problems.
+
+Serving services and pages
+--------------------------
+
+Services
+^^^^^^^^
+
+    You can register as many services as you wish, the limit being how much memory is required
+    and how much the hardware can take. Services can be installed in a hierarchy, this can 
+    sometimes be useful to present meaningful urls to the user:
+
+    	Server.registerService("retrieve",retrieve_func)
+    	Server.registerService(["retrieve","help"],help_func)
+    	Server.registerService(["retrieve","status"],status_func)
+
+    The family of services are grouped under the main name *retrieve* and can be accessed as follows:
+
+    	* host:port:/retrieve
+    	* host:post:/retrieve/help
+    	* host:post/retrieve/status
+
+    This grouping is offered just to offer a family of urls to the user if it makes the services easier to
+    understand, otherwise the different services can be regsitered separately. 
+    is currently
+
+Pages
+^^^^^
+
+    **HTML** pages can be served for different urls related to services. As we saw at the beginning of this
+    tutorial, default pages are provided for a server or a service just to help with debugging and
+    monitoring the system. The user can however register handlers at particular urls to provide information
+    about the system. Once again, this is provided for *debugging* and *monitoring* purposes,
+    this is not intended to be used for web applications. Let's see an example (::download`Pages 1<page1.py>`):
+
+    .. literalinclude:: page1.py
+    	:language: python
+
+    The web browser at url http://localhost:8880/calculate displays:
+
+    .. image:: page1.tiff
+
+    A few utilities are available to help with displaying pages, including a very basic templating
+    system. Please see the :mod:`Services` module for more information.

@@ -1,0 +1,38 @@
+{
+	"directive": "score",
+	"keywords" : {
+		"forecast": {
+			"unique": true,
+            "alias": ["fc"]
+		},
+		"reference": {
+			"unique": true,
+            "alias": ["ref"],
+            "optional":true
+		},
+		"persistence": {
+			"unique": true,
+            "alias": ["per"],
+            "optional":true
+		},
+        "todo": {
+            "alias":["todolist"]
+        },
+        "output_file": {
+            "unique": true,
+            "default_value": "data.txt"
+        },
+        "_forecast_default_class": {
+            "default_value": "forecast",
+            "unique": true
+        },
+        "_reference_default_class": {
+            "default_value": "analysis",
+            "unique": true
+        },
+        "_persistence_default_class": {
+            "default_value": "persistence",
+            "unique": true
+        }
+	}
+}

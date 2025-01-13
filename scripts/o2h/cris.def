@@ -1,0 +1,25 @@
+[cris-fsr_npp]    
+kx = 940
+kt=40
+
+[cris_npp]        
+kx = 950
+kt=40
+
+[cris-fsr_n20]   
+kx =  960
+kt=40
+
+[cris-fsr_n21]    
+kx = 961
+kt=40
+
+#(MERRA-2 only, Will's remapped CrIS-FSR data)
+[cris_n20]        
+kx = 970 
+kt=40
+
+# (MERRA-2 only, Will's remapped CrIS-FSR data)
+[cris_n21]        
+kx = 971  
+kt=40

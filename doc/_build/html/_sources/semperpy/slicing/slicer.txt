@@ -1,0 +1,64 @@
+:mod:`The Slice class` --- Slicing netCDF variables and arrays
+==============================================================
+
+.. module:: slicer.slicer
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: Slicer(object)
+
+Public methods
+--------------
+
+    .. method:: Slicer(dimensions):
+
+    	:param dimensions: the objects which will handle each of the dimensions of the array(s) to slice
+    	:type dimensions: a list of class instances derived from :class:`slicing.dimensions.dimensions, the same number as the shape of the array(s) to slice.`
+
+
+    .. method:: __call__(variable,directive,visitor,verbose=0,**kargs):
+
+        :param variable: the array to be sliced
+        :type variable: a numpy array or any object being able to be sliced
+        :param directive: contains entries with the same name as the dimensions, specifying how to slice the array
+        :type directive: dictionary
+        :param visitor: will be called repeatedly as the variable is sliced.
+        :type visitor: object implementing the right methods
+        :param verbose: sets the level of output during the operations
+        :type verbose: int
+        :param kargs: any parameters you want to be sent down to the visitor
+
+        This method does all the work of calling the dimension objects and slicing
+        along all the dimensions. The visitor should have the following methods (please
+        see for example :class:`slicing.slice2array.Slice2Array` and :class:`slicing.slice2list.Slice2List`)::
+
+            def __call__(self,dimensions,variable,src,dst,meta,is_interval,**kargs):
+                # called for each slice to copy from source to destination
+                # dimensions: list of string giving the dimension names
+                # variable: the array being sliced
+                # src: list of slices to use from the variable
+                # dst: list of slices to use to the destination array
+                # meta: a dictionary representing the metadata taken from the directive (e.g. date=list of dates, levels = list of level) once intervals have been resolved
+                # is_interval: an array of booleans stating whether the successive dimensions are
+                    discrete values or intervals
+
+            def preProcess(self,dimensions,variable,shape,slices,metadata):
+               # called once right before __call__ is called for possible initialisations
+               # dimensions: a list of dimension-derived class intances
+               # variable: the array to be sliced
+               # shape: the shape of the array to be sliced
+               # slices: the list of slices which will be applied
+               # metadata: see above
+
+            def postProcess(self,dimensions,variable,shape,slices,metadata):
+              # called once right before the slicing is done
+              # the parameters are identical to the preProcess method
+
+Private methods
+---------------
+
+    .. method:: slice(dimensions,variable,slices,metadata,is_interval,visitor,index = 0,src=[],dst=[],meta=[],**kargs):
+
+        This method is the recursive method which does all the slicing work. Please see the
+        source for details.

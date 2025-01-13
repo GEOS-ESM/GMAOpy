@@ -1,0 +1,37 @@
+[timeseriesplot]
+combinable = domain_name,statistic,variable,level,step
+index_columns = date
+title = GEOS-5 Time Series <expver>, <date_interval> <step>,<domain_name> <level> <variable>,<name>,<statistic>
+legend = <expver> <level> <domain_name> <statistic> <step>
+xtitle = 
+ytitle = <statistic> <unit>
+colorbartitle = <statistic> <unit>
+
+[meanplot]
+combinable = domain_name,statistic,variable,level
+index_columns = date,step
+draw_index_columns = step
+title = GEOS-5 Time Series <expver>, <date_interval>,<domain_name> <level> <variable>,<name>,<statistic>
+legend = <source> <level> <domain_name>
+xtitle = 
+ytitle = <statistic> <unit>
+colorbartitle = <statistic> <unit>
+
+[diffplot]
+combinable = domain_name,statistic,variable,level
+index_columns = date,step
+draw_index_columns = step
+title = GEOS-5 Time Series <expver>, <date_interval>,<domain_name> <level> <variable>,<name>,<statistic>
+legend = <source> <level> <domain_name>
+xtitle = 
+ytitle = <statistic> <unit>
+colorbartitle = <statistic> <unit>
+
+[verticalxsection]
+combinable = domain_name,statistic,variable,step
+index_columns = level
+title = GEOS-5 Vertical XSection <variable>,<date_interval>,<expver> <domain_name>,<statistic>
+legend = <expver> <variable> <domain_name> <variable> <statistic>
+xtitle = <type> <variable> <unit>
+ytitle = <levtype>
+colorbartitle =

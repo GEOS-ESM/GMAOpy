@@ -1,0 +1,33 @@
+{
+	"directive": "commenttext",
+    "doc": true,
+    "inherit_from": "comment",
+	"keywords" : {
+        "x": {
+            "unique": true,
+            "type": "float",
+            "default_value": 0.0
+        },
+        "y": {
+            "unique": true,
+            "type": "float",
+            "default_value": 0.0
+        },
+        "text": {
+            "unique": true
+        },
+        "coords": {
+            "unique": true,
+            "default_value": "data"
+        },
+        "rotation": {
+            "unique": true,
+            "default_value": 0
+        },
+        "font": {
+            "default_value": "",
+            "type": "plotfont",
+            "unique": true
+        }
+	}
+}

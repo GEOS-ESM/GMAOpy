@@ -1,0 +1,21 @@
+{
+	"directive": "slice",
+	"keywords" : {
+		"parameter": {
+			"alias": ["param","var"]
+		},
+		"level": {
+			"alias": ["lev","levels"],
+			"type": "float",
+            "default_value": 0
+		},
+        "latitude": {
+            "alias": ["lat","lats","latitudes"],
+            "optional": true
+        },
+        "longitude": {
+            "alias": ["lon","lons","longitudes"],
+            "optional": true
+        }
+	}	
+}

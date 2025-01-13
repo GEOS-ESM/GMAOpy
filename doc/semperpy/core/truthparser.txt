@@ -1,0 +1,121 @@
+:mod:`truthparser` --- Parsing Boolean expressions
+====================================================
+
+.. module:: core.truthparser
+   :synopsis: A parser and computation engine for boolean expressions
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+The TruthParser class
+----------------------
+
+.. class:: TruthParser(dict)
+
+    The TruthParser analyses boolean expressions in the form: "**a == 1 and b < 3 or c == 0**".
+    If then builds a tree from the reverse polish notation of the expresion, loading each
+    node and leaf with user-defined object instances. It is then able to "execute" the 
+    tree to let the user's objects do their job.
+
+    The TruthParser uses pyparser Python module (http://pyparsing.wikispaces.com/) and handles
+    comparison operator and logical operators: **==, !=, <, <=, >, >=** together with **and** and **or**.
+    It is quite simple and crude and could be improved greatly particularly for handling
+    user's syntax errors, but it does the job it was required to do. It can be improved
+    later.
+
+    Some sort of abstraction has been put into developping the parser, it could be used
+    for most applications which require truth parsing. The user of this class should implement
+    a class with the following methods (what is the token parsed in the expression):
+
+        * createLogical(self,what): returns an object instance to deal with **x and y** or **x or y**
+        * createComparison(self,what) returns an object instance to deal with operator **==, !=, <, <=, >, >=**
+        * createVariable(self,what) returns an object instance to deal with variables defines in the expression, basically any string which is not a number or an operator
+        * createValue(self,what) returns an object instance to deal with hardcoded floating point values which are part of the expression.
+
+    The TruthParser class provides default behaviour for nodes holding a logical (and, or),
+    a comparison (<,>,== etc...) and a value (literal floating point value). Nothing can be supplied
+    by default for Variable.
+
+    Once the tree representing the expression is built, it is executed to produce a result. The 
+    following object methods are called during the process:
+
+        * Object created by createLogical: __call__(self,a,b) returns the result of the logical operation between a and b (or whatever they contain)
+        * Object created by createComparison: __call__(self,a,b) returns the result of the comparison of a and b
+        * Object created by createVariable: __call__(self) returns the value of the variable in the expression
+        * Object created by createValue: __call__(self) returns the value.
+
+    .. method:: parse(expression,creator)
+
+    	:param expression: the text expression to be parsed.
+        :type expression: string
+    	:param creator: called with one parameter, the token found, should return an object instance to be stored in a node.
+        :type creator: an object instance with the necessary methods see introduction
+
+        Parses the text, creates the expression tree and executes it calling the objects provided
+        by the creator (please see introduction).
+
+    .. method:: build(x,creator)
+
+        Builds the expression tree, *called internally*.
+
+    .. method:: execute(tree)
+
+        Executes the tree by calling the object instances, *called internally*.
+        
+TruthParser Examples
+---------------------
+        
+    Here is a simple example:
+
+        .. literalinclude:: parse1.py
+            :language: python
+    
+    This is what the TruthParser can do by default, nice but it doesn't take
+    us very far. Let's slighly improve it:
+
+        .. literalinclude:: parse2.py
+            :language: python
+
+    This is slightly more useful if we know the expression in advance and the value
+    of the variables at run time only. The TruthParser was designed for an application
+    a little more sophisticated, the calculation of masks. This example shows how to compute
+    a mask on arrays according to an expression:
+
+        .. literalinclude:: parse3.py
+            :language: python
+
+    The program produces the output::
+
+        [False False False False False False False False False False False False
+         False False False False False False False False False False False False
+         False False False False False False False False False False False False
+         False False False False False False False False False False False False
+         False  True False False False False False False False False False False <-
+         False False False False False False False False False False False False
+         False False False False False False False False False False False False
+         False False False False False False False False False False False False
+         False False False False]
+        [ True  True  True  True  True  True  True  True  True  True  True  True <-
+          True  True  True  True  True  True  True  True  True  True  True  True <-
+          True  True  True  True  True  True  True  True  True  True  True  True <-
+          True  True  True  True  True  True  True  True  True  True  True  True <-
+          True  True False False False False False False False False False False <-
+         False False False False False False False False False False False False
+         False False False False False False False False False False False False
+         False False False False False False False False False False False False
+         False False False False]
+        (50,)
+        [ 74.81871765  51.32676716  80.04210581  44.91719832  91.08454225
+          79.85584726  41.72192775  83.58348206  15.76761108  28.59978859
+          62.13575457  60.91221397  50.9117611   24.52117651  83.9582438
+          66.06572606  14.7983316   62.25920367  10.28110361  35.65820036
+          32.09910369  38.49067582  24.58884459   5.61183983  73.55411382
+          11.84061137  78.59969057  94.35803136  53.61091119  55.52293499
+          15.16219035  10.34310616  42.76413067  32.72124625  91.36094832
+           9.59616351  14.48611709  72.42349225  90.82700306  10.03005652
+          45.08080076  11.23162564  82.12659091   5.65627268  95.54599445
+          36.45911579  32.76919863   7.9673354   33.95351563  23.11777119]
+
+    A full working example is implemented in :class: `observations.odsreader` 
+    using netcdf files. Masks are calculated on arrays containing metadata,
+    the mask is then used to read selected observations.

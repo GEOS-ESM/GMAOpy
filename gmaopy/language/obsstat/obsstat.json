@@ -1,0 +1,77 @@
+{
+	"directive": "obsstat",
+    "inherit_from": "obsidentifier",
+    "doc": true,
+    "help": ["<obbstat> is a directive used to initiate the computation of statistics","from the original ODS files"],
+	"keywords" : {
+        "collection": {
+            "remove": true
+        },
+        "source": {
+            "optional": false
+        },
+        "variable": {
+            "remove": true
+        },
+        "statistic": {
+            "optional": true
+        },
+        "observation": {
+            "alias":["observations","obs"],
+            "optional": true,
+            "help": ["one or more <observation> directives, these are used to specify","which observations should be used for computing statistics"]
+        },
+        "storage": {
+            "alias": "store",
+            "default_value": "dbstorer",
+            "help": ["the name of a storage class to store the statistics, by default the","statistics are saved in an SQL database, to store the statistics","in a file, specify: storage = 'filestorer' with output_file = 'filename'"]
+        },
+        "database": {
+            "alias": "output_file",
+            "unique": true,
+            "default_value": "test_obs",
+            "help": ["this is the name of the database to store the data into. This is not an arbitrary","name, it should be given to you by the administrator of gmaopy who will","have setup that database and given you the necessary credentials"]
+        },
+        "overwrite": {
+            "unique": true,
+            "default_value": false,
+            "help": ["if the statistics being computed are already present in the database,","when setting this keyword to False, the application will fail and preserve","what is in the database. When True, any data already present","will be overwritten. Be careful when using that option."]
+        },
+        "ignore_missing_files": {
+            "alias": "ignore_missing",
+            "default_value": false,
+            "unique": true,
+            "help": ["When accessing ODS files, if a file is missing, the application","can either fail and report the error, or ignore","the problem and carry on"]
+        },
+        "output_expver": {
+			"alias": ["output_experiment_id","output_expid"],
+			"unique": true,
+            "lowercase": false,
+            "optional": true
+        },
+        "staging_rate": {
+            "unique": true,
+            "default_value": "hourly",
+            "lowercase": false
+        },
+        "root_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "tree_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "file_tmpl": {
+            "optional": true,
+            "unique": true,
+            "lowercase": false
+        },
+        "archive_type": {
+            "optional": true,
+            "unique": true
+        }
+	}
+}

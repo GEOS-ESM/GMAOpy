@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>directives — Application directives &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Reference" href="../reference.html" />
+    <link rel="next" title="axis" href="axis.html" />
+    <link rel="prev" title="The Statistics class" href="../stats/statistics.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="axis.html" title="axis"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../stats/statistics.html" title="The Statistics class"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" accesskey="U">Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-directives">
+<span id="directives-application-directives"></span><h1><a class="reference internal" href="#module-directives" title="directives"><tt class="xref py py-mod docutils literal"><span class="pre">directives</span></tt></a> &#8212; Application directives<a class="headerlink" href="#module-directives" title="Permalink to this headline">¶</a></h1>
+<p><em>Module author: Claude Gibert &lt;<a class="reference external" href="mailto:claude&#46;gibert&#37;&#52;&#48;synopticview&#46;co&#46;uk">claude<span>&#46;</span>gibert<span>&#64;</span>synopticview<span>&#46;</span>co<span>&#46;</span>uk</a>&gt;</em></p>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="axis.html">axis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bar.html">bar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boundary.html">boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boxedline.html">boxedline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="channelplot.html">channelplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coastlines.html">coastlines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colormap.html">colormap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commentexpver.html">commentexpver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commentline.html">commentline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commenttext.html">commenttext</a></li>
+<li class="toctree-l1"><a class="reference internal" href="continents.html">continents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="countries.html">countries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coverageplot.html">coverageplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="curve.html">curve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dbdump.html">dbdump</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diffplot.html">diffplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="document.html">document</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fieldplot.html">fieldplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodata.html">geodata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="geography.html">geography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphics.html">graphics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="levelplot.html">levelplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meanplot.html">meanplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meridians.html">meridians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="obsdata.html">obsdata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="observation.html">observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="obsstat.html">obsstat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="obsuncertaintyplot.html">obsuncertaintyplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="odscounter.html">odscounter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="odsdata.html">odsdata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="odslevelplot.html">odslevelplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="odssummaryplot.html">odssummaryplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallels.html">parallels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotfont.html">plotfont</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotlegend.html">plotlegend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proddata.html">proddata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proddata.html">proddata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prodstat.html">prodstat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rivers.html">rivers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scatterplot.html">scatterplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scoredata.html">scoredata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="significance.html">significance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="states.html">states</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summaryplot.html">summaryplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="symbol.html">symbol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textloader.html">textloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseriesplot.html">timeseriesplot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verticalxsection.html">verticalxsection</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">directives</span></tt> &#8212; Application directives</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../stats/statistics.html"
+                        title="previous chapter">The Statistics class</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="axis.html"
+                        title="next chapter">axis</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/directives/directives.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="axis.html" title="axis"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../stats/statistics.html" title="The Statistics class"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../reference.html" >Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

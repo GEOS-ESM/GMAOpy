@@ -1,0 +1,32 @@
+:mod:`The Service class` 
+========================
+
+.. module:: services.service
+
+.. class:: Service(object)
+
+    The **Service** class is not intended to be used by the user directly in normal
+    circumstances. It subclasses twisted.web.resource to handle connnection requests.
+
+Private definition
+------------------
+
+    .. method:: Service(name,services,pages,response)
+
+    	:param name: name of the service
+    	:type name: string
+    	:param services: hierarchical dictionary containing the registration of different names and assciated actions for services.
+    	:param pages: hierarchical dictionary containing the registration of different names and assciated actions for serving pages.
+    	:response: instance of the class handling the required type of response.
+
+    .. method:: render_POST(request)
+    .. method:: render_GET(request)
+
+    	These methods implement the twisted required methods to handle respectively POST and
+    	GET requests. Besides handling the right response type (defined when creating
+    	a :class:`Services.Server.Server` object), it handles data decoding and errors.
+    	
+    .. method:: find_handler(postpath,handlers):
+    	
+    	Works recursively to find the right handler (if defined) for the current url.
+

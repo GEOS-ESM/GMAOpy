@@ -1,0 +1,50 @@
+:mod:`The Slice to List Visitor` --- Slicing into a collection of multi-dimensional arrays
+==========================================================================================
+
+.. module:: slicer.slice2list
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+.. class:: Slice2List(object)
+
+Methods
+-------
+
+    .. method:: Slice2List(visitor):
+
+    	:param visitor: a visitor to handle the creation of arrays.
+
+        Slice2List create a discrete list of n dimensional arrays (e.g. a list of vertical slices or a list of horizontal fields) with their associated metadata. The visitor should provided 
+        the following interface::
+
+            def __call__(self,slices,metadata,**kargs):
+                # slices: a list of one slice (exceptionally 2) to extract from the source array
+                # metadata: metadata regarding the dimensions of the array
+                # kargs: metadata extracted from the original directive passed to the slicer
+
+            def preProcess(self,dimensions,source,shape,slices,metadata):
+                # see :class:`slicer.slicer.Slicer`
+
+            def postProcess(self,dimensions,source,shape,slices,metadata):
+                # see :class:`slicer.slicer.Slicer`
+
+            def fieldSet(self,new = None):
+                # should return a collection of created fields / arrays.
+
+    .. method:: __call__(dimensions,variable,src,dst,meta,is_interval,**kargs):
+
+        The parameters are described in :class:`slicer.slicer.Slicer`. Copies slices of
+        *variable* into a newly create array.
+
+    .. method:: preProcess(dimensions,variable,shape,slices,metadata):
+
+        calls the visitor's preProcess method.
+
+    .. method:: postProcess(dimensions,variable,shape,slices,metadata):
+    
+        calls the visitor's postProcess method.
+
+    .. method:: fieldset():
+
+        returns the generated :class:`fields.fieldset.FieldSet`.

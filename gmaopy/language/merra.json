@@ -1,0 +1,49 @@
+{
+	"directive": "merra",
+    "specialize_from": {
+        "source == 'odas'": "odas"
+    },
+	"keywords" : {
+        "source": {
+			"unique": true,
+            "default_value": "oper"
+        },
+		"date": {
+			"alias": ["dates","time"],
+			"optional": true
+		},
+		"step": {
+			"alias": ["steps","timestep","validtime","timesteps"],
+			"type": "int",
+			"default_value": 0
+		},
+		"expver": {
+			"alias": ["experiment_id","expid"],
+			"unique": true,
+            "default_value": "d540",
+            "lowercase": false
+		},
+        "dataset": {
+            "unique": true,
+            "default_value": "inst3d_met_p"
+        },
+		"type": {
+			"validate": ["ValidateChoice","fc","an","cl","ob","im"],
+			"unique": true,
+			"optional": true,
+            "help": " fc: forecast\n an: analysis\n cl: climatology\n ob: observation\n im: observation impact\n "
+		},
+        "dataset": {
+			"unique": true,
+			"optional": true,
+            "default_value": "MAI3CPASM",
+            "lowercase": false
+        },
+		"dimension": {
+			"alias": ["field_dimension"],
+			"validate": ["ValidateChoice","2d","3d"],
+			"unique": true,
+            "default_value": "3d"
+		}
+	}	
+}

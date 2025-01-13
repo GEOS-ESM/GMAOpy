@@ -1,0 +1,381 @@
+:mod:`tools` --- Micellaneous language tools
+============================================
+
+.. module:: core.tools
+   :synopsis: Different tools, some are clever some are just shortcuts.
+
+.. versionadded:: 0.1
+.. moduleauthor:: Claude Gibert <claude.gibert@synopticview.co.uk>
+
+Miscellaneous classes and functions
+-----------------------------------
+
+    The **tools** module offers different convenience classes and functions. It is probably
+    quicker to look at the source file to find out what things do.
+
+    .. function:: specialise(newclass)
+
+        :param newclass: The class to change to
+        :type newclass: any class
+        
+        Dynamically changes the current class of the object to newclass.
+
+    .. function:: classname()
+
+        returns the class name of the current object.
+
+    .. function:: classof()
+
+        returns the class object of the current object.    
+
+    .. function:: is_string(what)
+
+        returns True or False
+
+    .. function:: to_list(item)
+
+        :parameter item: any variable
+        :type item: any type
+
+        create a list out of a single element or returns it untouched if it is 
+        already a list ot a tuple.
+
+    .. function:: no_list(item) 
+
+        :parameter item: any variable
+        :type item: any type
+
+        returns the first element if it is a one element list or tuple. Raises ValueError if the list has more than one element.
+
+    .. function:: is_list(item)
+
+        :parameter item: any variable
+        :type item: any type
+
+        returns True or False
+
+    .. function:: is_tuple(item)
+
+        :parameter item: any variable
+        :type item: any type
+
+        returns True or False
+
+    .. function:: is_tuple_or_list(item)
+
+        :parameter item: any variable
+        :type item: any type
+
+        returns True or False
+
+    .. function:: is_dict(item)
+
+        :parameter item: any variable
+        :type item: any type
+
+        returns True or False
+
+    .. function:: to_lower(item)
+
+        :parameter item: any variable
+        :type item: any type
+
+        recursively converts any arbitrary stucture to lower case.
+        It is aware of strings tuples, lists and dictionary and converts
+        any string contained to lower case. For example::
+
+            a = [['Hello','World'],{'a':'HELLO','b':'world'},'SHOUT']
+            print to_lower(a)
+            [['hello', 'world'], {'a': 'hello', 'b': 'world'}, 'shout']
+
+    .. function:: float10Power(value)
+
+        returns the power of 10 of a float, postive or negative value
+
+    .. function:: floatFormat(power)
+
+        returns a Python type format using the power of 10 given as a parameter. Numbers
+        less than 10^-2 or more than 10^+2 are formatted using the exponant notation.
+
+    .. function:: apply_type(thisType,item)
+
+        :param thisType: a valid python class
+        :type thisType: any
+        :param item: any variable
+        :type item: any
+
+        builds an instance of 'thisType' initialised with item, or if item is
+        a list, builds a list of instances of 'thisType', for example::
+            
+            a = ['12','24','45','50']
+            print apply_type(int,a)
+            [12, 24, 45, 50]
+
+    .. function:: apply_type_deep(thisType,item)
+
+        :param thisType: a valid python class
+        :type thisType: any
+        :param item: any variable
+        :type item: any
+
+        recursively builds instances of 'thisType' in arbitrary stucture
+        with item going through lists and dictionaries (hence *deep*), for example::
+            
+            a = ['12','24','45',{'a':'12','b':13},'50']
+            print apply_type_deep(int,a)
+            [12, 24, 45, {'a': 12, 'b': 13}, 50]
+
+    .. function:: resolve_environment_variables(what)
+
+        :parameter what: contains text and possibly environment variable name in the form: ${VARIABLE}
+        :type what: string
+
+        This function looks in the shell environment and substitutes each variable name with its value:: 
+
+            s = "Map over ${DOMAIN}"
+
+    .. function:: substitute_variables(template,what)
+
+        :param template: containing the templated text
+        :type template: string
+        :param what: containing entries with the same name as the variables
+        :type what: dictionary
+
+        template is a string containing variable following the format:
+        "<var1> <var2> etc...". ::
+
+            template = "<type> for <valid>, parameter <parameter>, level <level>"
+            what = dict(
+                type = 'forecast',
+                valid = 2010121500,
+                parameter = 't',
+                level = 500
+            )
+            print substitute_variables(template,what)
+            forecast for 2010121500, parameter t, level 500
+
+        This is a convenience function, it first calls the function find_variables
+        and then the function substitute_variable_list.
+
+    .. function:: find_variables(template)
+
+        :param template: containing the templated text
+        :type template: string
+
+        Returns the list of variable names contained in the string template please see 
+        :func:`substitute_variables` above.
+
+    .. function:: substitute_variable_list(variables,template,what)
+
+        :param variables: the list of variables to be substituted in the template, typically returned by the function find_variables
+        :type variables: list of strings
+        :param template: containing the templated text
+        :type template: string
+        :param what: containing entries with the same name as the variables
+        :type what: dictionary
+
+        Please see :func:`substitute_variables` above. 
+
+    .. function:: substitute_unix_dates(template,name1,thedate1,...,nameN,thedateN)
+
+        :param template: containing the templated text
+        :type template: string
+        :param name: used in the template for the date following, these work in pairs
+        :type name: string
+        :param thedate: to be formatatted and use for the substitution
+        :type thedate: :class:`core.date.Date`
+
+        template is a string containing dates expressed as: name(strftime-format)
+        where: name is here the string preceding the (format), e.g. date(%d).
+        The format complies with the Unix format for the function strftime::
+
+            template = "forecast/Ydate(%Y)/Mdate(%m)/Ddate(%d)/Hdate(%H)/date(%Y%m%d_%Hz)+valid(%Y%m%d_%H%Mz).hdf
+            a = substitute_unix_dates(template,'date',Date(2010010100))
+            print substitute_unix_dates(template,'valid',Date(2010010212))
+            forecast/Y2010/M10/D01/H00/20100101_00z+20100102_1200z
+
+        Please note that for convenience in configuration files (see :class:`core.configfile.ConfigFile`),
+        the format can also be expressed using the character '@' instead of '%'.
+
+    .. function:: substitute_unix_calculated_dates(template,date,keyword = 'date')
+
+        :param template: containing the templated text
+        :type template: string
+        :param date: a date
+        :type date: :class:`core.date.Date`
+        :param keyword: the name of the variable in the template, see below
+        :type keyword: string
+
+        This function is similar to :func:`substitute_unix_dates`, it substitutes dates
+        formatted as strftime-format, but dates can include simple calculations::
+
+            s = 'date(@Y@m@d_@H@Mz)-date+12(@Y@m@d_@H@Mz)-date-12(@Y@m@d_@H@Mz)'
+            date = Date(2011020100)
+            print substitute_unix_calculated_dates(s,date)
+              -> 20110201_0000z-20110201_1200z-20110131_1200z
+
+        The calculations depend on the unit of the date::
+
+            s = 'date(@Y@m@d_@H@Mz)-date+12(@Y@m@d_@H@Mz)-date-12(@Y@m@d_@H@Mz)'
+            date = Date(20110201)
+            print substitute_unix_calculated_dates(s,date)
+              -> 20110201_0000z-20110213_0000z-20110120_0000z
+
+        Finally, you can combine the use of this function with :func:`subtitute_variables`
+        to express the calculation in terms of variables part of a dictionary (please also
+        note the use of the **keyword** parameter)::
+
+            d = dict(step=12)
+            s = 'time(@Y@m@d_@H@Mz)-time+<step>(@Y@m@d_@H@Mz)-time-<step>(@Y@m@d_@H@Mz)'
+            s = substitute_variables(s,d)
+            date = Date(2011020100)
+            print substitute_unix_calculated_dates(s,date,keyword='time') 
+              -> 20110201_0000z-20110213_0000z-20110120_0000z
+
+        Please note that for convenience in configuration files (see :class:`core.configfile.ConfigFile`),
+        the format can also be expressed using the character '@' instead of '%'.
+
+    .. class:: dictionary(object)
+
+        inherits from the built-in dict and redefines the __str__ method to improve
+        the display of the dictionary, particularly with nested dictionaries.
+
+    .. class:: nocasedict(dictionary)
+
+        inherits from dictionary but also convert the dictionary keys to lower case
+        when reading and writing.
+
+    .. function:: mergedicts_overwrite(a,b)
+        
+        return a new dictionary after merging dictionaries a and b. If a and b have some common
+        keys, b's values are kept.
+
+    .. function:: mergedicts_keep(a,b)
+
+        return a new dictionary after merging dictionaries a and b. If a and b have some common
+        keys, a's values are kept.
+
+    .. class:: ErrorCreator(object)
+
+        This is a small utility to help keep code readable when dealing with errors. Sometimes,
+        when we detect an error, we want to continue and report the error later or report
+        a list of errors instead just one, which saves time when debugging. This is what this
+        class does.
+
+        .. method:: __init__(exception,title = ''):
+            
+            :param exception: the class of the exception to raise
+            :param title: a general title to be displayed is the exception is raised
+
+        .. method:: __call__(message)
+            
+            Appends the message to the list of messages to display.
+
+        .. method:: check()
+
+            If no messages have been added through the __call__ method, nothing happens, 
+            otherwise, an exception of the class given in the constructor is raised, initialised
+            with all messages added through the __call__  method separated by a new line.
+
+    .. function:: distribute(values)
+
+        recursively distributes all values contained in values, in other terms, generates all the possible combinations.
+        The parameter values is expected to be a list of any type of element, combinations will be generated if some of these 
+        elements are lists::
+
+            a = [1,2,3,4]
+            print distribute(a)
+             [[1, 2, 3, 4]]
+            a = [1,2,3,[4,5]]
+            print distribute(a)
+             [[1, 2, 3, 4], [1, 2, 3, 5]]
+            a = [1,[2,3],[4,5],[6,7]]
+            print distribute(a)
+             [[1, 2, 4, 6], [1, 2, 4, 7], [1, 2, 5, 6], [1, 2, 5, 7], [1, 3, 4, 6], [1, 3, 4, 7], [1, 3, 5, 6], [1, 3, 5, 7]]
+            [[1, 2, 3, 4], [1, 2, 3, 5]]
+
+    .. function:: nestedLoops(directive,keywords,action = None,\*\*kargs)
+
+        :param directive: A dictionary containing keywords. Some keywords are lists, this function executes nested loops given by the keyword **keywords** and generates as many dictionaries as combinations
+        :type directive: dict
+        :param keywords: list of keywords, the number of items in the list determines the number of nested loops
+        :type keywords: list
+        :parameter action: a function to be called for each dictionary generated.
+        :type action: callable
+
+        This function executes nested loops given by the keyword **keywords** and generates as many dictionaries as combinations. If an action is passed, it is called for each combination. The function also returns the list all of combinations. Extra parameters can be passed to the action through \*\*kargs::
+
+            d = dictionary(
+                direction = ['north','south','west','east'],
+                speed = [50,100,150],
+                vehicule = ['boat','car'],
+                expver = 0001,
+            )
+            print nestedLoops(d,['direction','speed','vehicule'])
+
+            [{'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}, {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}]
+
+            def visitor(directive,current):
+                print current
+            print nestedLoops(d,['direction','speed','vehicule'],visitor) 
+
+            {'direction': 'north', 'speed': 50, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'north', 'speed': 50, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'north', 'speed': 100, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'north', 'speed': 100, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'north', 'speed': 150, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'north', 'speed': 150, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'south', 'speed': 50, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'south', 'speed': 50, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'south', 'speed': 100, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'south', 'speed': 100, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'south', 'speed': 150, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'south', 'speed': 150, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'west', 'speed': 50, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'west', 'speed': 50, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'west', 'speed': 100, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'west', 'speed': 100, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'west', 'speed': 150, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'west', 'speed': 150, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'east', 'speed': 50, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'east', 'speed': 50, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'east', 'speed': 100, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'east', 'speed': 100, 'expver': 1, 'vehicule': 'car'}
+            {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'boat'}
+            {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': 'car'}
+
+            nestedLoops(d,['direction','speed'],visitor)
+
+            {'direction': 'north', 'speed': 50, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'north', 'speed': 100, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'north', 'speed': 150, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'south', 'speed': 50, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'south', 'speed': 100, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'south', 'speed': 150, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'west', 'speed': 50, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'west', 'speed': 100, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'west', 'speed': 150, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'east', 'speed': 50, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'east', 'speed': 100, 'expver': 1, 'vehicule': ['boat', 'car']}
+            {'direction': 'east', 'speed': 150, 'expver': 1, 'vehicule': ['boat', 'car']}
+
+        :note: The list returned by the function is reversed (recursive processing), you can reverse it again if necessary: mylist.reverse()
+
+    .. function:: dirlist(dir,follow_symlinks = True)
+
+        :param dir: A valid os path
+        :type dir: str
+        :param follow_symlinks: follow symbolic links
+        :type follow_symlinks: bool
+
+        Walks a directory tree and returns a list of the full path to the directories found under dir + dir itself. If required
+        it follows symbolic links.
+
+    .. function:: dirwalk(dir,follow_symlinks = True)
+
+        :param dir: A valid os path
+        :type dir: str
+        :param follow_symlinks: follow symbolic links
+        :type follow_symlinks: bool
+
+        Walks a directory tree and returns a full path to each of the directories including dir itself. It is implemented as a generator.

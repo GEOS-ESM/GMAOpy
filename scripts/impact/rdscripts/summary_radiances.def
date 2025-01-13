@@ -1,0 +1,55 @@
+[metopa_iasi]
+kx = 875
+kt = 40
+
+[aqua_airs]
+kx = 49
+kt = 40
+
+[noaa18_mhs]
+kx = 818
+kt=40
+
+[metopa_mhs]
+kx = 825
+kt=40
+
+[noaa15_amsua]
+kx = 315
+kt=40
+
+[noaa18_amsua]
+kx = 318
+kt=40
+
+[noaa19_amsua]
+kx = 319
+kt=40
+
+[aqua_amsua]
+kx = 300
+kt=40
+
+[metopa_amsua]
+kx = 325
+kt=40
+
+[goes11_btemp]
+kx = 61
+kt = 40
+
+[goes13_btemp]
+kx = 63
+kt = 40
+
+[noaa17_hirs]
+kx = 17
+kt = 40
+
+[noaa19_hirs]
+kx = 19
+kt = 40
+
+[metopa_hirs]
+kx = 25
+kt = 40

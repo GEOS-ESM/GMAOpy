@@ -1,0 +1,39 @@
+The ODSVariable class
+---------------------
+
+.. class:: ODSVariable(Observation)
+
+    The **ODVariable class** inherits from 
+    :class:`semperpy.observations.observation.Observation` to hold an array
+    of values extracted from a netcdf variable.
+
+Public Methods
+==============
+    .. method:: ODSVariable(name,file):
+
+        :param name: name of the netcdf variable
+        :type name: string
+        :param file: a netCDF4.Dataset object
+        :type file: string
+
+        Initializes the object.
+
+    .. method:: values():
+
+        returns the values extracted from the netcdf variable using the 
+        private method readVariable.
+
+Private Methods
+================
+
+    .. method:: readVariable(name,file):
+
+        :param name: name of the netcdf variable
+        :type name: string
+        :param file: a netCDF4.Dataset object
+        :type file: string
+
+        Loads the variable using the object file. If the variable has a **missing_value**
+        attribute a masked array is created otherwise a numpy array is created. If the 
+        attributes **scale_factor** and **add_offset** exist, the array is scaled
+        and offset.

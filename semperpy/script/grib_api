@@ -1,0 +1,1 @@
+./configure --prefix=/Users/claudegibert/unix/local/lib/grib_api-1.9.5 --with-jasper=/Users/claudegibert/unix/local/lib/jasper --disable-fortran --enable-python

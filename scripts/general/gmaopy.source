@@ -1,0 +1,18 @@
+#!/bin/ksh
+
+set +u
+
+source /usr/share/modules/init/ksh
+module load other/comp/gcc-4.5
+module load other/SIVO-PyD/spd_1.1.2b
+
+GMAOPY_VERSION=${GMAOPY_VERSION:-current}
+root=/discover/nobackup/projects/gmao/share/dasilva/lib/python/gmaopy
+gmaopy_root=$root/${GMAOPY_VERSION}
+PATH=$root:$PATH
+export PYTHONPATH=$gmaopy_root:$PYTHONPATH
+export LD_LIBRARY_PATH=/usr/local/other/libpq/lib:$LD_LIBRARY_PATH
+
+export GMAOPY_LANGUAGE=${GMAOPY_LANGUAGE}:$gmaopy_root/gmaopy/language:$gmaopy_root/gmaopy/config/db/schema:$gmaopy_root/semperpy/plot/matplotlib/language
+export SEMPERPY_LANGUAGE=$GMAOPY_LANGUAGE
+GMAOPY_CONFIG=${GMAOPY_CONFIG}:$gmaopy_root/gmaopy/config

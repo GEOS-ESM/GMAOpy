@@ -1,0 +1,147 @@
+.. _odstutorial:
+
+ODS - reading and filtering ODS files
+*************************************
+
+    The following examples show how to read an ODS file using SemperPy. The ODS file used for the
+    examples is e561_tst_02.diag_conv.20110201_00z.ods.
+
+Example 1
+_________
+
+    The first example shows how easily you can select metar zonal wind (this is for one file,
+    and therefore one synoptic time):
+
+    .. literalinclude:: ods1.py
+        :language: python
+
+    The output shows::
+        
+        (1001875,)
+        (1001875,) 111.753709794
+        (6294,) -0.0947882085897
+
+    :download:`Download example 1<ods1.py>`
+
+    The filter is an array of the size of the variable arrays in the file, 
+    containing True boolean values for each observation to keep.
+
+    Please note that by default, the **compile** method only extracts observation values
+    which were used in the assimilation (qcexcl == 0). This is some sort of built in safety.
+    If you would like to obtain all observations or filter on the qcexcl variable:
+
+    .. literalinclude:: ods1_1.py
+        :language: python
+
+    The output shows that no observations were passive, but note that more observations
+    than in example 1 were returned::
+
+        (1001875,)
+        (6401,) -0.0890327671732
+        (0,) --
+
+    :download:`Download example 1.1<ods1_1.py>`
+
+Example 2
+_________
+
+    The same selection is made but only for extra-tropical latitudes:
+
+    .. literalinclude:: ods2.py
+        :language: python
+
+    The output shows::
+
+        (3922,)
+
+    :download:`Download example 2<ods2.py>`
+
+Example 3
+_________
+
+    This example shows how to combine filters in order to optimise computing, thanks to
+    the operators implemented in :class:`ods.odsvariable.ODSVariable`:
+
+    .. literalinclude:: ods3.py
+        :language: python
+
+    The output shows::
+
+        (6756,)     <- a
+        (641,)      <- b
+        (7397,)     <- c
+        (14507,)    <- d
+        (7751,)     <- e
+
+    The two geographical areas chosen don't overlap so it is reassuring to find that:
+        * c = a + b
+        * e = d - a
+
+    :warning: The method **compile** produces filters which are only valid within one ODS file, if we looked at another file, the filter *temp* would need to be recompiled for that file. Avoid combining filters generated using data from different files. The ODS class offers a method **validateFilter**, to make sure that the filter you have was compiled for that file.
+
+    :download:`Download example 3<ods3.py>`
+
+Example 4
+_________
+
+    All operators can be used in the expressions, for example, select zonal wind when the forecast predicted that the wind would blow from the east, or from the west:
+
+    .. literalinclude:: ods4.py
+        :language: python
+
+    The output shows::
+
+        (3473,)     <- a
+        (2821,)     <- b
+        (6294,)     <- c
+
+    We find:
+        * c = a + b
+
+    :download:`Download example 4<ods4.py>`
+
+Example 5
+_________
+
+    Finally, here is an example of how to match upper air observations to standard
+    levels. This program counts all radiosonde wind vectors u and v which were used
+    in the assimilation for a selection of standard levels.
+
+    .. literalinclude:: ods5.py
+        :language: python
+
+    The output shows::
+
+        2200.0
+        2850.0
+        4086.0
+        5444.0
+        4422.0
+        3576.0
+        3490.0
+        3118.0
+        3426.0
+        3948.0
+        4696.0
+        4448.0
+        5152.0
+        4512.0
+        3720.0
+        2006.0
+        334.0
+        64.0
+
+
+    :download:`Download example 5<ods5.py>`
+
+Example 6
+---------
+
+    This example illustrates how much work is required using semperpy to
+    compute some observation statistics for a month of data for the variable oma
+    for both wind components u and v from radiosondes.
+
+    .. literalinclude:: ods6.py
+        :language: python
+
+    :download:`Download example 6<ods6.py>`

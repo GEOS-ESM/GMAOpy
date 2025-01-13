@@ -1,0 +1,23 @@
+.. _slicing_introduction:
+
+Introduction
+************
+    
+    The slicing module implements a general purpose multi-dimensional array slicing
+    mechanism in the contents space. It comprises different components:
+
+        - the Slicer, a general purpose algorithm to find slices along an arbitrary number of dimensions
+        - the dimensions, objects specialised in the type and organisation of the data along one particular dimension. A generic Dimension object exists, but also specialised classes which deal with sorted data (e.g. levels) or regularly spread data (e.g. latitude on a regular grid)
+        - the CF1.0 compliant dimensions (latitude, longitude, level, date)
+
+    The algorithm is recursive, therefore any number of dimensions can be handled. The dimensions are classes instances, therefore most types of dimensions can be handled. The *Slicer* implements the algorithm by calling repeatedly a visitor. Two visitors have been implemented by default:
+
+        - Slice2Array which creates a multi-dimensional array as the result of the slicing
+        - Slice2List which requires another visitor to create a list of separate fields (probably 2D arrays for plotting purposes).
+
+    The numpy python module is used to handle the multi-dimensional arrays and the *ArrayGenerator* object implements the default behaviour for creating numpy arrays, it can be customised.
+
+    When specifying slices, the following convention is used:
+
+        - a list of values specifies a list of slices (e.g. level = [1000,500] -> 2 slices)
+        - a dictionary specified an interval (e.g. level = {1000,500} -> n slices for all levels found between 1000 and 500).

@@ -1,0 +1,161 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Design decisions &mdash; SemperPy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SemperPy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="SemperPy - Core libraries" href="../semperpy.html" />
+    <link rel="next" title="Download and install" href="download.html" />
+    <link rel="prev" title="SemperPy - Core libraries" href="../semperpy.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="download.html" title="Download and install"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../semperpy.html" title="SemperPy - Core libraries"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../semperpy.html" accesskey="U">SemperPy - Core libraries</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="design-decisions">
+<h1>Design decisions<a class="headerlink" href="#design-decisions" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>A few design decisions have been made in the development of the framework to try and achieve the following:</p>
+<ul class="simple">
+<li>modules are as little coupled as possible, ideally they are not coupled at all. The idea is to develop sub-components which are independent to reduce maintenance and offer the user a programming framework which only requires to know what is needed.</li>
+<li>object orientation should be used. Object delegation is preferred to class inheritance as this enables low coupling.</li>
+<li>classes and modules should be fully documented as soon as they are tested and validated. Tutorials should be provided whenever it helps the user to quickly learn how to use a module or a collection of modules together.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="programming-convention">
+<h1>Programming convention<a class="headerlink" href="#programming-convention" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>A few programming conventions have been applied when developing the <strong>SemperPy</strong> library.
+Although conventions are important in a project intended to be used and shared between
+a number of users, some exceptions can sometimes be acceptable. Here are the conventions
+and some of the exceptions:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Class names start with an uppercase and use mixed-case: <em>ThisClass</em>.</li>
+<li>A class definition is stored in a file with the class name classnamelowercase.py. As far as possible only one class is defined in one file. However, classes used privately in that module can be defined there as well (class name starting with underscore).</li>
+<li>Public methods and function names start with a lowercase and then use mixed case: <em>openFile()</em>. Public means that these were intended to be used by the users of the library. <em>An exception to this rule is for example the Core.tools module which exports low level functions (e.g. *is_list</em>). Using mixed case for those functions does not feel right, it gives them too much emphasis in the code while they should be seen as <em>part of the language</em>. <em>Whenever this applies, it is acceptable to use rule 4</em>.</li>
+<li>Private functions and methods used within one module or within one hierarchy of classes start with a lowercase and then use lowercase and underscore: <em>close_all_open_files()</em>.</li>
+<li>Don&#8217;t be lazy, please use long names for variables, classes and methods, as this saves comments and explanations.</li>
+<li>No rules are imposed on the naming of object or class members, these are normally easily recognized (self.member).</li>
+<li>Attention to spelling is expected. American spelling is preferred, but for method names, it can be useful to define British and American spelling when they differ, for example Core.tools.specialize is also defined as Core.tools.specialise. Anyway, I know I tend to use British spelling and vocabulary, I will try to do my best.</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<p><em>Section author: Claude Gibert 2010-2011-2012</em></p>
+<ul class="simple">
+<li><a class="reference internal" href="../genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="../py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="../search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../gmaopy.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Design decisions</a></li>
+<li><a class="reference internal" href="#programming-convention">Programming convention</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../semperpy.html"
+                        title="previous chapter">SemperPy - Core libraries</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="download.html"
+                        title="next chapter">Download and install</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/semperpy/introduction.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="download.html" title="Download and install"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../semperpy.html" title="SemperPy - Core libraries"
+             >previous</a> |</li>
+        <li><a href="../gmaopy.html">SemperPy 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../semperpy.html" >SemperPy - Core libraries</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011, 2012, GMAO. In collaboration with Synoptic View Ltd, Claude Gibert.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

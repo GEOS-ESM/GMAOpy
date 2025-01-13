@@ -1,0 +1,25 @@
+{
+	"directive": "proddata",
+    "inherit_from": "proddata",
+    "doc": true,
+	"keywords" : {
+        "statistic": {
+            "optional": false
+        },
+        "date": {
+            "optional": false
+        },
+        "domain_name": {
+            "optional": false
+        },
+        "variable": {
+            "optional": false
+        },
+        "level": {
+            "optional": false
+        },
+        "database": {
+            "optional": false
+        }
+    }
+}

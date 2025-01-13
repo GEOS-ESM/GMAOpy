@@ -1,0 +1,21 @@
+{
+	"directive": "odsplot",
+    "inherit_from": "plot",
+	"keywords" : {
+        "storage": {
+            "default_value": "odsreader"
+        },
+        "staging_rate": {
+            "unique": true,
+            "default_value": "hour"
+        },
+        "ignore_missing_files": {
+            "unique": true,
+            "default_value": false
+        },
+        "plotdata": {
+            "unique": true,
+            "type": "odsdata"
+        }
+	}
+}

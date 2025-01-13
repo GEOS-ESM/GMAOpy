@@ -1,0 +1,17 @@
+Reference
+=========
+
+Contents:
+
+.. toctree::
+   :maxdepth: 3
+
+   ods/odsmodule
+   netcdf/netcdfmodule
+   stats/statmodule
+   directives/directives
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

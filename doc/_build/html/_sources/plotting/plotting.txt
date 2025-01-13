@@ -1,0 +1,145 @@
+.. _tipsandtricks:
+
+Plotting features
+*****************
+
+    SemperPy is based on matplolib for plotting and many of the configurable parameters
+    in matplotlib can be specified in either Document, Plot and Curve classes. This is
+    documented as much a possible, it is advisable to take a look at the :mod:`directives`
+    reference section to see the different parameters which can be adjusted in various
+    directives. Particularly relevant directives are:
+
+        - :ref:`axis`
+        - :ref:`bar`
+        - :ref:`boxedline`
+        - :ref:`colormap`
+        - :ref:`commentexpver`
+        - :ref:`commentline`
+        - :ref:`commenttext`
+        - :ref:`continents`
+        - :ref:`countries`
+        - :ref:`document`
+        - :ref:`geography`
+        - :ref:`graphics`
+        - :ref:`meridians`
+        - :ref:`meridians`
+        - :ref:`parallels`
+        - :ref:`plotfont`
+        - :ref:`plotfont`
+        - :ref:`plotlegend`
+        - :ref:`rivers`
+        - :ref:`states`
+        - :ref:`symbol`
+
+Plot titles
+-----------
+        
+
+The **graphics** directive
+--------------------------
+    
+    Each class Document, Plot and Curve have a keyword **graphics** which is a :ref:`graphics`
+    directive.
+
+    The different keywords enable the customization of graphics attributes. If you consider
+    that the document is at the top level and the curve is at the bottom level, the lower the
+    keyword the bigger the precedence:
+
+    .. literalinclude:: graphics.py
+        :language: python
+        :linenos:
+
+    Explanation:
+
+        - line 3 states that none of the plots in the document will display a grid
+        - line 8 states that the timeseries plot, unlike the other plots will display a grid and that all line curves in that plot will have a 3.0 width
+        - line 26 states that all graphical objects in the levelplot will have an alpha channel of 0.2
+        - line 14 states that the first curve, unlike the others will have a width of 1.0
+        - line 19 states that the second curve will not inherit the standard color but will be red.
+
+    :Reminder: "The lower the keyword, the bigger the precedence" principle works for all keywords.
+
+Changing color tables
+---------------------
+
+    Each Plot object holds a list of colors to use for each of its curve, or bars or dots or symbols
+    with the following keywords:
+
+        - line_color
+        - bar_color
+        - dot_color
+        - sym_color
+
+    Each of the keyword hold a list of color which are attributed to graphical objects in order.
+    You can redefine those.
+
+Customizing axis
+----------------
+
+    Each plot object holds two different directives, xaxis and yaxis (:ref:`axis`). Each axis
+    can be customized. The scale of the axis can be forced.
+
+Data hooks
+----------
+
+    Each plot object can be specified a data hook. A data hook is called for all the curves and
+    can either process the values, or display them. A standard data hook is provided, it is called
+    printhook, it prints values out.
+
+    The printhooks takes the following arguments::
+
+        hidemissing = True # does not display missing values
+        separator = ','    # the character used to separate columns
+        arguments: a list of keywords to display
+
+        For example:
+        printhook('date','domain_name','statistic','value',separator='|',hidemissing=True)
+
+    Example in a timeseries:
+
+    .. literalinclude:: ts.py
+        :language: python
+
+    Outputs::
+
+        name, domain_name, date, statistic, value
+        radiosonde wind, global, 2012032900, impact_per_anl, -0.245859568
+        radiosonde wind, global, 2012033000, impact_per_anl, -0.206111816
+        radiosonde wind, global, 2012033100, impact_per_anl, -0.189974906
+
+        name, domain_name, date, statistic, value
+        radiosonde wind, global, 2012032900, impact_per_ob, -3.56008641761e-06
+        radiosonde wind, global, 2012033000, impact_per_ob, -2.91151282631e-06
+        radiosonde wind, global, 2012033100, impact_per_ob, -2.71641080416e-06
+
+        name, domain_name, date, statistic, value
+        radiosonde wind, global, 2012032900, beneficial, 50.864465682
+        radiosonde wind, global, 2012033000, beneficial, 52.0115267262
+        radiosonde wind, global, 2012033100, beneficial, 51.1767902082
+
+    New data hooks can be developed (e.g. to plot the data using a different plotting package
+    or to store the data into some repository).
+
+Comments (or Decorators)
+------------------------
+
+    A plot object can hold a **comment** or **decorator** object. These objects
+    usually draw something extra on the plot. There are at the moment three
+    different classes defined, more can be developed by the maintainers of 
+    SemperPy:
+
+        - commentline
+        - commenttext
+        - commentexpver
+
+commentline
+^^^^^^^^^^^
+
+commenttext
+^^^^^^^^^^^
+
+commentexpver
+^^^^^^^^^^^^^
+
+observers
+^^^^^^^^^
