@@ -66,7 +66,7 @@ class Axis(Attribute):
             if labels is not None:
                 if ticks is None:
                     ticks = list(range(len(labels)))
-                ticks = list(range(len(labels)))
+                #ticks = list(range(len(labels))) # SJR 20250410 see commit
                 subplot.set_yticks(ticks)
                 subplot.set_yticklabels(labels)
             if date:

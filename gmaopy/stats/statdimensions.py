@@ -65,6 +65,7 @@ class LevelPlotDimension(Dimension):
     def process_axis(self,layout,subplot,axis,values,curves):
 
         axis_values = self.process_values(values,curves)
+        
         major_locator = None
         if len(values) > 100:
             div = 20
@@ -80,7 +81,8 @@ class LevelPlotDimension(Dimension):
                 if (values[i] % div) == 0 or i == 0:
                     vals.append(values[i])
             values = vals
-            major_locator = IndexLocator(div,0)
+            axis_values = vals
+            #major_locator = IndexLocator(div,0.5) # SJR 20250410 see commit 
         labels = self.labels_for_float(values)
         '''
         if 'absolute_max' in axis:
