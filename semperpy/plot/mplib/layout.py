@@ -169,6 +169,14 @@ class Layout(object):
         if 'alpha' in kargs:
             alpha = kargs['alpha']
             del(kargs['alpha'])
+
+        newlines = []
+        for line in lines:
+            if isinstance(line, list):
+                newlines.append(line[0])
+            else:
+                newlines.append(line)
+        lines = newlines
         legend = subplot.legend(lines,texts,**kargs)
         # make legend transparent
         legend.get_frame().set_alpha(alpha)
@@ -450,6 +458,8 @@ class PlaceLegend(Spacer):
             subplot.set_position([bbox.x0 + height/2,bbox.y0,bbox.width,bbox.height-height/2])
             #legend.set_bbox_to_anchor((0.5,-height-vertical_offset ))
         elif position == 'topleft':
+            if isinstance(vertical_offset, list):
+                vertical_offset = vertical_offset[0]
             subplot.set_position([bbox.x0,bbox.y0,bbox.width,bbox.height-vertical_offset])
             #legend.set_bbox_to_anchor((bbox.x0,1 + height + vertical_offset ))
         elif position == 'bottomleft':
