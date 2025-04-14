@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Fixed
+Some checks were added to semperpy/plot/mplib/layout.py to trap list objects where scalar objects were expected. This is likely the result of misinterpretation of matplotlib return values that are tuples or have become tuples. For example: val = plt.plot(a,b) should perhaps be val, = plt.plot(a,b). Other similar patches have been noted in the codes implemented by other developers. A better fix would be to correct the origin of the misassigned tuple values.
 
 ### Removed
 
